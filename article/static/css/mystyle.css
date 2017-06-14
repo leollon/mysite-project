@@ -1,0 +1,43 @@
+body {
+    background-color: #F5F5D5;
+}
+
+#article-title {
+    text-align: center;
+}
+
+.glyphicon-eye-open {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+}
+.form-group {
+    margin: 0;
+    padding: 0;
+    width: 50%;
+    height: auto;
+}
+
+.article-tag {
+    font-size: 20px;
+}
+
+.form-control > input, .form-control > textarea {
+    width: 100%;
+    border: 0;
+}
+
+.form-control > input {
+    height: 40px;
+    font-size: 26px;
+}
+
+.form-control > textarea {
+    height: 80%;
+    font-size: 16px;
+}
+
+.submit-button {
+    padding: 5px;
+    font-size: 20px;
+}

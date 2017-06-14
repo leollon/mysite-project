@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block article %}
+    <h2 id="article-title">{{ article.title }}</h2>
+    <section class="article-body">
+        {{ article.article_body }}
+    </section>
+{% endblock %}
+{% block scripts %}
+    {{ block.super }}
+    <script src="{% static "js/my.js" %}"></script>
+{% endblock %}
