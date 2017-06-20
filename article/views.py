@@ -1,14 +1,14 @@
 from django.views.generic import DetailView
 from article.models import Article
 from django.views.generic import ListView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 
 
 class ArticleDetail(DetailView):
     """
     the detail of each article
     """
-    queryset = Article.objects.all()
+    model = Article
     template_name = 'article_detail.html'
     context_object_name = 'article'
 
@@ -35,5 +35,19 @@ class ArticleCreate(CreateView):
     template_name = 'article_form.html'
     model = Article
     fields = ['title', 'article_summary', 'article_body']
+
+
+class ArticleUpdate(UpdateView):
+    """
+    view function for editing a posted article
+    """
+    template_name = 'article_edit.html'
+    model = Article
+    context_object_name = 'article'
+    fields = ['title', 'article_summary', 'article_body']
+
+    def get_object(self):
+        article = super(ArticleUpdate, self).get_object()
+        return article
 
 
