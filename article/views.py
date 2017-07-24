@@ -32,7 +32,7 @@ class ArticleCreate(CreateView):
     """
     class-based view function used to write an article
     """
-    template_name = 'article_form.html'
+    template_name = 'article_write.html'
     model = Article
     fields = ['title', 'article_body']
 
