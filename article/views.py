@@ -34,7 +34,7 @@ class ArticleCreate(CreateView):
     """
     template_name = 'article_form.html'
     model = Article
-    fields = ['title', 'article_summary', 'article_body']
+    fields = ['title', 'article_body']
 
 
 class ArticleUpdate(UpdateView):
