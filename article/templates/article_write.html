@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="{% static "css/mystyle.css" %}">
 </head>
 <body>
-    <form action="{% url 'article:edit' article.id %}" method="post">
+    <form class="manage-article-form" action="{% url 'article:edit' article.id %}" method="post">
         {% for field in form %}
             <div class="form-group">
                 <p class="article-tag">{{ field.label_tag }}</p>
