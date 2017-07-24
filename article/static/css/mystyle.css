@@ -1,5 +1,4 @@
 body {
-    background-color: #F5F5D5;
 }
 
 #article-title {
@@ -22,7 +21,8 @@ body {
     font-size: 20px;
 }
 
-.form-control > input, .form-control > textarea {
+.form-control > input,
+.form-control > textarea {
     width: 100%;
     border: 0;
 }
