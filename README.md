@@ -1,9 +1,9 @@
 
-# myblog with myblog
+# myblog with Django
 
 ## TODO
-- [ ] Article
+- [x] Article
 - [ ] Author
-- [ ] Category
+- [x] Category
 - [ ] Tags
 - [ ] Comment
