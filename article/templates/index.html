@@ -1,4 +1,8 @@
 {% extends 'base.html' %}
 {% block article %}
-    {% include 'article_list.html' %}
+        {% include 'article_list.html' %}
+        {% block pagination %}
+            {% include "pagination.html" %}
+        {% endblock %}
+    </div>
 {% endblock %}
