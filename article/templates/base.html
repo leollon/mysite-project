@@ -5,21 +5,27 @@
     {% load staticfiles %}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block meta %}
+        <meta name="author" content="">
+        <meta name="description" content="">
+        <meta name="title" content="">
+        <meta name="keywords" content="">
+    {% endblock %}
 
     <title>Clean Blog</title>
 
     <!-- title icon -->
-    <link rel="shortcut icon" href="{% static "img/luffy.png" %}" type="image/png">
+    <link rel="shortcut icon" href="{% static "img/luffy.png" %}"
+          type="image/png">
 
     <!-- bookmark icon -->
-    <link rel="shortcut icon" href="{% static "img/luffy.png" %}" type="image/png">
+    <link rel="icon" href="{% static "img/luffy.png" %}" type="image/png">
 
 
     <!-- Bootstrap Core CSS -->
-    <link href="{% static "vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          rel="stylesheet">
 
     <!-- Theme CSS -->
     <link href="{% static "css/clean-blog.min.css" %}" rel="stylesheet">
@@ -28,8 +34,10 @@
     <link href="{% static "css/mystyle.css" %}" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="{% static "vendor/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet" type="text/css">
-    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet'
+    <link href="{% static "vendor/font-awesome/css/font-awesome.min.css" %}"
+          rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic'
+          rel='stylesheet'
           type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
           rel='stylesheet' type='text/css'>
@@ -44,120 +52,120 @@
 </head>
 
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle" data-toggle="collapse"
-                        data-target="#list-in-navbar-to-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    Menu <i class="fa fa-bars"></i>
-                </button>
-                <a class="navbar-brand" href="{% url "article:index" %}">Homepage</a>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="list-in-navbar-to-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="#">About</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'article:write' %}">Write Post</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#list-in-navbar-to-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                Menu <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand"
+               href="{% url "article:index" %}">Homepage</a>
         </div>
-        <!-- /.container -->
-    </nav>
 
-    <!-- Page Header -->
-    <!-- Set your background image for this header on the line below. -->
-    <header class="intro-header" style="background-image: url('{% static "img/home-bg.jpg" %}')">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <div class="site-heading">
-                        <h1 id="blog-head">CodingOnTux</h1>
-                        <hr class="small">
-                        <span class="subheading">Keep Stupid, Keep Hungry, Keep It Simple.</span>
-                    </div>
-                </div>
-            </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="list-in-navbar-to-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#">About</a>
+                </li>
+                <li>
+                    <a href="{% url 'article:write' %}">Write Post</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+            </ul>
         </div>
-    </header>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
 
-    <!-- Main Content -->
+<!-- Page Header -->
+<!-- Set your background image for this header on the line below. -->
+<header class="intro-header"
+        style="background-image: url('{% static "img/home-bg.jpg" %}')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                {% block article %}
-                {% endblock %}
-                <!-- Pager -->
-                <ul class="pager">
-                    <li class="next">
-                        <a href="#">Older Posts &rarr;</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <hr>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <ul class="list-inline text-center">
-                        <li>
-                            <a href="#">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                    <p class="copyright text-muted">Copyright &copy; Leo's blog 2017<br>Powered by Django & Boostrap</p>
-                    <p class="blog-arch text-muted"></p>
+                <div class="site-heading">
+                    <h1 id="blog-head">CodingOnTux</h1>
+                    <hr class="small">
+                    <span class="subheading">Keep Stupid, Keep Hungry, Keep It Simple.</span>
                 </div>
             </div>
         </div>
-    </footer>
-    {% block scripts %}
-        <!-- jQuery -->
-        <script src="{% static "vendor/jquery/jquery.min.js" %}"></script>
+    </div>
+</header>
 
-        <!-- Bootstrap Core JavaScript -->
-        <script src="{% static "vendor/bootstrap/js/bootstrap.min.js" %}"></script>
+<!-- Main Content -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
+        {% block article %}
+        {% endblock %}
+        </div>
+    </div>
+</div>
 
-        <!-- Theme JavaScript -->
-        <script src="{% static "js/clean-blog.min.js" %}"></script>
-    {% endblock %}
+<hr>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    <li>
+                        <a href="https://github.com/leollon">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x
+                                    fa-inverse"></i>
+                                </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-creative-commons fa-stack-1x
+                                    fa-inverse"></i>
+                                </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/leollon92">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x
+                                    fa-inverse"></i>
+                                </span>
+                        </a>
+                    </li>
+                </ul>
+                <p class="copyright text-muted">Copyright &copy; Leo's blog 2017<br>Powered
+                    by Django & Boostrap</p>
+                <p class="blog-arch text-muted"></p>
+            </div>
+        </div>
+    </div>
+</footer>
+{% block scripts %}
+    <!-- jQuery -->
+    <script src="{% static "vendor/jquery/jquery.min.js" %}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="{% static "js/clean-blog.min.js" %}"></script>
+{% endblock %}
 
 </body>
 
