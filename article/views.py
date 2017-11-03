@@ -22,16 +22,11 @@ class ArticleList(ListView):
     def get_context_data(self, **kwargs):
         context = super(ArticleList, self).get_context_data(**kwargs)
         articles_list = Article.objects.order_by('-created_time').all()
-        renderer = HightlightRenderer()
-        markdown = mistune.Markdown(escape=True, hard_wrap=True,
-                                    renderer=renderer)
         # paginator paginate an ordered list
         paginator = Paginator(articles_list, per_page=per_page)
         page = self.request.GET.get('page')
         try:
             articles = paginator.page(page)
-            for article in articles:
-                article.article_body = markdown(article.article_body)
         except PageNotAnInteger:
             articles = paginator.page(1)
         except EmptyPage:
