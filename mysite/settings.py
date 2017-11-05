@@ -121,3 +121,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = '../article/static/'
+PER_PAGE = 6
