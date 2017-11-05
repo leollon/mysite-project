@@ -1,0 +1,57 @@
+body {
+    background-color: lightgray;
+}
+
+form > div {
+    margin: 10px 0px;
+    width: 100%;
+}
+
+pre {
+    background-color: #0F3741;
+    color: white;
+}
+
+.navbar {
+    border-top: 5px solid firebrick;
+    border-radius: 0px;
+}
+
+.textinput,
+.textarea,
+.select {
+    width: 100%;
+}
+
+.textinput,
+.select {
+    height: 30px;
+}
+
+.textinput {
+    border-radius: 2px;
+}
+
+.textarea {
+    height: 800px;
+    border: 0px;
+    border-radius: 2px;
+    resize: none; /* forbidden to resize the height and width */
+    /*as follow, the other way to do that
+    width: 260px;
+    height: 120px;
+    max-width: 260px;
+    max-height: 120px;
+    */
+
+}
+
+.asteriskField {
+    color: red;
+}
+
+.article-title-preview {
+    padding-top: 10px;
+    margin-bottom: 30px;
+}
+
