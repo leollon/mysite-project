@@ -1,10 +1,23 @@
 from django.template import Library
 from django.template.defaultfilters import stringfilter
+import bleach
+from django.conf import settings
 
 # import customize module
 from article import utils
 
 register = Library()
+
+allow_content = getattr(settings, 'ALLOWED_CONTENT')
+
+
+@register.filter(name='banxss')
+def bleach_xss(text):
+    return bleach.clean(text=text,
+                        tags=allow_content['ALLOWED_TAGS'],
+                        attributes=allow_content['ALLOWED_ATTRIBUTES'],
+                        styles=allow_content['ALLOWED_STYLES'],
+                        strip=True)
 
 
 @register.filter(name='md')

@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load summary_extras %}
 {% block article %}
     <h2 id="article-title">{{ article.title }}</h2>
     <section class="article-body">
-        {{ article.article_body }}
+        {{ article.article_body | banxss | safe }}
     </section>
 {% endblock %}
 {% block scripts %}

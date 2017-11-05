@@ -1,14 +1,16 @@
+{% load summary_extras %}
 {% block article %}
     {% for article in articles %}
         <div class="post-preview">
             <a href="{% url 'article:detail' article.id %}">
                 <h2 class="post-title">
-                    {{ article.title }}
+                    <a href="{% url "article:detail" article.id %}">
+                        {{ article.title }}
+                    </a>
                 </h2>
             </a>
-            <span class="glyphicon glyphicon-eye-open"></span> · {{ article.view_times }}
             <article class="post-subtitle">
-                {{ article.article_body | truncatechars:125 }}
+                {{ article.article_body | truncatechars:125 | md | banxss | safe }}
             </article>
             <p class="post-meta">Posted by <a href="#">Start Bootstrap</a> on {{ article.created_time }}</p>
         </div>
