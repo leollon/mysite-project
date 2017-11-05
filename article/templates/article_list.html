@@ -12,6 +12,11 @@
             <article class="post-subtitle">
                 {{ article.article_body | truncatechars:125 | md | banxss | safe }}
             </article>
+            <div class="category"><span class="fa fa-folder-open"></span>
+                <a href="{% url "category:all_article" article.category_id %}">
+                {{ article.category }}
+                </a>
+            </div>
             <p class="post-meta">Posted by <a href="#">Start Bootstrap</a> on {{ article.created_time }}</p>
         </div>
         <hr>
