@@ -1,20 +1,5 @@
-<!doctype html>
-<html>
-<head>
-    {% load staticfiles %}
-    <link rel="stylesheet" href="{% static "css/mystyle.css" %}">
-</head>
-<body>
-    <form class="manage-article-form" action="{% url 'article:write' %}" method="post">
-        {% for field in form %}
-            <div class="form-group">
-                <p class="article-tag">{{ field.label_tag }}</p>
-                <p class="form-control">{{ field }}</p>
-            </div>
-        {% endfor %}
-        {% csrf_token %}
-        <input class="submit-button" type="submit" value="submit">
-    </form>
-    <script src="{% static "js/my.js" %}"></script>
-</body>
-</html>
+{% extends "editor_base.html" %}
+{% load  crispy_forms_tags %}
+{% block editor %}
+    {% crispy form %}
+{% endblock %}
