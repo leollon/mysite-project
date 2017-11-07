@@ -52,3 +52,15 @@ a {
     background-color: #0F3741;
     color: white;
 }
+
+p > img {
+    margin: 0px 10%;
+}
+
+@media only screen and (max-width: 768px) {
+    p > img {
+        width: 245px;
+        height: auto;
+        margin: 0px 14%;
+    }
+}
