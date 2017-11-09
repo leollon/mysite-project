@@ -53,6 +53,15 @@ a {
     color: white;
 }
 
+p {
+    margin: 0px;
+}
+
+th, td {
+    border: 1px solid silver;
+    padding: 2px;
+    font-size: 16px;
+}
 p > img {
     margin: 0px 10%;
 }
