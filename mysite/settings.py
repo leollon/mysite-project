@@ -37,9 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'article.apps.ArticleConfig',
     'article_category.apps.ArticleCategoryConfig',
-    'crispy_forms',
+    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
@@ -57,7 +58,7 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -146,3 +147,6 @@ ALLOWED_CONTENT = {
     'ALLOWED_STYLES': ['color', 'background-image', 'background',
                        'font', 'text-align', ]
 }
+
+# Customize User model
+AUTH_USER_MODEL = 'users.User'
