@@ -150,3 +150,8 @@ ALLOWED_CONTENT = {
 
 # Customize User model
 AUTH_USER_MODEL = 'users.User'
+
+# Customize backend authentication
+AUTHENTICATION_BACKENDS = [
+    'users.backend.EmailBackend',
+]
