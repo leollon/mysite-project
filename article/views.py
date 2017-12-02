@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView
@@ -35,16 +36,18 @@ class ArticleList(ListView):
         return context
 
 
-class CreateArticleView(CreateView):
+class CreateArticleView(LoginRequiredMixin, CreateView):
     """Class-based view function used to write an article
     """
     template_name = 'article_write.html'
     form_class = CreateArticleForm
+    login_url = '/accounts/login/'
 
 
-class UpdateArticleView(UpdateView):
+class UpdateArticleView(LoginRequiredMixin, UpdateView):
     """View function for editing a posted article
     """
+    login_url = '/accounts/login/'
     template_name = 'article_write.html'
     model = Article
     context_object_name = 'article'
