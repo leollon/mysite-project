@@ -1,14 +1,16 @@
 {% extends "custom_base.html" %}
 {% block main %}
-    <form action="{% url 'users:login' %}" method="post">
+    <b><p>{{ status }}</p></b>
+    <form action="" method="post">
         {% csrf_token %}
-        {% for field in form %}
-            <div class="field-container">
-                <div>{{ field.label_tag }}</div>
-                <div>
-                {{ field }}
+            {% for field in form %}
+                <div class="form-group label-tag-name">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.help_text %}
+                        <p class="small">{{ field.help_text }}</p>
+                    {% endif %}
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
     </form>
 {% endblock %}

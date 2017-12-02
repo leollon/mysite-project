@@ -69,11 +69,17 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="list-in-navbar-to-collapse-1">
             <ul class="nav navbar-nav navbar-right">
+                {% if not user.is_authenticated %}
                 <li>
-                    <a href="#">About</a>
+                    <a href="{% url 'users:login' %}">Backend</a>
                 </li>
+                {% else %}
                 <li>
-                    <a href="{% url 'article:write' %}">Write Post</a>
+                    <a href="{% url 'users:logout' %}">Logout</a>
+                </li>
+                {% endif %}
+                <li>
+                    <a href="#">All Articles</a>
                 </li>
                 <li>
                     <a href="#">Contact</a>
