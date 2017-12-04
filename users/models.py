@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from django.utils.crypto import salted_hmac
 
 from mysite import settings
 
@@ -32,14 +33,18 @@ class User(AbstractUser):
     def __str__(self):
         return "%s" % self.username
 
-    def generate_serial(self, expires_in=1*24*60*60):
+    def get_session_auth_hash(self):
+        key_salt = "django.contrib.auth.models.AbstractBaseUser.get_session_auth_hash"
+        return salted_hmac(key_salt, self.password).hexdigest()
+
+    def generate_serial(self, expires_in=3600):
         """
         generate a serial number for activating an account when a user
         register an account received a activate link in their email.
+        :param expires_in: after that seconds, token will be valid
         :return: Serial number
         """
-        s = Serializer(getattr(settings, 'SERIAL_SECRET_KEY'), expires_in)
-        return s
+        return Serializer(getattr(settings, 'SERIAL_SECRET_KEY'), expires_in)
 
     def generate_valid_token(self):
         serial_number = self.generate_serial()
@@ -59,4 +64,18 @@ class User(AbstractUser):
         self.save()
         return True
 
+    def generate_email_token(self):
+        serial_obj = self.generate_serial(expires_in=1*24*60*60)
+        return serial_obj.dumps({'name': self.username}).decode(encoding="ascii")
 
+    def verify_email_token(self, token):
+        serial_obj = self.generate_serial(expires_in=30*60)
+        try:
+            data = serial_obj.loads(token)
+        except:
+            return False
+
+        if data.get('name') != self.username:
+            print(data.get('name'))
+            return False
+        return True
