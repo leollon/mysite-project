@@ -1,4 +1,5 @@
 {% extends 'custom_base.html' %}
+{% block title %}<title>Create account</title>{% endblock %}
 {% block main %}
     <form action="{% url 'users:register' %}" method="POST">
         {% csrf_token %}

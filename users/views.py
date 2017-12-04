@@ -1,25 +1,33 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
-
 from users.models import User
 from users.forms import UserLoginForm, UserRegisterForm, \
                         PasswordResetForm, PasswordResetRequestForm
-
+from mysite.settings import EMAIL_RELATED
 from users.utils import notify_user
+
+
+reg_notification_file = EMAIL_RELATED.get('REG_NOTIFICATION_FILE')
+pwd_change_notification_file = EMAIL_RELATED.get('PWD_CHANGE_NOTIFICATION_FILE')
 
 
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
-            user = User.objects.create(username=form.cleaned_data['username'],
-                                       email=form.cleaned_data['email'])
+            user = User(username=form.cleaned_data['username'],
+                        email=form.cleaned_data['email'])
             user.set_password(form.cleaned_data['password1'])
-            notify_user(form=form, token=user.generate_valid_token())
+            notify_user(request=request,
+                        url="/accounts/validate/",
+                        token=user.generate_valid_token(),
+                        subject="Confirm your account",
+                        filename=reg_notification_file)
             user.save()
             return HttpResponseRedirect(reverse('users:login'))
         else:
@@ -47,7 +55,7 @@ def validate_view(request, token):
             "expiration": "This link used to confirm your account is expired "
                           "or invalid."
         }
-        return render(request, 'users/fail_to_validate.html', msg)
+        return render(request, 'users/expiration.html', msg)
 
 
 @login_required
@@ -64,12 +72,15 @@ def resend_email_view(request):
     elif request.user.is_active:
         # if user did not activate his/her account, then resend the email
         # including the token
-        token = request.user.generate_valid_token()
-        notify_user(request=request, token=token)
+        notify_user(request=request,
+                    url="/accounts/validate/",
+                    token=request.user.generate_valid_token(),
+                    subject="Confirm your account",
+                    filename=reg_notification_file)
         msg = {
             "notification": _("The email including token has resent to you.")
         }
-        return render(request, "users/resend_ok.html", msg)
+        return render(request, "users/send_ok.html", msg)
     else:
         # if user is a blocked user, redirect to homepage
         return HttpResponseRedirect(reverse("article:index"))
@@ -77,6 +88,7 @@ def resend_email_view(request):
 
 def login_view(request):
     if request.method == 'POST':
+        print(request.COOKIES)
         next_url = request.GET.get('next')
         form = UserLoginForm(request.POST)
         if form.is_valid():
@@ -87,7 +99,7 @@ def login_view(request):
                 return render(request,
                               'users/login.html',
                               {"form": UserLoginForm(),
-                               "status": "This user does not exists."}
+                               "status": "Username and Password mismatch."}
                               )
             elif user.is_active or user.is_valid:
                 login(request, user)
@@ -113,10 +125,51 @@ def logout_view(request):
 
 @login_required
 def password_reset_request(request):
-    pass
+    if request.method == "POST":
+        # send user email including the token
+        form = PasswordResetRequestForm(request.POST)
+        if form.is_valid():
+            notify_user(request,
+                        url="/accounts/password_reset/",
+                        token=request.user.generate_email_token(),
+                        subject="Change Password",
+                        filename=pwd_change_notification_file)
+            msg = {
+                "notification": "The email including token has sent to you."
+            }
+            return render(request, "users/send_ok.html", msg)
+        else:
+            return render(request, "users/password_reset_request.html",
+                          {"form": form})
+    else:
+        form = PasswordResetRequestForm()
+        return render(request, "users/password_reset_request.html",
+                      {"form": form})
 
 
 @login_required
-def password_reset(request):
-    pass
+def password_reset(request, token):
+    if request.method == "POST" and request.user.verify_email_token(token):
+        form = PasswordResetForm(request.user, request.POST)
+        if form.is_valid():
+            request.user.set_password(form.cleaned_data['new_password2'])
+            request.user.save()
+            return HttpResponseRedirect(reverse("users:login"))
+        else:
+            # bug：表单渲染后，页面未显示错误
+            # why：PasswordResetForm自定义了__init__()，当post过来的时候，request.POST
+            #     复制给了user，但是BaseForm的__init__()的data并没有数据接收到数据，
+            #     默认值是None的，所以form是is not valid的
+            # how：在PasswordResetForm类中定义的__init__方法多声明一个data参数，传参的时候
+            #      一一对应地将参数传给方法中的参数
+            # Result：Fixed
+            return render(request, "users/password_reset.html", {"form": form})
 
+    if request.user.verify_email_token(token):
+        form = PasswordResetForm(request.user)
+        return render(request, "users/password_reset.html", {"form": form})
+    else:
+        msg = {
+            "expiration": _("The token is expired or invalid.")
+        }
+        return render(request, "users/expiration.html", msg)
