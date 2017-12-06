@@ -3,9 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
-from django.utils.crypto import salted_hmac
-
-from mysite import settings
+from mysite.config.settings import dev_settings
 
 
 @python_2_unicode_compatible
@@ -17,7 +15,7 @@ class User(AbstractUser):
     class Meta:
         db_table = 'users_user'
 
-    email = models.EmailField(_('email address'), blank=True, unique=True)
+    email = models.EmailField(_('email address'), unique=True)
     is_staff = models.BooleanField(_('staff'),
                                    default=False,
                                    help_text=_('Designates whether the user \
@@ -33,10 +31,6 @@ class User(AbstractUser):
     def __str__(self):
         return "%s" % self.username
 
-    def get_session_auth_hash(self):
-        key_salt = "django.contrib.auth.models.AbstractBaseUser.get_session_auth_hash"
-        return salted_hmac(key_salt, self.password).hexdigest()
-
     def generate_serial(self, expires_in=3600):
         """
         generate a serial number for activating an account when a user
@@ -44,7 +38,8 @@ class User(AbstractUser):
         :param expires_in: after that seconds, token will be valid
         :return: Serial number
         """
-        return Serializer(getattr(settings, 'SERIAL_SECRET_KEY'), expires_in)
+        return Serializer(getattr(dev_settings, 'SERIAL_SECRET_KEY'),
+                          expires_in)
 
     def generate_valid_token(self):
         serial_number = self.generate_serial()
