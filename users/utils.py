@@ -10,7 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.mail import send_mail
 
 
-from mysite.settings import EMAIL_ACCOUNT, DOMAIN_NAME
+from mysite.config.settings.dev_settings import EMAIL_ACCOUNT, DOMAIN_NAME
 
 
 email_user = EMAIL_ACCOUNT.get('EMAIL_HOST_USER')

@@ -1,14 +1,14 @@
 from django.template import Library
 from django.template.defaultfilters import stringfilter
 import bleach
-from django.conf import settings
 
 # import customize module
 from article import utils
+from mysite.config.settings import dev_settings
 
 register = Library()
 
-allow_content = getattr(settings, 'ALLOWED_CONTENT')
+allow_content = getattr(dev_settings, 'ALLOWED_CONTENT')
 
 
 @register.filter(name='banxss')
