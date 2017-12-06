@@ -8,7 +8,8 @@ from django.utils.translation import ugettext_lazy as _
 from users.models import User
 from users.forms import UserLoginForm, UserRegisterForm, \
                         PasswordResetForm, PasswordResetRequestForm
-from mysite.settings import EMAIL_RELATED
+
+from mysite.config.settings.dev_settings import EMAIL_RELATED
 from users.utils import notify_user
 
 
@@ -23,12 +24,12 @@ def register(request):
             user = User(username=form.cleaned_data['username'],
                         email=form.cleaned_data['email'])
             user.set_password(form.cleaned_data['password1'])
+            user.save()
             notify_user(request=request,
                         url="/accounts/validate/",
                         token=user.generate_valid_token(),
                         subject="Confirm your account",
                         filename=reg_notification_file)
-            user.save()
             return HttpResponseRedirect(reverse('users:login'))
         else:
             return render(request, 'users/register.html', {'form': form})
@@ -44,6 +45,7 @@ def validate_view(request, token):
     :param token: user's activating token
     :return: HttpResponse obj or HttpResponseRedirect obj
     """
+    print(token)
     if not request.user.is_valid and \
             request.user.valid_account(token.encode(encoding="ascii")):
         msg = {
@@ -68,7 +70,7 @@ def resend_email_view(request):
     """
     if request.user.is_valid:
             # if user has activated his/her account
-            return render(request, 'index.html')
+            return render(request, 'article/index.html')
     elif request.user.is_active:
         # if user did not activate his/her account, then resend the email
         # including the token
@@ -88,7 +90,6 @@ def resend_email_view(request):
 
 def login_view(request):
     if request.method == 'POST':
-        print(request.COOKIES)
         next_url = request.GET.get('next')
         form = UserLoginForm(request.POST)
         if form.is_valid():

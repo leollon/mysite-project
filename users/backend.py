@@ -4,14 +4,13 @@ customizing my own authentication system
 """
 
 from users.models import User
-from django.contrib.auth import get_user_model
 from django.contrib.auth.backends import ModelBackend
 
 
 class EmailBackend(ModelBackend):
 
     def authenticate(self, request, email=None, password=None, **credentials):
-        UserModel = get_user_model()
+        UserModel = User
         try:
             user = UserModel.objects.get(email=email)
         except User.DoesNotExist:

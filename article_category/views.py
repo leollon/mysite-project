@@ -26,5 +26,5 @@ def get_all_articles_by_category(request, category_id):
     except EmptyPage:
         articles = paginator.page(paginator.num_pages)
     return render(request,
-                  'article_categorized.html',
+                  'category/article_categorized.html',
                   {"category": category, "articles": articles})

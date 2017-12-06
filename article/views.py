@@ -4,19 +4,20 @@ from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView
 from article.forms import CreateArticleForm, EditAriticleForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.conf import settings
+
+from mysite.config.settings import dev_settings
 
 import mistune
 from article.utils import HightlightRenderer
 from article.models import Article
 
-per_page = getattr(settings, 'PER_PAGE')
+per_page = getattr(dev_settings, 'PER_PAGE')
 
 
 class ArticleList(ListView):
     """Index homepage
     """
-    template_name = "index.html"
+    template_name = "article/index.html"
     model = Article
     context_object_name = 'articles_list'
 
@@ -39,7 +40,7 @@ class ArticleList(ListView):
 class CreateArticleView(LoginRequiredMixin, CreateView):
     """Class-based view function used to write an article
     """
-    template_name = 'article_write.html'
+    template_name = 'article/article_write.html'
     form_class = CreateArticleForm
     login_url = '/accounts/login/'
 
@@ -48,7 +49,7 @@ class UpdateArticleView(LoginRequiredMixin, UpdateView):
     """View function for editing a posted article
     """
     login_url = '/accounts/login/'
-    template_name = 'article_write.html'
+    template_name = 'article/article_write.html'
     model = Article
     context_object_name = 'article'
     form_class = EditAriticleForm
@@ -63,7 +64,7 @@ class ArticleDetailView(DetailView):
     """The detail of each article
     """
     model = Article
-    template_name = 'article_detail.html'
+    template_name = 'article/article_detail.html'
     context_object_name = 'article'
 
     def get_object(self):
