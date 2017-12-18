@@ -2,16 +2,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView
-from article.forms import CreateArticleForm, EditAriticleForm
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
-from mysite.config.settings import dev_settings
+from article.forms import CreateArticleForm, EditArticleForm
+from django.http import HttpResponseForbidden, HttpResponseRedirect
+from django.urls import reverse
 
 import mistune
-from article.utils import HightlightRenderer
+from article.utils import pager
+from article.my_renderer import HightlightRenderer
 from article.models import Article
-
-per_page = getattr(dev_settings, 'PER_PAGE')
 
 
 class ArticleList(ListView):
@@ -19,21 +17,11 @@ class ArticleList(ListView):
     """
     template_name = "article/index.html"
     model = Article
-    context_object_name = 'articles_list'
 
     def get_context_data(self, **kwargs):
         context = super(ArticleList, self).get_context_data(**kwargs)
-        articles_list = Article.objects.order_by('-created_time').all()
-        # paginator paginate an ordered list
-        paginator = Paginator(articles_list, per_page=per_page)
         page = self.request.GET.get('page')
-        try:
-            articles = paginator.page(page)
-        except PageNotAnInteger:
-            articles = paginator.page(1)
-        except EmptyPage:
-            articles = paginator.page(paginator.num_pages)
-        context['articles'] = articles
+        context['articles'] = pager(page)
         return context
 
 
@@ -52,13 +40,24 @@ class UpdateArticleView(LoginRequiredMixin, UpdateView):
     template_name = 'article/article_write.html'
     model = Article
     context_object_name = 'article'
-    form_class = EditAriticleForm
-    # fields = ['title', 'article_body']
+    form_class = EditArticleForm
 
-    def get_object(self):
-        article = super(UpdateArticleView, self).get_object()
-        return article
+    # TODO: to be refactored in the future
+    def get(self, request, *args, **kwargs):
+        response = super(UpdateArticleView, self).get(request, *args, **kwargs)
+        if request.user != self.object.author or not request.user.is_superuser:
+            return HttpResponseForbidden("<h1>The article doesn't blog to "
+                                         "you.</h1>")
+        return response
 
+    # TODO: to be refactored in the future
+    def post(self, request, *args, **kwargs):
+        super(UpdateArticleView, self).post(request, *args, **kwargs)
+        if request.user != self.object.author or not request.user.is_superuser:
+            return HttpResponseForbidden("<h1>The article doesn't blog to "
+                                         "you.</h1>")
+        return HttpResponseRedirect(reverse("article:index"))
+    
 
 class ArticleDetailView(DetailView):
     """The detail of each article
@@ -69,9 +68,23 @@ class ArticleDetailView(DetailView):
 
     def get_object(self):
         renderer = HightlightRenderer()
-        markdown = mistune.Markdown(escape=True, hard_wrap=True, renderer=renderer)
+        markdown = mistune.Markdown(escape=True,
+                                    hard_wrap=True,
+                                    renderer=renderer)
         article = super(ArticleDetailView, self).get_object()
         article.view_times += 1
         article.save()
         article.article_body = markdown(article.article_body)
         return article
+
+
+class AllArticles(ListView):
+    template_name = 'article/all_articles.html'
+    model = Article
+
+    def get_context_data(self, **kwargs):
+        context = super(AllArticles, self).get_context_data(**kwargs)
+        page = self.request.GET.get('page')
+        per_page = 10
+        context['articles'] = pager(page, per=per_page)
+        return context

@@ -1,9 +1,9 @@
-from django.template import Library
+from django.template.library import Library
 from django.template.defaultfilters import stringfilter
 import bleach
 
-# import customize module
-from article import utils
+# import customized module
+from article import my_renderer
 from mysite.config.settings import dev_settings
 
 register = Library()
@@ -28,7 +28,8 @@ def md(text):
     :param text: origin text
     :return: markdown object
     """
-    renderer = utils.HightlightRenderer()
-    markdown = utils.mistune.Markdown(escape=True, hard_wrap=True,
-                                      renderer=renderer)
+    renderer = my_renderer.HightlightRenderer()
+    markdown = my_renderer.mistune.Markdown(escape=True,
+                                            hard_wrap=True,
+                                            renderer=renderer)
     return markdown(text)
