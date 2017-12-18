@@ -5,13 +5,13 @@
             class="badge">
         {{ category.article_set.count }}</span>篇文章。
     </blockquote>
-        {% for article in articles %}
-            <li style="list-style: none; text-align: center;">
-                <a href="{% url "article:detail" article.id %}">
-                    {{ article.title }}</a>
-            </li>
-        {% endfor %}
-    {% block pagination %}
-        {% include "article/pagination.html" %}
-    {% endblock %}
+    {% for article in articles %}
+        <li style="list-style: none; text-align: center;">
+            <a href="{% url "article:detail" article.id %}">
+                {{ article.title }}</a>
+        </li>
+    {% endfor %}
+{% endblock %}
+{% block pagination %}
+    {% include "article/pagination.html" %}
 {% endblock %}

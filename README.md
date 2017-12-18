@@ -3,7 +3,7 @@
 
 ## TODO
 - [x] Article
-- [ ] Author
+- [x] Author
 - [x] Category
 - [ ] Tags
 - [ ] Comment

@@ -79,7 +79,7 @@
                 </li>
                 {% endif %}
                 <li>
-                    <a href="#">All Articles</a>
+                    <a href="{% url 'article:all' %}">All Articles</a>
                 </li>
                 <li>
                     <a href="#">Contact</a>
@@ -112,8 +112,9 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-
         {% block article %}
+        {% endblock %}
+        {% block pagination %}
         {% endblock %}
         </div>
     </div>

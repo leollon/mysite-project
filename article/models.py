@@ -2,6 +2,7 @@ from django.db import models
 from django.shortcuts import reverse
 from django.utils.encoding import python_2_unicode_compatible
 from article_category.models import ArticleCategory
+from users.models import User
 
 
 @python_2_unicode_compatible
@@ -14,6 +15,7 @@ class Article(models.Model):
     created_time = models.DateField(auto_now_add=True)
     view_times = models.PositiveIntegerField(default=0)
     category = models.ForeignKey(ArticleCategory, null=True)
+    author = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return "%s" % self.title

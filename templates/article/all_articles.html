@@ -1,0 +1,13 @@
+{% extends 'article/base.html' %}
+{% block article %}
+    <ul>
+        {% for article in articles %}
+            <li>{{ article.created_time }}
+                <a href="{% url "article:detail" article.id %}">
+                {{ article.title }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    {% include 'article/pagination.html' %}
+{% endblock %}

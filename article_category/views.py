@@ -28,3 +28,9 @@ def get_all_articles_by_category(request, category_id):
     return render(request,
                   'category/article_categorized.html',
                   {"category": category, "articles": articles})
+
+
+def get_all_category(request):
+    category_lists = ArticleCategory.objects.all()
+    return render(request, 'category/all_categories.html',
+                  {'category_lists': category_lists})
