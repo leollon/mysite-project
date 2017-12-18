@@ -1,24 +1,24 @@
 {% load summary_extras %}
-{% block article %}
-    {% for article in articles %}
-        <div class="post-preview">
-            <a href="{% url 'article:detail' article.id %}">
-                <h2 class="post-title">
-                    <a href="{% url "article:detail" article.id %}">
-                        {{ article.title }}
-                    </a>
-                </h2>
-            </a>
-            <article class="post-subtitle">
-                {{ article.article_body | truncatechars:140 | md | banxss | safe }}
-            </article>
-            <div class="category"><span class="fa fa-folder-open"></span>
-                <a href="{% url "category:all_article" article.category_id %}">
-                {{ article.category }}
+{% for article in articles %}
+    <div class="post-preview">
+        <a href="{% url 'article:detail' article.id %}">
+            <h2 class="post-title">
+                <a href="{% url "article:detail" article.id %}">
+                    {{ article.title }}
                 </a>
-            </div>
-            <p class="post-meta">Posted by <a href="#">Start Bootstrap</a> on {{ article.created_time }}</p>
+            </h2>
+        </a>
+        <article class="post-subtitle">
+            {{ article.article_body | truncatechars:140 | md | banxss | safe }}
+        </article>
+        <div class="category"><span class="fa fa-folder-open"></span>
+            <a href="{% url "category:all_category" %}">
+                {{ article.category }}
+            </a>
         </div>
-        <hr>
-    {% endfor %}
-{% endblock %}
+        <p class="post-meta">Posted by <a href="#">
+            {{ article.author }}</a> on
+            {{ article.created_time }}</p>
+    </div>
+    <hr>
+{% endfor %}

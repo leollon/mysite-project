@@ -20,7 +20,7 @@ class CreateArticleForm(forms.ModelForm):
         self.helper.add_input(Submit('submit', 'publish'))
 
 
-class EditAriticleForm(forms.ModelForm):
+class EditArticleForm(forms.ModelForm):
     """
     generate an form from models for edit an article
     """
@@ -29,7 +29,7 @@ class EditAriticleForm(forms.ModelForm):
         fields = ('title', 'article_body', 'category')
 
     def __init__(self, *args, **kwargs):
-        super(EditAriticleForm, self).__init__(*args, **kwargs)
+        super(EditArticleForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'save'))
