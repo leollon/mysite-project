@@ -45,23 +45,8 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="{% url "users:login" %}">LogIn</a></li>
-                <li><a>/</a></li>
+                <li><a href="{% url "users:login" %}">SignIn</a></li>
                 <li><a href="{% url "users:register" %}">Create Account</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-                       role="button" aria-haspopup="true" aria-expanded="false">
-                        Backend Management
-                        <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{% url "article:write" %}">New
-                            Article</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                    </ul>
-                </li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
