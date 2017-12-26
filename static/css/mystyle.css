@@ -1,3 +1,7 @@
+body {
+    background-color: #EEEEEE;
+}
+
 a {
     text-decoration: none;
 }
@@ -66,6 +70,7 @@ th, td {
     padding: 2px;
     font-size: 16px;
 }
+
 p > img {
     margin: 0px 10%;
 }
@@ -76,4 +81,12 @@ p > img {
         height: auto;
         margin: 0px 14%;
     }
+}
+
+.article-title {
+    float: left;
+}
+
+.article-created-time {
+    float: right;
 }

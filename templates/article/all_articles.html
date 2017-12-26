@@ -2,11 +2,13 @@
 {% block article %}
     <ul>
         {% for article in articles %}
-            <li>{{ article.created_time }}
+            <li class="article-title">
                 <a href="{% url "article:detail" article.id %}">
                 {{ article.title }}
                 </a>
             </li>
+            <li class="article-created-time">{{ article.created_time }}</li>
+            <br>
         {% endfor %}
     </ul>
     {% include 'article/pagination.html' %}
