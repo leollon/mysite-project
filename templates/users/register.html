@@ -1,29 +1,35 @@
-{% extends 'custom_base.html' %}
-{% block title %}<title>Create account</title>{% endblock %}
-{% block main %}
-    <form action="{% url 'users:register' %}" method="post">
-        {% csrf_token %}
-        {% for field in form %}
-            <div class="form-group">
-                {% if field.label %}
-                    <label class="field-label" for="{{ field.id_for_label }}">
-                        {{ field.label }}
-                    </label>
-                {% endif %}
-                {{ field }}
-                {% if field.help_text %}
-                    <p class="small">{{ field.help_text }}</p>
-                {% endif %}
-            </div>
-            {% if field.errors %}
-                <div class="errors">
-                    <ul class="errorlist">
-                        {% for error in field.errors %}
-                            <li class="error">{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endif %}
-        {% endfor %}
-    </form>
+{% extends 'backend_base.html' %}
+{% block title %}Create account{% endblock %}
+{% block content %}
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4">
+            <form action="{% url 'users:register' %}" method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-group">
+                        {% if field.label %}
+                            <label class="field-label"
+                                   for="{{ field.id_for_label }}">
+                                {{ field.label }}
+                            </label>
+                        {% endif %}
+                        {{ field }}
+                        {% if field.help_text %}
+                            <p class="small">{{ field.help_text }}</p>
+                        {% endif %}
+                    </div>
+                    {% if field.errors %}
+                        <div class="errors">
+                            <ul class="errorlist">
+                                {% for error in field.errors %}
+                                    <li class="error">{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </form>
+        </div>
+        <div class="col-lg-4"></div>
+
 {% endblock %}

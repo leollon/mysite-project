@@ -1,10 +1,16 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from article.models import Article
 from article_category.models import ArticleCategory
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.conf import settings
 
 per_page = getattr(settings, 'PER_PAGE')
+
+
+@login_required
+def manage_category(request):
+    return render(request, 'category/category_backend.html')
 
 
 def get_all_articles_by_category(request, category_id):

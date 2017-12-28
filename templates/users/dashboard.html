@@ -1,0 +1,105 @@
+{% extends 'backend_base.html' %}
+{% load dashboard_filters_tags %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <div id="page-wrapper" style="min-height: 626px;"
+         class="__web-inspector-hide-shortcut__">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Dashboard</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-folder-open-o fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                {% category_numbers as number %}
+                                <div class="huge">{{ number }}</div>
+                                {% if not number|divisibleby:2 %}
+                                    <div>categories!</div>
+                                {% else %}
+                                    <div>category!</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <a href="{% url 'category:manage' %}">
+                        <div class="panel-footer">
+                            <span class="pull-left">View All</span>
+                            <span class="pull-right"><i
+                                    class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="panel panel-green">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-book fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                {% article_numbers user as number %}
+                                <div class="huge">{{ number }}</div>
+                                <div>article{{ number | pluralize }}!</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="{% url 'article:manage' %}">
+                        <div class="panel-footer">
+                            <span class="pull-left">View All</span>
+                            <span class="pull-right"><i
+                                    class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Newest Categories</h1>
+                </div>
+                <ul id="category-list">
+                    {% newest_category as category_list %}
+                    {% for cat in category_list %}
+                        <li class="label label-primary fa fa-folder">
+                            {{ cat.name }}
+                            <span class="badge">{{ cat.article_set.count }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-lg-6">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Newest Articles</h1>
+                </div>
+                <ul id="post-list">
+                    {% newest_articles user as article_list %}
+                    {% for post in article_list %}
+                        <li>
+                            <a href="{% url 'article:detail' post.id %}"
+                               id="post-title"
+                               title="Posted at {{ post.created_time|date:"d/m/Y" }}">
+                                {{ post.title }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+        </div>
+    </div>
+    {% current_time "%Y-%m-%d %I:%M %p" as the_time %}
+    <p>The time is {{ the_time }}.</p>
+{% endblock %}

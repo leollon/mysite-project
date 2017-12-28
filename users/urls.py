@@ -3,6 +3,7 @@ from django.conf.urls import url
 from users.views import login_view, logout_view
 from users.views import register, validate_view, resend_email_view
 from users.views import password_reset, password_reset_request
+from users.views import dashboard
 
 
 app_name = 'users'
@@ -20,4 +21,5 @@ urlpatterns = [
         name='reset_request'),
     url('^accounts/password_reset/(?P<token>[\w\-\.\^]+)$', password_reset,
         name='pwd_reset'),
+    url('^dashboard/$', dashboard, name='dashboard')
 ]

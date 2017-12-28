@@ -12,3 +12,9 @@ urlpatterns = [
     url(r'^post/(?P<pk>[\d]+)/edit/$', views.UpdateArticleView.as_view(),
         name='edit'),
 ]
+
+# urlpatterns used by backend
+urlpatterns += [
+    url(r'article/management/', views.ArticleManagement.as_view(),
+        name='manage'),
+]
