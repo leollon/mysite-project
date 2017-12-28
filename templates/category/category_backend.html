@@ -1,0 +1,41 @@
+{% extends 'backend_base.html' %}
+{% load dashboard_filters_tags %}
+{% block title %}Category Management{% endblock %}
+{% block content %}
+    {% all_categories as categories %}
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <td>#</td>
+            <td>Category Name</td>
+            <td>Operations</td>
+            <td>Article Number</td>
+            <td>Created Time</td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for category in categories %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>
+                    <a href="{% url 'category:all_article' category.id %}" target="_blank">
+                        {{ category.name }}
+                    </a>
+                </td>
+                <td>
+                    <li class="label label-success">
+                        <a href="#">edit</a>
+                        <span class="fa fa-pencil"></span>
+                    </li>
+                    <li class="label label-danger">
+                        <a href="#">delete</a>
+                        <span class="fa fa-trash"></span>
+                    </li>
+                </td>
+                <td>{{ category.article_set.count }}</td>
+                <td>{{ category.created_time|date:"d/m/Y" }}</td>
+            </tr>
+            </tbody>
+        {% endfor %}
+    </table>
+{% endblock %}

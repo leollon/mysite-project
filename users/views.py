@@ -107,7 +107,7 @@ def login_view(request):
                 if next_url is not None:
                     return HttpResponseRedirect(next_url)
                 else:
-                    return HttpResponseRedirect(reverse('article:index'))
+                    return HttpResponseRedirect(reverse('users:dashboard'))
             else:
                 msg = {
                     "invalidation": "This account was banned. It can't not be \
@@ -121,7 +121,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect(reverse('article:index'))
+    return HttpResponseRedirect(reverse('users:login'))
 
 
 @login_required
@@ -174,3 +174,8 @@ def password_reset(request, token):
             "expiration": _("The token is expired or invalid.")
         }
         return render(request, "users/expiration.html", msg)
+
+
+@login_required
+def dashboard(request):
+    return render(request, "users/dashboard.html")

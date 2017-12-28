@@ -1,7 +1,3 @@
-body {
-    background-color: lightgray;
-}
-
 form > div {
     margin: 10px 0px;
     width: 100%;
@@ -29,7 +25,7 @@ pre {
 }
 
 .textinput {
-    border-radius: 2px;
+    border: 0px;
 }
 
 .textarea {
@@ -37,13 +33,6 @@ pre {
     border: 0px;
     border-radius: 2px;
     resize: none; /* forbidden to resize the height and width */
-    /*as follow, the other way to do that
-    width: 260px;
-    height: 120px;
-    max-width: 260px;
-    max-height: 120px;
-    */
-
 }
 
 .asteriskField {
@@ -54,4 +43,3 @@ pre {
     padding-top: 10px;
     margin-bottom: 30px;
 }
-
