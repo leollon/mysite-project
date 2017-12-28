@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView
 from django.views.generic import ListView
+from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 from article.forms import CreateArticleForm, EditArticleForm
 from django.http import HttpResponseForbidden, HttpResponseRedirect
@@ -28,7 +29,7 @@ class ArticleList(ListView):
 class CreateArticleView(LoginRequiredMixin, CreateView):
     """Class-based view function used to write an article
     """
-    template_name = 'article/article_write.html'
+    template_name = 'article/editor.html'
     form_class = CreateArticleForm
     login_url = '/accounts/login/'
 
@@ -37,7 +38,7 @@ class UpdateArticleView(LoginRequiredMixin, UpdateView):
     """View function for editing a posted article
     """
     login_url = '/accounts/login/'
-    template_name = 'article/article_write.html'
+    template_name = 'article/editor.html'
     model = Article
     context_object_name = 'article'
     form_class = EditArticleForm
@@ -88,3 +89,7 @@ class AllArticles(ListView):
         per_page = 10
         context['articles'] = pager(page, per=per_page)
         return context
+
+
+class ArticleManagement(LoginRequiredMixin, TemplateView):
+    template_name = 'article/article_backend.html'
