@@ -15,6 +15,8 @@ urlpatterns = [
 
 # urlpatterns used by backend
 urlpatterns += [
-    url(r'article/management/', views.ArticleManagement.as_view(),
+    url(r'post/management/', views.ArticleManagementView.as_view(),
         name='manage'),
+    url(r'post/(?P<pk>[\d]+)/delete/$', views.DeleteArticleView.as_view(),
+        name='delete'),
 ]
