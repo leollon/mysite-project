@@ -2,6 +2,7 @@ from django.conf.urls import url
 from article_category.views import get_all_articles_by_category
 from article_category.views import get_all_category
 from article_category.views import manage_category
+from article_category.views import delete_category
 
 app_name = 'category'
 
@@ -16,5 +17,8 @@ urlpatterns = [
 # urlpatterns used by backend
 urlpatterns += [
     url(r'^management/$', manage_category, name='manage'),
+    url(r'category/(?P<category_id>[\d]+)/delete$',
+        delete_category,
+        name='delete'),
 ]
 
