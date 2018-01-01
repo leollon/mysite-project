@@ -61,11 +61,3 @@ def all_article(user):
     :return:  all of articles
     """
     return Article.objects.filter(author=user).all()
-
-
-
-@register.simple_tag
-def current_time(format_string):
-    return datetime.datetime.now().strftime(format_string)
-
-
