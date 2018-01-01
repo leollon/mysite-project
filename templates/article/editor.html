@@ -1,7 +1,11 @@
 {% extends "backend_base.html" %}
-{% block title %}Editor{% endblock %}
-{% load  crispy_forms_tags %}
 {% load staticfiles %}
+{% block title %}Editor{% endblock %}
+{% block css_file %}
+    {{ block.super }}
+    <link href="{% static 'css/editor.css' %}" rel="stylesheet">
+{% endblock %}
+{% load  crispy_forms_tags %}
 {% load summary_extras %}
 {% block content %}
         <div class="col-sm-6" id="article-editor">

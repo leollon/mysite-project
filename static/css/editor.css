@@ -3,7 +3,14 @@ form > div {
     width: 100%;
 }
 
+/*选择符 selector pre*/
+
 pre {
+    /*
+      声明,
+      color、background-color是p标签的属性,
+      冒号后面是属性值
+    */
     background-color: #0F3741;
     color: white;
 }

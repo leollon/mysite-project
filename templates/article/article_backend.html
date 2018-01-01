@@ -8,7 +8,6 @@
 
 {% block css_file %}
     {{ block.super }}
-    <link href="{% static 'css/editor.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -38,7 +37,9 @@
                         <span class="fa fa-pencil"></span>
                     </li>
                     <li class="label label-danger">
-                        <a href="#">delete</a>
+                        <a href="{% url 'article:delete' article.id %}">
+                            delete
+                        </a>
                         <span class="fa fa-trash"></span>
                     </li>
                 </td>
