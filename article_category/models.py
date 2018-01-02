@@ -8,7 +8,7 @@ class ArticleCategory(models.Model):
     class META:
         db_table = "article_category"
 
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=64, unique=True)
     created_time = models.DateTimeField(null=True, auto_now_add=True)
 
     def count_number(self):

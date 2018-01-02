@@ -206,3 +206,61 @@ td > li > a:hover {
     text-decoration: none;
     color: darkblue;
 }
+
+.btn-primary {
+    font-size: 18px;
+}
+
+
+form > div {
+    margin: 10px 0px;
+    width: 100%;
+}
+
+/*选择符 selector pre*/
+
+pre {
+    /*
+      声明,
+      color、background-color是p标签的属性,
+      冒号后面是属性值
+    */
+    background-color: #0F3741;
+    color: white;
+}
+
+.textinput,
+.textarea,
+.select {
+    width: 100%;
+}
+
+.textinput,
+.select {
+    height: 30px;
+}
+
+.textinput {
+    border: 0px;
+}
+
+.textarea {
+    height: 800px;
+    border: 0px;
+    border-radius: 2px;
+    resize: none; /* forbidden to resize the height and width */
+}
+
+.errorlist,
+.asteriskField {
+    color: red;
+}
+
+.article-title-preview {
+    padding-top: 10px;
+    margin-bottom: 30px;
+}
+
+.btn-primary {
+    padding: 3px;
+}

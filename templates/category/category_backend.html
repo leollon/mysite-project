@@ -40,4 +40,16 @@
             </tbody>
         {% endfor %}
     </table>
+    <form class="form-inline" action="{% url 'category:add' %}" method="post">
+        {% csrf_token %}
+        <h3>添加分类</h3>
+        <div class="form-group">
+            <label for="category_name">Name</label>
+            <input type="text" class="form-control" name="name" placeholder="Category name">
+            {% if error_msg %}
+                <label class="errorlist" for="error">{{ error_msg }}</label>
+            {% endif %}
+        <input type="submit" class="btn btn-primary" value="Save">
+        </div>
+    </form>
 {% endblock %}
