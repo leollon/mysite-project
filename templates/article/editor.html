@@ -1,28 +1,24 @@
 {% extends "backend_base.html" %}
 {% load staticfiles %}
 {% block title %}Editor{% endblock %}
-{% block css_file %}
-    {{ block.super }}
-    <link href="{% static 'css/editor.css' %}" rel="stylesheet">
-{% endblock %}
 {% load  crispy_forms_tags %}
 {% load summary_extras %}
 {% block content %}
-        <div class="col-sm-6" id="article-editor">
-            {% crispy form %}
-        </div>
-        <div class="col-sm-6">
-            {% block preview %}
-                <div class="article-title-preview">
-                    <h2 id="article-title">{{ article.title }}</h2>
-                </div>
-                <div id="id-article-body-preview">
-                    <article id="article-preview-body">
-                        {{ article.article_body | md | banxss | safe }}
-                    </article>
-                </div>
-            {% endblock %}
-        </div>
+    <div class="col-sm-6" id="article-editor">
+        {% crispy form %}
+    </div>
+    <div class="col-sm-6">
+        {% block preview %}
+            <div class="article-title-preview">
+                <h2 id="article-title">{{ article.title }}</h2>
+            </div>
+            <div id="id-article-body-preview">
+                <article id="article-preview-body">
+                    {{ article.article_body | md | banxss | safe }}
+                </article>
+            </div>
+        {% endblock %}
+    </div>
 {% endblock %}
 {% block scripts %}
     {{ block.super }}

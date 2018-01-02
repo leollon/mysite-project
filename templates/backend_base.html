@@ -41,9 +41,14 @@
     <!-- Sidebar -->
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
-            <li class="sidebar-brand"><a>BACKEND</a></li>
+            <li class="sidebar-brand">
+                <a>BACKEND</a>
+            </li>
             <li>
                 <a href="{% url 'users:dashboard' %}">Dashboard</a>
+                {% if user.is_authenticated %}
+                    <a>Hello, {{ user.username }}</a>
+                {% endif %}
             </li>
             {% if user.is_authenticated %}
                 <li>

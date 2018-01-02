@@ -45,6 +45,21 @@ def get_all_category(request):
 
 
 @login_required
+def add_category(request):
+    error_message = None
+    if request.method == 'POST':
+        name = request.POST.get('name', None)
+        if request.user.is_superuser:
+            try:
+                category = ArticleCategory(name=name)
+                category.save()
+            except Exception:
+                error_message = "Can not add %s category!" % repr(name, )
+    return render(request, 'category/category_backend.html',
+                  {'error_msg': error_message})
+
+
+@login_required
 def delete_category(request, category_id):
     if request.method == 'POST':
         if request.user.is_superuser:
