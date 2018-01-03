@@ -1,92 +1,55 @@
 body {
-    background-color: #EEEEEE;
-}
-
-a {
-    text-decoration: none;
+    font-family: 'Roboto', sans-serif
 }
 
 li {
-    list-style: none;
-}
-
-#article-title {
-    text-align: center;
-}
-
-.glyphicon-eye-open {
-    margin: 0;
-    padding: 0;
-    font-size: 14px;
-}
-
-.form-group {
-    margin: 0;
-    padding: 0;
-    width: 50%;
-    height: auto;
-}
-
-.article-tag {
-    font-size: 20px;
-}
-
-.form-control > input,
-.form-control > textarea {
-    width: 100%;
-    border: 0;
-}
-
-.form-control > input {
-    height: 40px;
-    font-size: 26px;
-}
-
-.form-control > textarea {
-    height: 80%;
-    font-size: 16px;
-}
-
-.submit-button {
-    padding: 5px;
-    font-size: 20px;
-}
-
-.manage-article-form {
-    background-color: darkgrey;
+    list-style: none
 }
 
 .block-code {
-    background-color: #0F3741;
-    color: white;
+    background-color: #0f3741;
+    color: white
 }
 
 p {
-    margin: 0px;
+    margin: 0
 }
 
 th, td {
     border: 1px solid silver;
-    padding: 2px;
-    font-size: 16px;
+    padding: 4px;
+    font-size: 16px
 }
 
 p > img {
-    margin: 0px 10%;
+    margin: 0 10%
 }
 
 @media only screen and (max-width: 768px) {
     p > img {
         width: 245px;
         height: auto;
-        margin: 0px 14%;
+        margin: 0 14%
     }
 }
 
-.article-title {
-    float: left;
+.title, .article-title {
+    float: left
 }
 
-.article-created-time {
-    float: right;
+.created-time, .article-created-time {
+    float: right
+}
+
+.title, .created-time {
+    color: grey;
+    font-size: 14px;
+    margin: 0
+}
+
+#underline {
+    margin-top: 0;
+    margin-bottom: 2px;
+    padding: 0;
+    border: 1px solid lightgrey
 }
