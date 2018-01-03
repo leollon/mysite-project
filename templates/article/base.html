@@ -27,16 +27,11 @@
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
           rel="stylesheet">
 
-    <!-- Theme CSS -->
-    <link href="{% static "css/clean-blog.min.css" %}" rel="stylesheet">
-
-    <!-- customize CSS -->
-    <link href="{% static "css/mystyle.css" %}" rel="stylesheet">
-
     <!-- Custom Fonts -->
-    <link href="{% static "vendor/font-awesome/css/font-awesome.min.css" %}"
+    <link href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css"
           rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    <link href="https://fonts.lug.ustc.edu.cn/css?family=Roboto" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -44,6 +39,12 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <!-- Cusomized Theme CSS -->
+    <link href="{% static "css/clean-blog.min.css" %}" rel="stylesheet">
+
+    <!-- Customized CSS -->
+    <link href="{% static "css/mystyle.css" %}" rel="stylesheet">
 
 </head>
 
@@ -161,7 +162,7 @@
     </div>
 </footer>
 {% block scripts %}
-    <script src="{% static "vendor/jquery/jquery.min.js" %}"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="{% static "js/clean-blog.min.js" %}"></script>
 {% endblock %}

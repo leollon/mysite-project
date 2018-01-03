@@ -14,12 +14,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-INSTALLED_APPS += [
-    'debug_toolbar',
-]
-
-MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
-
 DOMAIN_NAME = "http://127.0.0.1:8000"
 
 ROOT_URLCONF = 'mysite.config.urls.dev_urls'
@@ -40,5 +34,3 @@ DATABASES = {
 EMAIL_HOST = 'smtp.qq.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-
-INTERNAL_IPS = ('127.0.0.1',)
