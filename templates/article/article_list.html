@@ -12,7 +12,7 @@
             {{ article.article_body | truncatechars:140 | md | banxss | safe }}
         </article>
         <div class="category"><span class="fa fa-folder-open"></span>
-            <a href="{% url "category:all_category" %}">
+            <a href="{% url "category:all_article" article.category.id %}">
                 {{ article.category }}
             </a>
         </div>

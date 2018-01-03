@@ -3,8 +3,7 @@
 {% block content %}
         <div class="col-lg-4"></div>
         <div class="col-lg-4">
-
-            <b><p>{{ status }}</p></b>
+            <b><p class="errorlist">{{ status }}</p></b>
             <form action="" method="post">
                 {% csrf_token %}
                 {% for field in form %}

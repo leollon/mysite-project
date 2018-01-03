@@ -1,7 +1,9 @@
 /* 元素选择符 */
+/* 元素选择符 */
 body {
     overflow-x: hidden;
     background-color: lightgrey;
+    font-family: 'Roboto', sans-serif;
 }
 
 /* Toggle Styles */
@@ -21,16 +23,17 @@ body {
 #sidebar-wrapper {
     z-index: 1000;
     position: fixed;
-    left: 250px;
+    left: 220px;
     width: 0;
     height: 100%;
     margin-left: -250px;
     overflow-y: auto;
-    background: #000;
+    background: rgba(0, 0, 0, 0.8);
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
+    font-size: 18px;
 }
 
 #wrapper.toggled #sidebar-wrapper {
@@ -68,7 +71,8 @@ body {
 .sidebar-nav li a {
     display: block;
     text-decoration: none;
-    color: #999999;
+    color: grey;
+    text-align: center;
 }
 
 .sidebar-nav li a:hover {
@@ -127,7 +131,24 @@ body {
 
 /* customized css */
 
-.page-header {
+#outer {
+    text-align: center;
+}
+
+#inner > a > img {
+    height: 120px;
+    width: 120px;
+    border-radius: 100%;
+    text-align: center;
+}
+
+#greeting a:hover,
+#inner a:hover {
+    text-decoration: none;
+    background-color: inherit;
+}
+
+#category-list.page-header {
     color: #0F3741;
 }
 
@@ -182,7 +203,6 @@ body {
 
 table {
     margin-top: 20px;
-    margin-left: 2px;
     text-align: center;
 }
 
@@ -204,7 +224,6 @@ td > li > a {
 td > a:hover,
 td > li > a:hover {
     text-decoration: none;
-    color: darkblue;
 }
 
 .btn-primary {
@@ -263,4 +282,9 @@ pre {
 
 .btn-primary {
     padding: 3px;
+}
+
+.badge {
+    background-color: darkred;
+    color: whitesmoke;
 }

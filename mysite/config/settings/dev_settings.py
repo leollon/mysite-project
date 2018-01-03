@@ -41,3 +41,4 @@ EMAIL_HOST = 'smtp.qq.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
+INTERNAL_IPS = ('127.0.0.1',)

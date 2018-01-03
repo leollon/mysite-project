@@ -1,14 +1,18 @@
 {% extends 'article/base.html' %}
 {% block article %}
-    <ul>
-        {% for article in articles %}
-            <li class="article-title">
-                <a href="{% url "article:detail" article.id %}">
+<ul>
+    <li class="title">Title</li>
+    <li class="created-time">Time</li>
+    <br>
+    <hr id="underline">
+    {% for article in articles %}
+        <li class="article-title">
+            <a href="{% url "article:detail" article.id %}">
                 {{ article.title }}
-                </a>
-            </li>
-            <li class="article-created-time">{{ article.created_time }}</li>
-            <br>
+            </a>
+        </li>
+        <li class="article-created-time">{{ article.created_time }}</li>
+        <br>
         {% endfor %}
     </ul>
     {% include 'article/pagination.html' %}

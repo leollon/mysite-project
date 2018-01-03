@@ -46,18 +46,20 @@ class UpdateArticleView(LoginRequiredMixin, UpdateView):
     # TODO: to be refactored in the future
     def get(self, request, *args, **kwargs):
         response = super(UpdateArticleView, self).get(request, *args, **kwargs)
-        if request.user != self.object.author or not request.user.is_superuser:
-            return HttpResponseForbidden("<h1>The article doesn't blog to "
-                                         "you.</h1>")
-        return response
+        if request.user.is_superuser or request.user == self.object.author:
+            return response
+        return HttpResponseForbidden("<h1>The article can't be edited by you"
+                                     ".</h1>")
 
     # TODO: to be refactored in the future
     def post(self, request, *args, **kwargs):
-        super(UpdateArticleView, self).post(request, *args, **kwargs)
-        if request.user != self.object.author or not request.user.is_superuser:
-            return HttpResponseForbidden("<h1>The article doesn't blog to "
-                                         "you.</h1>")
-        return HttpResponseRedirect(reverse("article:index"))
+        article = Article.objects.get(pk=kwargs.get('pk', None))
+        if request.user.is_superuser or request.user == article.author:
+            super(UpdateArticleView, self).post(request, *args, **kwargs)
+            return HttpResponseRedirect(reverse("article:manage"))
+
+        return HttpResponseForbidden("<h1>The article doesn't blog to "
+                                     "you.</h1>")
 
 
 class ArticleDetailView(DetailView):
@@ -88,15 +90,17 @@ class DeleteArticleView(LoginRequiredMixin, DeleteView):
 
     def get(self, request, *args, **kwargs):
         response = super(DeleteArticleView, self).get(request, *args, **kwargs)
-        if self.object.author != request.user or not request.user.is_superuser:
-            return HttpResponseForbidden('This article does not blog to you.')
-        return response
+        if self.object.author == request.user or request.user.is_superuser:
+            return response
+        return HttpResponseForbidden('<h1>This article does not blog to '
+                                     'you.</h1>')
 
     def post(self, request, *args, **kwargs):
         response = super(DeleteArticleView, self).post(request, *args, **kwargs)
-        if self.object.author != request.user or not request.user.is_superuser:
-            return HttpResponseForbidden('This article does not blog to you.')
-        return response
+        if self.object.author == request.user or request.user.is_superuser:
+            return response
+        return HttpResponseForbidden('<h1>This article does not blog to '
+                                     'you.</h1>')
 
 
 class AllArticles(ListView):

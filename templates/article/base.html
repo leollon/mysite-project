@@ -36,11 +36,7 @@
     <!-- Custom Fonts -->
     <link href="{% static "vendor/font-awesome/css/font-awesome.min.css" %}"
           rel="stylesheet" type="text/css">
-    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic'
-          rel='stylesheet'
-          type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
-          rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -71,18 +67,21 @@
             <ul class="nav navbar-nav navbar-right">
                 {% if not user.is_authenticated %}
                 <li>
-                    <a href="{% url 'users:login' %}">Backend</a>
+                    <a href="{% url 'users:login' %}">backend</a>
                 </li>
                 {% else %}
                 <li>
-                    <a href="{% url 'users:logout' %}">Logout</a>
+                    <a href="{% url 'users:logout' %}">logout</a>
                 </li>
                 {% endif %}
                 <li>
-                    <a href="{% url 'article:all' %}">All Articles</a>
+                    <a href="{% url 'article:all' %}">all articles</a>
                 </li>
                 <li>
-                    <a href="#">Contact</a>
+                    <a href="{% url 'category:all_category' %}">all category</a>
+                </li>
+                <li>
+                    <a href="#">about</a>
                 </li>
             </ul>
         </div>
@@ -108,7 +107,6 @@
     </div>
 </header>
 
-<!-- Main Content -->
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -122,7 +120,6 @@
 
 <hr>
 
-<!-- Footer -->
 <footer>
     <div class="container">
         <div class="row">
@@ -164,13 +161,8 @@
     </div>
 </footer>
 {% block scripts %}
-    <!-- jQuery -->
     <script src="{% static "vendor/jquery/jquery.min.js" %}"></script>
-
-    <!-- Bootstrap Core JavaScript -->
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    <!-- Theme JavaScript -->
     <script src="{% static "js/clean-blog.min.js" %}"></script>
 {% endblock %}
 
