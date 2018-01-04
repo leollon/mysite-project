@@ -45,7 +45,6 @@ def validate_view(request, token):
     :param token: user's activating token
     :return: HttpResponse obj or HttpResponseRedirect obj
     """
-    print(token)
     if not request.user.is_valid and \
             request.user.valid_account(token.encode(encoding="ascii")):
         msg = {
