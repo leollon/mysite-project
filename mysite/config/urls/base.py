@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'', include('article.urls')),
     url(r'category/', include('article_category.urls')),
     url('accounts/', include('users.urls')),
+    url('comment', include('comments.urls')),
 ]
