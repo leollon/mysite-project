@@ -25,10 +25,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'rest_framework',
     'crispy_forms',
     'article.apps.ArticleConfig',
     'article_category.apps.ArticleCategoryConfig',
     'users.apps.UsersConfig',
+    'comment.apps.CommentConfig',
 ]
 
 TEMPLATES = [

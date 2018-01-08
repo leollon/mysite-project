@@ -36,7 +36,8 @@
     <!-- Custom Fonts -->
     <link href="{% static "vendor/font-awesome/css/font-awesome.min.css" %}"
           rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto"
+          rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -66,13 +67,13 @@
         <div class="collapse navbar-collapse" id="list-in-navbar-to-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 {% if not user.is_authenticated %}
-                <li>
-                    <a href="{% url 'users:login' %}">backend</a>
-                </li>
+                    <li>
+                        <a href="{% url 'users:login' %}">backend</a>
+                    </li>
                 {% else %}
-                <li>
-                    <a href="{% url 'users:logout' %}">logout</a>
-                </li>
+                    <li>
+                        <a href="{% url 'users:logout' %}">logout</a>
+                    </li>
                 {% endif %}
                 <li>
                     <a href="{% url 'article:all' %}">all articles</a>
@@ -110,10 +111,14 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        {% block article %}
-        {% endblock %}
-        {% block pagination %}
-        {% endblock %}
+            {% block article %}
+            {% endblock %}
+            {% block comment_content %}
+            {% endblock %}
+            {% block comment_input %}
+            {% endblock %}
+            {% block pagination %}
+            {% endblock %}
         </div>
     </div>
 </div>

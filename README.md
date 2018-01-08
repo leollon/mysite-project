@@ -6,4 +6,4 @@
 - [x] Author
 - [x] Category
 - [ ] Tags
-- [ ] Comment
+- [x] Comment
