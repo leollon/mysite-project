@@ -33,21 +33,21 @@ p > img {
     }
 }
 
-.title, .article-title {
-    float: left
-}
-
-.created-time, .article-created-time {
-    float: right
-}
-
-.title, .created-time {
+.article-title, .article-created-time {
     color: grey;
     font-size: 14px;
     margin: 0
 }
 
-#underline {
+.article-title {
+    float: left
+}
+
+.article-created-time {
+    float: right
+}
+
+.underline {
     margin-top: 0;
     margin-bottom: 2px;
     padding: 0;
