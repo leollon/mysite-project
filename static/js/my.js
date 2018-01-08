@@ -33,3 +33,40 @@ window.addEventListener('input', function editorPage() {
         article_body_preview.innerHTML  = markdownToHtmlHandler(id_article_body.value);
     }
 })
+
+function comment_input(username) {
+    document.getElementById('id_comment_text').innerText += '@'.concat(username).concat(" ");
+}
+
+
+function createXhrObject() {
+    return new XMLHttpRequest();
+}
+
+function clear_input() {
+    document.getElementsByName("username")[0].value='';
+    document.getElementsByName("email")[0].value = '';
+    document.getElementsByName("link")[0].value ='';
+    document.getElementsByName("comment_text")[0].value;
+}
+function postComment(post_id) {
+    var xhRequest = createXhrObject();
+    var url = '/comment/new/';
+    var data = {
+        "username": document.getElementsByName("username")[0].value,
+        "email": document.getElementsByName("email")[0].value,
+        "link": document.getElementsByName("link")[0].value,
+        "comment_text": document.getElementsByName("comment_text")[0].value,
+        "post": post_id
+    }
+    clear_input();
+    var json = JSON.stringify(data);
+    xhRequest.onreadystatechange = function() {
+        if (xhRequest.readyState == 4 && xhRequest.status == "201") {
+            // render new comments from server
+        }
+    }
+    xhRequest.open("POST", url, true);
+    xhRequest.setRequestHeader("Content-type", "application/json; charset=utf-8")
+    xhRequest.send(json);
+}

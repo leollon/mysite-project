@@ -20,6 +20,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'', include('article.urls')),
     url(r'category/', include('article_category.urls')),
-    url('accounts/', include('users.urls')),
-    url('comment', include('comments.urls')),
+    url(r'accounts/', include('users.urls')),
+    url(r'comment/', include('comment.urls')),
 ]

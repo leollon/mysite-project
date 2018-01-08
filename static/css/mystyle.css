@@ -53,3 +53,76 @@ p > img {
     padding: 0;
     border: 1px solid lightgrey
 }
+
+
+.article-extra {
+    font-size: 14px;
+}
+
+#comment-content {
+    margin-top: 20px;
+    display: block;
+}
+
+#list  {
+    margin-left: 15px;
+    padding: 0px;
+}
+
+.floor {
+    font-size: 14px;
+}
+
+.username {
+    text-decoration: underline;
+    font-size: 16px;
+    display: inline-block;
+    padding: 0px 4px;
+}
+
+.datetime, .reply {
+    margin-left: 10px;
+    color: grey;
+}
+
+.datetime {
+    font-size: 12px;
+}
+
+.comment-text {
+    padding-left: 20px;
+}
+
+.reply {
+    font-size: 14px;
+    color:black;
+}
+
+.reply:hover {
+    display: inline-block;
+    border-radius: 2px;
+    padding: 1px 4px;
+    background-color: #2e6da4;
+    color: white;
+}
+
+.input-box >input,
+.input-box > textarea {
+    border: 1px solid grey;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.comment-label-name {
+    font-size: 12px;
+}
+
+textarea {
+    height: 100px;
+    width: 100%;
+    resize: none;
+}
+
+.my-btn {
+    padding: 1px 15px;
+}
