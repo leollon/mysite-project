@@ -11,14 +11,16 @@
         <article class="post-subtitle">
             {{ article.article_body | truncatechars:140 | md | banxss | safe }}
         </article>
-        <div class="category"><span class="fa fa-folder-open"></span>
+        <div class="article-extra"><span class="fa fa-folder-open"></span>
             <a href="{% url "category:all_article" article.category.id %}">
                 {{ article.category }}
             </a>
+            <span class="fa fa-comments"></span>
+            <span>{{ article.comment_set.count }} comments</span>
         </div>
         <p class="post-meta">Posted by <a href="#">
             {{ article.author }}</a> on
-            {{ article.created_time }}</p>
+            {{ article.created_time | date:"d N Y D" }}</p>
     </div>
     <hr>
 {% endfor %}

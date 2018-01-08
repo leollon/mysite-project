@@ -1,0 +1,28 @@
+{% load comment_filter_tags %}
+{% load summary_extras %}
+{% get_comments article.id as comments %}
+<div id="comment-content">{{ comments.count }} Comment{{ comments.count | pluralize }}
+   <hr class="underline">
+    <ul id="list">
+        {% for comment in comments %}
+            <li class="comment">
+                <a href="#{{ forloop.counter }}" class="floor">
+                    {{ forloop.counter }}L</a>
+                <a href="http://{{ comment.link }}" class="username">
+                    {{ comment.username }}
+                </a>
+                <span class="datetime">
+                    {{ comment.created_time | date:"d N Y D H:m:s" }}
+                </span>
+                <div class="comment-text">
+                    {{ comment.comment_text | banxss | md | safe }}
+                </div>
+                <span class="reply" onclick="comment_input('{{ comment.username }}')">
+                    Reply
+                </span>
+            </li>
+            {% empty %}
+            <li class="comment">No Comment yet!</li>
+        {% endfor %}
+    </ul>
+</div>

@@ -1,4 +1,3 @@
-import datetime
 from django.template.library import Library
 
 from article_category.models import ArticleCategory

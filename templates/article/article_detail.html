@@ -7,6 +7,12 @@
         {{ article.article_body | banxss | safe }}
     </section>
 {% endblock %}
+{% block comment_content %}
+    {% include 'comment/comment_list.html' %}
+{% endblock %}
+{% block comment_input %}
+    {% include 'comment/comment_form.html' %}
+{% endblock %}
 {% block scripts %}
     {{ block.super }}
     <script src="{% static "js/my.js" %}"></script>

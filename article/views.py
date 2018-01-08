@@ -11,6 +11,7 @@ import mistune
 from article.utils import pager
 from article.my_renderer import HightlightRenderer
 from article.models import Article
+from comment.forms import CommentForm
 
 
 class ArticleList(ListView):
@@ -62,10 +63,11 @@ class UpdateArticleView(LoginRequiredMixin, UpdateView):
                                      "you.</h1>")
 
 
-class ArticleDetailView(DetailView):
+class ArticleDetailView(DetailView, CreateView):
     """The detail of each article
     """
     model = Article
+    form_class = CommentForm
     template_name = 'article/article_detail.html'
     context_object_name = 'article'
 
