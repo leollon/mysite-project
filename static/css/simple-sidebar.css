@@ -270,8 +270,12 @@ textarea {
     resize: none; /* forbidden to resize the height and width */
 }
 
+.help-inline,
 .errorlist,
 .asteriskField {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
     color: red;
 }
 
