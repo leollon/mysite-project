@@ -7,12 +7,15 @@ from article_category.models import ArticleCategory
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.conf import settings
 
+from article_category.forms import CategoryForm
 per_page = getattr(settings, 'PER_PAGE')
 
 
 @login_required
 def manage_category(request):
-    return render(request, 'category/category_backend.html')
+    category_form = CategoryForm()
+    return render(request, 'category/category_backend.html',
+                  {'form': category_form})
 
 
 def get_all_articles_by_category(request, category_id):
@@ -46,17 +49,25 @@ def get_all_category(request):
 
 @login_required
 def add_category(request):
-    error_message = None
     if request.method == 'POST':
-        name = request.POST.get('name', None)
-        if request.user.is_superuser:
+        form = CategoryForm(request.POST)
+        # print(form.is_valid(), request.POST.get('name', 'blank'))
+        if request.user.is_superuser and form.is_valid():
+            name = request.POST.get('name')
             try:
                 category = ArticleCategory(name=name)
                 category.save()
             except Exception:
-                error_message = "Can not add %s category!" % repr(name, )
-    return render(request, 'category/category_backend.html',
-                  {'error_msg': error_message})
+                error_message = "Can not add %s category" % repr(name)
+                category_form = CategoryForm()
+                return render(request, 'category/category_backend.html',
+                              {'form': category_form,
+                               'error_msg': error_message})
+            finally:
+                return HttpResponseRedirect(reverse('category:manage'))
+        else:
+            return render(request, 'category/category_backend.html',
+                          {'form': form})
 
 
 @login_required
