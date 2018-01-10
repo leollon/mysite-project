@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 
 class CategoryForm(forms.Form):
     """
-    form for category's operations
+    form for adding category
     """
     error_messages = {'required': _("category name is required.")}
     name = forms.CharField(max_length=64,
@@ -16,11 +16,13 @@ class CategoryForm(forms.Form):
                                                          'required.')}
                            )
 
+    # 用于初始化表单instance数据
     def __int__(self, data=None, *args, **kwargs):
         super(CategoryForm, self).__int__(data, args, kwargs)
 
     def clean(self):
         name = self.cleaned_data.get('name')
         if name == '' or name is None:
-            raise forms.ValidationError(message=self.error_messages['required'])
+            raise forms.ValidationError(message=self.error_messages['required'],
+                                        code='required')
         return name
