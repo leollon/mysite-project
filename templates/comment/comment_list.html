@@ -1,14 +1,13 @@
-{% load comment_filter_tags %}
 {% load summary_extras %}
-{% get_comments article.id as comments %}
-<div id="comment-content">{{ comments.count }} Comment{{ comments.count | pluralize }}
+<div id="comment-content">{{ article.comment_set.count }} Comment{{ comments.count | pluralize }}
    <hr class="underline">
     <ul id="list">
-        {% for comment in comments %}
+        {% for comment in article.comment_set.all %}
             <li class="comment">
                 <a href="#{{ forloop.counter }}" class="floor">
                     {{ forloop.counter }}L</a>
-                <a href="http://{{ comment.link }}" class="username">
+                <a href="{% if comment.link %}http://{{ comment.link }}
+                         {% endif %}" class="username">
                     {{ comment.username }}
                 </a>
                 <span class="datetime">
