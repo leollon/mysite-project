@@ -43,12 +43,12 @@ function createXhrObject() {
     return new XMLHttpRequest();
 }
 
-function clear_input() {
-    document.getElementsByName("username")[0].value='';
-    document.getElementsByName("email")[0].value = '';
-    document.getElementsByName("link")[0].value ='';
-    document.getElementsByName("comment_text")[0].value;
+function clear_input(eleArray) {
+    for (var i = 0; i < eleArray.length; ++i) {
+        document.getElementsByName(eleArray[i])[0].value='';
+    }
 }
+
 function postComment(post_id) {
     var xhRequest = createXhrObject();
     var url = '/comment/new/';
@@ -59,11 +59,13 @@ function postComment(post_id) {
         "comment_text": document.getElementsByName("comment_text")[0].value,
         "post": post_id
     }
-    clear_input();
+    var eleArray = ["username", "email", "link", "comment_text"];
     var json = JSON.stringify(data);
+    clear_input(eleArray);
     xhRequest.onreadystatechange = function() {
         if (xhRequest.readyState == 4 && xhRequest.status == "201") {
-            // render new comments from server
+            // reload the current whole page to get latest comment seen.
+            document.location.reload(true);
         }
     }
     xhRequest.open("POST", url, true);
