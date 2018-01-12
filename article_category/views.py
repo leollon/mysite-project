@@ -63,7 +63,6 @@ def add_category(request):
             except IntegrityError:
                 error_message = "Duplicated %s category" % repr(name)
                 category_form = CategoryForm()
-                print(error_message)
                 return render(request, 'category/category_backend.html',
                               {'form': category_form,
                                'error_msg': error_message})
@@ -72,6 +71,38 @@ def add_category(request):
         else:
             return render(request, 'category/category_backend.html',
                           {'form': form})
+
+
+@login_required
+def edit_category(request, category_id):
+    """
+    view function for changing category's name
+    :param request: HttpRequest object
+    :param category_id: category's id in database
+    :return: return HttpResponse with form
+    """
+    category = ArticleCategory.objects.get(pk=category_id)
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        name = request.POST.get('name')
+        if request.user.is_superuser and form.is_valid():
+            category.name = name
+            try:
+                category.save()
+            except IntegrityError:
+                error_message = "Duplicated %s category" % repr(name)
+                category_form = CategoryForm()
+                return render(request, 'category/category_backend.html',
+                              {'form': category_form,
+                               'error_msg': error_message})
+            else:
+                return HttpResponseRedirect(reverse('category:manage'))
+    else:
+        initial = {'name': category.name}
+        # 在前端编辑表单中显示要编辑的类名
+        category_form = CategoryForm(data=initial)
+        return render(request, 'category/category_backend.html',
+                      {'form': category_form})
 
 
 @login_required
