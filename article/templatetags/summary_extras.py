@@ -33,3 +33,11 @@ def md(text):
                                             hard_wrap=True,
                                             renderer=renderer)
     return markdown(text)
+
+
+@register.simple_tag(name='mypluralize')
+def pluralize(num):
+    if num > 1:
+        return 's'
+    else:
+        return ''
