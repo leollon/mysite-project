@@ -154,5 +154,6 @@ EMAIL_ACCOUNT = {
 
 EMAIL_RELATED = {
     'REG_NOTIFICATION_FILE': 'notification',
-    'PWD_CHANGE_NOTIFICATION_FILE': 'pwd_change'
+    'PWD_CHANGE_NOTIFICATION_FILE': 'pwd_change',
+    'COMMENT_NOTIFICATION': 'comment_notification_template',
 }
