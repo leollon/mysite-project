@@ -1,5 +1,8 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+
+
+from comment.utils import send_comment_notification_to_site_owner
 from rest_framework.parsers import JSONParser
 from comment.serializers import CommentSerializers
 
@@ -18,6 +21,9 @@ def create_comment(request):
         serializers = CommentSerializers(data=data)
         if serializers.is_valid():
             serializers.save()
+            send_comment_notification_to_site_owner(data.get('post'),
+                                                    data.get('username'),
+                                                    data.get('comment_text'))
             success_msg = {'successMsg': 'success'}
             return JsonResponse(success_msg, status=201)
         return JsonResponse(serializers.errors, status=400)
