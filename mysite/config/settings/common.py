@@ -41,7 +41,6 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.template.context_processors.i18n',
                 'django.contrib.auth.context_processors.auth',
@@ -112,48 +111,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 # tied to app's static, like my_app/static/
 STATIC_URL = '/static/'
-
-
-# Directory containing all static files
-STATIC_ROOT = '/home/monkey/Desktop/Django/static/'
-
-
-STATICFILES_DIRS = [
-    os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), 'static/')
-]
-# Show the articles' number in each page
-PER_PAGE = 6
-
-# In order to preventing XSS, it needs to set `ALLOWED_CONTENT`
-ALLOWED_CONTENT = {
-    'ALLOWED_TAGS': ['blockquote', 'ul', 'li', 'ol', 'pre', 'code',
-                     'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a',
-                     'q', 'section', 'img', 'table', 'thead', 'tbody',
-                     'tr', 'th', 'td'],
-    'ALLOWED_ATTRIBUTES': {'*': ['class', 'style'],
-                           'a': ['href'],
-                           'img': ['src', 'alt', 'width', 'height'], },
-    'ALLOWED_STYLES': ['color', 'background-image', 'background',
-                       'font', 'text-align', ]
-}
-
-# Customize User model
-AUTH_USER_MODEL = 'users.User'
-
-# Customize backend authentication
-AUTHENTICATION_BACKENDS = [
-    'users.backend.EmailBackend',
-    'django.contrib.auth.backends.ModelBackend',
-]
-
-EMAIL_ACCOUNT = {
-    'EMAIL_HOST_USER': os.environ.get("EMAIL_USER"),
-    'EMAIL_HOST_PASSWORD': os.environ.get('EMAIL_PWD')
-}
-
-
-EMAIL_RELATED = {
-    'REG_NOTIFICATION_FILE': 'notification',
-    'PWD_CHANGE_NOTIFICATION_FILE': 'pwd_change',
-    'COMMENT_NOTIFICATION': 'comment_notification_template',
-}

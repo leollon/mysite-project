@@ -4,7 +4,7 @@ from article import views
 app_name = 'article'
 
 urlpatterns = [
-    url(r'^$', views.ArticleList.as_view(), name='index'),
+    url(r'^$', views.ArticleListView.as_view(), name='index'),
     url(r'^all/$', views.AllArticles.as_view(), name='all'),
     url(r'^post/new/$', views.CreateArticleView.as_view(), name='write'),
     url(r'^post/(?P<pk>[\d]+)/$', views.ArticleDetailView.as_view(),

@@ -4,11 +4,11 @@ import bleach
 
 # import customized module
 from article import my_renderer
-from mysite.config.settings import dev_settings
+from mysite.config.settings import production_settings
 
 register = Library()
 
-allow_content = getattr(dev_settings, 'ALLOWED_CONTENT')
+allow_content = getattr(production_settings, 'ALLOWED_CONTENT')
 
 
 @register.filter(name='banxss')

@@ -9,7 +9,7 @@ from users.models import User
 from users.forms import UserLoginForm, UserRegisterForm, \
                         PasswordResetForm, PasswordResetRequestForm
 
-from mysite.config.settings.dev_settings import EMAIL_RELATED
+from mysite.config.settings.production_settings import EMAIL_RELATED
 from users.utils import notify_user
 
 
