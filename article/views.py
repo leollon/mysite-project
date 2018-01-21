@@ -2,7 +2,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView
 from django.views.generic import ListView
 from django.views.generic.base import TemplateView
-from django.views.generic.edit import CreateView, UpdateView,DeleteView
+from django.views.generic.edit import BaseCreateView, UpdateView, DeleteView
+from django.views.generic.detail import SingleObjectTemplateResponseMixin
 from article.forms import CreateArticleForm, EditArticleForm
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
@@ -27,12 +28,24 @@ class ArticleListView(ListView):
         return context
 
 
-class CreateArticleView(LoginRequiredMixin, CreateView):
+class CreateArticleView(LoginRequiredMixin,
+                        SingleObjectTemplateResponseMixin,
+                        BaseCreateView):
     """Class-based view function used to write an article
     """
     template_name = 'article/editor.html'
     form_class = CreateArticleForm
     login_url = '/accounts/login/'
+
+    def form_valid(self, form):
+        """
+        :param form: instantiate an form with request.POST
+        :return: HttpResponseRedirect
+        """
+        # update article instance,
+        # fix article'author is null when article posted.
+        form.instance.author = self.request.user
+        return super(CreateArticleView, self).form_valid(form)
 
 
 class UpdateArticleView(LoginRequiredMixin, UpdateView):
@@ -63,7 +76,7 @@ class UpdateArticleView(LoginRequiredMixin, UpdateView):
                                      "you.</h1>")
 
 
-class ArticleDetailView(DetailView, CreateView):
+class ArticleDetailView(DetailView, BaseCreateView):
     """The detail of each article
     """
     model = Article
