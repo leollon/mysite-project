@@ -115,6 +115,7 @@ p > img {
 
 .comment-label-name {
     font-size: 12px;
+    margin: 0px;
 }
 
 textarea {

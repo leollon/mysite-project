@@ -12,5 +12,7 @@ class CommentForm(forms.ModelForm):
         self.fields['username'].widget.attrs['placeholder'] = 'Username(needed)'
         self.fields['email'].widget.attrs['placeholder'] = 'Email(optional)'
         self.fields['link'].widget.attrs['placeholder'] = 'Link(optional)'
-        self.fields['comment_text'].widget.attrs['placeholder'] = 'comment('\
+        self.fields['comment_text'].widget.attrs['placeholder'] = 'Comment('\
                                                                   'needed)'
+        self.fields['username'].widget.attrs['required'] = True
+        self.fields['comment_text'].widget.attrs['required'] = True
