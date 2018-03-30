@@ -22,4 +22,4 @@ class Article(models.Model):
 
     @staticmethod
     def get_absolute_url():
-        return reverse('article:index')
+        return reverse('article:manage')
