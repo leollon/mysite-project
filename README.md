@@ -10,7 +10,7 @@
 
 
 # how to run
-> just like
+> run by django default
 
-Customize a few feature of backend without the default one.
-for example, user always log in with his/her registered email.
+Customize a few features of backend without the default one.
+for example, user always log in with the registered email.
