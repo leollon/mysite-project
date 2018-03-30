@@ -27,10 +27,10 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'crispy_forms',
-    'article.apps.ArticleConfig',
-    'article_category.apps.ArticleCategoryConfig',
-    'users.apps.UsersConfig',
-    'comment.apps.CommentConfig',
+    'apps.article.apps.ArticleConfig',
+    'apps.category.apps.ArticleCategoryConfig',
+    'apps.users.apps.UsersConfig',
+    'apps.comment.apps.CommentConfig',
 ]
 
 TEMPLATES = [
@@ -115,7 +115,7 @@ STATIC_URL = '/static/'
 
 
 # Directory containing all static files
-STATIC_ROOT = '/home/monkey/Desktop/Django/static/'
+STATIC_ROOT = '/home/monkey/Desktop/Project/Django/static/'
 
 
 STATICFILES_DIRS = [
@@ -142,7 +142,7 @@ AUTH_USER_MODEL = 'users.User'
 
 # Customize backend authentication
 AUTHENTICATION_BACKENDS = [
-    'users.backend.EmailBackend',
+    'apps.users.backend.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
 
