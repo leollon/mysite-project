@@ -1,11 +1,9 @@
-var splited_url = window.location.href.split('/');
-var is_post_detail_page = splited_url.indexOf('post');
+var is_post_detail_page = window.location.href.split('/').indexOf('post');
 var is_editor_page = document.getElementById('article-editor');
 
 
 if (is_post_detail_page && !is_editor_page) {
-    var head = document.getElementById('blog-head');
-    head.innerHTML = document.getElementById('article-title').innerHTML;
+    document.getElementById('blog-head').innerHTML = document.getElementById('article-title').innerHTML;
 //    console.log(is_editor_page);  // for test
 }
 
@@ -21,16 +19,9 @@ window.addEventListener('input', function editorPage() {
     'use strict';
 //    console.log('hello, showdown'); // for test user input
     if (is_editor_page) {
-
-        // editor
-        var id_title = document.getElementById('id_title');
-        var id_article_body = document.getElementById('id_article_body');
-
-        //  preview
-        var article_title_preview = document.getElementById('article-title');
-        var article_body_preview = document.getElementById('article-preview-body');
-        article_title_preview.innerHTML = id_title.value;
-        article_body_preview.innerHTML  = markdownToHtmlHandler(id_article_body.value);
+        //  preview                                                  editor
+        document.getElementById('article-title').innerHTML = document.getElementById('id_title').value;
+        document.getElementById('article-preview-body').innerHTML  = markdownToHtmlHandler(document.getElementById('id_article_body').value);
     }
 })
 
