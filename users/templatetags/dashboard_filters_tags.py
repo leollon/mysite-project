@@ -50,7 +50,7 @@ def all_category():
     get all of Categories from category table
     :return: all of categories in database
     """
-    return ArticleCategory.objects.all()
+    return ArticleCategory.objects.order_by('-created_time').all()
 
 
 @register.simple_tag(name='all_articles')
@@ -59,4 +59,4 @@ def all_article(user):
     get all of user's articles from article table
     :return:  all of articles
     """
-    return Article.objects.filter(author=user).all()
+    return Article.objects.filter(author=user).order_by('-created_time').all()
