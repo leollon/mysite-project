@@ -1,4 +1,4 @@
-{% load summary_extras %}
+{% load article_tags %}
 {% for article in articles %}
     <div class="post-preview">
         <a href="{% url 'article:detail' article.id %}">
