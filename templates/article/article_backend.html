@@ -18,6 +18,7 @@
             <td>#</td>
             <td>Title</td>
             <td>Operations</td>
+            <td>Category</td>
             <td>Viewed times</td>
             <td>Created Time</td>
         </tr>
@@ -27,7 +28,8 @@
             <tr>
                 <td>{{ forloop.counter }}</td>
                 <td>
-                    <a href="{% url 'article:detail' article.id %}" target="_blank">
+                    <a href="{% url 'article:detail' article.id %}"
+                       target="_blank">
                         {{ article.title }}
                     </a>
                 </td>
@@ -42,6 +44,13 @@
                         </a>
                         <span class="fa fa-trash"></span>
                     </li>
+                </td>
+                <td>
+                    <ul>
+                        <li class="fa fa-bookmark">
+                            <a href="{% url 'category:manage' %}">{{ article.category.name }}</a>
+                        </li>
+                    </ul>
                 </td>
                 <td>{{ article.view_times }}</td>
                 <td>{{ article.created_time|date:"d/m/Y" }}</td>
