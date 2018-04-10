@@ -15,7 +15,7 @@ from .models import Article
 from apps.comment.forms import CommentForm
 
 
-class ArticleList(ListView):
+class ArticleListView(ListView):
     """Index homepage
     """
     template_name = "article/index.html"
