@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from .views import (ArticleList, AllArticles, CreateArticleView,
+from .views import (ArticleListView, AllArticles, CreateArticleView,
                     ArticleDetailView, UpdateArticleView,
                     ArticleManagementView, DeleteArticleView
                     )
@@ -7,7 +7,7 @@ from .views import (ArticleList, AllArticles, CreateArticleView,
 app_name = 'article'
 
 urlpatterns = [
-    url(r'^$', ArticleList.as_view(), name='index'),
+    url(r'^$', ArticleListView.as_view(), name='index'),
     url(r'^all/$', AllArticles.as_view(), name='all'),
     url(r'^post/new/$', CreateArticleView.as_view(), name='write'),
     url(r'^post/(?P<pk>[\d]+)/$', ArticleDetailView.as_view(),
