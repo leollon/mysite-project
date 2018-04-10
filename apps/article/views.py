@@ -15,14 +15,14 @@ from .models import Article
 from apps.comment.forms import CommentForm
 
 
-class ArticleList(ListView):
+class ArticleListView(ListView):
     """Index homepage
     """
     template_name = "article/index.html"
     model = Article
 
     def get_context_data(self, **kwargs):
-        context = super(ArticleList, self).get_context_data(**kwargs)
+        context = super(ArticleListView, self).get_context_data(**kwargs)
         page = self.request.GET.get('page')
         context['articles'] = pager(page)
         return context
