@@ -5,11 +5,10 @@ environ = {
     'SECRET_KEY': "this_key_is_needed_by_django.",
     'SERIAL_SECRET_KEY': "this_key_is_for_itsdangerous",
     'DB_USER': "your_DB_user",
-    'DB_PASSWD': "your_DB_password",
+    'DB_PWD': "your_DB_password",
     'EMAIL_USER': "your_email_account",
-    'EMAIL_PASSWD': "your_email_authentication_password",
+    'EMAIL_PWD': "your_email_authentication_password",
     'EMAIL_HOST': "your_email_host",
-    'EMAIL_PORT': 587
 }
 
 
@@ -18,7 +17,7 @@ SERIAL_SECRET_KEY = environ.get('SERIAL_SECRET_KEY')
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['your-test-domain.com']
+ALLOWED_HOSTS = ['your-test-domain-name']
 
 DOMAIN_NAME = ALLOWED_HOSTS[0]
 
@@ -32,7 +31,7 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '3306',
         'USER': environ.get('DB_USER'),
-        'PASSWORD': environ.get('DB_PASSWD'),
+        'PASSWORD': environ.get('DB_PWD'),
     }
 }
 
@@ -41,7 +40,7 @@ DATABASES = {
 # when running `python manage.py collectstatic`, collect all static file in a
 # same directory.
 # for production deployed, use nginx to response static file requested
-STATIC_ROOT = os.path.join(os.path.join('/home/', getpass.getuser()), 'static/')
+STATIC_ROOT = os.path.join(os.path.join('/home/', getpass.getuser()), 'static')
 
 
 # Here stores all static files
@@ -70,7 +69,7 @@ AUTH_USER_MODEL = 'users.User'
 
 # Customize backend authentication
 AUTHENTICATION_BACKENDS = [
-    'users.backend.EmailBackend',
+    'apps.users.backend.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
 

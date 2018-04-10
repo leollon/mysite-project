@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Application definition and Customized APPS
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -27,10 +26,10 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'crispy_forms',
-    'article.apps.ArticleConfig',
-    'article_category.apps.ArticleCategoryConfig',
-    'users.apps.UsersConfig',
-    'comment.apps.CommentConfig',
+    'apps.article.apps.ArticleConfig',
+    'apps.category.apps.ArticleCategoryConfig',
+    'apps.users.apps.UsersConfig',
+    'apps.comment.apps.CommentConfig',
 ]
 
 TEMPLATES = [
@@ -41,6 +40,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.template.context_processors.i18n',
                 'django.contrib.auth.context_processors.auth',
@@ -60,9 +60,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-
 WSGI_APPLICATION = 'mysite.config.wsgi.application'
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -106,8 +104,44 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 # tied to app's static, like my_app/static/
 STATIC_URL = '/static/'
+
+# Show the articles' number in each page
+PER_PAGE = 6
+
+# In order to preventing XSS, it needs to set `ALLOWED_CONTENT`
+ALLOWED_CONTENT = {
+    'ALLOWED_TAGS': ['blockquote', 'ul', 'li', 'ol', 'pre', 'code',
+                     'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a',
+                     'q', 'section', 'img', 'table', 'thead', 'tbody',
+                     'tr', 'th', 'td'],
+    'ALLOWED_ATTRIBUTES': {'*': ['class', 'style'],
+                           'a': ['href'],
+                           'img': ['src', 'alt', 'width', 'height'], },
+    'ALLOWED_STYLES': ['color', 'background-image', 'background',
+                       'font', 'text-align', ]
+}
+
+# Customize User model
+AUTH_USER_MODEL = 'users.User'
+
+# Customize backend authentication
+AUTHENTICATION_BACKENDS = [
+    'apps.users.backend.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+EMAIL_ACCOUNT = {
+    'EMAIL_HOST_USER': os.environ.get("EMAIL_USER"),
+    'EMAIL_HOST_PASSWORD': os.environ.get('EMAIL_PWD')
+}
+
+
+EMAIL_RELATED = {
+    'REG_NOTIFICATION_FILE': 'notification',
+    'PWD_CHANGE_NOTIFICATION_FILE': 'pwd_change',
+    'COMMENT_NOTIFICATION': 'comment_notification_template',
+}
