@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Application definition and Customized APPS
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -145,15 +144,3 @@ AUTHENTICATION_BACKENDS = [
     'apps.users.backend.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
-
-EMAIL_ACCOUNT = {
-    'EMAIL_HOST_USER': os.environ.get("EMAIL_USER"),
-    'EMAIL_HOST_PASSWORD': os.environ.get('EMAIL_PWD')
-}
-
-
-EMAIL_RELATED = {
-    'REG_NOTIFICATION_FILE': 'notification',
-    'PWD_CHANGE_NOTIFICATION_FILE': 'pwd_change',
-    'COMMENT_NOTIFICATION': 'comment_notification_template',
-}
