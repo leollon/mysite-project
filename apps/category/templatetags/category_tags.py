@@ -25,7 +25,7 @@ def newest_cat():
 
 
 @register.simple_tag(name='all_categories')
-def all_category():
+def all_categories():
     """
     get all of Categories from category table
     :return: all of categories in database

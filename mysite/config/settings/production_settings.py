@@ -17,7 +17,7 @@ SERIAL_SECRET_KEY = environ.get('SERIAL_SECRET_KEY')
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['your-test-domain-name']
+ALLOWED_HOSTS = ['your_test_domain_name']
 
 DOMAIN_NAME = ALLOWED_HOSTS[0]
 

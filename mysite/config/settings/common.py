@@ -109,6 +109,10 @@ USE_TZ = True
 # tied to app's static, like my_app/static/
 STATIC_URL = '/static/'
 
+
+STATICFILES_DIRS = [
+    os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), 'static/')
+]
 # Show the articles' number in each page
 PER_PAGE = 6
 
