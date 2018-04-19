@@ -41,4 +41,17 @@ EMAIL_HOST = 'smtp.qq.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
+
+EMAIL_ACCOUNT = {
+    'EMAIL_HOST_USER': os.environ.get("EMAIL_USER"),
+    'EMAIL_HOST_PASSWORD': os.environ.get('EMAIL_PWD')
+}
+
+
+EMAIL_RELATED = {
+    'REG_NOTIFICATION_FILE': 'notification',
+    'PWD_CHANGE_NOTIFICATION_FILE': 'pwd_change',
+    'COMMENT_NOTIFICATION': 'comment_notification_template',
+}
+
 INTERNAL_IPS = ('127.0.0.1',)

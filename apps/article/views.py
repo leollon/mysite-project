@@ -22,7 +22,7 @@ class ArticleListView(ListView):
     model = Article
 
     def get_context_data(self, **kwargs):
-        context = super(ArticleList, self).get_context_data(**kwargs)
+        context = super(ArticleListView, self).get_context_data(**kwargs)
         page = self.request.GET.get('page')
         context['articles'] = pager(page)
         return context
