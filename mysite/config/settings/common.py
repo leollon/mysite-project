@@ -11,10 +11,12 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+PROJECT_ROOT = os.path.dirname(os.path.dirname(BASE_DIR))
+sys.path.insert(0, os.path.join(PROJECT_ROOT, 'apps'))
 
 # Application definition and Customized APPS
 INSTALLED_APPS = [
@@ -145,15 +147,3 @@ AUTHENTICATION_BACKENDS = [
     'apps.users.backend.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
-
-EMAIL_ACCOUNT = {
-    'EMAIL_HOST_USER': os.environ.get("EMAIL_USER"),
-    'EMAIL_HOST_PASSWORD': os.environ.get('EMAIL_PWD')
-}
-
-
-EMAIL_RELATED = {
-    'REG_NOTIFICATION_FILE': 'notification',
-    'PWD_CHANGE_NOTIFICATION_FILE': 'pwd_change',
-    'COMMENT_NOTIFICATION': 'comment_notification_template',
-}
