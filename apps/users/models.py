@@ -1,9 +1,9 @@
-from django.utils.encoding import python_2_unicode_compatible
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
-from mysite.config.settings import production_settings
 
 
 @python_2_unicode_compatible
@@ -38,8 +38,7 @@ class User(AbstractUser):
         :param expires_in: after that seconds, token will be valid
         :return: Serial number
         """
-        return Serializer(getattr(production_settings,
-                                  'SERIAL_SECRET_KEY'),
+        return Serializer(getattr(settings, 'SERIAL_SECRET_KEY'),
                           expires_in)
 
     def generate_valid_token(self):

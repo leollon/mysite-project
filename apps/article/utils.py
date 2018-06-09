@@ -1,9 +1,9 @@
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.conf import settings
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+
 from .models import Article
 
-from mysite.config.settings import production_settings
-
-per_page = getattr(production_settings, 'PER_PAGE')
+per_page = getattr(settings, 'PER_PAGE')
 
 
 def pager(page, per=per_page):

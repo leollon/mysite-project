@@ -1,15 +1,15 @@
-from django.template.library import Library
-from django.template.defaultfilters import stringfilter
-from ..models import Article
 import bleach
+from django.conf import settings
+from django.template.defaultfilters import stringfilter
+from django.template.library import Library
 
 # import customized module
 from .. import my_renderer
-from mysite.config.settings import production_settings
+from ..models import Article
 
 register = Library()
 
-allow_content = getattr(production_settings, 'ALLOWED_CONTENT')
+allow_content = getattr(settings, 'ALLOWED_CONTENT')
 
 
 @register.filter(name='banxss')

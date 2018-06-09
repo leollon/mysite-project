@@ -1,7 +1,8 @@
 import os
+
+from django.conf import settings
 from django.core.mail import send_mail
 from django.urls import reverse
-from django.conf import settings
 
 from apps.article.models import Article
 

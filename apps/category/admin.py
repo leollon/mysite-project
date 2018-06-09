@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from .models import ArticleCategory
 
 
@@ -8,5 +9,3 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 admin.site.register(ArticleCategory, CategoryAdmin)
-
-

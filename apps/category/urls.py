@@ -1,10 +1,8 @@
 from django.conf.urls import url
 
-
-from .views import (manage_category, get_all_articles_by_category,
-                    get_all_category, add_category, edit_category,
-                    delete_category
-                    )
+from .views import (add_category, delete_category, edit_category,
+                    get_all_articles_by_category, get_all_category,
+                    manage_category)
 
 app_name = 'category'
 
@@ -25,4 +23,3 @@ urlpatterns += [
         delete_category,
         name='delete'),
 ]
-

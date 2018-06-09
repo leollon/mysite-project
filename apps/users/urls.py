@@ -1,11 +1,8 @@
 from django.conf.urls import url
 
-from .views import (login_view, logout_view, register,
-                    validate_view, resend_email_view,
-                    password_reset, password_reset_request,
-                    dashboard
-                    )
-
+from .views import (dashboard, login_view, logout_view, password_reset,
+                    password_reset_request, register, resend_email_view,
+                    validate_view)
 
 app_name = 'users'
 

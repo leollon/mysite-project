@@ -1,13 +1,12 @@
-from mysite.config.settings.common import *
 import getpass
+
+from mysite.config.settings.common import *
 
 environ = {
     'SECRET_KEY': "this_key_is_needed_by_django.",
     'SERIAL_SECRET_KEY': "this_key_is_for_itsdangerous",
-    # 'DB_USER': "your_DB_user",
-    'DB_USER': "blog",
-    'DB_PWD': "123456",
-    # 'DB_PWD': "your_DB_password",
+    'DB_USER': "your_DB_user",
+    'DB_PWD': "your_DB_password",
     'EMAIL_USER': "your_email_account",
     'EMAIL_PWD': "your_email_authentication_password",
     'EMAIL_HOST': "your_email_host",
@@ -17,15 +16,13 @@ environ = {
 SECRET_KEY = environ.get('SECRET_KEY')
 SERIAL_SECRET_KEY = environ.get('SERIAL_SECRET_KEY')
 
-DEBUG = True
+DEBUG = False
 
-# ALLOWED_HOSTS = ['your_test_domain_name']
-ALLOWED_HOSTS = ['127.0.0.1']
-
+ALLOWED_HOSTS = ['your_test_domain_name']
 
 DOMAIN_NAME = ALLOWED_HOSTS[0]
 
-ROOT_URLCONF = 'mysite.config.urls.production_urls'
+ROOT_URLCONF = 'mysite.config.urls.production'
 
 
 DATABASES = {

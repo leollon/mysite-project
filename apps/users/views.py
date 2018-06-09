@@ -1,19 +1,20 @@
-from django.shortcuts import render
-from django.contrib.auth import login, logout, authenticate
+from django.conf import settings
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.urls import reverse
 from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
-from .models import User
-from .forms import UserLoginForm, UserRegisterForm, \
-                        PasswordResetForm, PasswordResetRequestForm
 
-from mysite.config.settings.production_settings import EMAIL_RELATED
+from .forms import (PasswordResetForm, PasswordResetRequestForm, UserLoginForm,
+                    UserRegisterForm)
+from .models import User
 from .utils import notify_user
 
+email_related = getattr(settings, 'EMAIL_RELATED')
 
-reg_notification_file = EMAIL_RELATED.get('REG_NOTIFICATION_FILE')
-pwd_change_notification_file = EMAIL_RELATED.get('PWD_CHANGE_NOTIFICATION_FILE')
+reg_notification_file = email_related.get('REG_NOTIFICATION_FILE')
+pwd_change_notification_file = email_related.get('PWD_CHANGE_NOTIFICATION_FILE')
 
 
 def register(request):
@@ -67,8 +68,8 @@ def resend_email_view(request):
     :return: HttpResponse
     """
     if request.user.is_valid:
-            # if user has activated his/her account
-            return render(request, 'article/index.html')
+        # if user has activated his/her account
+        return render(request, 'article/index.html')
     elif request.user.is_active:
         # if user did not activate his/her account, then resend the email
         # including the token
