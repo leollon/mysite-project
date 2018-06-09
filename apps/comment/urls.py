@@ -1,11 +1,14 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 
+from rest_framework.routers import DefaultRouter
 
-from .views import create_comment
+from .views import CommentViewSets
+
+router = DefaultRouter()
+router.register(r'comment', CommentViewSets, base_name='comment')
 
 app_name = 'comment'
 
-
 urlpatterns = [
-    url(r'new/$', create_comment),
+    url(r'', include(router.urls)),
 ]

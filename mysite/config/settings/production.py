@@ -4,8 +4,10 @@ import getpass
 environ = {
     'SECRET_KEY': "this_key_is_needed_by_django.",
     'SERIAL_SECRET_KEY': "this_key_is_for_itsdangerous",
-    'DB_USER': "your_DB_user",
-    'DB_PWD': "your_DB_password",
+    # 'DB_USER': "your_DB_user",
+    'DB_USER': "blog",
+    'DB_PWD': "123456",
+    # 'DB_PWD': "your_DB_password",
     'EMAIL_USER': "your_email_account",
     'EMAIL_PWD': "your_email_authentication_password",
     'EMAIL_HOST': "your_email_host",
@@ -15,9 +17,11 @@ environ = {
 SECRET_KEY = environ.get('SECRET_KEY')
 SERIAL_SECRET_KEY = environ.get('SERIAL_SECRET_KEY')
 
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['your_test_domain_name']
+# ALLOWED_HOSTS = ['your_test_domain_name']
+ALLOWED_HOSTS = ['127.0.0.1']
+
 
 DOMAIN_NAME = ALLOWED_HOSTS[0]
 
@@ -91,3 +95,10 @@ EMAIL_RELATED = {
     'PWD_CHANGE_NOTIFICATION_FILE': 'pwd_change',
     'COMMENT_NOTIFICATION': 'comment_notification_template',
 }
+
+
+CSRF_USE_SESSIONS = True  # store csrftoke in the session
+CSRF_COOKIE_SECURE = True  # only sent with an HTTPS connection
+CSRF_COOKIE_HTTPONLY = True  # csrftoken disallow to be read by JS in console
+CSRF_COOKIE_AGE = 604800  # in seconds
+SESSION_COOKIE_AGE = 604800  # in seconds

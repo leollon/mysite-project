@@ -36,6 +36,9 @@ class CreateArticleView(LoginRequiredMixin,
     template_name = 'article/editor.html'
     form_class = CreateArticleForm
     login_url = '/accounts/login/'
+    
+    def dispatch(self, request, *args, **kwargs):
+        return super(CreateArticleView, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         """

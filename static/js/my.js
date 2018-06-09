@@ -21,7 +21,7 @@ window.addEventListener('input', function editorPage() {
     if (is_editor_page) {
         //  preview                                                  editor
         document.getElementById('article-title').innerHTML = document.getElementById('id_title').value;
-        document.getElementById('article-preview-body').innerHTML  = markdownToHtmlHandler(document.getElementById('id_article_body').value);
+        document.getElementById('article-preview-body').innerHTML = markdownToHtmlHandler(document.getElementById('id_article_body').value);
     }
 })
 
@@ -36,13 +36,13 @@ function createXhrObject() {
 
 function clear_input(eleArray) {
     for (var i = 0; i < eleArray.length; ++i) {
-        document.getElementsByName(eleArray[i])[0].value='';
+        document.getElementsByName(eleArray[i])[0].value = '';
     }
 }
 
 function postComment(post_id) {
     var xhRequest = createXhrObject();
-    var url = '/comment/new/';
+    var url = '/api/comment/';
     var data = {
         "username": document.getElementsByName("username")[0].value,
         "email": document.getElementsByName("email")[0].value,
@@ -53,13 +53,15 @@ function postComment(post_id) {
     var eleArray = ["username", "email", "link", "comment_text"];
     var json = JSON.stringify(data);
     clear_input(eleArray);
-    xhRequest.onreadystatechange = function() {
+    xhRequest.onreadystatechange = function () {
         if (xhRequest.readyState == 4 && xhRequest.status == "201") {
             // reload the current whole page to get latest comment seen.
             document.location.reload(true);
         }
-    }
+    };
+    let csrfToken = $("[name=csrfmiddlewaretoken]").val();
     xhRequest.open("POST", url, true);
-    xhRequest.setRequestHeader("Content-type", "application/json; charset=utf-8")
+    xhRequest.setRequestHeader("Content-type", "application/json; charset=utf-8");
+    xhRequest.setRequestHeader("X-CSRFToken", csrfToken);
     xhRequest.send(json);
 }
