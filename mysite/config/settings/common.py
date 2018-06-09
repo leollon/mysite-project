@@ -60,9 +60,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-
 WSGI_APPLICATION = 'mysite.config.wsgi.application'
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -85,12 +83,6 @@ AUTH_PASSWORD_VALIDATORS = [
 # Password Encrypt Hasher
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
-    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
-    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
-    'django.contrib.auth.hashers.BCryptPasswordHasher',
-    'django.contrib.auth.hashers.SHA1PasswordHasher',
-    'django.contrib.auth.hashers.MD5PasswordHasher',
-    'django.contrib.auth.hashers.CryptPasswordHasher',
 ]
 
 # Internationalization
@@ -106,16 +98,13 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 # tied to app's static, like my_app/static/
 STATIC_URL = '/static/'
 
-
 # Directory containing all static files
 STATIC_ROOT = '/home/monkey/Desktop/Project/Django/static/'
-
 
 STATICFILES_DIRS = [
     os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), 'static/')
