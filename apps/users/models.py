@@ -13,7 +13,7 @@ class User(AbstractUser):
     make email field unique in users_user table
     """
     class Meta:
-        db_table = 'users_user'
+        db_table = 'auth_users'
 
     email = models.EmailField(_('email address'), unique=True)
     is_staff = models.BooleanField(_('staff'),
