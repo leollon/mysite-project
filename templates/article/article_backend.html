@@ -7,57 +7,55 @@
 {% block title %}Article Management{% endblock %}
 
 {% block css_file %}
-    {{ block.super }}
+  {{ block.super }}
 {% endblock %}
 
 {% block content %}
-    {% all_articles user as articles %}
-    <table class="table table-bordered table-hover">
-        <thead>
-        <tr>
-            <td>#</td>
-            <td>Title</td>
-            <td>Operations</td>
-            <td>Category</td>
-            <td>Viewed times</td>
-            <td>Created Time</td>
-        </tr>
-        </thead>
-        <tbody>
-        {% for article in articles %}
-            <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>
-                    <a href="{% url 'article:detail' article.id %}"
-                       target="_blank">
-                        {{ article.title }}
-                    </a>
-                </td>
-                <td>
-                    <li class="label label-success">
-                        <a href="{% url 'article:edit' article.id %}">edit</a>
-                        <span class="fa fa-pencil"></span>
-                    </li>
-                    <li class="label label-danger">
-                        <a href="{% url 'article:delete' article.id %}">
-                            delete
-                        </a>
-                        <span class="fa fa-trash"></span>
-                    </li>
-                </td>
-                <td>
-                    <ul>
-                        <li class="fa fa-bookmark">
-                            <a href="{% url 'category:manage' %}">{{ article.category.name }}</a>
-                        </li>
-                    </ul>
-                </td>
-                <td>{{ article.view_times }}</td>
-                <td>{{ article.created_time|date:"d/m/Y" }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <a href="{% url 'article:write' %}" class="btn btn-primary">Make a Post
-        <span class="fa fa-leaf"></span></a>
+  {% all_articles user as articles %}
+  <table class="table table-stripped table-hover">
+    <thead>
+    <tr>
+      <td>#</td>
+      <td>Title</td>
+      <td>Operations</td>
+      <td>Category</td>
+      <td>Viewed times</td>
+      <td>Created Time</td>
+    </tr>
+    </thead>
+    <tbody>
+    {% for article in articles %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>
+          <a href="{% url 'article:detail' article.id %}"
+             target="_blank">
+            {{ article.title }}
+          </a>
+        </td>
+        <td>
+          <div class="label label-success">
+            <a href="{% url 'article:edit' article.id %}">edit</a>
+            <span class="fa fa-pencil"></span>
+          </div>
+          <div class="label label-danger">
+            <a href="{% url 'article:delete' article.id %}">
+              delete
+            </a>
+            <span class="fa fa-trash"></span>
+          </div>
+        </td>
+        <td>
+          <div class="fa fa-bookmark">
+            <a href="{% url 'category:manage' %}">{{ article.category.name }}</a>
+          </div>
+        </td>
+        <td>{{ article.view_times }}</td>
+        <td>{{ article.created_time|date:"d/m/Y" }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  <a href="{% url 'article:write' %}" class="btn btn-primary">Make a Post
+    <span class="fa fa-leaf"></span></a>
 {% endblock %}
