@@ -21,5 +21,5 @@ urlpatterns = [
     url(r'', include('apps.article.urls')),
     url(r'category/', include('apps.category.urls')),
     url(r'accounts/', include('apps.users.urls')),
-    url(r'comment/', include('apps.comment.urls')),
+    url(r'^api/', include('apps.comment.urls')),
 ]
