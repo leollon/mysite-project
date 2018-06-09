@@ -1,5 +1,6 @@
 {% load article_tags %}
-<div id="comment-content">{{ article.comment_set.count }} Comment{{ comments.count | pluralize }}
+<div id="comment-content">
+  {{ article.comment_set.count }} Comment{{ article.comment_set.count | pluralize }}
    <hr class="underline">
     <ul id="list">
         {% for comment in article.comment_set.all %}
