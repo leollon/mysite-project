@@ -1,32 +1,50 @@
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+from rest_framework import mixins
+from rest_framework import viewsets
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.exceptions import ValidationError
 
-from rest_framework.parsers import JSONParser
-
-from .utils import send_comment_notification_to_site_owner
+from .models import Comment
 from .serializers import CommentSerializers
 
-FORMAT_STRING = "%b %d %Y %a %H:%M:%S"
+
+class CommentPagination(PageNumberPagination):
+    page_size = 10
+    page_query_param = "page"
+    page_size_query_param = "page_size"
+    max_page_size = 50
 
 
-@csrf_exempt
-def create_comment(request):
-    """
-    comment api for post request
-    :param request: HttpRequest object
-    :return: JsonResponse Object
-    """
-    if request.method == 'POST':
-        data = JSONParser().parse(request)
-        serializers = CommentSerializers(data=data)
-        if serializers.is_valid():
-            serializers.save()
-            send_comment_notification_to_site_owner(data.get('post'),
-                                                    data.get('username'),
-                                                    data.get('comment_text'))
-            success_msg = {'successMsg': 'success'}
-            return JsonResponse(success_msg, status=201)
-        return JsonResponse(serializers.errors, status=400)
-    else:
-        error_msg = {'errMsg': 'Forbidden'}
-        return JsonResponse(error_msg, status=400)
+class CommentViewSets(mixins.CreateModelMixin,
+                      mixins.ListModelMixin,
+                      viewsets.GenericViewSet):
+    serializer_class = CommentSerializers
+    pagination_class = CommentPagination
+    queryset = Comment.objects.all()
+    allowed_methods = ('GET', 'POST')
+
+    def dispatch(self, request, *args, **kwargs):
+        return super(CommentViewSets, self).dispatch(request, *args, **kwargs)
+
+    def create(self, request, *args, **kwargs):
+        serializers = self.get_serializer(data=request.data)
+        try:
+            serializers.is_valid(raise_exception=True)
+        except ValidationError as e:
+            err = e.detail
+            return Response(err, status=status.HTTP_400_BAD_REQUEST,
+                            content_type="application/json; charset=utf-8")
+        else:
+            self.perform_create(serializers)
+            response = Response(serializers.data,
+                                status=status.HTTP_201_CREATED,
+                                content_type="application/json; charset=utf-8")
+            return response
+
+    def list(self, request, *args, **kwargs):
+        response = super(CommentViewSets, self).list(request, *args, **kwargs)
+        return response
+
+    def perform_create(self, serializer):
+        serializer.save()
