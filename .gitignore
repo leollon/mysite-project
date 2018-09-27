@@ -6,3 +6,4 @@ deploy/
 *.sql
 *.bak
 siteEnv
+node_modules
