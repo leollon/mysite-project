@@ -5,8 +5,6 @@ from django.utils.encoding import python_2_unicode_compatible
 @python_2_unicode_compatible
 class ArticleCategory(models.Model):
     """each article category"""
-    class Meta:
-        db_table = "categories"
 
     name = models.CharField(max_length=64, blank=False, unique=True)
     created_time = models.DateTimeField(null=True, auto_now_add=True)
@@ -18,3 +16,6 @@ class ArticleCategory(models.Model):
 
     def __str__(self):
         return '%s' % self.name
+
+    class Meta:
+        db_table = "categories"

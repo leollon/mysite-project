@@ -1,14 +1,7 @@
 {% extends 'backend_base.html' %}
-
-{% load staticfiles %}
-
 {% load article_tags %}
 
 {% block title %}Article Management{% endblock %}
-
-{% block css_file %}
-{{ block.super }}
-{% endblock %}
 
 {% block content %}
 {% all_articles user as articles %}
