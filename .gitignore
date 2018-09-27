@@ -1,4 +1,5 @@
-.idea/*
+.idea/
+.vscode/
 *.pyc
 *.sqlite3
 *.tags*
