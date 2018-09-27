@@ -1,59 +1,49 @@
-{% load staticfiles %}
 <!DOCTYPE html>
+{% load staticfiles %}
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport"
-        content="width=device-width, shrink-to-fit=no, initial-scale=1">
+  <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>{% block title %}{% endblock %}</title>
+  <title>{% block title %}Dashboard{% endblock %}</title>
 
-  <!-- Backend icon -->
-  <link rel="shortcut icon" href="{% static "img/luffy.png" %}"
-        type="image/png">
+  <link rel="shortcut icon" href="{% static " img/luffy.png" %}" type="image/png">
 
-  <!-- Bootstrap Core CSS -->
   <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
-        rel="stylesheet">
+    rel="stylesheet">
 
-  <!-- Custom font -->
-  <link
-      href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css"
-      rel="stylesheet" type="text/css">
+  <link href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css"
+    rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-
-
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+  {% block css_file %}
+  <link href="{% static 'css/simple-sidebar.css' %}" rel="stylesheet">
+  {% endblock %}
 
   <!-- Custom CSS -->
   {% block css_file %}
-    <link href="{% static 'css/simple-sidebar.css' %}" rel="stylesheet">
+  <link href="{% static 'css/simple-sidebar.css' %}" rel="stylesheet">
   {% endblock %}
 
 </head>
 
 <body>
 
-<div id="wrapper">
-  <!-- Sidebar -->
-  <div id="sidebar-wrapper">
-    <ul class="sidebar-nav">
-      <li class="sidebar-brand">
-        <a>Backend</a>
-      </li>
-      {% if user.is_authenticated %}
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+      <ul class="sidebar-nav">
+        <li class="sidebar-brand">
+          <a>Backend</a>
+        </li>
+        {% if user.is_authenticated %}
         <li id="outer">
           <div id="inner">
             <a href="{% url 'users:dashboard' %}">
-              <img src="{% static 'img/Asuna.jpg' %}">
+              <img src="{% static 'images/Asuna.jpg' %}">
             </a>
           </div>
         </li>
@@ -70,36 +60,37 @@
           <a href="{% url 'article:manage' %}">Articles</a>
         </li>
         {% if user.is_superuser %}
-          <li>
-            <a href="{% url 'category:manage' %}">
-              Categories
-            </a>
-          </li>
+        <li>
+          <a href="{% url 'category:manage' %}">
+            Categories
+          </a>
+        </li>
         {% endif %}
-      {% else %}
+        {% else %}
         <li>
           <a href="{% url 'users:login' %}">SignIn</a>
         </li>
         <li>
           <a href="{% url 'users:register' %}">Create account</a>
         </li>
-      {% endif %}
-      <li>
-        <a href="{% url 'article:index' %}" target="_blank">
-          Homepage
-        </a>
-      </li>
-    </ul>
-  </div>
-  <!-- /#sidebar-wrapper -->
+        {% endif %}
+        <li>
+          <a href="{% url 'article:index' %}" target="_blank">
+            Homepage
+          </a>
+        </li>
+      </ul>
+    </div>
+    <!-- /#sidebar-wrapper -->
 
-  <!-- Page Content -->
-  <div id="page-content-wrapper">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-lg-12">
-          <a href="#menu-toggle" class="btn btn-default"
-             id="menu-toggle">Toggle Menu</a>
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-12">
+            <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle
+              Menu</a>
+          </div>
         </div>
       </div>
     </div>
@@ -113,25 +104,20 @@
 
   </div>
   <!-- /#page-content-wrapper -->
-</div>
-<!-- /#wrapper -->
+  </div>
+  <!-- /#wrapper -->
 
-{% block scripts %}
-  <!-- jQuery -->
+  {% block scripts %}
   <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-
-  <!-- Bootstrap Core JavaScript -->
-  <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js">
-  </script>
-
+  <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <!-- Menu Toggle Script -->
   <script>
-      $("#menu-toggle").click(function (e) {
-          e.preventDefault();
-          $("#wrapper").toggleClass("toggled");
-      });
+    $("#menu-toggle").click(function (e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
   </script>
-{% endblock %}
+  {% endblock %}
 </body>
 
 </html>

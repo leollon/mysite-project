@@ -1,29 +1,32 @@
 {% load article_tags %}
 {% for article in articles %}
-    <div class="post-preview">
+<div class="post-preview">
+    <h2 class="post-title">
         <a href="{% url 'article:detail' article.id %}">
-            <h2 class="post-title">
-                <a href="{% url "article:detail" article.id %}">
-                    {{ article.title }}
-                </a>
-            </h2>
+            {{ article.title }}
         </a>
-        <article class="post-subtitle">
-            {{ article.article_body | truncatechars:140 | md | banxss | safe }}
-        </article>
-        <div class="article-extra">
-            <span class="fa fa-bookmark"></span>
-            <a href="{% url "category:all_article" article.category.id %}">
+    </h2>
+    </a>
+    <article class="post-subtitle">
+        {{ article.article_body | truncatechars:140 | md | banxss | safe }}
+    </article>
+    <div class="article-extra">
+        <span class="fa fa-folder">
+            <a href="{% url 'category:all_article' article.category.id %}">
                 {{ article.category }}
             </a>
             <span class="fa fa-comments"></span>
-            <span>{{ article.comment_set.count }} comment{%  mypluralize article.comment_set.count %}</span>
+            <a href="{% url 'article:detail' article.id %}#comments">
+                <span>
+                    {{ article.comment_set.count }}
+                    comment{% mypluralize article.comment_set.count %}
+                </span>
+            </a>
             <span class="fa fa-eye"></span>
             <span>{{ article.view_times }}</span>
-        </div>
-        <p class="post-meta">Posted by <a href="#">
-            {{ article.author }}</a> on
-            {{ article.created_time | date:"d N Y D" }}</p>
     </div>
-    <hr>
+    <p class="post-meta">Posted by <a href="#">
+            {{ article.author }}</a> on
+        {{ article.created_time | date:"d N Y D" }}</p>
+</div>
 {% endfor %}

@@ -1,7 +1,10 @@
-.idea/*
+.idea/
+.vscode/
 *.pyc
 *.sqlite3
 *.tags*
 deploy/
 *.sql
 *.bak
+siteEnv
+node_modules

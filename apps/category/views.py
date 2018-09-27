@@ -99,7 +99,7 @@ def edit_category(request, category_id):
     else:
         initial = {'name': category.name}
         # 在前端编辑表单中显示要编辑的类名
-        category_form = CategoryForm(data=initial)
+        category_form = CategoryForm(initial=initial)
         return render(request, 'category/category_backend.html',
                       {'form': category_form})
 

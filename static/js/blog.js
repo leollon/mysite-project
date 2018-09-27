@@ -1,34 +1,26 @@
-var is_post_detail_page = window.location.href.split('/').indexOf('post');
-var is_editor_page = document.getElementById('article-editor');
-
-
-if (is_post_detail_page && !is_editor_page) {
-    document.getElementById('blog-head').innerHTML = document.getElementById('article-title').innerHTML;
-//    console.log(is_editor_page);  // for test
-}
+'use strict';
+if ($('#article-editor')[0] !== 'undefined') {
+    $("#menu-toggle").trigger("click");
+};
 
 function markdownToHtmlHandler(text) {
-    'use strict';
     var converter = new showdown.Converter();
     converter.setFlavor('github');
     return converter.makeHtml(text);
 }
 
-// 这里后期可能要做监听事件的监听策略了，监听了不必要的事件了，比如监听单选框的输入了
-window.addEventListener('input', function editorPage() {
-    'use strict';
-//    console.log('hello, showdown'); // for test user input
-    if (is_editor_page) {
-        //  preview                                                  editor
-        document.getElementById('article-title').innerHTML = document.getElementById('id_title').value;
-        document.getElementById('article-preview-body').innerHTML = markdownToHtmlHandler(document.getElementById('id_article_body').value);
-    }
+$('#id_title').on('input', function () {
+    $('#article-title').text($('#id_title').val());
+})
+
+$('#id_article_body').on('input', function () {
+    $('#article-preview-body').html(markdownToHtmlHandler($('#id_article_body').val()));
 })
 
 function comment_input(username) {
-    document.getElementById('id_comment_text').innerText += '@'.concat(username).concat(" ");
+    var commentText = $('#id_comment_text').val();
+    $('#id_comment_text').val('@'.concat(username).concat(" ") + commentText);
 }
-
 
 function createXhrObject() {
     return new XMLHttpRequest();
@@ -64,4 +56,15 @@ function postComment(post_id) {
     xhRequest.setRequestHeader("Content-type", "application/json; charset=utf-8");
     xhRequest.setRequestHeader("X-CSRFToken", csrfToken);
     xhRequest.send(json);
+}
+
+function getCookie() {
+    var cookie = document.cookie;
+    var fieldList = cookie.split(";");
+    for (var i in fieldList) {
+        var field = fieldList[i].split("=");
+        if (field[0].trim() === "csrftoken") {
+            return field[1].trim();
+        }
+    }
 }

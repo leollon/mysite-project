@@ -6,34 +6,49 @@ li {
     list-style: none
 }
 
+.post-preview,
+.article-body {
+    border: 1px solid;
+    border-radius: 5px;
+    margin-top: 30px;
+    padding: 0px 20px 20px;
+    /* 边框阴影 */
+    -webkit-box-shadow: 0 0 5px #ccc;
+    -moz-box-shadow: 0 0 5px #ccc;
+    box-shadow: 0 0 5px #0f3741;
+}
+
+.post-preview:hover,
+.article-body:hover {
+    box-shadow: 0 0 10px #2e6da4;
+}
+
 .block-code {
     background-color: #0f3741;
     color: white
 }
 
 p {
-    margin: 0
+    margin: 0;
 }
 
-th, td {
+th,
+td {
     border: 1px solid silver;
     padding: 4px;
     font-size: 16px
 }
 
-p > img {
-    margin: 0 10%
+p>img {
+    min-height: 200px;
+    max-height: 400px;
+    width: 100%;
+    border: 1px solid rgba(128, 128, 128, 0.5);
+    border-radius: 8px;
 }
 
-@media only screen and (max-width: 768px) {
-    p > img {
-        width: 245px;
-        height: auto;
-        margin: 0 14%
-    }
-}
-
-.article-title, .article-created-time {
+.article-title,
+.article-created-time {
     color: grey;
     font-size: 14px;
     margin: 0
@@ -59,14 +74,14 @@ p > img {
     font-size: 14px !important;
 }
 
-#comment-content {
+.comment-content {
     margin-top: 20px;
     display: block;
 }
 
-#list  {
+#list {
     margin-left: 15px;
-    padding: 0px;
+    padding: 0;
 }
 
 .floor {
@@ -77,10 +92,11 @@ p > img {
     text-decoration: underline;
     font-size: 16px;
     display: inline-block;
-    padding: 0px 4px;
+    padding: 0 4px;
 }
 
-.datetime, .reply {
+.datetime,
+.reply {
     margin-left: 10px;
     color: grey;
 }
@@ -95,7 +111,7 @@ p > img {
 
 .reply {
     font-size: 14px;
-    color:black;
+    color: black;
 }
 
 .reply:hover {
@@ -106,8 +122,8 @@ p > img {
     color: white;
 }
 
-.input-box >input,
-.input-box > textarea {
+.input-box>input,
+.input-box>textarea {
     border: 1px solid grey;
     border-radius: 4px;
     font-size: 16px;
@@ -115,7 +131,7 @@ p > img {
 
 .comment-label-name {
     font-size: 12px;
-    margin: 0px;
+    margin: 0;
 }
 
 textarea {
@@ -124,6 +140,20 @@ textarea {
     resize: none;
 }
 
-.my-btn {
-    padding: 1px 15px;
+.reply-btn {
+    margin-left: 0px;
+    padding: 5px 15px;
+}
+
+.error404 {
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    color: green;
+}
+
+.error404>img {
+    max-width: 80%;
+    max-height: 80%;
+    border-radius: 5px;
 }
