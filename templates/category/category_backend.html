@@ -1,57 +1,58 @@
 {% extends 'backend_base.html' %}
 {% load category_tags %}
-{% block title %}Category Management{% endblock %}
+{% block title%}
+Category Management
+{% endblock %}
 {% block content %}
-    {% all_categories as categories %}
-    <table class="table table-bordered table-hover">
-        <thead>
-        <tr>
-            <td>#</td>
-            <td>Category Name</td>
-            <td>Operations</td>
-            <td>Article Number</td>
-            <td>Created Time</td>
-        </tr>
-        </thead>
-        <tbody>
-        {% for category in categories %}
-            <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>
-                    <a href="{% url 'category:all_article' category.id %}" target="_blank">
-                        {{ category.name }}
-                    </a>
-                </td>
-                <td>
-                    <li class="label label-success">
-                        <a href="{% url 'category:edit' category.id %}">edit</a>
-                        <span class="fa fa-pencil"></span>
-                    </li>
-                    <li class="label label-danger">
-                        <a href="{% url 'category:delete' category.id %}">
-                            delete
-                        </a>
-                        <span class="fa fa-trash"></span>
-                    </li>
-                </td>
-                <td>{{ category.article_set.count }}</td>
-                <td>{{ category.created_time|date:"d/m/Y" }}</td>
-            </tr>
-            </tbody>
-        {% endfor %}
-    </table>
-    <form class="form-inline" action="{% url 'category:add' %}" method="post">
-        {% csrf_token %}
-        <h3>添加分类</h3>
-        {% for field in form %}
-            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-            {{ field }}
-            <label class="errorlist" for="error">
-                {% if field.errors %} {{ field.errors }}
-                {% elif error_msg %} {{ error_msg }}
-                {% endif %}
-            </label>
-        {% endfor %}
-        <input type="submit" class="btn btn-primary" value="Save">
-    </form>
+{% all_categories as categories%}
+<table class="table table-stripped table-hover">
+  <thead>
+    <tr>
+      <td>#</td>
+      <td>Category Name</td>
+      <td>Operations</td>
+      <td>Article Number</td>
+      <td>Created Time</td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for category in categories %}
+    <tr>
+      <td>{{ forloop.counter }}</td>
+      <td>
+        <a href="{% url 'category:all_article' category.id %}" target="_blank">
+          {{ category.name }}
+        </a>
+      </td>
+      <td>
+        <div class="label label-success">
+          <a href="{% url 'category:edit' category.id %}">
+            <span class="fa fa-pencil"></span>
+          </a>
+        </div>
+        <div class="label label-danger">
+          <a href="{% url 'category:delete' category.id %}">
+            <span class="fa fa-trash"></span>
+          </a>
+        </div>
+      </td>
+      <td>{{ category.article_set.count }}</td>
+      <td>{{ category.created_time|date:"d/m/Y" }}</td>
+    </tr>
+  </tbody>
+  {% endfor %}
+</table>
+<form id="category-form" class="form-inline" action="" method="post">
+  {% csrf_token %}
+  <h3>添加分类</h3>
+  {% for field in form %}
+  <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+  {{ field }}
+  <label class="errorlist" for="error">
+    {% if field.errors %} {{ field.errors }} {% elif error_msg %} {{ error_msg
+    }} {%endif%}
+  </label>
+  {% endfor %}
+  <input type="submit" class="btn btn-primary" value="Save">
+</form>
 {% endblock %}

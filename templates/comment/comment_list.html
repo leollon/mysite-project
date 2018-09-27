@@ -1,28 +1,30 @@
 {% load article_tags %}
-<div id="comment-content">
-  {{ article.comment_set.count }} Comment{{ article.comment_set.count | pluralize }}
-   <hr class="underline">
+<div class="comment-content" id="comments">
+    {{ article.comment_set.count }}
+    Comment{{article.comment_set.count | pluralize }}
+    <hr class="underline">
     <ul id="list">
         {% for comment in article.comment_set.all %}
-            <li class="comment">
-                <a href="#{{ forloop.counter }}" class="floor">
-                    {{ forloop.counter }}L</a>
-                <a href="{% if comment.link %}http://{{ comment.link }}
-                         {% endif %}" class="username">
-                    {{ comment.username }}
-                </a>
-                <span class="datetime">
-                    {{ comment.created_time | date:"d N Y D H:m:s" }}
-                </span>
-                <div class="comment-text">
-                    {{ comment.comment_text | banxss | md | safe }}
-                </div>
-                <span class="reply" onclick="comment_input('{{ comment.username }}')">
-                    Reply
-                </span>
-            </li>
-            {% empty %}
-            <li class="comment">No Comment yet!</li>
+        <li class="comment">
+            <a href="#{{ forloop.counter }}" class="floor">
+                {{ forloop.counter }}L</a>
+            <a href="{% if comment.link %}http://{{ comment.link }}
+                         {% endif %}"
+                class="username">
+                {{ comment.username }}
+            </a>
+            <span class="datetime">
+                {{ comment.created_time | date:"d N Y D H:m:s" }}
+            </span>
+            <div class="comment-text">
+                {{ comment.comment_text | banxss | md | safe }}
+            </div>
+            <span class="reply" onclick="comment_input('{{ comment.username }}')">
+                Reply
+            </span>
+        </li>
+        {% empty %}
+        <li class="comment">No Comment yet!</li>
         {% endfor %}
     </ul>
 </div>

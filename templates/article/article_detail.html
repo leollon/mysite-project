@@ -1,19 +1,19 @@
 {% extends 'article/base.html' %}
 {% load staticfiles %}
 {% load article_tags %}
+{% block blog-head %}
+{{ article.title }}
+{% endblock %}
 {% block article %}
-    <h2 id="article-title">{{ article.title }}</h2>
-    <section class="article-body">
-        {{ article.article_body | banxss | safe }}
-    </section>
+<article class="article-body">
+
+    <h2 class="post-title">{{ article.title }}</h2>
+    {{ article.article_body | banxss | safe }}
+</article>
 {% endblock %}
 {% block comment_content %}
-    {% include "comment/comment_list.html" %}
+{% include "comment/comment_list.html" %}
 {% endblock %}
 {% block comment_input %}
-    {% include 'comment/comment_form.html' %}
-{% endblock %}
-{% block scripts %}
-    {{ block.super }}
-    <script src="{% static "js/my.js" %}"></script>
+{% include 'comment/comment_form.html' %}
 {% endblock %}

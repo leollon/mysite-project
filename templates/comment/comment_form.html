@@ -1,11 +1,11 @@
 <form class="form-inline">
-    {% for field in form %}
-        <div class="form-horizontal">
+    <div class="form-horizontal">
+        {% for field in form %}
+        <div class="form-group">
             {% if field.label %}
-                <label class="col-sm-10 comment-label-name"
-                       for="{{ field.id_for_label }}">
-                    {{ field.label }}
-                </label>
+            <label class="col-sm-10 comment-label-name" for="{{ field.id_for_label }}">
+                {{ field.label }}
+            </label>
             {% endif %}
             <div class="col-sm-10">
                 <div class="input-box {{ field.label }}">
@@ -13,14 +13,11 @@
                 </div>
             </div>
             {% if field.help_text %}
-                <p class="small">{{ field.help_text }}</p>
+            <p class="small">{{ field.help_text }}</p>
             {% endif %}
         </div>
-    {% endfor %}
-    <div class="form-horizontal">
-        <div class="col-sm-10">
-            <input type="button" onclick="postComment({{ article.id }})"
-                   class="btn btn-default my-btn" value="Reply">
-        </div>
+        {% endfor %}
     </div>
+    <input type="button" onclick="postComment({{ article.id }})" class="btn btn-default reply-btn"
+        value="Reply">
 </form>

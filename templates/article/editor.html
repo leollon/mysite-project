@@ -1,27 +1,27 @@
 {% extends "backend_base.html" %}
 {% load staticfiles %}
 {% block title %}Editor{% endblock %}
-{% load  crispy_forms_tags %}
+{% load crispy_forms_tags %}
 {% load article_tags %}
 {% block content %}
-    <div class="col-sm-6" id="article-editor">
-        {% crispy form %}
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" id="article-editor">
+    {% crispy form %}
+</div>
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+    {% block preview %}
+    <div class="article-title-preview">
+        <h2 id="article-title">{{ article.title }}</h2>
     </div>
-    <div class="col-sm-6">
-        {% block preview %}
-            <div class="article-title-preview">
-                <h2 id="article-title">{{ article.title }}</h2>
-            </div>
-            <div id="id-article-body-preview">
-                <article id="article-preview-body">
-                    {{ article.article_body | md | banxss | safe }}
-                </article>
-            </div>
-        {% endblock %}
+    <div id="id-article-body-preview">
+        <article id="article-preview-body">
+            {{ article.article_body | md | banxss | safe }}
+        </article>
     </div>
+    {% endblock %}
+</div>
 {% endblock %}
 {% block scripts %}
-    {{ block.super }}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.0/showdown.min.js"></script>
-    <script src="{% static "js/my.js" %}"></script>
+{{ block.super }}
+<script src="{% static 'vendor/showdown/showdown.js' %}"></script>
+<script src="{% static 'js/blog.js' %}"></script>
 {% endblock %}
