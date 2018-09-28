@@ -39,10 +39,11 @@ td {
     font-size: 16px
 }
 
-p>img {
-    min-height: 200px;
-    max-height: 400px;
-    width: 100%;
+img {
+    max-width: 90%;
+    height: auto;
+    display: block;
+    margin: auto;
     border: 1px solid rgba(128, 128, 128, 0.5);
     border-radius: 8px;
 }
