@@ -50,12 +50,12 @@
           <a href="{% url 'users:dashboard' %}">Dashboard</a>
         </li>
         <li>
-          <a href="{% url 'article:manage' %}">Articles</a>
+          <a href="{% url 'article:manage' %}">Article</a>
         </li>
         {% if user.is_superuser %}
         <li>
           <a href="{% url 'category:manage' %}">
-            Categories
+            Category
           </a>
         </li>
         {% endif %}
