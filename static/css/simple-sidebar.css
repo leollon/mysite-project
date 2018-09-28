@@ -302,12 +302,6 @@ textarea {
     font-size: 18px;
 }
 
-.badge {
-    margin-bottom: -3px;
-    background-color: darkred;
-    color: whitesmoke;
-}
-
 p>img {
     min-height: 200px;
     max-height: 400px;
