@@ -1,3 +1,7 @@
+from .forms import (PasswordResetForm, PasswordResetRequestForm, UserLoginForm,
+                    UserRegisterForm)
+from .models import User
+from .utils import notify_user
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -5,11 +9,6 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
-
-from .forms import (PasswordResetForm, PasswordResetRequestForm, UserLoginForm,
-                    UserRegisterForm)
-from .models import User
-from .utils import notify_user
 
 email_related = getattr(settings, 'EMAIL_RELATED')
 

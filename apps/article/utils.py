@@ -1,7 +1,6 @@
+from .models import Article
 from django.conf import settings
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-
-from .models import Article
 
 per_page = getattr(settings, 'PER_PAGE')
 

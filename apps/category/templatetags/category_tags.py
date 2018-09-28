@@ -1,6 +1,5 @@
-from django.template.library import Library
-
 from apps.category.models import ArticleCategory
+from django.template.library import Library
 
 register = Library()
 

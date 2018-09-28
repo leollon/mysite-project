@@ -1,3 +1,6 @@
+from .forms import CategoryForm
+from .models import ArticleCategory
+from apps.article.models import Article
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
@@ -5,10 +8,6 @@ from django.db import IntegrityError
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-
-from .forms import CategoryForm
-from .models import ArticleCategory
-from apps.article.models import Article
 
 per_page = getattr(settings, 'PER_PAGE')
 

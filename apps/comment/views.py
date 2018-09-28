@@ -1,10 +1,9 @@
+from .models import Comment
+from .serializers import CommentSerializers
 from rest_framework import mixins, status, viewsets
 from rest_framework.exceptions import ValidationError
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
-
-from .models import Comment
-from .serializers import CommentSerializers
 
 
 class CommentPagination(PageNumberPagination):

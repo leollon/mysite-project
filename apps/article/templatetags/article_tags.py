@@ -1,11 +1,10 @@
 import bleach
-from django.conf import settings
-from django.template.defaultfilters import stringfilter
-from django.template.library import Library
-
 # import customized module
 from .. import my_renderer
 from ..models import Article
+from django.conf import settings
+from django.template.defaultfilters import stringfilter
+from django.template.library import Library
 
 register = Library()
 
