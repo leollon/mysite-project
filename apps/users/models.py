@@ -12,8 +12,6 @@ class User(AbstractUser):
     Customize User model:
     make email field unique in users_user table
     """
-    class Meta:
-        db_table = 'users_user'
 
     email = models.EmailField(_('email address'), unique=True)
     is_staff = models.BooleanField(_('staff'),
@@ -74,3 +72,6 @@ class User(AbstractUser):
             print(data.get('name'))
             return False
         return True
+
+    class Meta:
+        db_table = 'auth_users'
