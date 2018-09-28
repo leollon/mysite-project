@@ -1,9 +1,4 @@
 import mistune
-from .forms import CreateArticleForm, EditArticleForm
-from .models import Article
-from .my_renderer import HightlightRenderer
-from .utils import pager
-from apps.comment.forms import CommentForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
@@ -11,6 +6,13 @@ from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import SingleObjectTemplateResponseMixin
 from django.views.generic.edit import BaseCreateView, DeleteView, UpdateView
+
+from apps.comment.forms import CommentForm
+
+from .forms import CreateArticleForm, EditArticleForm
+from .models import Article
+from .my_renderer import HightlightRenderer
+from .utils import pager
 
 
 class ArticleListView(ListView):

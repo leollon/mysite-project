@@ -1,7 +1,8 @@
+from django.conf.urls import url
+
 from .views import (AllArticles, ArticleDetailView, ArticleListView,
                     ArticleManagementView, CreateArticleView,
                     DeleteArticleView, UpdateArticleView)
-from django.conf.urls import url
 
 app_name = 'article'
 

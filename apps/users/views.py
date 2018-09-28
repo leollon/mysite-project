@@ -1,7 +1,3 @@
-from .forms import (PasswordResetForm, PasswordResetRequestForm, UserLoginForm,
-                    UserRegisterForm)
-from .models import User
-from .utils import notify_user
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -10,8 +6,12 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
-email_related = getattr(settings, 'EMAIL_RELATED')
+from .forms import (PasswordResetForm, PasswordResetRequestForm, UserLoginForm,
+                    UserRegisterForm)
+from .models import User
+from .utils import notify_user
 
+email_related = getattr(settings, 'EMAIL_RELATED')
 reg_notification_file = email_related.get('REG_NOTIFICATION_FILE')
 pwd_change_notification_file = email_related.get('PWD_CHANGE_NOTIFICATION_FILE')
 

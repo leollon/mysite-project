@@ -1,9 +1,10 @@
 import os
 
-from apps.article.models import Article
 from django.conf import settings
 from django.core.mail import send_mail
 from django.urls import reverse
+
+from apps.article.models import Article
 
 email_account = getattr(settings, 'EMAIL_ACCOUNT')
 email_related = getattr(settings, 'EMAIL_RELATED')
