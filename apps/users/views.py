@@ -1,16 +1,15 @@
-from django.shortcuts import render
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.urls import reverse
 from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
+
+from .forms import (PasswordResetForm, PasswordResetRequestForm, UserLoginForm,
+                    UserRegisterForm)
 from .models import User
-from .forms import UserLoginForm, UserRegisterForm, \
-                        PasswordResetForm, PasswordResetRequestForm
-
-from mysite.config.settings.dev_settings import EMAIL_RELATED
 from .utils import notify_user
-
+from mysite.config.settings.dev_settings import EMAIL_RELATED
 
 reg_notification_file = EMAIL_RELATED.get('REG_NOTIFICATION_FILE')
 pwd_change_notification_file = EMAIL_RELATED.get('PWD_CHANGE_NOTIFICATION_FILE')

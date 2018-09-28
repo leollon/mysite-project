@@ -1,11 +1,11 @@
 import os
+
 from django.core.mail import send_mail
 from django.urls import reverse
 
 from apps.article.models import Article
-from mysite.config.settings.dev_settings import (DOMAIN_NAME,EMAIL_ACCOUNT,
-                                                 EMAIL_RELATED
-                                                 )
+from mysite.config.settings.dev_settings import (DOMAIN_NAME, EMAIL_ACCOUNT,
+                                                 EMAIL_RELATED)
 
 message_template_file = EMAIL_RELATED.get('COMMENT_NOTIFICATION')
 email_address = EMAIL_ACCOUNT.get('EMAIL_HOST_USER')

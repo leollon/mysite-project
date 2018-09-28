@@ -2,8 +2,9 @@
 customizing my own authentication system
 """
 
-from .models import User
 from django.contrib.auth.backends import ModelBackend
+
+from .models import User
 
 
 class EmailBackend(ModelBackend):

@@ -1,17 +1,16 @@
+import mistune
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import DetailView, ListView
-from django.views.generic.base import TemplateView
-from django.views.generic.edit import BaseCreateView, UpdateView, DeleteView
-from django.views.generic.detail import SingleObjectTemplateResponseMixin
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
-
-import mistune
+from django.views.generic import DetailView, ListView
+from django.views.generic.base import TemplateView
+from django.views.generic.detail import SingleObjectTemplateResponseMixin
+from django.views.generic.edit import BaseCreateView, DeleteView, UpdateView
 
 from .forms import CreateArticleForm, EditArticleForm
-from .utils import pager
-from .my_renderer import HightlightRenderer
 from .models import Article
+from .my_renderer import HightlightRenderer
+from .utils import pager
 from apps.comment.forms import CommentForm
 
 
@@ -135,5 +134,3 @@ class AllArticles(ListView):
 
 class ArticleManagementView(LoginRequiredMixin, TemplateView):
     template_name = 'article/article_backend.html'
-
-
