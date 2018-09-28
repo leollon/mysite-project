@@ -8,3 +8,7 @@ deploy/
 *.bak
 siteEnv
 node_modules
+static
+gulpfile.js
+package.json
+package-lock.json
