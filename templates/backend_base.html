@@ -9,8 +9,8 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <link rel="icon" href="{% static 'images/luffy.ico' %}" type="image/icon">
-  <link rel="shortcut icon" href="{% static 'images/luffy.ico' %}" type="image/icon">
+  <link rel="icon" href="/assets/images/luffy.ico" type="image/icon">
+  <link rel="shortcut icon" href="/assets/images/luffy.ico" type="image/icon">
 
   <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
     rel="stylesheet">
@@ -18,7 +18,7 @@
   <link href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css"
     rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-  <link href="{% static 'css/simple-sidebar.css' %}" rel="stylesheet">
+  <link href="/assets/css/simple-sidebar.min.css" rel="stylesheet">
 
   <title>{% block title %}{% endblock %}</title>
 </head>
@@ -36,7 +36,7 @@
         <li id="outer">
           <div id="inner">
             <a href="{% url 'users:dashboard' %}">
-              <img src="{% static 'images/Asuna.jpg' %}">
+              <img src="/assets/images/Asuna.jpg">
             </a>
           </div>
         </li>

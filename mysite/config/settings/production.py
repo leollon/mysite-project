@@ -41,12 +41,12 @@ DATABASES = {
 # when running `python manage.py collectstatic`, collect all static file in a
 # same directory.
 # for production deployed, use nginx to response static file requested
-STATIC_ROOT = os.path.join(os.path.join('/home/', getpass.getuser()), 'static')
+STATIC_ROOT = os.path.join(os.path.join('/home/', getpass.getuser()), 'assets')
 
 
 # Here stores all static files
 STATICFILES_DIRS = [
-    os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), 'static')
+    os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), 'assets')
 ]
 
 # Show the articles' number in each page
