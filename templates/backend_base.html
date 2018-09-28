@@ -8,16 +8,15 @@
   <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>{% block title %}Dashboard{% endblock %}</title>
+
   <link rel="shortcut icon" href="{% static 'images/luffy.ico' %}" type="image/icon">
   <link href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet"
     type="text/css">
   <link href="{% static 'vendor/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-  {% block css_file %}
   <link href="{% static 'css/simple-sidebar.css' %}" rel="stylesheet">
-  {% endblock %}
 
+  <title>{% block title %}{% endblock %}</title>
 </head>
 
 <body>
