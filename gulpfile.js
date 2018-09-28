@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 var cleanCSS = require('gulp-clean-css');
+var imageMinify = require('gulp-imagemin');
 var del = require('del');
 
 var paths = {
@@ -12,6 +13,10 @@ var paths = {
     js: {
         orig: 'static/js/*.js',
         dest: 'assets/js/'
+    },
+    img: {
+        orig: 'static/images/*.*',
+        dest: 'assets/images/'
     }
 }
 
@@ -41,11 +46,19 @@ function cssMinify() {
         .pipe(gulp.dest(paths.css.dest))
 }
 
+function imgMinifiy() {
+    // 压缩图片
+    return gulp.src(paths.img.orig)
+        .pipe(imageMinify({
+            progressive: true
+        }))
+        .pipe(gulp.dest(paths.img.dest))
+}
+
 function auto() {
     gulp.watch('static/css/*.css', cssMinify);
     gulp.watch('static/js/*.js', jsMinify);
 }
 
-
-exports.compress = gulp.series(clean, gulp.parallel(cssMinify, jsMinify));
-exports.default = gulp.series(clean, gulp.parallel(cssMinify, jsMinify), auto);
+exports.compress = gulp.series(clean, gulp.parallel(cssMinify, jsMinify, imgMinifiy));
+exports.default = gulp.series(clean, gulp.parallel(cssMinify, jsMinify, imgMinifiy), auto);
