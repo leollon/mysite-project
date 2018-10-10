@@ -14,7 +14,7 @@
 {% for article in articles %}
 <ul>
     <li style="list-style: none; text-align: center;">
-        <a href="{% url 'article:detail' article.id %}">
+        <a href="{% url 'article:detail' article.slug %}">
             {{ article.title }}</a>
     </li>
 </ul>

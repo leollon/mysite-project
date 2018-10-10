@@ -2,7 +2,7 @@
 {% for article in articles %}
 <div class="post-preview">
     <h2 class="post-title">
-        <a href="{% url 'article:detail' article.id %}">
+        <a href="{% url 'article:detail' article.slug %}">
             {{ article.title }}
         </a>
     </h2>
@@ -16,7 +16,7 @@
                 {{ article.category }}
             </a>
             <span class="fa fa-comments"></span>
-            <a href="{% url 'article:detail' article.id %}#comments">
+            <a href="{% url 'article:detail' article.slug %}#comments">
                 <span>
                     {{ article.comment_set.count }}
                     comment{% mypluralize article.comment_set.count %}

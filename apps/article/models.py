@@ -1,12 +1,15 @@
+import uuid
 from django.db import models
 from django.shortcuts import reverse
-from django.utils.encoding import python_2_unicode_compatible
 
 from apps.category.models import ArticleCategory
 from apps.users.models import User
 
 
-@python_2_unicode_compatible
+def default_slug():
+    return str(uuid.uuid4())
+
+
 class Article(models.Model):
     """
     an article model - control the way to access data in the database
@@ -14,6 +17,7 @@ class Article(models.Model):
     title = models.CharField(max_length=256)
     article_body = models.TextField()
     created_time = models.DateField(auto_now_add=True)
+    slug = models.SlugField(max_length=100, null=True, unique=True, default=default_slug)
     view_times = models.PositiveIntegerField(default=0)
     category = models.ForeignKey(ArticleCategory, null=True)
     author = models.ForeignKey(User, null=True, on_delete=models.CASCADE)

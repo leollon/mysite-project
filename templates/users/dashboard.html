@@ -73,7 +73,7 @@
                 {% newest_articles user as article_list %}
                 {% for post in article_list %}
                 <li>
-                    <a href="{% url 'article:detail' post.id %}" class="post-title"
+                    <a href="{% url 'article:detail' post.slug %}" class="post-title"
                         title="Posted at {{ post.created_time|date:"d/m/Y" }}">
                         {{ post.title }}
                     </a>

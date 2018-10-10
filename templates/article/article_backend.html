@@ -21,18 +21,18 @@
     <tr>
       <td>{{ forloop.counter }}</td>
       <td>
-        <a href="{% url 'article:detail' article.id %}" target="_blank">
+        <a href="{% url 'article:detail' article.slug %}" target="_blank">
           {{ article.title }}
         </a>
       </td>
       <td>
         <div class="label label-success">
-          <a href="{% url 'article:edit' article.id %}">
+          <a href="{% url 'article:edit' article.slug %}">
             <span class="fa fa-pencil"></span>
           </a>
         </div>
         <div class="label label-danger">
-          <a href="{% url 'article:delete' article.id %}">
+          <a href="{% url 'article:delete' article.slug %}">
             <span class="fa fa-trash"></span>
           </a>
         </div>
