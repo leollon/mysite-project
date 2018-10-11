@@ -12,7 +12,7 @@ urlpatterns = [
     url(r'^new/article/$', CreateArticleView.as_view(), name='write'),
     url(r'^detail/(?P<slug>[-\w]+)/$', ArticleDetailView.as_view(),
         name='detail'),
-    url(r'^/edit/article/(?P<slug>[-\w]+)/$', UpdateArticleView.as_view(),
+    url(r'^edit/article/(?P<slug>[-\w]+)/$', UpdateArticleView.as_view(),
         name='edit'),
 ]
 

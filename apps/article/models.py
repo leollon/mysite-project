@@ -1,7 +1,11 @@
 import uuid
+import unicodedata 
+
+from django.utils.text import slugify
 from django.db import models
 from django.shortcuts import reverse
 
+from unidecode import unidecode
 from apps.category.models import ArticleCategory
 from apps.users.models import User
 
@@ -24,6 +28,10 @@ class Article(models.Model):
 
     def __str__(self):
         return "%s" % self.title
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(unidecode(self.title))
+        super(Article, self).save(*args, **kwargs)
 
     @staticmethod
     def get_absolute_url():
