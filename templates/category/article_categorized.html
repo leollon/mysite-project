@@ -8,13 +8,12 @@
             </span>
         </div>
     </strong>
-    分类下有<span class="badge">
-        {{ category.article_set.count }}</span>篇文章。
+    分类下有<span class="badge">{{ category.article_set.count }}</span>篇文章。
 </blockquote>
 {% for article in articles %}
 <ul>
     <li style="list-style: none; text-align: center;">
-        <a href="{% url 'article:detail' article.id %}">
+        <a href="{% url 'articles:detail' article.slug %}">
             {{ article.title }}</a>
     </li>
 </ul>

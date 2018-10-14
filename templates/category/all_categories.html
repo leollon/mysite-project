@@ -1,16 +1,15 @@
 {% extends 'article/base.html' %}
 {% block article %}
-    <ul>
-        {% for category in category_lists %}
-            <li style="float: left; margin: 2px;">
-                <a href="{% url 'category:all_article' category.id %}"
-                   class="label label-primary fa fa-folder">
-                    {{ category.name }}
-                </a>
-                <span class="badge">
-                    {{ category.article_set.count }}
-                </span>
-            </li>
-        {% endfor %}
-    </ul>
+<ul id="categories">
+    {% for category in category_lists %}
+    <li>
+        <a href="{% url 'category:all_article' category.id %}" class="label label-primary fa fa-folder">
+            {{ category.name }}
+            <span class="badge">
+                {{ category.article_set.count }}
+            </span>
+        </a>
+    </li>
+    {% endfor %}
+</ul>
 {% endblock %}

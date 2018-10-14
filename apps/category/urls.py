@@ -15,7 +15,7 @@ urlpatterns = [
 
 # urlpatterns used by backend
 urlpatterns += [
-    url(r'management/$', manage_category, name='manage'),
+    url(r'dashboard/$', manage_category, name='manage'),
     url(r'add/$', add_category, name='add'),
     url(r'edit/(?P<category_id>[\d]+)/$', edit_category, name='edit'),
     url(r'category/(?P<category_id>[\d]+)/delete$',

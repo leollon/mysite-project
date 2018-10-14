@@ -1,9 +1,9 @@
 {% extends "backend_base.html" %}
 {% block content %}
-    <form action="{% url 'article:delete' article.id %}" method="post">
-        {% csrf_token %}
-        <p>Are you sure you want to delete <strong>"
+<form action="{% url 'articles:delete' article.slug %}" method="post">
+    {% csrf_token %}
+    <p>Are you sure you want to delete <strong>"
             {{ article.title }}"</strong>?</p>
-        <input class="button btn-danger" type="submit" value="Confirm"/>
-    </form>
+    <input class="button btn-danger" type="submit" value="Confirm" />
+</form>
 {% endblock %}

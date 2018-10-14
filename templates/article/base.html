@@ -44,7 +44,7 @@
                     <span class="sr-only">Toggle navigation</span>
                     Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="{% url 'article:index' %}">Homepage</a>
+                <a class="navbar-brand" href="{% url 'articles:index' %}">Homepage</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -60,11 +60,10 @@
                     </li>
                     {% endif %}
                     <li>
-                        <a href="{% url 'article:all' %}">all articles</a>
+                        <a href="{% url 'articles:all' %}">articles</a>
                     </li>
                     <li>
-                        <a href="{% url 'category:all_category' %}">all
-                            categories</a>
+                        <a href="{% url 'category:all_category' %}">categories</a>
                     </li>
                     <li>
                         <a href="#">about</a>
