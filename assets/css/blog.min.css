@@ -10,6 +10,15 @@ li {
     font-size: 18px
   }
 }
+#articles,
+#categories {
+  list-style: none;
+  margin-top: 10px
+}
+#categories li {
+  float: left;
+  margin: 2px
+}
 .article-body,
 .post-preview {
   border: 1px solid;
@@ -45,21 +54,36 @@ img {
   border: 1px solid rgba(128,128,128,.5);
   border-radius: 8px
 }
+#articles {
+  padding: 0
+}
 .article-created-time,
-.article-title {
+.article-created-time-header,
+.article-title a,
+.article-title-header {
   color: grey;
-  font-size: 14px;
   margin: 0
 }
+.article-created-time-header,
+.article-title-header {
+  text-transform: uppercase;
+  font-size: 20px
+}
+.article-created-time,
 .article-title {
+  font-size: 16px
+}
+.article-title,
+.article-title-header {
   float: left
 }
-.article-created-time {
+.article-created-time,
+.article-created-time-header {
   float: right
 }
-.underline {
+#underline {
   margin-top: 0;
-  margin-bottom: 2px;
+  margin-bottom: 12px;
   padding: 0;
   border: 1px solid #d3d3d3
 }
