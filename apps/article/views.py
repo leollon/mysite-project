@@ -72,7 +72,7 @@ class UpdateArticleView(LoginRequiredMixin, UpdateView):
         article = Article.objects.get(pk=kwargs.get('pk', None))
         if request.user.is_superuser or request.user == article.author:
             super(UpdateArticleView, self).post(request, *args, **kwargs)
-            return HttpResponseRedirect(reverse("article:manage"))
+            return HttpResponseRedirect(reverse("articles:manage"))
 
         return HttpResponseForbidden("<h1>The article doesn't blog to "
                                      "you.</h1>")

@@ -1,13 +1,13 @@
 {% extends 'article/base.html' %}
 {% block article %}
-<ul>
-    <li class="article-title">Title</li>
-    <li class="article-created-time">Time</li>
+<ul id="articles">
+    <li class="article-title-header">title</li>
+    <li class="article-created-time-header">date</li>
     <br>
-    <hr class="underline">
+    <hr id="underline">
     {% for article in articles %}
     <li class="article-title">
-        <a href="{% url " article:detail" article.slug %}">
+        <a href="{% url 'articles:detail' article.slug %}">
             {{ article.title }}
         </a>
     </li>

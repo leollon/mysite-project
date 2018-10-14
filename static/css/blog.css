@@ -14,6 +14,17 @@ li {
     }
 }
 
+#categories,
+#articles {
+    list-style: none;
+    margin-top: 10px;
+}
+
+#categories li {
+    float: left;
+    margin: 2px;
+}
+
 .post-preview,
 .article-body {
     border: 1px solid;
@@ -56,26 +67,45 @@ img {
     border-radius: 8px;
 }
 
-.article-title,
-.article-created-time {
-    color: grey;
-    font-size: 14px;
-    margin: 0
+#articles {
+    padding: 0px;
 }
 
+.article-title-header,
+.article-created-time-header,
+.article-title a,
+.article-created-time {
+    color: grey;
+    margin: 0;
+}
+
+.article-title-header,
+.article-created-time-header {
+    text-transform: uppercase;
+    font-size: 20px;
+}
+
+
+.article-title,
+.article-created-time {
+    font-size: 16px;
+}
+
+.article-title-header,
 .article-title {
     float: left
 }
 
+.article-created-time-header,
 .article-created-time {
     float: right
 }
 
-.underline {
+#underline {
     margin-top: 0;
-    margin-bottom: 2px;
+    margin-bottom: 12px;
     padding: 0;
-    border: 1px solid lightgrey
+    border: 1px solid lightgrey;
 }
 
 .post-meta,

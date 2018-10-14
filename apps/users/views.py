@@ -82,7 +82,7 @@ def resend_email_view(request):
         return render(request, "users/send_ok.html", msg)
     else:
         # if user is a blocked user, redirect to homepage
-        return HttpResponseRedirect(reverse("article:index"))
+        return HttpResponseRedirect(reverse("articles:index"))
 
 
 def login_view(request):

@@ -1,6 +1,6 @@
 {% extends "backend_base.html" %}
 {% block content %}
-<form action="{% url 'article:delete' article.slug %}" method="post">
+<form action="{% url 'articles:delete' article.slug %}" method="post">
     {% csrf_token %}
     <p>Are you sure you want to delete <strong>"
             {{ article.title }}"</strong>?</p>
