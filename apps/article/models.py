@@ -35,7 +35,7 @@ class Article(models.Model):
 
     @staticmethod
     def get_absolute_url():
-        return reverse('article:manage')
+        return reverse('articles:manage')
 
     class Meta:
         db_table = 'articles'
