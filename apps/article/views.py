@@ -70,7 +70,7 @@ class UpdateArticleView(LoginRequiredMixin, UpdateView):
 
     # TODO: to be refactored in the future
     def post(self, request, *args, **kwargs):
-        article = Article.objects.get(pk=kwargs.get('pk', None))
+        article = Article.objects.get(slug=kwargs.get('slug', None))
         if request.user.is_superuser or request.user == article.author:
             super(UpdateArticleView, self).post(request, *args, **kwargs)
             return HttpResponseRedirect(reverse("articles:manage"))

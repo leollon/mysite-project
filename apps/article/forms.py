@@ -1,3 +1,5 @@
+from django.shortcuts import reverse
+
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from django import forms
@@ -27,7 +29,7 @@ class CreateArticleForm(ArticleBaseForm):
 
     def __init__(self, *args, **kwargs):
         super(CreateArticleForm, self).__init__(*args, **kwargs)
-        self.helper.form_action = 'article:write'
+        self.helper.form_action = reverse('articles:write')
 
 
 class EditArticleForm(ArticleBaseForm):
