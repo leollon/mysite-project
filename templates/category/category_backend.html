@@ -20,18 +20,18 @@ Category Management
     <tr>
       <td>{{ forloop.counter }}</td>
       <td>
-        <a href="{% url 'category:all_article' category.id %}" target="_blank">
+        <a href="{% url 'category:all_article' category.name %}" target="_blank">
           {{ category.name }}
         </a>
       </td>
       <td>
         <div class="label label-success">
-          <a href="{% url 'category:edit' category.id %}">
+          <a href="{% url 'category:edit' category.name %}">
             <span class="fa fa-pencil"></span>
           </a>
         </div>
         <div class="label label-danger">
-          <a href="{% url 'category:delete' category.id %}">
+          <a href="{% url 'category:delete' category.name %}">
             <span class="fa fa-trash"></span>
           </a>
         </div>
