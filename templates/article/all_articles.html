@@ -11,7 +11,9 @@
             {{ article.title }}
         </a>
     </li>
-    <li class="article-created-time">{{ article.created_time }}</li>
+    <li class="article-created-time">
+        {{ article.created_time | date:"Y.m.d D h:i a" }}
+    </li>
     <br>
     {% endfor %}
 </ul>

@@ -20,7 +20,7 @@ class Article(models.Model):
     """
     title = models.CharField(max_length=256)
     article_body = models.TextField()
-    created_time = models.DateField(auto_now_add=True)
+    created_time = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(max_length=100, null=True, unique=True, default=default_slug)
     view_times = models.PositiveIntegerField(default=0)
     category = models.ForeignKey(ArticleCategory, null=True)
