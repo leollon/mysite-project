@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
@@ -7,9 +6,10 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
+from apps.article.models import Article
+
 from .forms import CategoryForm
 from .models import ArticleCategory
-from apps.article.models import Article
 
 per_page = getattr(settings, 'PER_PAGE')
 

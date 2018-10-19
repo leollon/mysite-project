@@ -7,5 +7,4 @@ deploy/
 *.sql
 *.bak
 siteEnv
-assets
 node_modules

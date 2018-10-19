@@ -6,13 +6,15 @@ extra feature:
 
 import os
 
+from django.conf import settings
 from django.core.mail import send_mail
 from django.utils.translation import ugettext_lazy as _
 
-from mysite.config.settings.dev_settings import DOMAIN_NAME, EMAIL_ACCOUNT
+email_account = getattr(settings, 'EMAIL_ACCOUNT')
+domain_name = getattr(settings, 'DOMAIN_NAME')
 
-email_user = EMAIL_ACCOUNT.get('EMAIL_HOST_USER')
-email_password = EMAIL_ACCOUNT.get('EMAIL_HOST_PASSWORD')
+email_user = email_account.get('EMAIL_HOST_USER')
+email_password = email_account.get('EMAIL_HOST_PASSWORD')
 
 
 def get_notification(filename):
@@ -38,7 +40,7 @@ def notify_user(request, **kwargs):
     subject = _(kwargs.get('subject'))
     from_email = email_user
 
-    domain = DOMAIN_NAME
+    domain = domain_name
     link = domain + kwargs.get('url') + kwargs.get('token')
     html_message = message.format(username, link, link)
 

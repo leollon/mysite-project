@@ -13,7 +13,6 @@ urlpatterns = [
         name='all_article'),
 ]
 
-
 # urlpatterns used by backend
 urlpatterns += [
     url(r'dashboard/$', manage_category, name='manage'),

@@ -7,11 +7,12 @@ from django.views.generic.base import TemplateView
 from django.views.generic.detail import SingleObjectTemplateResponseMixin
 from django.views.generic.edit import BaseCreateView, DeleteView, UpdateView
 
+from apps.comment.forms import CommentForm
+
 from .forms import CreateArticleForm, EditArticleForm
 from .models import Article
 from .my_renderer import HightlightRenderer
 from .utils import pager
-from apps.comment.forms import CommentForm
 
 
 class ArticleListView(ListView):

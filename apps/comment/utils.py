@@ -1,15 +1,17 @@
 import os
 
+from django.conf import settings
 from django.core.mail import send_mail
 from django.urls import reverse
 
 from apps.article.models import Article
-from mysite.config.settings.dev_settings import (DOMAIN_NAME, EMAIL_ACCOUNT,
-                                                 EMAIL_RELATED)
 
-message_template_file = EMAIL_RELATED.get('COMMENT_NOTIFICATION')
-email_address = EMAIL_ACCOUNT.get('EMAIL_HOST_USER')
-email_password = EMAIL_ACCOUNT.get('EMAIL_HOST_PWD')
+email_account = getattr(settings, 'EMAIL_ACCOUNT')
+email_related = getattr(settings, 'EMAIL_RELATED')
+domain_name = getattr(settings, 'DOMAIN_NAME')
+message_template_file = email_related.get('COMMENT_NOTIFICATION')
+email_address = email_account.get('EMAIL_HOST_USER')
+email_password = email_account.get('EMAIL_HOST_PWD')
 
 
 def message_handle(filename, **kwargs):
@@ -17,9 +19,9 @@ def message_handle(filename, **kwargs):
                             filename)
     with open(filename) as f:
         message = f.read()
-        article_link = DOMAIN_NAME + reverse('article:detail',
+        article_link = domain_name + reverse('article:detail',
                                              kwargs={'pk': kwargs.get(
-                                                               'article_id')})
+                                                 'article_id')})
         message = message.format(kwargs.get('username'),
                                  article_link,
                                  kwargs.get('title'),

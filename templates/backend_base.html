@@ -9,17 +9,22 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <link rel="shortcut icon" href="{% static 'images/luffy.ico' %}" type="image/icon">
-  <link href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet"
-    type="text/css">
-  <link href="{% static 'vendor/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+  <link rel="icon" href="/assets/images/luffy.ico" type="image/icon">
+  <link rel="shortcut icon" href="/assets/images/luffy.ico" type="image/icon">
+
+  <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css"
+    rel="stylesheet">
+
+  <link href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css"
+    rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-  <link href="{% static 'css/simple-sidebar.css' %}" rel="stylesheet">
+  <link href="/assets/css/simple-sidebar.min.css" rel="stylesheet">
 
   <title>{% block title %}{% endblock %}</title>
 </head>
 
 <body>
+
   <div id="wrapper">
     <!-- Sidebar -->
     <div id="sidebar-wrapper">
@@ -31,7 +36,7 @@
         <li id="outer">
           <div id="inner">
             <a href="{% url 'users:dashboard' %}">
-              <img src="{% static 'images/Asuna.jpg' %}">
+              <img src="/assets/images/Asuna.jpg">
             </a>
           </div>
         </li>
@@ -53,7 +58,8 @@
             Categories
           </a>
         </li>
-        {% endif %} {% else %}
+        {% endif %}
+        {% else %}
         <li>
           <a href="{% url 'users:login' %}">SignIn</a>
         </li>
@@ -83,22 +89,18 @@
       <!-- Main Page Content -->
       <div class="container-fluid">
         <div class="row">
-          {% block content %} {% endblock %}
+          {% block content %}
+          {% endblock %}
         </div>
       </div>
-
     </div>
     <!-- /#page-content-wrapper -->
   </div>
   <!-- /#wrapper -->
 
   {% block scripts %}
-  <!-- jQuery -->
-  <script src="{% static 'vendor/jquery/jquery.js' %}"></script>
-
-  <!-- Bootstrap Core JavaScript -->
-  <script src="{% static 'vendor/bootstrap/js/bootstrap.js' %}"></script>
-
+  <script src="https://cdn.staticfile.org/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <!-- Menu Toggle Script -->
   <script>
     $("#menu-toggle").click(function (e) {

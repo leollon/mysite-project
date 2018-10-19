@@ -1,25 +1,25 @@
-'use strict';
-if ($('#article-editor')[0] !== 'undefined') {
+"use strict";
+if ($("#article-editor")[0] !== "undefined") {
     $("#menu-toggle").trigger("click");
 };
 
 function markdownToHtmlHandler(text) {
     var converter = new showdown.Converter();
-    converter.setFlavor('github');
+    converter.setFlavor("github");
     return converter.makeHtml(text);
 }
 
-$('#id_title').on('input', function () {
-    $('#article-title').text($('#id_title').val());
+$("#id_title").on("input", function () {
+    $("#article-title").text($("#id_title").val());
 })
 
-$('#id_article_body').on('input', function () {
-    $('#article-preview-body').html(markdownToHtmlHandler($('#id_article_body').val()));
+$("#id_article_body").on("input", function () {
+    $("#article-preview-body").html(markdownToHtmlHandler($("#id_article_body").val()));
 })
 
 function comment_input(username) {
-    var commentText = $('#id_comment_text').val();
-    $('#id_comment_text').val('@'.concat(username).concat(" ") + commentText);
+    var commentText = $("#id_comment_text").val();
+    $("#id_comment_text").val("@".concat(username).concat(" ") + commentText);
 }
 
 function createXhrObject() {
@@ -28,13 +28,13 @@ function createXhrObject() {
 
 function clear_input(eleArray) {
     for (var i = 0; i < eleArray.length; ++i) {
-        document.getElementsByName(eleArray[i])[0].value = '';
+        document.getElementsByName(eleArray[i])[0].value = "";
     }
 }
 
 function postComment(post_id) {
     var xhRequest = createXhrObject();
-    var url = '/api/comment/';
+    var url = "/api/comment/";
     var data = {
         "username": document.getElementsByName("username")[0].value,
         "email": document.getElementsByName("email")[0].value,

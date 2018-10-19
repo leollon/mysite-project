@@ -11,7 +11,7 @@ var paths = {
         dest: "assets/css/"
     },
     js: {
-        orig: "static/js/*.js",
+        orig: ["static/js/*.js", "static/vendor/showdown/*.js"],
         dest: "assets/js/"
     },
     img: {
@@ -52,7 +52,7 @@ function imgMinifiy() {
         .pipe(imageMinify({
             progressive: true
         }))
-        .pipe(gulp.dest(paths.img.dest))
+        .pipe(gulp.dest(paths.img.dest));
 }
 
 function auto() {
