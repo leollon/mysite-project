@@ -33,9 +33,10 @@
         <span class="fa fa-eye"></span>
         <span>{{ article.view_times }}</span>
     </div>
-    <p class="post-meta">Posted by <a href="#">
-            {{ article.author }}</a> on
-        {{ article.created_time | date:"Y.m.d D h:i a" }}</p>
+    <p class="post-meta">
+        Posted by <a href="#">{{ article.author }}</a> on
+        {{ article.created_time | date:"Y.m.d D h:i a" }}
+    </p>
 </div>
 {% empty %}
 <div class="post-preview">
