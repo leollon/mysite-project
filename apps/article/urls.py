@@ -8,8 +8,8 @@ app_name = 'articles'
 
 urlpatterns = [
     url(r'^$', ArticleListView.as_view(), name='index'),
-    url(r'^articles/$', AllArticles.as_view(), name='all'),
-    url(r'^articles/(?P<slug>[-\w]+)/detail/$', ArticleDetailView.as_view(),
+    url(r'^archives/$', AllArticles.as_view(), name='all'),
+    url(r'^archives/(?P<slug>[-\w]+)/$', ArticleDetailView.as_view(),
         name='detail'),
 ]
 
