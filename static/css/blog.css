@@ -16,7 +16,6 @@ li {
 
 #categories,
 #articles {
-    list-style: none;
     margin-top: 10px;
 }
 
@@ -68,7 +67,7 @@ img {
 }
 
 #articles {
-    padding: 0px;
+    padding: 0;
 }
 
 .article-title-header,
