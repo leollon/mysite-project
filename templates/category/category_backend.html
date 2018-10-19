@@ -4,7 +4,7 @@
 Category Management
 {% endblock %}
 {% block content %}
-{% all_categories as categories%}
+{% all_categories as categories %}
 <table class="table table-stripped table-hover">
   <thead>
     <tr>
@@ -20,18 +20,18 @@ Category Management
     <tr>
       <td>{{ forloop.counter }}</td>
       <td>
-        <a href="{% url 'category:all_article' category.id %}" target="_blank">
+        <a href="{% url 'category:all_article' category.name %}" target="_blank">
           {{ category.name }}
         </a>
       </td>
       <td>
         <div class="label label-success">
-          <a href="{% url 'category:edit' category.id %}">
+          <a href="{% url 'category:edit' category.name %}">
             <span class="fa fa-pencil"></span>
           </a>
         </div>
         <div class="label label-danger">
-          <a href="{% url 'category:delete' category.id %}">
+          <a href="{% url 'category:delete' category.name %}">
             <span class="fa fa-trash"></span>
           </a>
         </div>
@@ -49,8 +49,9 @@ Category Management
   <label for="{{ field.id_for_label }}">{{ field.label }}</label>
   {{ field }}
   <label class="errorlist" for="error">
-    {% if field.errors %} {{ field.errors }} {% elif error_msg %} {{ error_msg
-    }} {%endif%}
+    {% if field.errors %} {{ field.errors }}
+    {% elif error_msg %} {{ error_msg }}
+    {%endif%}
   </label>
   {% endfor %}
   <input type="submit" class="btn btn-primary" value="Save">

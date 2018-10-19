@@ -74,7 +74,7 @@
                 {% for post in article_list %}
                 <li>
                     <a href="{% url 'articles:detail' post.slug %}" class="post-title"
-                        title="Posted at {{ post.created_time|date:"d/m/Y" }}">
+                        title="Posted at {{ post.created_time|date:"Y/m/d h:m:s" }}">
                         {{ post.title }}
                     </a>
                 </li>
@@ -89,7 +89,7 @@
                 {% newest_category as category_list %}
                 {% for cat in category_list %}
                 <li class="label label-primary fa fa-folder">
-                    {{ cat.name }}
+                    <span>{{cat.name }}</span>
                     <span class="badge">{{ cat.article_set.count }}</span>
                 </li>
                 {% endfor %}

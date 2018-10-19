@@ -1,5 +1,6 @@
 {% extends 'article/base.html' %}
 {% load staticfiles %}
+{% block keywords %}{{ article.tags }}{% endblock %}
 {% load article_tags %}
 {% block blog-head %}
 {{ article.title }}
@@ -15,4 +16,8 @@
 {% endblock %}
 {% block comment_input %}
 {% include 'comment/comment_form.html' %}
+{% endblock %}
+{% block scripts %}
+{{ block.super }}
+<script src="/assets/js/blog.min.js"></script>
 {% endblock %}

@@ -103,7 +103,7 @@ ALLOWED_CONTENT = {
     'ALLOWED_TAGS': ['blockquote', 'ul', 'li', 'ol', 'pre', 'code',
                      'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a',
                      'q', 'section', 'img', 'table', 'thead', 'tbody',
-                     'tr', 'th', 'td'],
+                     'tr', 'th', 'td', 'br'],
     'ALLOWED_ATTRIBUTES': {'*': ['class', 'style'],
                            'a': ['href'],
                            'img': ['src', 'alt', 'width', 'height'], },

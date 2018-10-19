@@ -21,16 +21,16 @@ def manage_category(request):
                   {'form': category_form})
 
 
-def get_all_articles_by_category(request, category_id):
+def get_all_articles_by_category(request, name):
     """Get all articles by category
     :param
         @request: receive request from client
         @category_id: receive captured string from url
     :return: a response object with categorized articles
     """
-    category = ArticleCategory.objects.get(pk=category_id)
+    category = ArticleCategory.objects.get(name=name)
     articles_list = Article.objects.order_by('-created_time').filter(
-        category_id=category_id)
+        category_id=category.id)
     paginator = Paginator(articles_list, per_page=per_page)
     page = request.GET.get('page')
     try:
@@ -74,14 +74,14 @@ def add_category(request):
 
 
 @login_required
-def edit_category(request, category_id):
+def edit_category(request, name):
     """
     view function for changing category's name
     :param request: HttpRequest object
     :param category_id: category's id in database
     :return: return HttpResponse with form
     """
-    category = ArticleCategory.objects.get(pk=category_id)
+    category = ArticleCategory.objects.get(name=name)
     if request.method == 'POST':
         form = CategoryForm(request.POST)
         name = request.POST.get('name')
@@ -106,12 +106,12 @@ def edit_category(request, category_id):
 
 
 @login_required
-def delete_category(request, category_id):
+def delete_category(request, name):
     if request.method == 'POST':
         if request.user.is_superuser:
-            ArticleCategory.objects.get(pk=category_id).delete()
+            ArticleCategory.objects.get(name=name).delete()
         return HttpResponseRedirect(reverse('category:manage'))
     message = 'Can not be deleted.'
-    category = ArticleCategory.objects.get(pk=category_id)
+    category = ArticleCategory.objects.get(name=name)
     return render(request, 'category/delete_confirm.html',
                   {'category': category, 'message': message})

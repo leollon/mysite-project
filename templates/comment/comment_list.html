@@ -1,9 +1,10 @@
 {% load article_tags %}
 <div class="comment-content" id="comments">
-    {{ article.comment_set.count }}
-    Comment{{article.comment_set.count | pluralize }}
-    <hr class="underline">
-    <ul id="list">
+    <p class="fa fa-comment">{{ article.comment_set.count }}
+        Comment{{article.comment_set.count | pluralize }}
+    </p>
+    <hr id="underline">
+    <ul id="comment-list">
         {% for comment in article.comment_set.all %}
         <li class="comment">
             <a href="#{{ forloop.counter }}" class="floor">

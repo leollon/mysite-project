@@ -1,9 +1,6 @@
 body {
   font-family: Roboto,sans-serif
 }
-li {
-  list-style: none
-}
 @media only screen and (max-width:768px) {
   .article-body > p,
   .post-subtitle > p {
@@ -12,7 +9,6 @@ li {
 }
 #articles,
 #categories {
-  list-style: none;
   margin-top: 10px
 }
 #categories li {
@@ -64,6 +60,14 @@ img {
   color: grey;
   margin: 0
 }
+#categories li,
+.article-created-time,
+.article-created-time-header,
+.article-title,
+.article-title-header,
+.comment {
+  list-style: none
+}
 .article-created-time-header,
 .article-title-header {
   text-transform: uppercase;
@@ -81,6 +85,9 @@ img {
 .article-created-time-header {
   float: right
 }
+.empty {
+  text-align: center
+}
 #underline {
   margin-top: 0;
   margin-bottom: 12px;
@@ -95,7 +102,7 @@ img {
   margin-top: 20px;
   display: block
 }
-#list {
+#comment-list {
   margin-left: 15px;
   padding: 0
 }

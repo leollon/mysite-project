@@ -1,3 +1,4 @@
+import re
 import uuid
 import unicodedata 
 
@@ -36,9 +37,18 @@ class Article(models.Model):
         return "%s" % self.title
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(unidecode(self.title))
-        if not self.tags: self.tags = "untagged"
+        self.clean_data()
         super(Article, self).save(*args, **kwargs)
+
+    def clean_data(self):
+        pat = re.compile('[^\w\s,_\-]+') 
+        self.slug = slugify(unidecode(self.title))
+        if not self.tags:
+            self.tags = "untagged"
+        else:
+            tags_list = [re.sub(pat, '-', tag.strip()) for tag in self.tags.split(',') if tag]
+            self.tags = ','.join(tags_list)
+
 
     @staticmethod
     def get_absolute_url():

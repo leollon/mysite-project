@@ -6,12 +6,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% block meta %}
-    <meta name="author" content="">
-    <meta name="description" content="">
-    <meta name="title" content="">
-    <meta name="keywords" content="">
-    {% endblock %}
+    <meta name="author" content="leollon,leollon的小站">
+    <meta name="description" content="A Blog created by leollon based on Django and Bootstrap.">
+    <meta name="keywords" content="Python,Django,c,c++,Linux,backend,后端">
+    <meta name="title" content="leollon的小站,leollon的博客">
+    <meta name="keywords" content="Python,Django,c,c++,Linux,backend,后端,{% block keywords %}{% endblock %}">
 
     <title>{% block title %}leollon的小站{% endblock %}</title>
     <link rel="shortcut icon" href="/assets/images/luffy.ico" type="image/icon">
@@ -50,13 +49,13 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="list-in-navbar-to-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    {% if not user.is_authenticated %}
+                    {% if user.is_authenticated %}
                     <li>
-                        <a href="{% url 'users:login' %}">backend</a>
+                        <a href="{% url 'users:logout' %}">logout</a>
                     </li>
                     {% else %}
                     <li>
-                        <a href="{% url 'users:logout' %}">logout</a>
+                        <a href="{% url 'users:login' %}">backend</a>
                     </li>
                     {% endif %}
                     <li>

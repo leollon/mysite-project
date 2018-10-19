@@ -139,7 +139,8 @@ body {
 }
 #category-list li {
   list-style: none;
-  margin: 2px
+  margin: 2px;
+  display: inline-flex
 }
 #post-list li {
   list-style: none;
@@ -219,10 +220,6 @@ textarea {
   margin: 0;
   padding: 0;
   color: red
-}
-.article-title-preview {
-  padding-top: 10px;
-  margin-bottom: 30px
 }
 .btn-primary,
 .label {

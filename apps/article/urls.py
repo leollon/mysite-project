@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'^archives/$', AllArticles.as_view(), name='all'),
     url(r'^archives/(?P<slug>[-\w]+)/$', ArticleDetailView.as_view(),
         name='detail'),
-    url(r'tags/(?P<tag>[-\w]+)/$', TaggedArticleListView.as_view(), name='tag')
+    url(r'tags/(?P<tag>[-\w\s]+)/$', TaggedArticleListView.as_view(), name='tag')
 ]
 
 # urlpatterns used by backend
