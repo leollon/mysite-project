@@ -70,3 +70,14 @@ def all_article(user):
     :return:  all of articles
     """
     return Article.objects.filter(author=user).all()
+
+
+@register.simple_tag(name='split_tags')
+def split_tags(tags):
+    """
+    Split article's tag into an array
+    Arguments:
+        tags: str type
+        rtype: list type
+    """
+    return [tag.strip() for tag in tags.split(",")]

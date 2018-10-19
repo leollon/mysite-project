@@ -1,5 +1,6 @@
 {% load article_tags %}
 {% for article in articles %}
+{% split_tags article.tags as tags %}
 <div class="post-preview">
     <h2 class="post-title">
         <a href="{% url 'articles:detail' article.slug %}">
@@ -15,18 +16,29 @@
             <a href="{% url 'category:all_article' article.category.id %}">
                 {{ article.category }}
             </a>
-            <span class="fa fa-comments"></span>
-            <a href="{% url 'articles:detail' article.slug %}#comments">
-                <span>
-                    {{ article.comment_set.count }}
-                    comment{% mypluralize article.comment_set.count %}
-                </span>
-            </a>
-            <span class="fa fa-eye"></span>
-            <span>{{ article.view_times }}</span>
+        </span>
+        <span class="fa fa-tag"></span>
+        {% for tag in tags %}
+        <a href="{% url 'articles:tag' tag %}">
+            #{{ tag }}
+        </a>
+        {% endfor %}
+        <span class="fa fa-comments"></span>
+        <a href="{% url 'articles:detail' article.slug %}#comments">
+            <span>
+                {{ article.comment_set.count }}
+                comment{% mypluralize article.comment_set.count %}
+            </span>
+        </a>
+        <span class="fa fa-eye"></span>
+        <span>{{ article.view_times }}</span>
     </div>
     <p class="post-meta">Posted by <a href="#">
             {{ article.author }}</a> on
         {{ article.created_time | date:"Y.m.d D h:i a" }}</p>
+</div>
+{% empty %}
+<div class="post-preview">
+    <h2 class="post-title empty">暂无文章</h2>
 </div>
 {% endfor %}
