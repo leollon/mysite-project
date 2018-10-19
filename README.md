@@ -5,7 +5,7 @@
 - [x] Article
 - [x] Author
 - [x] Category
-- [ ] Tags
+- [x] Tags
 - [x] Comment
 
 

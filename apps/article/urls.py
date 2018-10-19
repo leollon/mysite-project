@@ -2,7 +2,7 @@ from django.conf.urls import url
 
 from .views import (AllArticles, ArticleDetailView, ArticleListView,
                     ArticleManagementView, CreateArticleView,
-                    DeleteArticleView, UpdateArticleView)
+                    DeleteArticleView, UpdateArticleView, TaggedArticleListView)
 
 app_name = 'articles'
 
@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^archives/$', AllArticles.as_view(), name='all'),
     url(r'^archives/(?P<slug>[-\w]+)/$', ArticleDetailView.as_view(),
         name='detail'),
+    url(r'tags/(?P<tag>[-\w]+)/$', TaggedArticleListView.as_view(), name='tag')
 ]
 
 # urlpatterns used by backend

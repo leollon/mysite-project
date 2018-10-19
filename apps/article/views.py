@@ -6,6 +6,7 @@ from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import SingleObjectTemplateResponseMixin
 from django.views.generic.edit import BaseCreateView, DeleteView, UpdateView
+from django.core.paginator import Paginator
 
 from apps.comment.forms import CommentForm
 
@@ -130,6 +131,19 @@ class AllArticles(ListView):
         page = self.request.GET.get('page')
         per_page = 15
         context['articles'] = pager(page, per=per_page)
+        return context
+
+
+class TaggedArticleListView(ListView):
+    template_name = 'article/index.html'
+    context_object_name = 'articles'
+
+    def get_queryset(self, **kwargs):
+        queryset = Article.objects.filter(tags__icontains=self.kwargs.get('tag'))
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(TaggedArticleListView, self).get_context_data(**kwargs)
         return context
 
 

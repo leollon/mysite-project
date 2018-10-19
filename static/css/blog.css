@@ -101,6 +101,10 @@ img {
     float: right
 }
 
+.empty {
+    text-align: center;
+}
+
 #underline {
     margin-top: 0;
     margin-bottom: 12px;

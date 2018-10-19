@@ -19,7 +19,7 @@ class ArticleBaseForm(forms.ModelForm):
 
     class Meta:
         model = Article
-        fields = ['title', 'article_body', 'category']
+        fields = ['title', 'article_body', 'category', 'tags']
 
 
 class CreateArticleForm(ArticleBaseForm):
