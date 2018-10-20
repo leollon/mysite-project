@@ -80,4 +80,4 @@ def split_tags(tags):
         tags: str type
         rtype: list type
     """
-    return [tag.strip() for tag in tags.split(",")]
+    return [tag for tag in tags.split(",") if tag]

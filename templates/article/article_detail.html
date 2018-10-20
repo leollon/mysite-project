@@ -17,3 +17,7 @@
 {% block comment_input %}
 {% include 'comment/comment_form.html' %}
 {% endblock %}
+{% block scripts %}
+{{ block.super }}
+<script src="{% static 'js/blog.js' %}"></script>
+{% endblock %}

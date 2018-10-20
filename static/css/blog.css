@@ -2,10 +2,6 @@ body {
     font-family: 'Roboto', sans-serif
 }
 
-li {
-    list-style: none
-}
-
 @media only screen and (max-width: 768px) {
 
     .article-body>p,
@@ -78,12 +74,20 @@ img {
     margin: 0;
 }
 
+#categories li,
+.article-title-header,
+.article-created-time-header,
+.article-title,
+.article-created-time,
+.comment {
+    list-style: none;
+}
+
 .article-title-header,
 .article-created-time-header {
     text-transform: uppercase;
     font-size: 20px;
 }
-
 
 .article-title,
 .article-created-time {
@@ -121,7 +125,7 @@ img {
     display: block;
 }
 
-#list {
+#comment-list {
     margin-left: 15px;
     padding: 0;
 }
