@@ -23,7 +23,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'rest_framework',
     'crispy_forms',
     'apps.article.apps.ArticleConfig',
@@ -34,10 +33,14 @@ INSTALLED_APPS = [
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)),
-                              'templates/')],
-        'APP_DIRS': True,
+        'BACKEND':
+        'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            os.path.join(
+                os.path.dirname(os.path.dirname(BASE_DIR)), 'templates/')
+        ],
+        'APP_DIRS':
+        True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -67,16 +70,20 @@ WSGI_APPLICATION = 'mysite.config.wsgi.application'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
@@ -114,15 +121,23 @@ PER_PAGE = 6
 
 # In order to preventing XSS, it needs to set `ALLOWED_CONTENT`
 ALLOWED_CONTENT = {
-    'ALLOWED_TAGS': ['blockquote', 'ul', 'li', 'ol', 'pre', 'code',
-                     'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a',
-                     'q', 'section', 'img', 'table', 'thead', 'tbody',
-                     'tr', 'th', 'td', 'br'],
-    'ALLOWED_ATTRIBUTES': {'*': ['class', 'style'],
-                           'a': ['href'],
-                           'img': ['src', 'alt', 'width', 'height'], },
-    'ALLOWED_STYLES': ['color', 'background-image', 'background',
-                       'font', 'text-align', ]
+    'ALLOWED_TAGS': [
+        'blockquote', 'ul', 'li', 'ol', 'pre', 'code', 'p', 'h1', 'h2', 'h3',
+        'h4', 'h5', 'h6', 'a', 'q', 'section', 'img', 'table', 'thead',
+        'tbody', 'tr', 'th', 'td', 'br'
+    ],
+    'ALLOWED_ATTRIBUTES': {
+        '*': ['class', 'style'],
+        'a': ['href'],
+        'img': ['src', 'alt', 'width', 'height'],
+    },
+    'ALLOWED_STYLES': [
+        'color',
+        'background-image',
+        'background',
+        'font',
+        'text-align',
+    ]
 }
 
 # Customize User model

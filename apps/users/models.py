@@ -15,13 +15,15 @@ class User(AbstractUser):
     """
 
     email = models.EmailField(_('email address'), unique=True)
-    is_staff = models.BooleanField(_('staff'),
-                                   default=False,
-                                   help_text=_('Designates whether the user \
+    is_staff = models.BooleanField(
+        _('staff'),
+        default=False,
+        help_text=_('Designates whether the user \
                                                can log into this site'))
-    is_valid = models.BooleanField(_('validation'),
-                                   default=False,
-                                   help_text="Designates whether the user \
+    is_valid = models.BooleanField(
+        _('validation'),
+        default=False,
+        help_text="Designates whether the user \
                                    will be blocked")
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'email'
@@ -37,8 +39,8 @@ class User(AbstractUser):
         :param expires_in: after that seconds, token will be valid
         :return: Serial number
         """
-        return Serializer(getattr(dev_settings, 'SERIAL_SECRET_KEY'),
-                          expires_in)
+        return Serializer(
+            getattr(dev_settings, 'SERIAL_SECRET_KEY'), expires_in)
 
     def generate_valid_token(self):
         serial_number = self.generate_serial()
@@ -59,11 +61,13 @@ class User(AbstractUser):
         return True
 
     def generate_email_token(self):
-        serial_obj = self.generate_serial(expires_in=1*24*60*60)
-        return serial_obj.dumps({'name': self.username}).decode(encoding="ascii")
+        serial_obj = self.generate_serial(expires_in=1 * 24 * 60 * 60)
+        return serial_obj.dumps({
+            'name': self.username
+        }).decode(encoding="ascii")
 
     def verify_email_token(self, token):
-        serial_obj = self.generate_serial(expires_in=30*60)
+        serial_obj = self.generate_serial(expires_in=30 * 60)
         try:
             data = serial_obj.loads(token)
         except:

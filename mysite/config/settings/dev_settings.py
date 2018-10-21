@@ -7,7 +7,6 @@ from mysite.config.settings.common import *
 SECRET_KEY = 'p5cuwb&=cb^_jq3=s8lu8b4v*+_zfs7dh$%ij#_5@ca3jijw2i'
 SERIAL_SECRET_KEY = '3NGKnEpCAauyEFZjbFQTTjrSAuQPVUqE89N5WJBawQMGJUjAhF'
 
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -17,12 +16,13 @@ INSTALLED_APPS += [
     'debug_toolbar',
 ]
 
-MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
+MIDDLEWARE += [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+]
 
 DOMAIN_NAME = "http://127.0.0.1:8000"
 
 ROOT_URLCONF = 'mysite.config.urls.dev_urls'
-
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
@@ -36,18 +36,15 @@ DATABASES = {
     }
 }
 
-
 # EMAIL HOST
 EMAIL_HOST = 'smtp.qq.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-
 EMAIL_ACCOUNT = {
     'EMAIL_HOST_USER': os.environ.get("EMAIL_USER"),
     'EMAIL_HOST_PASSWORD': os.environ.get('EMAIL_PWD')
 }
-
 
 EMAIL_RELATED = {
     'REG_NOTIFICATION_FILE': 'notification',
@@ -55,4 +52,4 @@ EMAIL_RELATED = {
     'COMMENT_NOTIFICATION': 'comment_notification_template',
 }
 
-INTERNAL_IPS = ('127.0.0.1',)
+INTERNAL_IPS = ('127.0.0.1', )

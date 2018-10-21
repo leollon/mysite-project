@@ -42,9 +42,11 @@ def notify_user(request, **kwargs):
     link = domain + kwargs.get('url') + kwargs.get('token')
     html_message = message.format(username, link, link)
 
-    send_mail(subject, message, from_email,
-              [to_email],
-              fail_silently=False,
-              auth_user=email_user,
-              auth_password=email_password,
-              html_message=html_message)
+    send_mail(
+        subject,
+        message,
+        from_email, [to_email],
+        fail_silently=False,
+        auth_user=email_user,
+        auth_password=email_password,
+        html_message=html_message)

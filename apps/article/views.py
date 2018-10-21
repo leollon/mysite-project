@@ -28,17 +28,17 @@ class ArticleListView(ListView):
         return context
 
 
-class CreateArticleView(LoginRequiredMixin,
-                        SingleObjectTemplateResponseMixin,
+class CreateArticleView(LoginRequiredMixin, SingleObjectTemplateResponseMixin,
                         BaseCreateView):
     """Class-based view function used to write an article
     """
     template_name = 'article/editor.html'
     form_class = CreateArticleForm
     login_url = '/accounts/login/'
-    
+
     def dispatch(self, request, *args, **kwargs):
-        return super(CreateArticleView, self).dispatch(request, *args, **kwargs)
+        return super(CreateArticleView, self).dispatch(request, *args,
+                                                       **kwargs)
 
     def form_valid(self, form):
         """
@@ -89,9 +89,8 @@ class ArticleDetailView(DetailView, BaseCreateView):
 
     def get_object(self):
         renderer = HightlightRenderer()
-        markdown = mistune.Markdown(escape=True,
-                                    hard_wrap=True,
-                                    renderer=renderer)
+        markdown = mistune.Markdown(
+            escape=True, hard_wrap=True, renderer=renderer)
         article = super(ArticleDetailView, self).get_object()
         article.view_times += 1
         article.save()
@@ -114,7 +113,8 @@ class DeleteArticleView(LoginRequiredMixin, DeleteView):
                                      'you.</h1>')
 
     def post(self, request, *args, **kwargs):
-        response = super(DeleteArticleView, self).post(request, *args, **kwargs)
+        response = super(DeleteArticleView, self).post(request, *args,
+                                                       **kwargs)
         if self.object.author == request.user or request.user.is_superuser:
             return response
         return HttpResponseForbidden('<h1>This article does not blog to '
@@ -138,7 +138,8 @@ class TaggedArticleListView(ListView):
     context_object_name = 'articles'
 
     def get_queryset(self, **kwargs):
-        queryset = Article.objects.filter(tags__icontains=self.kwargs.get('tag'))
+        queryset = Article.objects.filter(
+            tags__icontains=self.kwargs.get('tag'))
         return queryset
 
     def get_context_data(self, **kwargs):
