@@ -1,3 +1,5 @@
+import re
+
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 
@@ -16,6 +18,15 @@ class ArticleCategory(models.Model):
 
     def __str__(self):
         return '%s' % self.name
+
+    def save(self, *args, **kwargs):
+        self.filter_data()
+        super(ArticleCategory, self).save(*args, **kwargs)
+
+    def filter_data(self):
+        pat = re.compile('[^_\w\s]+')
+        self.name = re.sub(pat, '_', self.name)
+
 
     class Meta:
         db_table = "categories"
