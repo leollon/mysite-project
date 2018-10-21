@@ -42,9 +42,9 @@ Category Management
   </tbody>
   {% endfor %}
 </table>
-<form id="category-form" class="form-inline" action="" method="post">
+<form id="category-form" class="form-inline" action="{{ action }}" method="post">
   {% csrf_token %}
-  <h3>添加分类</h3>
+  <h3>{{ action_name }}分类</h3>
   {% for field in form %}
   <label for="{{ field.id_for_label }}">{{ field.label }}</label>
   {{ field }}

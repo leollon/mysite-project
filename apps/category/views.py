@@ -17,8 +17,12 @@ per_page = getattr(settings, 'PER_PAGE')
 @login_required
 def manage_category(request):
     category_form = CategoryForm()
-    return render(request, 'category/category_backend.html',
-                  {'form': category_form})
+    return render(
+        request, 'category/category_backend.html', {
+            'form': category_form,
+            'action_name': "添加",
+            'action': reverse('category:add')
+        })
 
 
 def get_all_articles_by_category(request, name):
@@ -39,9 +43,10 @@ def get_all_articles_by_category(request, name):
         articles = paginator.page(1)
     except EmptyPage:
         articles = paginator.page(paginator.num_pages)
-    return render(request,
-                  'category/article_categorized.html',
-                  {"category": category, "articles": articles})
+    return render(request, 'category/article_categorized.html', {
+        "category": category,
+        "articles": articles
+    })
 
 
 def get_all_category(request):
@@ -63,14 +68,19 @@ def add_category(request):
             except IntegrityError:
                 error_message = "Duplicated %s category" % repr(name)
                 category_form = CategoryForm()
-                return render(request, 'category/category_backend.html',
-                              {'form': category_form,
-                               'error_msg': error_message})
+                return render(request, 'category/category_backend.html', {
+                    'form': category_form,
+                    'error_msg': error_message
+                })
             else:
                 return HttpResponseRedirect(reverse('category:manage'))
         else:
-            return render(request, 'category/category_backend.html',
-                          {'form': form})
+            return render(
+                request, 'category/category_backend.html', {
+                    'form': form,
+                    'action_name': "添加",
+                    'action': reverse("category:add")
+                })
 
 
 @login_required
@@ -92,17 +102,22 @@ def edit_category(request, name):
             except IntegrityError:
                 error_message = "Duplicated %s category" % repr(name)
                 category_form = CategoryForm()
-                return render(request, 'category/category_backend.html',
-                              {'form': category_form,
-                               'error_msg': error_message})
+                return render(request, 'category/category_backend.html', {
+                    'form': category_form,
+                    'error_msg': error_message
+                })
             else:
                 return HttpResponseRedirect(reverse('category:manage'))
     else:
         initial = {'name': category.name}
         # 在前端编辑表单中显示要编辑的类名
         category_form = CategoryForm(initial=initial)
-        return render(request, 'category/category_backend.html',
-                      {'form': category_form})
+        return render(
+            request, 'category/category_backend.html', {
+                'form': category_form,
+                'action_name': "编辑",
+                'action': reverse('category:edit', args=(name, ))
+            })
 
 
 @login_required
@@ -113,5 +128,7 @@ def delete_category(request, name):
         return HttpResponseRedirect(reverse('category:manage'))
     message = 'Can not be deleted.'
     category = ArticleCategory.objects.get(name=name)
-    return render(request, 'category/delete_confirm.html',
-                  {'category': category, 'message': message})
+    return render(request, 'category/delete_confirm.html', {
+        'category': category,
+        'message': message
+    })
