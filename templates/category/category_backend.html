@@ -4,7 +4,7 @@
 Category Management
 {% endblock %}
 {% block content %}
-{% all_categories as categories%}
+{% all_categories as categories %}
 <table class="table table-stripped table-hover">
   <thead>
     <tr>
@@ -49,8 +49,9 @@ Category Management
   <label for="{{ field.id_for_label }}">{{ field.label }}</label>
   {{ field }}
   <label class="errorlist" for="error">
-    {% if field.errors %} {{ field.errors }} {% elif error_msg %} {{ error_msg
-    }} {%endif%}
+    {% if field.errors %} {{ field.errors }}
+    {% elif error_msg %} {{ error_msg }}
+    {%endif%}
   </label>
   {% endfor %}
   <input type="submit" class="btn btn-primary" value="Save">
