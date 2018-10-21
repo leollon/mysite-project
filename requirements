@@ -24,3 +24,4 @@ Unidecode==1.0.22
 uWSGI==2.0.17
 webencodings==0.5.1
 pylint==2.1.1
+sentry-sdk==0.4.3

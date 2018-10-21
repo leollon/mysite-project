@@ -1,4 +1,6 @@
 import getpass
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 from mysite.config.settings.common import *
 
@@ -99,3 +101,8 @@ CSRF_COOKIE_SECURE = True  # only sent with an HTTPS connection
 CSRF_COOKIE_HTTPONLY = True  # csrftoken disallow to be read by JS in console
 CSRF_COOKIE_AGE = 604800  # in seconds
 SESSION_COOKIE_AGE = 604800  # in seconds
+
+sentry_sdk.init(
+    dsn="",
+    integrations=[DjangoIntegration()]
+)
