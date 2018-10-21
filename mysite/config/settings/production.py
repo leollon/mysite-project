@@ -14,7 +14,6 @@ environ = {
     'EMAIL_HOST': "your_email_host",
 }
 
-
 SECRET_KEY = environ.get('SECRET_KEY')
 SERIAL_SECRET_KEY = environ.get('SERIAL_SECRET_KEY')
 
@@ -25,7 +24,6 @@ ALLOWED_HOSTS = ['your_test_domain_name']
 DOMAIN_NAME = ALLOWED_HOSTS[0]
 
 ROOT_URLCONF = 'mysite.config.urls.production'
-
 
 DATABASES = {
     'default': {
@@ -38,13 +36,11 @@ DATABASES = {
     }
 }
 
-
 # Directory containing all static files
 # when running `python manage.py collectstatic`, collect all static file in a
 # same directory.
 # for production deployed, use nginx to response static file requested
 STATIC_ROOT = os.path.join(os.path.join('/home/', getpass.getuser()), 'assets')
-
 
 # Here stores all static files
 STATICFILES_DIRS = [
@@ -56,15 +52,23 @@ PER_PAGE = 6
 
 # In order to preventing XSS, it needs to set `ALLOWED_CONTENT`
 ALLOWED_CONTENT = {
-    'ALLOWED_TAGS': ['blockquote', 'ul', 'li', 'ol', 'pre', 'code',
-                     'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a',
-                     'q', 'section', 'img', 'table', 'thead', 'tbody',
-                     'tr', 'th', 'td'],
-    'ALLOWED_ATTRIBUTES': {'*': ['class', 'style'],
-                           'a': ['href'],
-                           'img': ['src', 'alt', 'width', 'height'], },
-    'ALLOWED_STYLES': ['color', 'background-image', 'background',
-                       'font', 'text-align', ]
+    'ALLOWED_TAGS': [
+        'blockquote', 'ul', 'li', 'ol', 'pre', 'code', 'p', 'h1', 'h2', 'h3',
+        'h4', 'h5', 'h6', 'a', 'q', 'section', 'img', 'table', 'thead',
+        'tbody', 'tr', 'th', 'td'
+    ],
+    'ALLOWED_ATTRIBUTES': {
+        '*': ['class', 'style'],
+        'a': ['href'],
+        'img': ['src', 'alt', 'width', 'height'],
+    },
+    'ALLOWED_STYLES': [
+        'color',
+        'background-image',
+        'background',
+        'font',
+        'text-align',
+    ]
 }
 
 # Customize user model
@@ -82,7 +86,6 @@ EMAIL_ACCOUNT = {
     'EMAIL_HOST_PASSWORD': environ.get('EMAIL_PWD')
 }
 
-
 # Email server related
 EMAIL_HOST = environ.get('EMAIL_HOST')
 EMAIL_PORT = environ.get('EMAIL_PORT')
@@ -95,14 +98,10 @@ EMAIL_RELATED = {
     'COMMENT_NOTIFICATION': 'comment_notification_template',
 }
 
-
 CSRF_USE_SESSIONS = True  # store csrftoke in the session
 CSRF_COOKIE_SECURE = True  # only sent with an HTTPS connection
 CSRF_COOKIE_HTTPONLY = True  # csrftoken disallow to be read by JS in console
 CSRF_COOKIE_AGE = 604800  # in seconds
 SESSION_COOKIE_AGE = 604800  # in seconds
 
-sentry_sdk.init(
-    dsn="",
-    integrations=[DjangoIntegration()]
-)
+sentry_sdk.init(dsn="", integrations=[DjangoIntegration()])

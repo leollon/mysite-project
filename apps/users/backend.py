@@ -8,7 +8,6 @@ from .models import User
 
 
 class EmailBackend(ModelBackend):
-
     def authenticate(self, request, email=None, password=None, **credentials):
         UserModel = User
         try:

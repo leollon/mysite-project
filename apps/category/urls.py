@@ -16,9 +16,7 @@ urlpatterns = [
 # urlpatterns used by backend
 urlpatterns += [
     url(r'^all/$', get_all_category, name='all_category'),
-    url(
-        r'^(?P<name>[_\w\s]+)/$',
+    url(r'^(?P<name>[_\w\s]+)/$',
         get_all_articles_by_category,
-        name='all_article'
-        ),
+        name='all_article'),
 ]

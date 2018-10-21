@@ -1,6 +1,6 @@
 import re
 import uuid
-import unicodedata 
+import unicodedata
 
 from django.utils.text import slugify
 from django.db import models
@@ -23,15 +23,12 @@ class Article(models.Model):
     article_body = models.TextField()
     created_time = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(
-        max_length=100, null=True,
-        unique=True, default=default_slug
-        )
+        max_length=100, null=True, unique=True, default=default_slug)
     view_times = models.PositiveIntegerField(default=0)
     category = models.ForeignKey(ArticleCategory, null=True)
     author = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     tags = models.CharField(
-        max_length=32, default="untagged",
-        blank=True, help_text="使用逗号分隔")
+        max_length=32, default="untagged", blank=True, help_text="使用逗号分隔")
 
     def __str__(self):
         return "%s" % self.title
@@ -41,14 +38,16 @@ class Article(models.Model):
         super(Article, self).save(*args, **kwargs)
 
     def clean_data(self):
-        pat = re.compile('[^\w\s,_\-]+') 
+        pat = re.compile('[^\w\s,_\-]+')
         self.slug = slugify(unidecode(self.title))
         if not self.tags:
             self.tags = "untagged"
         else:
-            tags_list = [re.sub(pat, '-', tag.strip()) for tag in self.tags.split(',') if tag]
+            tags_list = [
+                re.sub(pat, '-', tag.strip()) for tag in self.tags.split(',')
+                if tag
+            ]
             self.tags = ','.join(tags_list)
-
 
     @staticmethod
     def get_absolute_url():

@@ -27,6 +27,5 @@ class ArticleCategory(models.Model):
         pat = re.compile('[^_\w\s]+')
         self.name = re.sub(pat, '_', self.name)
 
-
     class Meta:
         db_table = "categories"

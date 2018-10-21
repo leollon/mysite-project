@@ -14,8 +14,7 @@ class CommentPagination(PageNumberPagination):
     max_page_size = 50
 
 
-class CommentViewSets(mixins.CreateModelMixin,
-                      mixins.ListModelMixin,
+class CommentViewSets(mixins.CreateModelMixin, mixins.ListModelMixin,
                       viewsets.GenericViewSet):
     serializer_class = CommentSerializers
     pagination_class = CommentPagination
@@ -31,13 +30,16 @@ class CommentViewSets(mixins.CreateModelMixin,
             serializers.is_valid(raise_exception=True)
         except ValidationError as e:
             err = e.detail
-            return Response(err, status=status.HTTP_400_BAD_REQUEST,
-                            content_type="application/json; charset=utf-8")
+            return Response(
+                err,
+                status=status.HTTP_400_BAD_REQUEST,
+                content_type="application/json; charset=utf-8")
         else:
             self.perform_create(serializers)
-            response = Response(serializers.data,
-                                status=status.HTTP_201_CREATED,
-                                content_type="application/json; charset=utf-8")
+            response = Response(
+                serializers.data,
+                status=status.HTTP_201_CREATED,
+                content_type="application/json; charset=utf-8")
             return response
 
     def list(self, request, *args, **kwargs):

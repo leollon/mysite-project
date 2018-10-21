@@ -13,22 +13,25 @@ from .utils import notify_user
 
 email_related = getattr(settings, 'EMAIL_RELATED')
 reg_notification_file = email_related.get('REG_NOTIFICATION_FILE')
-pwd_change_notification_file = email_related.get('PWD_CHANGE_NOTIFICATION_FILE')
+pwd_change_notification_file = email_related.get(
+    'PWD_CHANGE_NOTIFICATION_FILE')
 
 
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
-            user = User(username=form.cleaned_data['username'],
-                        email=form.cleaned_data['email'])
+            user = User(
+                username=form.cleaned_data['username'],
+                email=form.cleaned_data['email'])
             user.set_password(form.cleaned_data['password1'])
             user.save()
-            notify_user(request=request,
-                        url="/accounts/validate/",
-                        token=user.generate_valid_token(),
-                        subject="Confirm your account",
-                        filename=reg_notification_file)
+            notify_user(
+                request=request,
+                url="/accounts/validate/",
+                token=user.generate_valid_token(),
+                subject="Confirm your account",
+                filename=reg_notification_file)
             return HttpResponseRedirect(reverse('users:login'))
         else:
             return render(request, 'users/register.html', {'form': form})
@@ -46,14 +49,13 @@ def validate_view(request, token):
     """
     if not request.user.is_valid and \
             request.user.valid_account(token.encode(encoding="ascii")):
-        msg = {
-            "validation": _("You have confirmed your account.")
-        }
+        msg = {"validation": _("You have confirmed your account.")}
         return render(request, 'users/validate.html', msg)
     else:
         msg = {
-            "expiration": "This link used to confirm your account is expired "
-                          "or invalid."
+            "expiration":
+            "This link used to confirm your account is expired "
+            "or invalid."
         }
         return render(request, 'users/expiration.html', msg)
 
@@ -72,11 +74,12 @@ def resend_email_view(request):
     elif request.user.is_active:
         # if user did not activate his/her account, then resend the email
         # including the token
-        notify_user(request=request,
-                    url="/accounts/validate/",
-                    token=request.user.generate_valid_token(),
-                    subject="Confirm your account",
-                    filename=reg_notification_file)
+        notify_user(
+            request=request,
+            url="/accounts/validate/",
+            token=request.user.generate_valid_token(),
+            subject="Confirm your account",
+            filename=reg_notification_file)
         msg = {
             "notification": _("The email including token has resent to you.")
         }
@@ -95,11 +98,11 @@ def login_view(request):
             password = form.cleaned_data['password']
             user = authenticate(request, email=email, password=password)
             if user is None:
-                return render(request,
-                              'users/login.html',
-                              {"form": UserLoginForm(),
-                               "status": "Username and Password mismatch."}
-                              )
+                return render(
+                    request, 'users/login.html', {
+                        "form": UserLoginForm(),
+                        "status": "Username and Password mismatch."
+                    })
             elif user.is_active or user.is_valid:
                 login(request, user)
                 if next_url is not None:
@@ -108,9 +111,9 @@ def login_view(request):
                     return HttpResponseRedirect(reverse('users:dashboard'))
             else:
                 msg = {
-                    "invalidation": "This account was banned. It can't not be \
+                    "invalidation":
+                    "This account was banned. It can't not be \
                                     used to login this site."
-
                 }
                 return render(request, "users/blocked.html", msg)
     if request.user.is_authenticated:
@@ -130,11 +133,12 @@ def password_reset_request(request):
         # send user email including the token
         form = PasswordResetRequestForm(request.POST)
         if form.is_valid():
-            notify_user(request,
-                        url="/accounts/password_reset/",
-                        token=request.user.generate_email_token(),
-                        subject="Change Password",
-                        filename=pwd_change_notification_file)
+            notify_user(
+                request,
+                url="/accounts/password_reset/",
+                token=request.user.generate_email_token(),
+                subject="Change Password",
+                filename=pwd_change_notification_file)
             msg = {
                 "notification": "The email including token has sent to you."
             }
@@ -170,9 +174,7 @@ def password_reset(request, token):
         form = PasswordResetForm(request.user)
         return render(request, "users/password_reset.html", {"form": form})
     else:
-        msg = {
-            "expiration": _("The token is expired or invalid.")
-        }
+        msg = {"expiration": _("The token is expired or invalid.")}
         return render(request, "users/expiration.html", msg)
 
 

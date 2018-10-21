@@ -16,11 +16,12 @@ allow_content = getattr(settings, 'ALLOWED_CONTENT')
 
 @register.filter(name='banxss')
 def bleach_xss(text):
-    return bleach.clean(text=text,
-                        tags=allow_content['ALLOWED_TAGS'],
-                        attributes=allow_content['ALLOWED_ATTRIBUTES'],
-                        styles=allow_content['ALLOWED_STYLES'],
-                        strip=True)
+    return bleach.clean(
+        text=text,
+        tags=allow_content['ALLOWED_TAGS'],
+        attributes=allow_content['ALLOWED_ATTRIBUTES'],
+        styles=allow_content['ALLOWED_STYLES'],
+        strip=True)
 
 
 @register.filter(name='md')
@@ -32,9 +33,8 @@ def md(text):
     :return: markdown object
     """
     renderer = my_renderer.HightlightRenderer()
-    markdown = my_renderer.mistune.Markdown(escape=True,
-                                            hard_wrap=True,
-                                            renderer=renderer)
+    markdown = my_renderer.mistune.Markdown(
+        escape=True, hard_wrap=True, renderer=renderer)
     return markdown(text)
 
 
