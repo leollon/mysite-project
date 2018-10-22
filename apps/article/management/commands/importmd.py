@@ -37,8 +37,8 @@ class Command(BaseCommand):
             'dir',
             nargs="?",
             type=str,
-            default=str(self.parent_dir/'markdown'),
-            help="default: %s." % str(self.parent_dir/'markdown'))
+            default=str(self.parent_dir / 'markdown'),
+            help="default: %s." % str(self.parent_dir / 'markdown'))
 
     def handle(self, *args, **options):
         settings.USE_TZ = False
@@ -60,7 +60,6 @@ class Command(BaseCommand):
                     message = "Import %s Error, msessage: %s." % (msg, error)
                     self.stderr.write(self.style.ERROR(message))
         settings.USE_TZ = True
-        
 
 
 def line_handler(line):

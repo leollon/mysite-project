@@ -127,6 +127,5 @@ def delete_category(request, name):
             get_object_or_404(ArticleCategory, name=name).delete()
         return HttpResponseRedirect(reverse('category:manage'))
     category = get_object_or_404(ArticleCategory, name=name)
-    return render(request, 'category/delete_confirm.html', {
-        'category': category
-    })
+    return render(request, 'category/delete_confirm.html',
+                  {'category': category})
