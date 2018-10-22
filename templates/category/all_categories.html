@@ -3,7 +3,7 @@
 <ul id="categories">
     {% for category in category_lists %}
     <li>
-        <a href="{% url 'category:all_article' category.id %}" class="label label-primary fa fa-folder">
+        <a href="{% url 'category:all_article' category.name %}" class="label label-primary fa fa-folder">
             {{ category.name }}
             <span class="badge">
                 {{ category.article_set.count }}
