@@ -1,8 +1,15 @@
+import os
 import getpass
+from pathlib import Path
+
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
-from mysite.config.settings.common import *
+from mysite.config.settings.common import (
+    BASE_DIR, INSTALLED_APPS, TEMPLATES, MIDDLEWARE, WSGI_APPLICATION,
+    AUTH_PASSWORD_VALIDATORS, PASSWORD_HASHERS, LANGUAGE_CODE, TIME_ZONE,
+    USE_I18N, USE_L10N, USE_TZ, STATIC_URL, PER_PAGE, ALLOWED_CONTENT,
+    AUTH_USER_MODEL, AUTHENTICATION_BACKENDS)
 
 environ = {
     'SECRET_KEY': "this_key_is_needed_by_django.",
@@ -40,7 +47,7 @@ DATABASES = {
 # when running `python manage.py collectstatic`, collect all static file in a
 # same directory.
 # for production deployed, use nginx to response static file requested
-STATIC_ROOT = os.path.join(os.path.join('/home/', getpass.getuser()), 'assets')
+STATIC_ROOT = str(Path('/home/')/getpass.getuser()/'assets')
 
 # Here stores all static files
 STATICFILES_DIRS = [

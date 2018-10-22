@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import IntegrityError
@@ -32,7 +33,7 @@ def get_all_articles_by_category(request, name):
         @category_id: receive captured string from url
     :return: a response object with categorized articles
     """
-    category = ArticleCategory.objects.get(name=name)
+    category = get_object_or_404(ArticleCategory, name=name)
     articles_list = Article.objects.order_by('-created_time').filter(
         category_id=category.id)
     paginator = Paginator(articles_list, per_page=per_page)
@@ -91,7 +92,7 @@ def edit_category(request, name):
     :param category_id: category's id in database
     :return: return HttpResponse with form
     """
-    category = ArticleCategory.objects.get(name=name)
+    category = get_object_or_404(ArticleCategory, name=name)
     if request.method == 'POST':
         form = CategoryForm(request.POST)
         name = request.POST.get('name')
@@ -124,11 +125,8 @@ def edit_category(request, name):
 def delete_category(request, name):
     if request.method == 'POST':
         if request.user.is_superuser:
-            ArticleCategory.objects.get(name=name).delete()
+            get_object_or_404(ArticleCategory, name=name).delete()
         return HttpResponseRedirect(reverse('category:manage'))
-    message = 'Can not be deleted.'
-    category = ArticleCategory.objects.get(name=name)
-    return render(request, 'category/delete_confirm.html', {
-        'category': category,
-        'message': message
-    })
+    category = get_object_or_404(ArticleCategory, name=name)
+    return render(request, 'category/delete_confirm.html',
+                  {'category': category})

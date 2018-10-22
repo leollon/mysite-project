@@ -28,7 +28,7 @@ class Article(models.Model):
     category = models.ForeignKey(ArticleCategory, null=True)
     author = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     tags = models.CharField(
-        max_length=32, default="untagged", blank=True, help_text="使用逗号分隔")
+        max_length=64, default="untagged", blank=True, help_text="使用逗号分隔")
 
     def __str__(self):
         return "%s" % self.title
