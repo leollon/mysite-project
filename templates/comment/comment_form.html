@@ -1,4 +1,5 @@
 <form class="form-inline">
+    {% csrf_token %}
     <div class="form-horizontal">
         {% for field in form %}
         <div class="form-group">

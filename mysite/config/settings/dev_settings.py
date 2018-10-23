@@ -72,4 +72,11 @@ EMAIL_RELATED = {
     'COMMENT_NOTIFICATION': 'comment_notification_template',
 }
 
+CSRF_USE_SESSIONS = True  # store csrftoke in the session
+CSRF_COOKIE_SECURE = False  # only sent with an HTTPS connection
+CSRF_COOKIE_HTTPONLY = True  # csrftoken disallow to be read by JS in console.
+CSRF_COOKIE_AGE = 604800  # in seconds
+CSRF_USE_SESSIONS = True
+SESSION_COOKIE_AGE = 604800  # in seconds
+
 INTERNAL_IPS = ('127.0.0.1', )
