@@ -1,9 +1,12 @@
 import os
+from getpass import getuser
+from pathlib import Path
+
 from mysite.config.settings.common import (
     BASE_DIR, INSTALLED_APPS, TEMPLATES, MIDDLEWARE, WSGI_APPLICATION,
     AUTH_PASSWORD_VALIDATORS, PASSWORD_HASHERS, LANGUAGE_CODE, TIME_ZONE,
-    USE_I18N, USE_L10N, USE_TZ, STATIC_URL, STATIC_ROOT, STATICFILES_DIRS,
-    PER_PAGE, ALLOWED_CONTENT, AUTH_USER_MODEL, AUTHENTICATION_BACKENDS)
+    USE_I18N, USE_L10N, USE_TZ, PER_PAGE, ALLOWED_CONTENT, AUTH_USER_MODEL,
+    AUTHENTICATION_BACKENDS)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
@@ -40,6 +43,18 @@ DATABASES = {
         "PASSWORD": '123456'
     }
 }
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.11/howto/static-files/
+# tied to app's static, like my_app/static/
+STATIC_URL = '/static/'
+
+# Directory containing all static files
+STATIC_ROOT = str(Path('/home/') / getuser() / 'static')
+
+STATICFILES_DIRS = [
+    os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), 'static/')
+]
 
 # EMAIL HOST
 EMAIL_HOST = 'smtp.qq.com'

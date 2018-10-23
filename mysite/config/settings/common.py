@@ -11,8 +11,6 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-from getpass import getuser
-from pathlib import Path
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -107,17 +105,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
-# tied to app's static, like my_app/static/
-STATIC_URL = '/static/'
-
-# Directory containing all static files
-STATIC_ROOT = str(Path('/home/') / getuser() / 'static')
-
-STATICFILES_DIRS = [
-    os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), 'static/')
-]
 # Show the articles' number in each page
 PER_PAGE = 6
 
