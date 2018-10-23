@@ -1,6 +1,6 @@
 {% load article_tags %}
 <div class="comment-content" id="comments">
-    <p class="fa fa-comment">{{ article.comment_set.count }}
+    <p class="fa fa-comment"> {{ article.comment_set.count }}
         Comment{{article.comment_set.count | pluralize }}
     </p>
     <hr id="underline">
@@ -15,7 +15,7 @@
                 {{ comment.username }}
             </a>
             <span class="datetime">
-                {{ comment.created_time | date:"d N Y D H:m:s" }}
+                {{ comment.created_time|date:"r" }}
             </span>
             <div class="comment-text">
                 {{ comment.comment_text | banxss | md | safe }}

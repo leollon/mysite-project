@@ -43,7 +43,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     {% if user.is_authenticated %}
                     <li>
-                        <a href="{% url 'users:logout' %}">logout</a>
+                        <a href="{% url 'users:dashboard' %}">dashboard</a>
                     </li>
                     {% else %}
                     <li>
