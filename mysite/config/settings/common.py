@@ -93,11 +93,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
-# tied to app's static, like my_app/static/
-STATIC_URL = '/static/'
-
 # Show the articles' number in each page
 PER_PAGE = 6
 
