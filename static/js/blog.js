@@ -58,12 +58,6 @@ function postComment(post_id) {
 }
 
 function getCookie() {
-    var cookie = document.cookie;
-    var fieldList = cookie.split(";");
-    for (var i in fieldList) {
-        var field = fieldList[i].split("=");
-        if (field[0].trim() === "csrftoken") {
-            return field[1].trim();
-        }
-    }
+    var cookie = $("input[name='csrfmiddlewaretoken']").attr("value");
+    return cookie;
 }
