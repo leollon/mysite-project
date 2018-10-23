@@ -9,7 +9,7 @@
     </h2>
     </a>
     <article class="post-subtitle">
-        {{ article.article_body | truncatechars:140 | md | banxss | safe }}
+        {{ article.article_body|truncatechars_html:140|md|banxss|safe }}
     </article>
     <div class="article-extra">
         <span class="fa fa-folder">
@@ -27,7 +27,7 @@
         <a href="{% url 'articles:detail' article.slug %}#comments">
             <span>
                 {{ article.comment_set.count }}
-                comment{% mypluralize article.comment_set.count %}
+                comment{{ article.comment_set.count|pluralize }}
             </span>
         </a>
         <span class="fa fa-eye"></span>
@@ -35,7 +35,7 @@
     </div>
     <p class="post-meta">
         Posted by <a href="#">{{ article.author }}</a> on
-        {{ article.created_time | date:"Y.m.d D h:i a" }}
+        {{ article.created_time|date:"r" }}
     </p>
 </div>
 {% empty %}

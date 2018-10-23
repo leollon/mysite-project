@@ -1,25 +1,24 @@
 <form class="form-inline">
   {% csrf_token %}
-  <div class="form-horizontal">
-    {% for field in form %}
-    <div class="form-group">
-      {% if field.label %}
-      <label class="col-xs-12 col-sm-12 col-md-12 col-lg-12 comment-label-name"
-        for="{{ field.id_for_label }}">
-        {{ field.label }}
-      </label>
-      {% endif %}
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div class="input-box {{ field.label }}">
-          {{ field }}
-        </div>
+  <div class="container-fluid">
+    <div class="row">
+      {% for field in form %}
+      <div class="col-xs-12
+            {% if field.label == 'Comment text' %} col-sm-12 col-md-12 col-lg-12
+            {% else %} col-xs-12 col-sm-4 col-md-4 col-lg-4 {% endif %}"
+        id='{{ field.label }}'>
+        <label class="
+                small" for="{{field.id_for_label }}">
+          {{ field.label }}
+        </label>
+        <div class="input-box">{{ field }}</div>
       </div>
       {% if field.help_text %}
       <p class="small">{{ field.help_text }}</p>
       {% endif %}
+      {% endfor %}
     </div>
-    {% endfor %}
+    <input type="button" onclick="postComment({{ article.id }})" class="btn btn-default reply-btn"
+      value="Reply">
   </div>
-  <input type="button" onclick="postComment({{ article.id }})" class="btn btn-default reply-btn"
-    value="Reply">
 </form>

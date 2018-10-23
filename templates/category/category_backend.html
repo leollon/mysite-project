@@ -11,7 +11,7 @@ Category Management
       <td>#</td>
       <td>Category Name</td>
       <td>Operations</td>
-      <td>Article Number</td>
+      <td>Articles</td>
       <td>Created Time</td>
     </tr>
   </thead>
@@ -37,7 +37,7 @@ Category Management
         </div>
       </td>
       <td>{{ category.article_set.count }}</td>
-      <td>{{ category.created_time|date:"d/m/Y" }}</td>
+      <td>{{ category.created_time|date:"Y/m/d H:i:s O" }}</td>
     </tr>
   </tbody>
   {% endfor %}

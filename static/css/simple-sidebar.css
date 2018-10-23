@@ -211,7 +211,6 @@ body {
 
 table {
     margin-top: 20px;
-    text-align: center;
 }
 
 table>thead {
@@ -223,8 +222,15 @@ td>li {
     display: block;
 }
 
-td>a,
-td>li>a {
+td:nth-child(odd) {
+    text-align: center;
+}
+
+td:nth-child(even) {
+    text-align: left;
+}
+
+td>a {
     font-size: 16px;
     color: #1D1F21;
 }

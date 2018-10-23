@@ -38,14 +38,6 @@ def md(text):
     return markdown(text)
 
 
-@register.simple_tag(name='mypluralize')
-def pluralize(num):
-    if num > 1:
-        return 's'
-    else:
-        return ''
-
-
 @register.simple_tag(name='article_numbers')
 def count_article(user):
     """
@@ -71,7 +63,7 @@ def all_article(user):
     get all of user's articles from article table
     :return:  all of articles
     """
-    return Article.objects.filter(author=user).all()
+    return Article.objects.filter(author=user).order_by('-created_time').all()
 
 
 @register.simple_tag(name='split_tags')
