@@ -1,13 +1,15 @@
 @media only screen and (max-width: 768px) {
 
-    .article-body>p,
-    .post-subtitle>p {
-        font-size: 18px;
+    .article-body {
+        font-size: 16px;
+    }
+
+    td {
+        font-size: 16px;
     }
 }
 
-#categories,
-#articles {
+#categories {
     margin-top: 10px;
 }
 
@@ -51,46 +53,25 @@ img {
     border-radius: 8px;
 }
 
-#articles {
-    padding: 0;
-}
-
-.article-title-header,
-.article-created-time-header,
-.article-title a,
-.article-created-time {
-    color: rgba(20, 19, 19, 0.856);
-    margin: 0;
-}
-
 #categories li,
-.article-title-header,
-.article-created-time-header,
-.article-title,
-.article-created-time,
 .comment {
     list-style: none;
 }
 
-.article-title-header,
-.article-created-time-header {
-    text-transform: uppercase;
-    font-size: 20px;
+#article-table {
+    margin: 20px 0 15px;
 }
 
-.article-title,
-.article-created-time {
-    font-size: 20px;
+#title-header,
+#created-time-header {
+    text-transform: capitalize;
 }
 
-.article-title-header,
-.article-title {
-    float: left
-}
-
-.article-created-time-header,
-.article-created-time {
-    float: right
+#title-header,
+#created-time-header,
+.title,
+.created-time {
+    padding: 0 !important;
 }
 
 .empty {
@@ -107,6 +88,10 @@ img {
 .post-meta,
 .article-extra {
     font-size: 14px !important;
+}
+
+#eof {
+    text-align: center;
 }
 
 .comment-content {

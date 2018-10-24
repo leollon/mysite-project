@@ -149,16 +149,15 @@ body {
 #post-list li > a {
   margin-top: 5px;
   margin-right: 10px;
-  padding: 5px 15px;
+  padding: 2px 10px;
   color: #000;
   font-size: 16px;
-  background-color: #2e6da4;
-  border-radius: 100px;
   text-decoration: none
 }
 #post-list li > a:hover {
   color: #fff;
-  background-color: #21b384
+  background-color: #21b384;
+  border-radius: 5px
 }
 .post-title {
   float: left
@@ -190,10 +189,6 @@ form > div {
   margin: 10px 0;
   width: 100%
 }
-pre {
-  background-color: #0f3741;
-  color: #fff
-}
 .select,
 .textarea,
 .textinput {
@@ -204,11 +199,11 @@ pre {
   height: 30px
 }
 #id_name,
+.btn-default,
 .btn-primary,
 .label,
 .select,
 .textinput {
-  border: 0 #f5f5f5;
   border-radius: 100px
 }
 textarea {
@@ -225,6 +220,7 @@ textarea {
   padding: 0;
   color: red
 }
+.btn-default,
 .btn-primary,
 .label {
   padding: 5px 10px;

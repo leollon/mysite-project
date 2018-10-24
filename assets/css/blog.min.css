@@ -1,10 +1,9 @@
 @media only screen and (max-width:768px) {
-  .article-body > p,
-  .post-subtitle > p {
-    font-size: 18px
+  .article-body,
+  td {
+    font-size: 16px
   }
 }
-#articles,
 #categories {
   margin-top: 10px
 }
@@ -41,40 +40,22 @@ img {
   border: 1px solid rgba(128,128,128,.5);
   border-radius: 8px
 }
-#articles {
-  padding: 0
-}
-.article-created-time,
-.article-created-time-header,
-.article-title a,
-.article-title-header {
-  color: rgba(20,19,19,.856);
-  margin: 0
-}
 #categories li,
-.article-created-time,
-.article-created-time-header,
-.article-title,
-.article-title-header,
 .comment {
   list-style: none
 }
-.article-created-time-header,
-.article-title-header {
-  text-transform: uppercase;
-  font-size: 20px
+#article-table {
+  margin: 20px 0 15px
 }
-.article-created-time,
-.article-title {
-  font-size: 20px
+#created-time-header,
+#title-header {
+  text-transform: capitalize
 }
-.article-title,
-.article-title-header {
-  float: left
-}
-.article-created-time,
-.article-created-time-header {
-  float: right
+#created-time-header,
+#title-header,
+.created-time,
+.title {
+  padding: 0!important
 }
 .empty {
   text-align: center
@@ -88,6 +69,9 @@ img {
 .article-extra,
 .post-meta {
   font-size: 14px!important
+}
+#eof {
+  text-align: center
 }
 .comment-content {
   margin-top: 20px;
