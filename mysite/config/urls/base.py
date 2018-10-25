@@ -15,6 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.views.decorators.cache import cache_page
+from django.contrib.sitemaps import views
+
+from mysite.config.sitemaps import ArticleSiteMap
+
+sitemaps = {
+    'Articles': ArticleSiteMap,
+}
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -22,4 +30,6 @@ urlpatterns = [
     url(r'categories/', include('apps.category.urls')),
     url(r'accounts/', include('apps.users.urls')),
     url(r'^api/', include('apps.comment.urls')),
+    url(r'^sitemap\.xml$', cache_page(60 * 60 * 12)(views.sitemap),
+        {'sitemaps': sitemaps}),
 ]
