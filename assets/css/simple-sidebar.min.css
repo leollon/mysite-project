@@ -204,6 +204,7 @@ form > div {
 .label,
 .select,
 .textinput {
+  border: 0;
   border-radius: 100px
 }
 textarea {

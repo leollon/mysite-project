@@ -11,6 +11,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'rest_framework',
     'crispy_forms',
     'apps.article.apps.ArticleConfig',
@@ -123,3 +124,6 @@ AUTHENTICATION_BACKENDS = [
     'apps.users.backend.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
+
+
+SITE_ID = 1

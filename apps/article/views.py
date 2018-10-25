@@ -1,5 +1,5 @@
 import mistune
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView
@@ -51,32 +51,28 @@ class CreateArticleView(LoginRequiredMixin, SingleObjectTemplateResponseMixin,
         return super(CreateArticleView, self).form_valid(form)
 
 
-class UpdateArticleView(LoginRequiredMixin, UpdateView):
+class UpdateArticleView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     """View function for editing a posted article
     """
+    model = Article
     login_url = '/accounts/login/'
     template_name = 'article/editor.html'
-    model = Article
     context_object_name = 'article'
     form_class = EditArticleForm
+    permission_denied_message = "Permission Denied."
+    raise_exception = True
 
-    # TODO: to be refactored in the future
+    def test_func(self):
+        article = self.get_object()
+        return self.request.user == article.author or \
+            self.request.user.is_superuser
+
     def get(self, request, *args, **kwargs):
-        response = super(UpdateArticleView, self).get(request, *args, **kwargs)
-        if request.user.is_superuser or request.user == self.object.author:
-            return response
-        return HttpResponseForbidden("<h1>The article can't be edited by you"
-                                     ".</h1>")
+        return super(UpdateArticleView, self).get(request, *args, **kwargs)
 
-    # TODO: to be refactored in the future
     def post(self, request, *args, **kwargs):
-        article = Article.objects.get(slug=kwargs.get('slug', None))
-        if request.user.is_superuser or request.user == article.author:
-            super(UpdateArticleView, self).post(request, *args, **kwargs)
-            return HttpResponseRedirect(reverse("articles:manage"))
-
-        return HttpResponseForbidden("<h1>The article doesn't blog to "
-                                     "you.</h1>")
+        super(UpdateArticleView, self).post(request, *args, **kwargs)
+        return HttpResponseRedirect(reverse("articles:manage"))
 
 
 class ArticleDetailView(DetailView, BaseCreateView):
@@ -98,27 +94,25 @@ class ArticleDetailView(DetailView, BaseCreateView):
         return article
 
 
-class DeleteArticleView(LoginRequiredMixin, DeleteView):
+class DeleteArticleView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Article
     login_url = 'account/login/'
     template_name = 'article/article_confirm.html'
     success_url = reverse_lazy('article:manage')
     context_object_name = 'article'
+    permission_denied_message = "Permission Denied."
+    raise_exception = True
+
+    def test_func(self):
+        article = self.get_object()
+        return self.request.user == articl.author or \
+            self.request.user.is_superuser
 
     def get(self, request, *args, **kwargs):
-        response = super(DeleteArticleView, self).get(request, *args, **kwargs)
-        if self.object.author == request.user or request.user.is_superuser:
-            return response
-        return HttpResponseForbidden('<h1>This article does not blog to '
-                                     'you.</h1>')
+        return super(DeleteArticleView, self).get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        response = super(DeleteArticleView, self).post(request, *args,
-                                                       **kwargs)
-        if self.object.author == request.user or request.user.is_superuser:
-            return response
-        return HttpResponseForbidden('<h1>This article does not blog to '
-                                     'you.</h1>')
+        return super(DeleteArticleView, self).post(request, *args, **kwargs)
 
 
 class AllArticles(ListView):
