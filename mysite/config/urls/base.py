@@ -16,7 +16,9 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.decorators.cache import cache_page
-from django.contrib.sitemaps import views
+from django.contrib.sitemaps import views as sitemap_views
+from django.contrib.flatpages import views as flatpage_views
+
 
 from mysite.config.sitemaps import ArticleSiteMap
 
@@ -30,6 +32,7 @@ urlpatterns = [
     url(r'categories/', include('apps.category.urls')),
     url(r'accounts/', include('apps.users.urls')),
     url(r'^api/', include('apps.comment.urls')),
-    url(r'^sitemap\.xml$', cache_page(60 * 60 * 12)(views.sitemap),
+    url(r'^sitemap\.xml$', cache_page(60 * 60 * 12)(sitemap_views.sitemap),
         {'sitemaps': sitemaps}),
+    url(r'^(?P<url>.*/)$', flatpage_views.flatpage),
 ]

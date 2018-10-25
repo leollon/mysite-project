@@ -1,0 +1,12 @@
+{% extends "article/base.html" %}
+{% load article_tags %}
+{% block title %}{{ flatpage.title }}{% endblock %}
+{% block blog-head %}
+{{ flatpage.title }}
+{% endblock %}
+{% block content %}
+<article class="article-body">
+    {{ flatpage.content|banxss|md|safe }}
+    <p class="text-muted" id="eof">-- EOF --</p>
+</article>
+{% endblock %}
