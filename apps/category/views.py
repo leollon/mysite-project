@@ -30,7 +30,7 @@ def get_all_articles_by_category(request, name):
     """Get all articles by category
     :param
         @request: receive request from client
-        @category_id: receive captured string from url
+        @name: receive captured string from url
     :return: a response object with categorized articles
     """
     category = get_object_or_404(ArticleCategory, name=name)
@@ -89,7 +89,7 @@ def edit_category(request, name):
     """
     view function for changing category's name
     :param request: HttpRequest object
-    :param category_id: category's id in database
+    :param name: category's name in database
     :return: return HttpResponse with form
     """
     category = get_object_or_404(ArticleCategory, name=name)
