@@ -30,7 +30,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'', include('apps.article.urls')),
     url(r'categories/', include('apps.category.urls')),
-    url(r'accounts/', include('apps.users.urls')),
+    url(r'accounts/', include('apps.user.urls')),
     url(r'^api/', include('apps.comment.urls')),
     url(r'^sitemap\.xml$', cache_page(60 * 60 * 12)(sitemap_views.sitemap),
         {'sitemaps': sitemaps}),

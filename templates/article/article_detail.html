@@ -8,7 +8,7 @@
 {% block content %}
 <article class="article-body">
     <h2 class="post-title">{{ article.title }}</h2>
-    {{ article.article_body | banxss | safe }}
+    {{ article.article_body | banxss | md | safe }}
     <p class="text-muted" id="eof">-- EOF --</p>
 </article>
 {% endblock %}
