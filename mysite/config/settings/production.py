@@ -84,7 +84,7 @@ ALLOWED_CONTENT = {
 }
 
 # Customize user model
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'user.User'
 
 # Customize backend authentication
 AUTHENTICATION_BACKENDS = [

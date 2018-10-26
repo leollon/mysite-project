@@ -8,7 +8,7 @@ from django.conf import settings
 
 from apps.article.models import Article
 from apps.category.models import ArticleCategory
-from apps.users.models import User
+from apps.user.models import User
 
 IMPORTED = 0
 REPLICA = 1

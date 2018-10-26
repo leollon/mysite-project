@@ -8,7 +8,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0001_initial'),
+        ('user', '0001_initial'),
     ]
 
     operations = [
@@ -18,6 +18,6 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterModelTable(
             name='user',
-            table='users_user',
+            table='user_users',
         ),
     ]

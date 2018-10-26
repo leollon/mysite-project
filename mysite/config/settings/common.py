@@ -17,7 +17,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'apps.article.apps.ArticleConfig',
     'apps.category.apps.ArticleCategoryConfig',
-    'apps.users.apps.UsersConfig',
+    'apps.user.apps.UserConfig',
     'apps.comment.apps.CommentConfig',
 ]
 
@@ -118,11 +118,11 @@ ALLOWED_CONTENT = {
 }
 
 # Customize User model
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'user.User'
 
 # Customize backend authentication
 AUTHENTICATION_BACKENDS = [
-    'apps.users.backend.EmailBackend',
+    'apps.user.backend.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
 
