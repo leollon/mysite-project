@@ -43,11 +43,11 @@
                 <ul class="nav navbar-nav navbar-right">
                     {% if user.is_authenticated %}
                     <li>
-                        <a href="{% url 'users:dashboard' %}">dashboard</a>
+                        <a href="{% url 'user:dashboard' %}">dashboard</a>
                     </li>
                     {% else %}
                     <li>
-                        <a href="{% url 'users:login' %}">backend</a>
+                        <a href="{% url 'user:login' %}">backend</a>
                     </li>
                     {% endif %}
                     <li>

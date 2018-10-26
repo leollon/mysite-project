@@ -8,7 +8,7 @@ from django.shortcuts import reverse
 
 from unidecode import unidecode
 from apps.category.models import ArticleCategory
-from apps.users.models import User
+from apps.user.models import User
 
 
 def default_slug():

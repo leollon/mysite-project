@@ -4,7 +4,7 @@ from .views import (dashboard, login_view, logout_view, password_reset,
                     password_reset_request, register, resend_email_view,
                     validate_view)
 
-app_name = 'users'
+app_name = 'user'
 
 urlpatterns = [
     url(r'^register/$', register, name='register'),

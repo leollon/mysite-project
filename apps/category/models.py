@@ -29,3 +29,5 @@ class ArticleCategory(models.Model):
 
     class Meta:
         db_table = "categories"
+        verbose_name = "category"
+        verbose_name_plural = "categories"

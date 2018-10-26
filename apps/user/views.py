@@ -31,12 +31,12 @@ def register(request):
                 token=user.generate_valid_token(),
                 subject="Confirm your account",
                 filename=reg_notification_file)
-            return HttpResponseRedirect(reverse('users:login'))
+            return HttpResponseRedirect(reverse('user:login'))
         else:
-            return render(request, 'users/register.html', {'form': form})
+            return render(request, 'user/register.html', {'form': form})
     else:
         form = UserRegisterForm()
-        return render(request, 'users/register.html', {'form': form})
+        return render(request, 'user/register.html', {'form': form})
 
 
 @login_required
@@ -49,14 +49,14 @@ def validate_view(request, token):
     if not request.user.is_valid and \
             request.user.valid_account(token.encode(encoding="ascii")):
         msg = {"validation": _("You have confirmed your account.")}
-        return render(request, 'users/validate.html', msg)
+        return render(request, 'user/validate.html', msg)
     else:
         msg = {
             "expiration":
             "This link used to confirm your account is expired "
             "or invalid."
         }
-        return render(request, 'users/expiration.html', msg)
+        return render(request, 'user/expiration.html', msg)
 
 
 @login_required
@@ -82,7 +82,7 @@ def resend_email_view(request):
         msg = {
             "notification": _("The email including token has resent to you.")
         }
-        return render(request, "users/send_ok.html", msg)
+        return render(request, "user/send_ok.html", msg)
     else:
         # if user is a blocked user, redirect to homepage
         return HttpResponseRedirect(reverse("articles:index"))
@@ -98,7 +98,7 @@ def login_view(request):
             user = authenticate(request, email=email, password=password)
             if user is None:
                 return render(
-                    request, 'users/login.html', {
+                    request, 'user/login.html', {
                         "form": UserLoginForm(),
                         "status": "Username and Password mismatch."
                     })
@@ -107,23 +107,23 @@ def login_view(request):
                 if next_url is not None:
                     return HttpResponseRedirect(next_url)
                 else:
-                    return HttpResponseRedirect(reverse('users:dashboard'))
+                    return HttpResponseRedirect(reverse('user:dashboard'))
             else:
                 msg = {
                     "invalidation":
                     "This account was banned. It can't not be \
                                     used to login this site."
                 }
-                return render(request, "users/blocked.html", msg)
+                return render(request, "user/blocked.html", msg)
     if request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('users:dashboard'))
+        return HttpResponseRedirect(reverse('usersdashboard'))
     form = UserLoginForm()
-    return render(request, 'users/login.html', {'form': form})
+    return render(request, 'user/login.html', {'form': form})
 
 
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect(reverse('users:login'))
+    return HttpResponseRedirect(reverse('user:login'))
 
 
 @login_required
@@ -141,13 +141,13 @@ def password_reset_request(request):
             msg = {
                 "notification": "The email including token has sent to you."
             }
-            return render(request, "users/send_ok.html", msg)
+            return render(request, "user/send_ok.html", msg)
         else:
-            return render(request, "users/password_reset_request.html",
+            return render(request, "user/password_reset_request.html",
                           {"form": form})
     else:
         form = PasswordResetRequestForm()
-        return render(request, "users/password_reset_request.html",
+        return render(request, "user/password_reset_request.html",
                       {"form": form})
 
 
@@ -158,7 +158,7 @@ def password_reset(request, token):
         if form.is_valid():
             request.user.set_password(form.cleaned_data['new_password2'])
             request.user.save()
-            return HttpResponseRedirect(reverse("users:login"))
+            return HttpResponseRedirect(reverse("user:login"))
         else:
             # bug：表单渲染后，页面未显示错误
             # why：PasswordResetForm自定义了__init__()，当post过来的时候，request.POST
@@ -167,16 +167,16 @@ def password_reset(request, token):
             # how：在PasswordResetForm类中定义的__init__方法多声明一个data参数，传参的时候
             #      一一对应地将参数传给方法中的参数
             # Result：Fixed
-            return render(request, "users/password_reset.html", {"form": form})
+            return render(request, "user/password_reset.html", {"form": form})
 
     if request.user.verify_email_token(token):
         form = PasswordResetForm(request.user)
-        return render(request, "users/password_reset.html", {"form": form})
+        return render(request, "user/password_reset.html", {"form": form})
     else:
         msg = {"expiration": _("The token is expired or invalid.")}
-        return render(request, "users/expiration.html", msg)
+        return render(request, "user/expiration.html", msg)
 
 
 @login_required
 def dashboard(request):
-    return render(request, "users/dashboard.html")
+    return render(request, "user/dashboard.html")

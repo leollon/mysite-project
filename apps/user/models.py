@@ -74,7 +74,6 @@ class User(AbstractUser):
             return False
 
         if data.get('name') != self.username:
-            print(data.get('name'))
             return False
         return True
 
