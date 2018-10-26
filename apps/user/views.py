@@ -32,7 +32,7 @@ def register(request):
                 token=user.generate_valid_token(),
                 subject="Confirm your account",
                 filename=reg_notification_file)
-            return HttpResponseRedirect(reverse('users:login'))
+            return HttpResponseRedirect(reverse('user:login'))
         else:
             return render(request, 'user/register.html', {'form': form})
     else:
@@ -108,7 +108,7 @@ def login_view(request):
                 if next_url is not None:
                     return HttpResponseRedirect(next_url)
                 else:
-                    return HttpResponseRedirect(reverse('users:dashboard'))
+                    return HttpResponseRedirect(reverse('user:dashboard'))
             else:
                 msg = {
                     "invalidation":
@@ -117,14 +117,14 @@ def login_view(request):
                 }
                 return render(request, "user/blocked.html", msg)
     if request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('users:dashboard'))
+        return HttpResponseRedirect(reverse('usersdashboard'))
     form = UserLoginForm()
     return render(request, 'user/login.html', {'form': form})
 
 
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect(reverse('users:login'))
+    return HttpResponseRedirect(reverse('user:login'))
 
 
 @login_required
@@ -159,7 +159,7 @@ def password_reset(request, token):
         if form.is_valid():
             request.user.set_password(form.cleaned_data['new_password2'])
             request.user.save()
-            return HttpResponseRedirect(reverse("users:login"))
+            return HttpResponseRedirect(reverse("user:login"))
         else:
             # bug：表单渲染后，页面未显示错误
             # why：PasswordResetForm自定义了__init__()，当post过来的时候，request.POST
