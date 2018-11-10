@@ -116,7 +116,7 @@ def login_view(request):
                 }
                 return render(request, "user/blocked.html", msg)
     if request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('usersdashboard'))
+        return HttpResponseRedirect(reverse('user:dashboard'))
     form = UserLoginForm()
     return render(request, 'user/login.html', {'form': form})
 
