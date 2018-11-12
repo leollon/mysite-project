@@ -12,7 +12,7 @@
 </blockquote>
 {% for article in articles %}
 <ul>
-    <li style="list-style: none; text-align: center;">
+    <li class="article-categorized-list">
         <a href="{% url 'articles:detail' article.slug %}">
             {{ article.title }}</a>
     </li>

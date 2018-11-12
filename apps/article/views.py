@@ -7,6 +7,7 @@ from django.views.generic.base import TemplateView
 from django.views.generic.detail import SingleObjectTemplateResponseMixin
 from django.views.generic.edit import BaseCreateView, DeleteView, UpdateView
 from django.core.paginator import Paginator
+from django.db.models import F
 
 from .forms import CreateArticleForm, EditArticleForm
 from .models import Article
@@ -88,9 +89,8 @@ class ArticleDetailView(DetailView, BaseCreateView):
         markdown = mistune.Markdown(
             escape=True, hard_wrap=True, renderer=renderer)
         article = super(ArticleDetailView, self).get_object()
-        article.view_times += 1
-        article.save()
-        article.article_body = markdown(article.article_body)
+        self.model.objects.filter(id=article.id).update(
+            view_times=F('view_times') + 1)
         return article
 
 
