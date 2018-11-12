@@ -102,6 +102,9 @@ body {
     margin-right: 0
   }
 }
+#page-wrapper {
+  min-height: 626px
+}
 #menu-toggle {
   margin-left: -12px
 }

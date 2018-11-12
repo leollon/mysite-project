@@ -1,3 +1,6 @@
+.intro-header {
+  background-image: url(../images/home-bg.jpg)
+}
 @media only screen and (max-width:768px) {
   .article-body,
   td {
@@ -42,6 +45,7 @@ img {
   border-radius: 8px
 }
 #categories li,
+.article-categorized-list,
 .comment {
   list-style: none
 }
@@ -58,6 +62,7 @@ img {
 .title {
   padding: 0!important
 }
+.article-categorized-list,
 .empty {
   text-align: center
 }
