@@ -6,7 +6,7 @@ body {
 }
 p {
   line-height: 1.5;
-  margin: 30px 0
+  margin: 0
 }
 p a {
   text-decoration: underline
@@ -351,7 +351,7 @@ form .row:first-child .floating-label-form-group {
   font-size: 14px;
   font-weight: 800;
   letter-spacing: 1px;
-  padding: 15px 25px;
+  padding: 10px;
   background-color: #fff;
   border-radius: 0
 }
@@ -386,4 +386,142 @@ img::selection {
 img::-moz-selection {
   color: #fff;
   background: 0 0
+}
+.intro-header {
+  background-image: url(../images/home-bg.jpg)
+}
+@media only screen and (max-width:768px) {
+  .article-body,
+  td {
+    font-size: 16px
+  }
+}
+#categories {
+  margin-top: 10px
+}
+#categories li {
+  float: left;
+  margin: 2px
+}
+.article-body,
+.post-preview {
+  -webkit-box-shadow: 0 0 5px #ccc;
+  -moz-box-shadow: 0 0 5px #ccc;
+  border: 0;
+  border-radius: 0;
+  margin-top: 20px;
+  padding: 2px 20px 10px;
+  box-shadow: 0 0 5px #0f3741;
+  word-break: break-word
+}
+.article-body:hover,
+.post-preview:hover {
+  box-shadow: 0 0 10px #778899
+}
+.block-code {
+  background-color: #0f3741;
+  color: #fff
+}
+img {
+  max-width: 90%;
+  height: auto;
+  display: block;
+  margin: auto;
+  border: 1px solid rgba(128,128,128,.5);
+  border-radius: 8px
+}
+#categories li,
+.article-categorized-list,
+.comment {
+  list-style: none
+}
+#article-table {
+  margin: 20px 0 15px
+}
+#created-time-header,
+#title-header {
+  text-transform: capitalize
+}
+#created-time-header,
+#title-header,
+.created-time,
+.title {
+  padding: 0!important
+}
+.article-categorized-list,
+.empty {
+  text-align: center
+}
+#underline {
+  margin-top: 0;
+  margin-bottom: 10px;
+  padding: 0;
+  border: 1px solid #d3d3d3
+}
+.article-extra,
+.post-meta {
+  font-size: 14px!important
+}
+#eof {
+  text-align: center
+}
+.comment-content {
+  margin-top: 20px;
+  display: block
+}
+#comment-list {
+  margin-left: 15px;
+  padding: 0
+}
+.floor {
+  font-size: 14px
+}
+.datetime,
+.reply {
+  margin-left: 10px;
+  color: grey
+}
+.datetime {
+  font-size: 12px
+}
+.comment-text {
+  padding-left: 20px
+}
+.reply {
+  font-size: 14px;
+  color: #000
+}
+.reply:hover {
+  display: inline-block;
+  border-radius: 2px;
+  padding: 1px 4px;
+  background-color: #2e6da4;
+  color: #fff
+}
+.input-box > input,
+.input-box > textarea {
+  border: 1px solid #d3d3d3;
+  border-radius: 2px;
+  font-size: 16px;
+  width: 100%
+}
+textarea {
+  height: 100px;
+  width: 100%;
+  resize: none
+}
+.reply-btn {
+  padding: 5px 15px;
+  margin-top: 15px
+}
+.error404 {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 700;
+  color: green
+}
+.error404 > img {
+  max-width: 80%;
+  max-height: 80%;
+  border-radius: 5px
 }

@@ -17,5 +17,5 @@ class Comment(models.Model):
         return "%s" % self.comment_text
 
     class Meta:
-        ordering = ("-created_time", )
+        ordering = ("created_time", )
         db_table = "comments"

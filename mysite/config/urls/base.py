@@ -19,7 +19,6 @@ from django.views.decorators.cache import cache_page
 from django.contrib.sitemaps import views as sitemap_views
 from django.contrib.flatpages import views as flatpage_views
 
-
 from mysite.config.sitemaps import ArticleSiteMap
 
 sitemaps = {
@@ -32,7 +31,10 @@ urlpatterns = [
     url(r'categories/', include('apps.category.urls')),
     url(r'accounts/', include('apps.user.urls')),
     url(r'^api/', include('apps.comment.urls')),
-    url(r'^sitemap\.xml$', cache_page(60 * 60 * 12)(sitemap_views.sitemap),
+    url(r'^sitemap\.xml$',
+        cache_page(60 * 60 * 24 * 7, cache='redis')(sitemap_views.sitemap),
         {'sitemaps': sitemaps}),
-    url(r'^(?P<url>.*/)$', flatpage_views.flatpage),
+    url(r'^(?P<url>.*/)$',
+        cache_page(60 * 60 * 24 * 7, cache='redis')(flatpage_views.flatpage),
+        name='django.contrib.flatpages.views.flatpage'),
 ]

@@ -40,7 +40,6 @@ class User(AbstractUser):
         """
         return Serializer(getattr(settings, 'SERIAL_SECRET_KEY'), expires_in)
 
-
     def generate_valid_token(self):
         serial_number = self.generate_serial()
         return serial_number.dumps({'pk': self.id}).decode(encoding='ascii')

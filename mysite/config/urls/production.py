@@ -1,1 +1,1 @@
-from mysite.config.urls.base import *
+from mysite.config.urls.base import sitemaps, urlpatterns

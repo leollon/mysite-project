@@ -27,7 +27,7 @@ except User.DoesNotExist:
 
 
 class Command(BaseCommand):
-    """Customized command from import content from markdown.
+    """Customized command for importing content from markdown.
     """
     help = "import article content from markdown file."
     parent_dir = Path(__file__).parent.parent

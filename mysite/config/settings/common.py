@@ -42,6 +42,7 @@ TEMPLATES = [
 ]
 
 MIDDLEWARE = [
+    # native middleware
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -49,6 +50,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # customized middleware
+    'apps.article.middleware.OnlineMiddleware',
+    'apps.article.middleware.ResponseTimeMiddleware',
 ]
 
 WSGI_APPLICATION = 'mysite.config.wsgi.application'
@@ -126,5 +130,5 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-
 SITE_ID = 1
+ADMINS = [('Leo', 'email@gmail.com')]

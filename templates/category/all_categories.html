@@ -1,7 +1,7 @@
 {% extends 'article/base.html' %}
 {% block content %}
 <ul id="categories">
-    {% for category in category_lists %}
+    {% for category in categories %}
     <li>
         <a href="{% url 'category:all_article' category.name %}" class="label label-primary fa fa-folder">
             {{ category.name }}

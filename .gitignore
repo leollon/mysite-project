@@ -8,3 +8,4 @@ deploy/
 *.bak
 siteEnv
 node_modules
+*.log

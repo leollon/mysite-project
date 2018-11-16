@@ -12,7 +12,6 @@ from django.utils.translation import ugettext_lazy as _
 
 email_account = getattr(settings, 'EMAIL_ACCOUNT')
 domain_name = getattr(settings, 'DOMAIN_NAME')
-
 email_user = email_account.get('EMAIL_HOST_USER')
 email_password = email_account.get('EMAIL_HOST_PASSWORD')
 

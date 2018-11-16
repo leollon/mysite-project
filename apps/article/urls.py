@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from .views import (AllArticles, ArticleDetailView, ArticleListView,
+from .views import (ArticleListView, ArticleDetailView, IndexView,
                     ArticleManagementView, CreateArticleView,
                     DeleteArticleView, UpdateArticleView,
                     TaggedArticleListView)
@@ -8,12 +8,12 @@ from .views import (AllArticles, ArticleDetailView, ArticleListView,
 app_name = 'articles'
 
 urlpatterns = [
-    url(r'^$', ArticleListView.as_view(), name='index'),
-    url(r'^archives/$', AllArticles.as_view(), name='all'),
+    url(r'^$', IndexView.as_view(), name='index'),
+    url(r'^archives/$', ArticleListView.as_view(), name='all'),
     url(r'^archives/(?P<slug>[\-\w]+)/$',
         ArticleDetailView.as_view(),
         name='detail'),
-    url(r'tags/(?P<tag>[\-_\w\s]+)/$',
+    url(r'tag/(?P<tag>[\-_\w\s]+)/$',
         TaggedArticleListView.as_view(),
         name='tag')
 ]

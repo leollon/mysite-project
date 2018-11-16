@@ -1,4 +1,3 @@
-import mistune
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
@@ -6,27 +5,29 @@ from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import SingleObjectTemplateResponseMixin
 from django.views.generic.edit import BaseCreateView, DeleteView, UpdateView
-from django.core.paginator import Paginator
 from django.db.models import F
+from django.conf import settings
+
+from ipware.ip import get_real_ip
 
 from .forms import CreateArticleForm, EditArticleForm
 from .models import Article
-from .my_renderer import HightlightRenderer
-from .utils import pager
 from apps.comment.forms import CommentForm
+from utils.cache import cache_decorator, cache
+
+PER_PAGE = getattr(settings, 'PER_PAGE')
 
 
-class ArticleListView(ListView):
+class IndexView(ListView):
     """Index homepage
     """
     template_name = "article/index.html"
     model = Article
+    paginate_by = PER_PAGE
+    context_object_name = 'articles'
 
-    def get_context_data(self, **kwargs):
-        context = super(ArticleListView, self).get_context_data(**kwargs)
-        page = self.request.GET.get('page')
-        context['articles'] = pager(page)
-        return context
+    def get(self, request, *args, **kwargs):
+        return super(IndexView, self).get(request, *args, **kwargs)
 
 
 class CreateArticleView(LoginRequiredMixin, SingleObjectTemplateResponseMixin,
@@ -84,14 +85,19 @@ class ArticleDetailView(DetailView, BaseCreateView):
     template_name = 'article/article_detail.html'
     context_object_name = 'article'
 
-    def get_object(self):
-        renderer = HightlightRenderer()
-        markdown = mistune.Markdown(
-            escape=True, hard_wrap=True, renderer=renderer)
-        article = super(ArticleDetailView, self).get_object()
-        self.model.objects.filter(id=article.id).update(
-            view_times=F('view_times') + 1)
-        return article
+    def get(self, request, *args, **kwargs):
+        Day = 24 * 60 * 60 # A day
+        self.object = super(ArticleDetailView, self).get_object()
+        ip = get_real_ip(request)
+        visited_ips = cache.get(self.object.slug, set())
+
+        if not visited_ips:
+            visited_ips.add(ip)
+            cache.set(self.object.slug, visited_ips, Day)
+            self.model.objects.filter(id=self.object.id).update(
+                view_times=F('view_times') + 1)
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)
 
 
 class DeleteArticleView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
@@ -115,20 +121,20 @@ class DeleteArticleView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return super(DeleteArticleView, self).post(request, *args, **kwargs)
 
 
-class AllArticles(ListView):
+class ArticleListView(ListView):
     template_name = 'article/all_articles.html'
     model = Article
+    paginate_by = 15
+    context_object_name = 'articles'
 
-    def get_context_data(self, **kwargs):
-        context = super(AllArticles, self).get_context_data(**kwargs)
-        page = self.request.GET.get('page')
-        per_page = 15
-        context['articles'] = pager(page, per=per_page)
-        return context
+    def get(self, request, *args, **kwargs):
+        return super(ArticleListView, self).get(request, *args, **kwargs)
 
 
 class TaggedArticleListView(ListView):
     template_name = 'article/index.html'
+    context_object_name = 'articles'
+    paginate_by = PER_PAGE
     context_object_name = 'articles'
 
     def get_queryset(self, **kwargs):
@@ -136,9 +142,8 @@ class TaggedArticleListView(ListView):
             tags__icontains=self.kwargs.get('tag'))
         return queryset
 
-    def get_context_data(self, **kwargs):
-        context = super(TaggedArticleListView, self).get_context_data(**kwargs)
-        return context
+    def get(self, request, *args, **kwargs):
+        return super(TaggedArticleListView, self).get(request, *args, **kwargs)
 
 
 class ArticleManagementView(LoginRequiredMixin, TemplateView):

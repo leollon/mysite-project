@@ -6,11 +6,12 @@ from django.conf import settings
 from django.template.defaultfilters import stringfilter
 from django.template.library import Library
 
+# import customized module
+from utils.cache import cache
 from .. import my_renderer
 from ..models import Article
 
 register = Library()
-
 allow_content = getattr(settings, 'ALLOWED_CONTENT')
 
 
@@ -75,3 +76,8 @@ def split_tags(tags):
         rtype: list type
     """
     return [tag for tag in tags.split(",") if tag]
+
+
+@register.simple_tag(name="online")
+def online():
+    return len(cache.get('online_ips', set()))

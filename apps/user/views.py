@@ -90,6 +90,8 @@ def resend_email_view(request):
 
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('user:dashboard'))
     if request.method == 'POST':
         next_url = request.GET.get('next')
         form = UserLoginForm(request.POST)
@@ -116,8 +118,6 @@ def login_view(request):
                                     used to login this site."
                 }
                 return render(request, "user/blocked.html", msg)
-    if request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('user:dashboard'))
     form = UserLoginForm()
     return render(request, 'user/login.html', {'form': form})
 

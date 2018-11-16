@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-{% load staticfiles %}
+{% load staticfiles %}{% load article_tags %} {% online as online_num %}
 
 <head>
     <meta charset="utf-8">
@@ -20,7 +20,6 @@
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link href="/assets/css/clean-blog.min.css" rel="stylesheet">
-    <link href="/assets/css/blog.min.css" rel="stylesheet">
 
     <title>{% block title %}leollon的小站{% endblock %}</title>
 </head>
@@ -130,6 +129,9 @@
                     <p class="blog-arch text-muted">
                         Powered by Django & Bootstrap
                     </p>
+                    <p class="blog-arch text-muted">
+                        {{ online_num }} visitor{{ online_num | pluralize }}</p>
+                    <p class="blog-arch text-muted">Response: RENDER_TIMEs</p>
                 </div>
             </div>
         </div>

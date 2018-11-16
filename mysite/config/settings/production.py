@@ -9,7 +9,7 @@ from mysite.config.settings.common import (
     BASE_DIR, INSTALLED_APPS, TEMPLATES, MIDDLEWARE, WSGI_APPLICATION,
     AUTH_PASSWORD_VALIDATORS, PASSWORD_HASHERS, LANGUAGE_CODE, TIME_ZONE,
     USE_I18N, USE_L10N, USE_TZ, PER_PAGE, ALLOWED_CONTENT, AUTH_USER_MODEL,
-    AUTHENTICATION_BACKENDS, SITE_ID)
+    AUTHENTICATION_BACKENDS, SITE_ID, ADMINS)
 
 environ = {
     'SECRET_KEY': "this_key_is_needed_by_django.",
@@ -43,6 +43,23 @@ DATABASES = {
     }
 }
 
+CACHES = {
+    "default": {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+        'OPTIONS': {
+            'MAX_ENTRIES': 1024,
+        }
+    },
+    "redis": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 # tied to app's static, like my_app/static/
@@ -59,8 +76,10 @@ STATICFILES_DIRS = [
     os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), 'assets')
 ]
 
-# Show the articles' number in each page
-PER_PAGE = 6
+# Cache-related
+SESSION_CACHE_ALIAS = "redis"
+SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
+
 
 # In order to preventing XSS, it needs to set `ALLOWED_CONTENT`
 ALLOWED_CONTENT = {
@@ -88,9 +107,11 @@ AUTH_USER_MODEL = 'user.User'
 
 # Customize backend authentication
 AUTHENTICATION_BACKENDS = [
-    'apps.users.backend.EmailBackend',
+    'apps.user.backend.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # Email account
 EMAIL_ACCOUNT = {
@@ -115,5 +136,64 @@ CSRF_COOKIE_SECURE = True  # only sent with an HTTPS connection
 CSRF_COOKIE_HTTPONLY = True  # csrftoken disallow to be read by JS in console
 CSRF_COOKIE_AGE = 604800  # in seconds
 SESSION_COOKIE_AGE = 604800  # in seconds
+
+# Logger: show more details
+LOG_LEVEL = "ERROR"
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'verbose': {
+            'format': '[%(levelname)s] [%(asctime)s] [%(module)s] pid:%(process)d [%(message)s]'
+        },
+        'simple': {
+            'format': '[%(levelname)s pid:%(process)d [%(message)s]'
+        },
+    },
+    'loggers': {
+        '': {
+            'level': 'WARNING',
+            'handlers': ['file',],
+            'propagate': True,
+        },
+        'django': {
+            'level': LOG_LEVEL,
+            'handlers': ['file',],
+            'propagate': True,
+        },
+        'django.request': {
+            'level': LOG_LEVEL,
+            'handlers': ['file',],
+            'propagate': False,
+        },
+        'django.db.backends': {
+            'level': LOG_LEVEL,
+            'handlers': ['file', 'mail_admins'],
+            'propagate': False
+        }
+    },
+    # Control over which log records are passed from logger to handler.
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': str(Path(BASE_DIR).parent / 'log' / 'production.log'),
+            'filters': ['require_debug_true'],
+            'formatter': 'verbose',
+        },
+        'mail_admins': {
+            'level': LOG_LEVEL,
+            'class': 'django.utils.log.AdminEmailHandler',
+            'filters': ['require_debug_true'],
+            'include_html': True,
+        }
+    },
+}
 
 sentry_sdk.init(dsn="", integrations=[DjangoIntegration()])
