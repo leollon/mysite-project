@@ -9,7 +9,7 @@ import os
 from django.core.mail import send_mail
 from django.utils.translation import ugettext_lazy as _
 
-from mysite.config.settings.dev_settings import DOMAIN_NAME, EMAIL_ACCOUNT
+from mysite.config.settings.develop import DOMAIN_NAME, EMAIL_ACCOUNT
 
 email_user = EMAIL_ACCOUNT.get('EMAIL_HOST_USER')
 email_password = EMAIL_ACCOUNT.get('EMAIL_HOST_PASSWORD')

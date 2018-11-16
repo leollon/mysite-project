@@ -9,7 +9,7 @@ from .forms import (PasswordResetForm, PasswordResetRequestForm, UserLoginForm,
                     UserRegisterForm)
 from .models import User
 from .utils import notify_user
-from mysite.config.settings.dev_settings import EMAIL_RELATED
+from mysite.config.settings.develop import EMAIL_RELATED
 
 reg_notification_file = EMAIL_RELATED.get('REG_NOTIFICATION_FILE')
 pwd_change_notification_file = EMAIL_RELATED.get(

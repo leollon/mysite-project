@@ -25,7 +25,8 @@ class Article(models.Model):
     slug = models.SlugField(
         max_length=100, null=True, unique=True, default=default_slug)
     view_times = models.PositiveIntegerField(default=0)
-    category = models.ForeignKey(ArticleCategory, null=True)
+    category = models.ForeignKey(
+        ArticleCategory, null=True, on_delete=models.SET_NULL)
     author = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     tags = models.CharField(
         max_length=64, default="untagged", blank=True, help_text="使用逗号分隔")
@@ -38,7 +39,7 @@ class Article(models.Model):
         super(Article, self).save(*args, **kwargs)
 
     def clean_data(self):
-        pat = re.compile('[^\w\s,_\-]+')
+        pat = re.compile(r'[^\w\s,_\-]+')
         self.slug = slugify(unidecode(self.title))
         if not self.tags:
             self.tags = "untagged"
@@ -54,4 +55,5 @@ class Article(models.Model):
         return reverse('articles:manage')
 
     class Meta:
+        ordering = ('-created_time', )
         db_table = 'articles'

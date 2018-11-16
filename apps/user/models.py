@@ -4,7 +4,7 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
-from mysite.config.settings import dev_settings
+from mysite.config.settings import develop
 
 
 @python_2_unicode_compatible
@@ -40,7 +40,7 @@ class User(AbstractUser):
         :return: Serial number
         """
         return Serializer(
-            getattr(dev_settings, 'SERIAL_SECRET_KEY'), expires_in)
+            getattr(develop, 'SERIAL_SECRET_KEY'), expires_in)
 
     def generate_valid_token(self):
         serial_number = self.generate_serial()

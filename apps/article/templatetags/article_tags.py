@@ -3,13 +3,14 @@ from django.template.defaultfilters import stringfilter
 from django.template.library import Library
 
 # import customized module
+from utils.cache import cache
 from .. import my_renderer
 from ..models import Article
-from mysite.config.settings import dev_settings
+from mysite.config.settings import develop
 
 register = Library()
 
-allow_content = getattr(dev_settings, 'ALLOWED_CONTENT')
+allow_content = getattr(develop, 'ALLOWED_CONTENT')
 
 
 @register.filter(name='banxss')
@@ -73,3 +74,8 @@ def split_tags(tags):
         rtype: list type
     """
     return [tag for tag in tags.split(",") if tag]
+
+
+@register.simple_tag(name="online")
+def online():
+    return len(cache.get('online_ips', set()))
