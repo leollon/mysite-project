@@ -101,6 +101,10 @@ CSRF_COOKIE_HTTPONLY = True  # csrftoken disallow to be read by JS in console.
 CSRF_COOKIE_AGE = 604800  # in seconds
 CSRF_USE_SESSIONS = True
 SESSION_COOKIE_AGE = 604800  # in seconds
+SECURE_CONTENT_TYPE_NOSNIFF = True # 'x-content-type-options: nosniff' header
+SECURE_BROWSER_XSS_FILTER = True # 'x-xss-protection: 1; mode=block' header
+SESSION_COOKIE_SECURE = True # Using a secure-only session cookie
+X_FRAME_OPTIONS = 'DENY' # unless there is a good reason for your site to serve other parts of itself in a frame, you should change it to 'DENY'
 
 # Logger: show more details
 LOG_LEVEL = DEBUG
