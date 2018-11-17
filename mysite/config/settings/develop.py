@@ -7,7 +7,7 @@ from mysite.config.settings.common import (
     BASE_DIR, INSTALLED_APPS, TEMPLATES, MIDDLEWARE, WSGI_APPLICATION,
     AUTH_PASSWORD_VALIDATORS, PASSWORD_HASHERS, LANGUAGE_CODE, TIME_ZONE,
     USE_I18N, USE_L10N, USE_TZ, PER_PAGE, ALLOWED_CONTENT, AUTH_USER_MODEL,
-    AUTHENTICATION_BACKENDS, SITE_ID)
+    AUTHENTICATION_BACKENDS, SITE_ID, ADMINS)
 
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -103,7 +103,7 @@ CSRF_USE_SESSIONS = True
 SESSION_COOKIE_AGE = 604800  # in seconds
 
 # Logger: show more details
-LOG_LEVEL = True
+LOG_LEVEL = DEBUG
 
 LOGGING = {
     'version': 1,
@@ -119,17 +119,22 @@ LOGGING = {
     'loggers': {
         '': {
             'level': 'WARNING',
-            'handlers': ['file'],
+            'handlers': ['console', 'file', 'mail_admins'],
             'propagate': True,
         },
         'django': {
             'level': LOG_LEVEL,
-            'handlers': ['console',],
+            'handlers': ['console', 'file', 'mail_admins'],
             'propagate': True,
         },
         'django.request': {
             'level': "ERROR",
-            'handlers': ['file'],
+            'handlers': ['file', 'mail_admins'],
+            'propagate': False,
+        },
+        'django.db.backends': {
+            'level': "ERROR",
+            'handlers': ['file', 'mail_admins'],
             'propagate': False,
         },
     },
@@ -146,14 +151,14 @@ LOGGING = {
             'formatter': 'verbose',
         },
         'file': {
-            'level': LOG_LEVEL,
+            'level': "ERROR",
             'class': 'logging.FileHandler',
             'filename': str(Path(BASE_DIR).parent / 'log' / 'develop.log'),
             'filters': ['require_debug_true'],
             'formatter': 'verbose',
         },
         'mail_admins': {
-            'level': 'ERROR',
+            'level': "ERROR",
             'class': 'django.utils.log.AdminEmailHandler',
             'filters': ['require_debug_true'],
             'include_html': True,

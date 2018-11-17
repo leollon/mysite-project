@@ -1,9 +1,9 @@
 from django.conf import settings
 from django.shortcuts import get_object_or_404
+from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import IntegrityError
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
 
@@ -11,52 +11,66 @@ from .forms import CategoryForm
 from .models import ArticleCategory
 from apps.article.models import Article
 
-per_page = getattr(settings, 'PER_PAGE')
+PER_PAGE = getattr(settings, 'PER_PAGE')
+
+
+class CategoryListView(ListView):
+    """Get all categories"""
+    model = ArticleCategory
+    template_name = 'category/all_categories.html'
+    context_object_name = 'categories'
+
+    def get(self, request, *args, **kwargs):
+        return super(CategoryListView, self).get(request, *args, **kwargs)
+
+
+class CategorizeArticleListView(ListView):
+    """Get all articles based on category name"""
+    model = Article
+    context_object_name = 'articles'
+    paginate_by = PER_PAGE
+    template_name = 'category/article_categorized.html'
+
+    def get_queryset(self):
+        queryset = super(CategorizeArticleListView, self).get_queryset()
+        category = ArticleCategory.objects.get(
+            name=self.kwargs.get('name', 'uncategorized'))
+        return queryset.filter(category=category)
+
+    def get_context_data(self, **kwargs):
+        context = dict()
+        context['category'] = ArticleCategory.objects.get(
+            name=self.kwargs.get('name', 'uncategorized'))
+        return super(CategorizeArticleListView, self).get_context_data(
+            **context)
 
 
 @login_required
 def manage_category(request):
+    """Cagetory dashboard View
+    response category dashboard, provide form, template
+        args:
+            :type request: HttpRequest
+            :rtype: HttpResponse
+    """
     category_form = CategoryForm()
     return render(
         request, 'category/category_backend.html', {
             'form': category_form,
             'action_name': "添加",
-            'action': reverse('category:add')
+            'action': reverse('category:add'),
+            'error_msg': ''
         })
-
-
-def get_all_articles_by_category(request, name):
-    """Get all articles by category
-    :param
-        @request: receive request from client
-        @name: receive captured string from url
-    :return: a response object with categorized articles
-    """
-    category = get_object_or_404(ArticleCategory, name=name)
-    articles_list = Article.objects.order_by('-created_time').filter(
-        category_id=category.id)
-    paginator = Paginator(articles_list, per_page=per_page)
-    page = request.GET.get('page')
-    try:
-        articles = paginator.page(page)
-    except PageNotAnInteger:
-        articles = paginator.page(1)
-    except EmptyPage:
-        articles = paginator.page(paginator.num_pages)
-    return render(request, 'category/article_categorized.html', {
-        "category": category,
-        "articles": articles
-    })
-
-
-def get_all_category(request):
-    category_lists = ArticleCategory.objects.all()
-    return render(request, 'category/all_categories.html',
-                  {'category_lists': category_lists})
 
 
 @login_required
 def add_category(request):
+    """Add category view
+    the desination of the datafrom submitted form, process form data
+        args:
+            :request: HttpRequest, its object include submitted form data
+            :rtype: HttpResponse
+    """
     if request.method == 'POST':
         # 使用request post 的数据初始化表单字段
         form = CategoryForm(request.POST)
@@ -81,15 +95,17 @@ def add_category(request):
                     'action_name': "添加",
                     'action': reverse("category:add")
                 })
+    return HttpResponseRedirect(reverse('category:manage'))
 
 
 @login_required
 def edit_category(request, name):
     """
     view function for changing category's name
-    :param request: HttpRequest object
-    :param name: category's name in database
-    :return: return HttpResponse with form
+        args:
+            :request: HttpRequest
+            :name: str, category's name
+            :rtype: HttpResponse
     """
     category = get_object_or_404(ArticleCategory, name=name)
     if request.method == 'POST':
