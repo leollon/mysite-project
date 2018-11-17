@@ -1,8 +1,0 @@
-[DEBUG] [2018-11-17 13:05:48,112] [utils] pid:29907 [(0.000) SELECT @@SQL_AUTO_IS_NULL; args=None]
-[DEBUG] [2018-11-17 13:05:48,113] [utils] pid:29907 [(0.000) SELECT VERSION(); args=None]
-[DEBUG] [2018-11-17 13:05:48,409] [utils] pid:29907 [(0.001) SHOW FULL TABLES; args=None]
-[DEBUG] [2018-11-17 13:05:48,412] [utils] pid:29907 [(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()]
-[DEBUG] [2018-11-17 13:06:56,135] [utils] pid:30070 [(0.000) SELECT @@SQL_AUTO_IS_NULL; args=None]
-[DEBUG] [2018-11-17 13:06:56,137] [utils] pid:30070 [(0.000) SELECT VERSION(); args=None]
-[DEBUG] [2018-11-17 13:06:56,430] [utils] pid:30070 [(0.001) SHOW FULL TABLES; args=None]
-[DEBUG] [2018-11-17 13:06:56,441] [utils] pid:30070 [(0.000) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()]

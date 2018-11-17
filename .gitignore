@@ -9,4 +9,4 @@ deploy/
 siteEnv
 assets
 node_modules
-.log
+*.log
