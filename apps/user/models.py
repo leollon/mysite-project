@@ -38,7 +38,12 @@ class User(AbstractUser):
         :param expires_in: after that seconds, token will be valid
         :return: Serial number
         """
+<<<<<<< HEAD
         return Serializer(getattr(settings, 'SERIAL_SECRET_KEY'), expires_in)
+=======
+        return Serializer(
+            getattr(develop, 'SERIAL_SECRET_KEY'), expires_in)
+>>>>>>> dev
 
     def generate_valid_token(self):
         serial_number = self.generate_serial()
