@@ -106,6 +106,16 @@ SECURE_BROWSER_XSS_FILTER = True # 'x-xss-protection: 1; mode=block' header
 SESSION_COOKIE_SECURE = True # Using a secure-only session cookie
 X_FRAME_OPTIONS = 'DENY' # unless there is a good reason for your site to serve other parts of itself in a frame, you should change it to 'DENY'
 
+# celery-relate configuration
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379/1'
+
+#: Only add pickle to this list if your broker is secured
+#: from unwanted access (see userguide/security.html)
+# CELERY_RESULT_BACKEND = 'db+sqlite:///results.sqlite'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+timezone = 'Asia/'+TIME_ZONE
+
 # Logger: show more details
 LOG_LEVEL = DEBUG
 
