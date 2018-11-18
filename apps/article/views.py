@@ -14,6 +14,7 @@ from .forms import CreateArticleForm, EditArticleForm
 from .models import Article
 from apps.comment.forms import CommentForm
 from utils.cache import cache_decorator, cache
+from .tasks import increment_view_times
 
 PER_PAGE = getattr(settings, 'PER_PAGE')
 
@@ -91,11 +92,10 @@ class ArticleDetailView(DetailView, BaseCreateView):
         ip = get_real_ip(request)
         visited_ips = cache.get(self.object.slug, set())
 
-        if not visited_ips:
+        if ip not in visited_ips:
             visited_ips.add(ip)
             cache.set(self.object.slug, visited_ips, Day)
-            self.model.objects.filter(id=self.object.id).update(
-                view_times=F('view_times') + 1)
+            increment_view_times.delay(article_id=self.object.id)
         context = self.get_context_data(object=self.object)
         return self.render_to_response(context)
 

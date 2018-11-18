@@ -52,7 +52,6 @@ class OnlineMiddleware(object):
         online_ips = cache.get('online_ips', set())
 
         ip = get_real_ip(request)
-        now = {'now': datetime.now()}
         cache.set(ip, 0, 5 * 60)
         online_ips.add(ip)
 
