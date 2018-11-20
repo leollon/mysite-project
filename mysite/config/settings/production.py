@@ -9,16 +9,16 @@ from mysite.config.settings.common import (
     BASE_DIR, INSTALLED_APPS, TEMPLATES, MIDDLEWARE, WSGI_APPLICATION,
     AUTH_PASSWORD_VALIDATORS, PASSWORD_HASHERS, LANGUAGE_CODE, TIME_ZONE,
     USE_I18N, USE_L10N, USE_TZ, PER_PAGE, ALLOWED_CONTENT, AUTH_USER_MODEL,
-    AUTHENTICATION_BACKENDS, SITE_ID)
+    AUTHENTICATION_BACKENDS, SESSION_CACHE_ALIAS, SESSION_ENGINE, SITE_ID)
 
 environ = {
-    'SECRET_KEY': "this_key_is_needed_by_django.",
+    'SECRET_KEY': "this_key_is_needed_by_django",
     'SERIAL_SECRET_KEY': "this_key_is_for_itsdangerous",
-    'DB_USER': "your_DB_user",
-    'DB_PWD': "your_DB_password",
-    'EMAIL_USER': "your_email_account",
-    'EMAIL_PWD': "your_email_authentication_password",
-    'EMAIL_HOST': "your_email_host",
+    'DB_USER': "Your_DB_user",
+    'DB_PWD': "Your_DB_password",
+    'EMAIL_USER': "Your_email_account",
+    'EMAIL_PWD': "Your_email_authentication_password",
+    'EMAIL_HOST': "Your_email_host",
 }
 
 SECRET_KEY = environ.get('SECRET_KEY')
@@ -77,7 +77,6 @@ STATICFILES_DIRS = [
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
 # Email account
 EMAIL_ACCOUNT = {
     'EMAIL_HOST_USER': environ.get("EMAIL_USER"),
