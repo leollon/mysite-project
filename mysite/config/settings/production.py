@@ -21,7 +21,6 @@ environ = {
     'EMAIL_HOST': "your_email_host",
 }
 
-
 SECRET_KEY = environ.get('SECRET_KEY')
 SERIAL_SECRET_KEY = environ.get('SERIAL_SECRET_KEY')
 
@@ -77,10 +76,6 @@ STATICFILES_DIRS = [
     os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), 'assets')
 ]
 
-# Cache-related
-SESSION_CACHE_ALIAS = "redis"
-SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # Email account
@@ -126,7 +121,7 @@ CELERY_BROKER_URL = 'redis://127.0.0.1:6379/1'
 # CELERY_RESULT_BACKEND = 'db+sqlite:///results.sqlite'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
-timezone = 'Asia/'+TIME_ZONE
+timezone = 'Asia/' + TIME_ZONE
 
 # Logger: show more details
 LOG_LEVEL = "ERROR"

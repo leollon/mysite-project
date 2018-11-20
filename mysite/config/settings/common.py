@@ -130,4 +130,8 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
+# Cache-related
+SESSION_CACHE_ALIAS = "redis"
+SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
+
 SITE_ID = 1
