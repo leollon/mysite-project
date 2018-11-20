@@ -131,9 +131,3 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 SITE_ID = 1
-ADMINS = [('Leo', 'email@gmail.com')]
-IMPORT_ARTICLE_USER = {
-    'username': 'root',
-    'email': 'email@gmail.com',
-    'password': 'admin1234'
-}

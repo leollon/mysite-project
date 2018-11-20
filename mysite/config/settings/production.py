@@ -9,7 +9,7 @@ from mysite.config.settings.common import (
     BASE_DIR, INSTALLED_APPS, TEMPLATES, MIDDLEWARE, WSGI_APPLICATION,
     AUTH_PASSWORD_VALIDATORS, PASSWORD_HASHERS, LANGUAGE_CODE, TIME_ZONE,
     USE_I18N, USE_L10N, USE_TZ, PER_PAGE, ALLOWED_CONTENT, AUTH_USER_MODEL,
-    AUTHENTICATION_BACKENDS, SITE_ID, ADMINS, IMPORT_ARTICLE_USER)
+    AUTHENTICATION_BACKENDS, SITE_ID)
 
 environ = {
     'SECRET_KEY': "this_key_is_needed_by_django.",
@@ -20,6 +20,7 @@ environ = {
     'EMAIL_PWD': "your_email_authentication_password",
     'EMAIL_HOST': "your_email_host",
 }
+
 
 SECRET_KEY = environ.get('SECRET_KEY')
 SERIAL_SECRET_KEY = environ.get('SERIAL_SECRET_KEY')
@@ -80,37 +81,6 @@ STATICFILES_DIRS = [
 SESSION_CACHE_ALIAS = "redis"
 SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 
-
-# In order to preventing XSS, it needs to set `ALLOWED_CONTENT`
-ALLOWED_CONTENT = {
-    'ALLOWED_TAGS': [
-        'blockquote', 'ul', 'li', 'ol', 'pre', 'code', 'p', 'h1', 'h2', 'h3',
-        'h4', 'h5', 'h6', 'a', 'q', 'section', 'img', 'table', 'thead',
-        'tbody', 'tr', 'th', 'td'
-    ],
-    'ALLOWED_ATTRIBUTES': {
-        '*': ['class', 'style'],
-        'a': ['href'],
-        'img': ['src', 'alt', 'width', 'height'],
-    },
-    'ALLOWED_STYLES': [
-        'color',
-        'background-image',
-        'background',
-        'font',
-        'text-align',
-    ]
-}
-
-# Customize user model
-AUTH_USER_MODEL = 'user.User'
-
-# Customize backend authentication
-AUTHENTICATION_BACKENDS = [
-    'apps.user.backend.EmailBackend',
-    'django.contrib.auth.backends.ModelBackend',
-]
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # Email account
@@ -140,6 +110,13 @@ SECURE_CONTENT_TYPE_NOSNIFF = True # 'x-content-type-options: nosniff' header
 SECURE_BROWSER_XSS_FILTER = True # 'x-xss-protection: 1; mode=block' header
 SESSION_COOKIE_SECURE = True # Using a secure-only session cookie
 X_FRAME_OPTIONS = 'DENY' # unless there is a good reason for your site to serve other parts of itself in a frame, you should change it to 'DENY'
+
+ADMINS = [('Leo', 'email@gmail.com')]
+IMPORT_ARTICLE_USER = {
+    'username': 'root',
+    'email': 'email@gmail.com',
+    'password': 'admin1234'
+}
 
 # celery-relate configuration
 CELERY_BROKER_URL = 'redis://127.0.0.1:6379/1'
