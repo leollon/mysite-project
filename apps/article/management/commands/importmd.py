@@ -104,7 +104,8 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
-            'dir',
+            '-d',
+            '--dir',
             nargs="?",
             type=str,
             default=str(self.parent_dir / 'markdown'),
