@@ -7,7 +7,7 @@ from mysite.config.settings.common import (
     BASE_DIR, INSTALLED_APPS, TEMPLATES, MIDDLEWARE, WSGI_APPLICATION,
     AUTH_PASSWORD_VALIDATORS, PASSWORD_HASHERS, LANGUAGE_CODE, TIME_ZONE,
     USE_I18N, USE_L10N, USE_TZ, PER_PAGE, ALLOWED_CONTENT, AUTH_USER_MODEL,
-    AUTHENTICATION_BACKENDS, SITE_ID, ADMINS)
+    AUTHENTICATION_BACKENDS, SITE_ID)
 
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -105,6 +105,13 @@ SECURE_CONTENT_TYPE_NOSNIFF = True # 'x-content-type-options: nosniff' header
 SECURE_BROWSER_XSS_FILTER = True # 'x-xss-protection: 1; mode=block' header
 SESSION_COOKIE_SECURE = True # Using a secure-only session cookie
 X_FRAME_OPTIONS = 'DENY' # unless there is a good reason for your site to serve other parts of itself in a frame, you should change it to 'DENY'
+
+ADMINS = [('Leo', 'email@gmail.com')]
+IMPORT_ARTICLE_USER = {
+    'username': 'root',
+    'email': 'email@gmail.com',
+    'password': 'admin1234'
+}
 
 # celery-relate configuration
 CELERY_BROKER_URL = 'redis://127.0.0.1:6379/1'

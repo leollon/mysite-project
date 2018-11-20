@@ -5,16 +5,7 @@ from functools import wraps
 from django.core.management.base import BaseCommand, CommandError
 
 from apps.article.models import Article
-
-
-def primer_generator(func):
-    """Decorator: primes `func` by advancing first `yield`"""
-    @wraps(func)
-    def primer(*args, **kwargs):
-        generator = func(*args, **kwargs) # get an generator object
-        next(generator) # prime the generator
-        return generator
-    return primer
+from utils.primer import primer_generator
 
 
 @primer_generator

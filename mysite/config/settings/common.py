@@ -143,4 +143,3 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 SITE_ID = 1
-ADMINS = [('Leo', 'email@gmail.com')]
