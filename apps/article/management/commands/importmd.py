@@ -15,9 +15,9 @@ REPLICA = 1
 ERROR = 2
 
 datetime_format_string = "%Y-%m-%d %H:%M:%S"
-title_pat = re.compile('[^\-_\w]+')
-name_pat = re.compile('[^_\w\s]+')
-tags_pat = re.compile('[\[\]\"]+')
+title_pat = re.compile('[^\-_\w]+')  # 获取文章标题
+name_pat = re.compile('[^_\w\s]+')  # 获取文章分类名字
+tags_pat = re.compile('[\[\]\"]+')  # 获取文章的标签
 
 try:
     author = User.objects.get(pk=1)
