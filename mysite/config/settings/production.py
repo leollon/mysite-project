@@ -98,14 +98,14 @@ EMAIL_RELATED = {
 CSRF_USE_SESSIONS = True  # store csrftoke in the session
 CSRF_COOKIE_SECURE = True  # only sent with an HTTPS connection
 CSRF_COOKIE_HTTPONLY = True  # csrftoken disallow to be read by JS in console
-CSRF_COOKIE_AGE = 604800  # in seconds
+CSRF_COOKIE_AGE = 15 * 60  # in seconds
 SESSION_COOKIE_AGE = 604800  # in seconds
-SECURE_CONTENT_TYPE_NOSNIFF = True # 'x-content-type-options: nosniff' header
-SECURE_BROWSER_XSS_FILTER = True # 'x-xss-protection: 1; mode=block' header
-SESSION_COOKIE_SECURE = True # Using a secure-only session cookie
-X_FRAME_OPTIONS = 'DENY' # unless there is a good reason for your site to serve other parts of itself in a frame, you should change it to 'DENY'
+SECURE_CONTENT_TYPE_NOSNIFF = True  # 'x-content-type-options: nosniff' header
+SECURE_BROWSER_XSS_FILTER = True  # 'x-xss-protection: 1; mode=block' header
+SESSION_COOKIE_SECURE = False  # Using a secure-only session cookie
+X_FRAME_OPTIONS = 'DENY'  # unless there is a good reason for your site to serve other parts of itself in a frame, you should change it to 'DENY'
 
-ADMINS = [('Leo', 'email@gmail.com')]
+ADMINS = [('root', 'email@gmail.com')]
 IMPORT_ARTICLE_USER = {
     'username': 'root',
     'email': 'email@gmail.com',

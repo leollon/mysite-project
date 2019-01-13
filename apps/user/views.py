@@ -119,7 +119,7 @@ def login_view(request):
                 }
                 return render(request, "user/blocked.html", msg)
     form = UserLoginForm()
-    return render(request, 'user/login.html', {'form': form})
+    return render(request, 'user/login.html', {'form': form, 'status': ''})
 
 
 def logout_view(request):
