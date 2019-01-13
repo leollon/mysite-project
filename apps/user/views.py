@@ -118,7 +118,7 @@ def login_view(request):
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse('user:dashboard'))
     form = UserLoginForm()
-    return render(request, 'user/login.html', {'form': form})
+    return render(request, 'user/login.html', {'form': form, 'status': ''})
 
 
 def logout_view(request):

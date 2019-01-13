@@ -91,18 +91,18 @@ EMAIL_RELATED = {
     'COMMENT_NOTIFICATION': 'comment_notification_template',
 }
 
-CSRF_USE_SESSIONS = True  # store csrftoke in the session
+CSRF_USE_SESSIONS = False  # store csrftoke in the session
 CSRF_COOKIE_SECURE = False  # only sent with an HTTPS connection
 CSRF_COOKIE_HTTPONLY = True  # csrftoken disallow to be read by JS in console.
-CSRF_COOKIE_AGE = 604800  # in seconds
+CSRF_COOKIE_AGE = 7 * 24 * 60  # in seconds, it's valid for seven days when under development
 CSRF_USE_SESSIONS = True
 SESSION_COOKIE_AGE = 604800  # in seconds
 SECURE_CONTENT_TYPE_NOSNIFF = True # 'x-content-type-options: nosniff' header
 SECURE_BROWSER_XSS_FILTER = True # 'x-xss-protection: 1; mode=block' header
-SESSION_COOKIE_SECURE = True # Using a secure-only session cookie
+SESSION_COOKIE_SECURE = False # Using a secure-only session cookie
 X_FRAME_OPTIONS = 'DENY' # unless there is a good reason for your site to serve other parts of itself in a frame, you should change it to 'DENY'
 
-ADMINS = [('Leo', 'email@gmail.com')]
+ADMINS = [('root', 'email@gmail.com')]
 IMPORT_ARTICLE_USER = {
     'username': 'root',
     'email': 'email@gmail.com',
@@ -117,7 +117,7 @@ CELERY_BROKER_URL = 'redis://127.0.0.1:6379/1'
 # CELERY_RESULT_BACKEND = 'db+sqlite:///results.sqlite'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
-timezone = 'Asia/'+TIME_ZONE
+timezone = 'Asia/' + TIME_ZONE
 
 # Logger: show more details
 LOG_LEVEL = DEBUG
