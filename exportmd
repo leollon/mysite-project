@@ -1,0 +1,5 @@
+#!/bin/bash
+
+set -o errexit
+
+docker container exec -it mysite-project_web_1 python manage.py exportmd "$@"

@@ -14,16 +14,12 @@
 ## How to run
 clone this repo
 ```bash
-$ cd mysite
-$ source siteEnv/bin/activate
-$ virtualenv -p python3 siteEnv
-$ python manage.py runserver
+$ ./up --build
 ```
 
 ### The way to export or import content
 
 ```bash
-$ source siteEnv/bin/activate
-$ python manage.py exportmd --help
-$ python manage.py importmd --help
+$ ./exportmd --help
+$ ./importmd --help
 ```

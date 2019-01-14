@@ -1,0 +1,57 @@
+version: '3.7'
+
+volumes:
+  mysql: {}
+  redis: {}
+
+services:
+
+  mysql:
+    image: mysql:5.7
+    command: ['--default-authentication-plugin=mysql_native_password', 
+      '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci',
+      '--explicit_defaults_for_timestamp']
+    env_file:
+      - ./.envs/.mysql/.env
+    volumes:
+      - ./mysql:/var/lib/mysql
+    networks:
+      - blog-net
+    ports:
+      - "127.0.0.1:33069:3306"
+
+  redis:
+    image: redis:4.0
+    volumes:
+      - ./redis:/data
+    networks:
+      - blog-net
+    ports:
+      - "127.0.0.1:6369:6379"
+
+  web:
+    image: leollon/mysite
+    build:
+      context: .
+      dockerfile: ./compose/mysite/Dockerfile  # the file contains the steps of build images
+    entrypoint: /entrypoint
+    command: /start        # The command runs in the container
+    volumes:
+      - ./mysite:/mysite
+    env_file:
+      - ./.envs/.django/.local
+    networks:
+      - blog-net
+    ports:
+      - "127.0.0.1:8000:8000"  # web service port
+      - "127.0.0.1:8085:8085"  # uwsgi status port
+    links:
+      - mysql:blog
+      - redis
+    depends_on:
+      - mysql
+      - redis
+
+networks:
+  blog-net:
+    driver: bridge

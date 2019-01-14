@@ -26,5 +26,9 @@
   },
   "devDependencies": {
     "del": "^3.0.0"
-  }
+  },
+  "keywords": [
+    "blog",
+    "django"
+  ]
 }
