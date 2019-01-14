@@ -41,3 +41,4 @@ RUN touch log/mysite.log
 
 RUN echo "uid=blog\ngid=blog\nhome=/usr/local\nchdir=/mysite\npidfile=$PIDFILE\n" \
     >> /uwsgi.ini
+

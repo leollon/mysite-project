@@ -7,7 +7,7 @@ this is used to count pv, uv, vv.
 import os
 from celery import Celery
 
-ENVIRON_MODULE = os.environ.get('DJANGO_MYSITE_PROFILE', 'production')
+ENVIRON_MODULE = os.environ.get('DJANGO_MYSITE_PROFILE', 'develop')
 os.environ.setdefault('DJANGO_SETTINGS_MODULE',
     'mysite.config.settings.%s' % ENVIRON_MODULE)
 
