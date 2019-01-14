@@ -6,5 +6,10 @@ if [ -e "./mysql" ]
 then
     sudo chown -R $USER:$USER ./mysql
 fi
+<<<<<<< HEAD
 cp -ruv ./mysite/assets "$HOME"  # copy static files, such as js, css and images
 docker-compose -f production.yml up "$@"
+=======
+cp -ruv ./mysite/static "$HOME"  # copy static files, such as js, css and images
+docker-compose -f local.yml up "$@"
+>>>>>>> a4c63a1... <fix>:framework:Upgrade Django for fixing CVE

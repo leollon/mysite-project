@@ -2,7 +2,6 @@
 
 set -o errexit
 
-
 docker-compose -f production.yml down
 docker rmi -f $(docker images | grep mysite | awk '{print $3}')
 docker rmi -f $(docker images | grep none | awk '{print $3}')

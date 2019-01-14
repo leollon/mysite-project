@@ -16,7 +16,6 @@ RUN pip install --no-cache-dir -r requirements.txt && rm -f requirements.txt
 RUN mkdir /mysite
 WORKDIR /mysite
 
-
 COPY mysite/apps       apps
 COPY mysite/utils      utils
 COPY mysite/templates  templates
@@ -30,6 +29,7 @@ COPY ./compose/mysite/entrypoint \
 
 RUN chmod 755 -R /entrypoint /start /mysite
 RUN chown -R blog:blog /entrypoint \
+    /mysite \
     /start \
     /mysite \
     /uwsgi.ini
@@ -41,4 +41,3 @@ RUN touch log/mysite.log
 
 RUN echo "uid=blog\ngid=blog\nhome=/usr/local\nchdir=/mysite\npidfile=$PIDFILE\n" \
     >> /uwsgi.ini
-
