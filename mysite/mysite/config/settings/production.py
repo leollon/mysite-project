@@ -12,13 +12,14 @@ from mysite.config.settings.common import (
     AUTHENTICATION_BACKENDS, SESSION_CACHE_ALIAS, SESSION_ENGINE, SITE_ID)
 
 environ = {
-    'SECRET_KEY': "this_key_is_needed_by_django",
-    'SERIAL_SECRET_KEY': "this_key_is_for_itsdangerous",
-    'DB_USER': "Your_DB_user",
-    'DB_PWD': "Your_DB_password",
-    'EMAIL_USER': "Your_email_account",
-    'EMAIL_PWD': "Your_email_authentication_password",
-    'EMAIL_HOST': "Your_email_host",
+    'SECRET_KEY': "ao$DZM2C9KlGksl&Lzl$7Tx0TOlEXoCyZxg7i&6b3LliqRFXHk1YinXBID@B#Ncm",
+    'SERIAL_SECRET_KEY': "e885Lufnp24ux@iIMJ2HSC^Og2CTO^fU8y93gd6Y4IRbPlJFV^BL$e9MWTpGMnw&",
+    'DB_USER': "blog",
+    'DB_PWD': "123456",
+    'EMAIL_USER': "your_email_account",
+    'EMAIL_PWD': "your_email_authentication_password",
+    'EMAIL_HOST': "your_email_host",
+    'EMAIL_PORT': 587,
 }
 
 SECRET_KEY = environ.get('SECRET_KEY')
@@ -26,7 +27,7 @@ SERIAL_SECRET_KEY = environ.get('SERIAL_SECRET_KEY')
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['your_test_domain_name']
+ALLOWED_HOSTS = ['dp.demo.com', '127.0.0.1']
 
 DOMAIN_NAME = ALLOWED_HOSTS[0]
 
@@ -36,10 +37,14 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'blog',
-        'HOST': 'localhost',
+        'HOST': 'mysql',
         'PORT': '3306',
         'USER': environ.get('DB_USER'),
         'PASSWORD': environ.get('DB_PWD'),
+        'CHARSET': 'utf8mb4',
+        'COLLATION': 'utf8mb4_unicode_ci',
+        'ATOMIC_REQUESTS': True,
+        'CONN_MAX_AGE': 60,
     }
 }
 
@@ -47,19 +52,18 @@ CACHES = {
     "default": {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         'LOCATION': 'unique-snowflake',
-        'OPTIONS': {
+        'options': {
             'MAX_ENTRIES': 1024,
         }
     },
     "redis": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
+        "LOCATION": "redis://redis:6379/0",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
     }
 }
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 # tied to app's static, like my_app/static/
@@ -77,6 +81,7 @@ STATICFILES_DIRS = [
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 # Email account
 EMAIL_ACCOUNT = {
     'EMAIL_HOST_USER': environ.get("EMAIL_USER"),
@@ -95,25 +100,18 @@ EMAIL_RELATED = {
     'COMMENT_NOTIFICATION': 'comment_notification_template',
 }
 
-CSRF_USE_SESSIONS = True  # store csrftoke in the session
-CSRF_COOKIE_SECURE = True  # only sent with an HTTPS connection
-CSRF_COOKIE_HTTPONLY = True  # csrftoken disallow to be read by JS in console
-CSRF_COOKIE_AGE = 15 * 60  # in seconds
-SESSION_COOKIE_AGE = 604800  # in seconds
-SECURE_CONTENT_TYPE_NOSNIFF = True  # 'x-content-type-options: nosniff' header
-SECURE_BROWSER_XSS_FILTER = True  # 'x-xss-protection: 1; mode=block' header
-SESSION_COOKIE_SECURE = False  # Using a secure-only session cookie
-X_FRAME_OPTIONS = 'DENY'  # unless there is a good reason for your site to serve other parts of itself in a frame, you should change it to 'DENY'
-
-ADMINS = [('root', 'email@gmail.com')]
-IMPORT_ARTICLE_USER = {
-    'username': 'root',
-    'email': 'email@gmail.com',
-    'password': 'admin1234'
-}
+CSRF_USE_SESSIONS = False           # store csrftoke in the session
+CSRF_COOKIE_SECURE = False          # only sent with an HTTPS connection
+CSRF_COOKIE_HTTPONLY = True         # csrftoken disallow to be read by JS in console
+CSRF_COOKIE_AGE = 15 * 60           # in seconds
+SESSION_COOKIE_AGE = 7 * 24 * 60    # in seconds
+SECURE_CONTENT_TYPE_NOSNIFF = True  # x-content-type-options: nosniff header
+SECURE_BROWSER_XSS_FILTER = True    # x-xss-protection: 1; mode=block header
+SESSION_COOKIE_SECURE = False       # Using a secure-only session cookie
+X_FRAME_OPTIONS = 'DENY'            # unless there is a good reason for your site to serve other parts of itself in a frame, you should change it to 'DENY'
 
 # celery-relate configuration
-CELERY_BROKER_URL = 'redis://127.0.0.1:6379/1'
+CELERY_BROKER_URL = 'redis://redis:6379/0'
 
 #: Only add pickle to this list if your broker is secured
 #: from unwanted access (see userguide/security.html)
@@ -154,7 +152,7 @@ LOGGING = {
         },
         'django.db.backends': {
             'level': LOG_LEVEL,
-            'handlers': ['file', 'mail_admins'],
+            'handlers': ['file', ],
             'propagate': False
         }
     },
@@ -168,17 +166,11 @@ LOGGING = {
         'file': {
             'level': 'WARNING',
             'class': 'logging.FileHandler',
-            'filename': str(Path(BASE_DIR).parent / 'log' / 'production.log'),
+            'filename': str(Path(BASE_DIR).parent.parent / 'log' / 'mysite.log'),
             'filters': ['require_debug_true'],
             'formatter': 'verbose',
         },
-        'mail_admins': {
-            'level': LOG_LEVEL,
-            'class': 'django.utils.log.AdminEmailHandler',
-            'filters': ['require_debug_true'],
-            'include_html': True,
-        }
     },
 }
 
-sentry_sdk.init(dsn="", integrations=[DjangoIntegration()])
+sentry_sdk.init(dsn="", integrations=[DjangoIntegration()], server_name="mysite")

@@ -11,6 +11,7 @@ services:
     command: ['--default-authentication-plugin=mysql_native_password', 
       '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci',
       '--explicit_defaults_for_timestamp']
+    restart: always
     env_file:
       - ./.envs/.mysql/.env
     volumes:
@@ -22,6 +23,7 @@ services:
 
   redis:
     image: redis:4.0
+    restart: always
     volumes:
       - ./redis:/data
     networks:
@@ -32,22 +34,18 @@ services:
   web:
     image: leollon/mysite
     build:
-      context: .
+      context: ./
       dockerfile: ./compose/mysite/Dockerfile  # the file contains the steps of build images
     entrypoint: /entrypoint
-    command: /start        # The command runs in the container
-    volumes:
-      - ./mysite:/mysite
+    command: /start        # The command runs in the containe
+    restart: always
     env_file:
-      - ./.envs/.django/.local
+      - ./.envs/.django/.production
     networks:
       - blog-net
     ports:
-      - "127.0.0.1:8000:8000"  # web service port
+      - "127.0.0.1:8080:8080"  # web service port
       - "127.0.0.1:8085:8085"  # uwsgi status port
-    links:
-      - mysql:blog
-      - redis
     depends_on:
       - mysql
       - redis
