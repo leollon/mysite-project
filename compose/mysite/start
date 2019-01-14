@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -o errexit
+
+rm -f ./celeryd.pid
+python manage.py makemigations && python manage.py migrate
+celery -A mysite worker -l INFO -P gevent -c 500 -f log/celery.log -D
+python manage.py runserver 0.0.0.0:8000

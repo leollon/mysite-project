@@ -39,8 +39,14 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'blog',
+        'HOST': 'mysql',
+        'port': 3306,
         'USER': 'blog',
-        "PASSWORD": '123456'
+        "PASSWORD": '123456',
+        'CHARSET': 'utf8mb4',
+        'COLLATION': 'utf8mb4_unicode_ci',
+        'ATOMIC_REQUESTS': True,
+        'CONN_MAX_AGE': 60,
     }
 }
 
@@ -54,7 +60,7 @@ CACHES = {
     },
     "redis": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
+        "LOCATION": "redis://redis:6379/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
@@ -110,7 +116,7 @@ IMPORT_ARTICLE_USER = {
 }
 
 # celery-relate configuration
-CELERY_BROKER_URL = 'redis://127.0.0.1:6379/1'
+CELERY_BROKER_URL = 'redis://redis:6379/1'
 
 #: Only add pickle to this list if your broker is secured
 #: from unwanted access (see userguide/security.html)
@@ -170,7 +176,7 @@ LOGGING = {
         'file': {
             'level': "ERROR",
             'class': 'logging.FileHandler',
-            'filename': str(Path(BASE_DIR).parent / 'log' / 'develop.log'),
+            'filename': str(Path(BASE_DIR).parent.parent / 'log' / 'mysite.log'),
             'filters': ['require_debug_true'],
             'formatter': 'verbose',
         },

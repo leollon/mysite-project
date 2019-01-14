@@ -25,7 +25,7 @@ def export_to_markdown(article=None, destination=None):
         fp.write("date: %s\n" % article.created_time.strftime(
             datetime_format_string))
         fp.write("categories: %s\n" % article.category.name)
-        fp.write("tags: [%s]\n---\n\n" % article.tags.split(','))
+        fp.write("tags: %s\n---\n\n" % article.tags.split(','))
         fp.write("%s" % article.article_body)
 
 class Command(BaseCommand):
