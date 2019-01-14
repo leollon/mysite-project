@@ -2,6 +2,21 @@
 
 set -o errexit
 
+if [ -e './celeryd.pid' ]
+then
+    rm -f ./celeryd.pid
+fi
+
+if [ ! -d './log' ]
+then
+    mkdir log
+    touch log/mysite.log
+fi
+
+if [ ! -d './data' ]
+then
+    mkdir data
+fi
 
 mysql_ready() {
 python << END

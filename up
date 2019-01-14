@@ -2,6 +2,9 @@
 
 set -o errexit
 
-sudo chown -R $USER:$USER ./mysql
+if [ -e "./mysql" ]
+then
+    sudo chown -R $USER:$USER ./mysql
+fi
 cp -ruv ./mysite/static "$HOME"  # copy static files, such as js, css and images
 docker-compose -f local.yml up "$@"

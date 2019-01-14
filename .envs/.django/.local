@@ -1,2 +1,4 @@
 DJANGO_SETTINGS_MODULE=mysite.config.settings.develop
 DJANGO_MYSITE_PROFILE=develop
+LANG=en_US.UTF-8
+LC_ALL=C

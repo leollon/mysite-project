@@ -21,7 +21,7 @@ var paths = {
 };
 
 function clean() {
-    return del(["assets/**", "dist"]);
+    return del(["assets/**"]);
 }
 
 function jsMinify() {

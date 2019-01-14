@@ -12,19 +12,22 @@ RUN echo 'blog:local' | chpasswd
 COPY ./requirements.txt /
 RUN pip install --no-cache-dir -r requirements.txt -i https://pypi.douban.com/simple && rm -f requirements.txt
 
+RUN mkdir /mysite
+WORKDIR /mysite
 
-COPY mysite /mysite
+COPY mysite/apps       apps
+COPY mysite/utils      utils
+COPY mysite/templates  templates
+COPY mysite/static     static
+COPY mysite/mysite     mysite
+COPY mysite/manage.py  manage.py
+
 COPY ./compose/mysite/entrypoint \
     ./compose/mysite/start /
 
-
 RUN chmod 755 -R /entrypoint /start /mysite
-RUN chmod +x /entrypoint /start
 RUN chown -R blog:blog /entrypoint \
     /start \
     /mysite
 
-WORKDIR /mysite
 USER blog:blog
-RUN mkdir log data
-RUN touch log/mysite.log
