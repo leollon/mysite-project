@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -o errexit
+
+sudo chown -R $USER:$USER ./mysql
+cp -ruv ./mysite/static "$HOME"  # copy static files, such as js, css and images
+docker-compose -f local.yml up "$@"

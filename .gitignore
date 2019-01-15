@@ -6,6 +6,13 @@
 deploy/
 *.sql
 *.bak
+*.pid
 siteEnv
 node_modules
 *.log
+backup
+mysql
+redis
+deploy
+*/log
+*/data
