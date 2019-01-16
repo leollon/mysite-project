@@ -39,6 +39,8 @@ services:
     entrypoint: /entrypoint
     command: /start        # The command runs in the containe
     restart: always
+    volumes:
+      - ./mysite:/mysite
     env_file:
       - ./.envs/.django/.production
     networks:
