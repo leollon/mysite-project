@@ -21,12 +21,14 @@ def export_to_markdown(article=None, destination=None):
     if not Path(destination).exists():
         Path(destination).mkdir(mode=511)
     with open(str(Path(destination)/filename), 'w') as fp:
-        fp.write("---\ntitle: %s\n" % article.title)
-        fp.write("date: %s\n" % article.created_time.strftime(
-            datetime_format_string))
-        fp.write("categories: %s\n" % article.category.name)
-        fp.write("tags: %s\n---\n\n" % article.tags.split(','))
-        fp.write("%s" % article.article_body)
+        content = "---\ntitle: %s\ndate: %s\ncategories: %s\ntags: %s\n---\n\n%s" % (
+            article.title,
+            article.created_time.strftime(datetime_format_string),
+            article.category.name,
+            article.tags.split(','),
+            article.article_body
+        )
+        fp.write(content)
 
 class Command(BaseCommand):
     """Export command for exporting article(s) to markdown file(s)
