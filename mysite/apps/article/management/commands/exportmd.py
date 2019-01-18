@@ -18,8 +18,8 @@ def export_coroutine():
 
 def export_to_markdown(article=None, destination=None):
     datetime_format_string = "%Y-%m-%d %H:%M:%S"
-    pat = re.compile(r'[^_\w\s]+')
-    filename = re.sub(pat, '-', article.title) + ".md"
+    pat = re.compile(r'[^_\w\s\-\']+')
+    filename = re.sub(pat, '', article.title) + ".md"
     if not Path(destination).exists():
         Path(destination).mkdir(mode=511)
     with open(str(Path(destination)/filename), 'w') as fp:
@@ -66,7 +66,7 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        destination = options.get('dest')
+        destination = options.get('dest') if options.get('dest') else self.parent_dir / 'markdown'
         article_id_list = options.get('post') if options.get('post') else None
         if article_id_list:
             for article_id in article_id_list:
