@@ -3,7 +3,6 @@ FROM python:3.6
 LABEL Name=mysite Version=1.0.0
 
 ENV PYTHONUNBUFFERED 1
-ENV PIDFILE /mysite/mysite-manager.pid
 
 RUN useradd -s /bin/bash -M blog
 RUN echo 'blog ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
@@ -22,12 +21,9 @@ COPY mysite/static     static
 COPY mysite/mysite     mysite
 COPY mysite/manage.py  manage.py
 
-COPY ./compose/mysite/entrypoint \
-    ./compose/mysite/start /
+COPY ./compose/mysite/entrypoint ./compose/mysite/start /
 
 RUN chmod 755 -R /entrypoint /start /mysite
-RUN chown -R blog:blog /entrypoint \
-    /start \
-    /mysite
+RUN chown -R blog:blog /entrypoint /start /mysite
 
 USER blog:blog

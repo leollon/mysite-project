@@ -32,6 +32,7 @@ def export_to_markdown(article=None, destination=None):
         )
         fp.write(content)
 
+
 class Command(BaseCommand):
     """Export command for exporting article(s) to markdown file(s)
     """
