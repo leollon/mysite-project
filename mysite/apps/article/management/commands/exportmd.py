@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 from datetime import datetime
 from functools import wraps
@@ -17,7 +18,8 @@ def export_coroutine():
 
 def export_to_markdown(article=None, destination=None):
     datetime_format_string = "%Y-%m-%d %H:%M:%S"
-    filename = "%s.md" % article.title
+    pat = re.compile(r'[^_\w\s]+')
+    filename = re.sub(pat, '-', article.title) + ".md"
     if not Path(destination).exists():
         Path(destination).mkdir(mode=511)
     with open(str(Path(destination)/filename), 'w') as fp:
