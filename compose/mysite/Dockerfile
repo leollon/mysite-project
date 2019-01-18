@@ -34,10 +34,6 @@ RUN chown -R blog:blog /entrypoint \
     /uwsgi.ini
 
 USER blog:blog
-RUN mkdir log data
-RUN touch log/mysite.log
-
 
 RUN echo "uid=blog\ngid=blog\nhome=/usr/local\nchdir=/mysite\npidfile=$PIDFILE\n" \
     >> /uwsgi.ini
-
