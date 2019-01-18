@@ -31,7 +31,6 @@ RUN chmod 755 -R /entrypoint /start /mysite
 RUN chown -R blog:blog /entrypoint \
     /mysite \
     /start \
-    /mysite \
     /uwsgi.ini
 
 USER blog:blog
@@ -41,3 +40,4 @@ RUN touch log/mysite.log
 
 RUN echo "uid=blog\ngid=blog\nhome=/usr/local\nchdir=/mysite\npidfile=$PIDFILE\n" \
     >> /uwsgi.ini
+
