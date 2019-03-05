@@ -1,4 +1,5 @@
 import os
+import re
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -135,3 +136,10 @@ SESSION_CACHE_ALIAS = "redis"
 SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 
 SITE_ID = 1
+
+DATETIME_FORMAT_STRING = "%Y-%m-%d %H:%M:%S"
+TITLE_PATTERN = re.compile(r'[^\-\w]+')             # 获取文章标题
+NAME_PATTERN = re.compile(r'[^\-\w\s]+')            # 获取文章分类名字
+TAGS_ARRAY_PATTERN = re.compile(r'([\[\]])')        # 获取文章的标签
+TAGS_WHITESPACE_PATTERN = re.compile(r'(?:,+\s*)')  # 去除逗号后面多余的空格
+TAGS_FILTER_PATTERN = re.compile(r'[^\w\s\-,{1}]')  # 去除无效字符

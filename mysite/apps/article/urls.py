@@ -13,7 +13,7 @@ urlpatterns = [
     url(r'^archives/(?P<slug>[\-\w]+)/$',
         ArticleDetailView.as_view(),
         name='detail'),
-    url(r'tag/(?P<tag>[\-_\w\s]+)/$',
+    url(r'tag/(?P<tag>[\-\w\s]+)/$',
         TaggedArticleListView.as_view(),
         name='tag')
 ]
