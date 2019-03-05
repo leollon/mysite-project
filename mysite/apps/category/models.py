@@ -24,8 +24,8 @@ class ArticleCategory(models.Model):
         super(ArticleCategory, self).save(*args, **kwargs)
 
     def filter_data(self):
-        pat = re.compile('[^_\w\s]+')
-        self.name = re.sub(pat, '_', self.name)
+        pat = re.compile(r'[^\-\w\s]+')
+        self.name = re.sub(pat, '', self.name)
 
     class Meta:
         db_table = "categories"

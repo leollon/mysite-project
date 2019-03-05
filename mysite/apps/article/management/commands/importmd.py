@@ -16,11 +16,6 @@ IMPORTED = 0
 REPLICA = 1
 ERROR = 2
 
-datetime_format_string = "%Y-%m-%d %H:%M:%S"
-title_pat = re.compile(r'[^\-_\w]+')  # 获取文章标题
-name_pat = re.compile(r'[^_\w\s]+')   # 获取文章分类名字
-tags_pat = re.compile(r'[\[\]\"]+')   # 获取文章的标签
-
 try:
     author = User.objects.get(pk=1)
 except User.DoesNotExist:
@@ -28,7 +23,18 @@ except User.DoesNotExist:
 
 
 def line_handler(line):
-    ret_val = ''.join(line.partition(':')[2]).strip()
+    """
+    Examples
+
+        >>> line = 'tags: [1, 2, 3]'
+        >>> line_handler(line)
+        '1, 2, 3'
+
+        >>> line = 'title: hello-world'
+        >>> line_handler(line)
+        'hello-world'
+    """
+    ret_val = line.partition(':')[-1].strip()
     return ret_val
 
 
@@ -53,7 +59,7 @@ def read_from_md():
     date = datetime.now()
     if filepath is None:
         return (None, None, None)
-    title = re.sub(title_pat, '-', filepath.split('/')[-1].split('.')[0])
+    title = re.sub(settings.TITLE_PATTERN, '-', filepath.split('/')[-1].split('.')[0])
     try:
         category = ArticleCategory.objects.get(pk=1)
     except ArticleCategory.DoesNotExist:
@@ -65,17 +71,25 @@ def read_from_md():
                     continue
                 elif line.startswith('date'):
                     date = datetime.strptime(
-                        line_handler(line), datetime_format_string)
+                        line_handler(line), settings.DATETIME_FORMAT_STRING)
                 elif line.startswith('categories'):
                     name = line_handler(line).strip("'")
-                    name = re.sub(name_pat, '', name)
+                    name = re.sub(settings.NAME_PATTERN, '', name)
                     try:
                         category = ArticleCategory.objects.get(name=name)
                     except ArticleCategory.DoesNotExist:
                         category = ArticleCategory(name=name)
                         category.save()
                 elif line.startswith('tags'):
-                    tags = re.sub(tags_pat, '', line_handler(line))
+                    tags_string = re.sub(
+                        settings.TAGS_ARRAY_PATTERN, '', line_handler(line)
+                    )
+                    tags_string = re.sub(
+                        settings.TAGS_WHITESPACE_PATTERN, ',', tags_string
+                    )
+                    tags = re.sub(
+                        settings.TAGS_FILTER_PATTERN, '', tags_string
+                    ).strip(',')
                 else:
                     article_body += line
 
@@ -88,7 +102,7 @@ def read_from_md():
                 tags=tags)
             article.created_time = date
             article.save()
-            return (IMPORTED, repr(filepath), 'Imorted')
+            return (IMPORTED, repr(filepath), 'Imported')
         except IntegrityError as e:
             return (REPLICA, repr(title), e.args[1])
         except DataError as e:
@@ -127,7 +141,7 @@ class Command(BaseCommand):
         self.output_results()
 
     def output_results(self):
-        for key, values in self.results.items():
+        for _, values in self.results.items():
             if values[0] == REPLICA:
                 message = "Article %s exists. message: %s" % (values[1], values[2])
                 self.stdout.write(self.style.WARNING(message))

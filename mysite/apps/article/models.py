@@ -5,6 +5,7 @@ import unicodedata
 from django.utils.text import slugify
 from django.db import models
 from django.shortcuts import reverse
+from django.conf import settings
 
 from unidecode import unidecode
 from apps.category.models import ArticleCategory
@@ -39,16 +40,13 @@ class Article(models.Model):
         super(Article, self).save(*args, **kwargs)
 
     def clean_data(self):
-        pat = re.compile(r'[^\w\s,_\-]+')
         self.slug = slugify(unidecode(self.title))
         if not self.tags:
             self.tags = "untagged"
         else:
-            tags_list = [
-                re.sub(pat, '-', tag.strip()) for tag in self.tags.split(',')
-                if tag
-            ]
-            self.tags = ','.join(tags_list)
+            self.tags = re.sub(
+                settings.TAGS_FILTER_PATTERN, '', self.tags
+            ).strip(',')
 
     @staticmethod
     def get_absolute_url():

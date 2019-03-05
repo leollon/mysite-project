@@ -9,14 +9,14 @@ app_name = 'category'
 urlpatterns = [
     url(r'dashboard/$', manage_category, name='manage'),
     url(r'add/$', add_category, name='add'),
-    url(r'edit/(?P<name>[_\w\s]+)/$', edit_category, name='edit'),
-    url(r'delete/(?P<name>[_\w\s]+)/$', delete_category, name='delete'),
+    url(r'edit/(?P<name>[\-\w\s]+)/$', edit_category, name='edit'),
+    url(r'delete/(?P<name>[\-\w\s]+)/$', delete_category, name='delete'),
 ]
 
 # urlpatterns for site visistor
 urlpatterns += [
     url(r'^$', CategoryListView.as_view(), name='all_category'),
-    url(r'^(?P<name>[_\w\s]+)/$',
+    url(r'^(?P<name>[\-\w\s]+)/$',
         CategorizeArticleListView.as_view(),
         name='all_article'),
 ]
