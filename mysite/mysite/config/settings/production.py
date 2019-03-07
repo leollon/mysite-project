@@ -11,7 +11,7 @@ from mysite.config.settings.common import (
     USE_I18N, USE_L10N, USE_TZ, PER_PAGE, ALLOWED_CONTENT, AUTH_USER_MODEL,
     AUTHENTICATION_BACKENDS, SESSION_CACHE_ALIAS, SESSION_ENGINE, SITE_ID,
     DATETIME_FORMAT_STRING, TITLE_PATTERN, NAME_PATTERN, TAGS_ARRAY_PATTERN,
-    TAGS_WHITESPACE_PATTERN, TAGS_FILTER_PATTERN,)
+    TAGS_WHITESPACE_PATTERN, TAGS_FILTER_PATTERN,REST_FRAMEWORK,)
 
 environ = {
     'SECRET_KEY': "ao$DZM2C9KlGksl&Lzl$7Tx0TOlEXoCyZxg7i&6b3LliqRFXHk1YinXBID@B#Ncm",
@@ -111,6 +111,14 @@ SECURE_CONTENT_TYPE_NOSNIFF = True  # x-content-type-options: nosniff header
 SECURE_BROWSER_XSS_FILTER = True    # x-xss-protection: 1; mode=block header
 SESSION_COOKIE_SECURE = False       # Using a secure-only session cookie
 X_FRAME_OPTIONS = 'DENY'            # unless there is a good reason for your site to serve other parts of itself in a frame, you should change it to 'DENY'
+
+# related to django-rest-framework
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    )
+}
 
 # celery-relate configuration
 CELERY_BROKER_URL = 'redis://redis:6379/0'
