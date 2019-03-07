@@ -9,7 +9,7 @@ from mysite.config.settings.common import (
     USE_I18N, USE_L10N, USE_TZ, PER_PAGE, ALLOWED_CONTENT, AUTH_USER_MODEL,
     AUTHENTICATION_BACKENDS, SESSION_CACHE_ALIAS, SESSION_ENGINE, SITE_ID,
     DATETIME_FORMAT_STRING, TITLE_PATTERN, NAME_PATTERN, TAGS_ARRAY_PATTERN,
-    TAGS_WHITESPACE_PATTERN, TAGS_FILTER_PATTERN,)
+    TAGS_WHITESPACE_PATTERN, TAGS_FILTER_PATTERN,REST_FRAMEWORK,)
 
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -115,6 +115,14 @@ IMPORT_ARTICLE_USER = {
     'username': 'root',
     'email': 'email@gmail.com',
     'password': 'admin1234'
+}
+
+# related to django-rest-framework
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    )
 }
 
 # celery-relate configuration
