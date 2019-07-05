@@ -16,32 +16,34 @@ from apps.comment.forms import CommentForm
 from utils.cache import cache_decorator, cache
 from .tasks import increment_view_times
 
-PER_PAGE = getattr(settings, 'PER_PAGE')
+PER_PAGE = getattr(settings, "PER_PAGE")
 
 
 class IndexView(ListView):
     """Index homepage
     """
+
     template_name = "article/index.html"
     model = Article
     paginate_by = PER_PAGE
-    context_object_name = 'articles'
+    context_object_name = "articles"
 
     def get(self, request, *args, **kwargs):
         return super(IndexView, self).get(request, *args, **kwargs)
 
 
-class CreateArticleView(LoginRequiredMixin, SingleObjectTemplateResponseMixin,
-                        BaseCreateView):
+class CreateArticleView(
+    LoginRequiredMixin, SingleObjectTemplateResponseMixin, BaseCreateView
+):
     """Class-based view function used to write an article
     """
-    template_name = 'article/editor.html'
+
+    template_name = "article/editor.html"
     form_class = CreateArticleForm
-    login_url = '/accounts/login/'
+    login_url = "/accounts/login/"
 
     def dispatch(self, request, *args, **kwargs):
-        return super(CreateArticleView, self).dispatch(request, *args,
-                                                       **kwargs)
+        return super(CreateArticleView, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         """
@@ -57,18 +59,21 @@ class CreateArticleView(LoginRequiredMixin, SingleObjectTemplateResponseMixin,
 class UpdateArticleView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     """View function for editing a posted article
     """
+
     model = Article
-    login_url = '/accounts/login/'
-    template_name = 'article/editor.html'
-    context_object_name = 'article'
+    login_url = "/accounts/login/"
+    template_name = "article/editor.html"
+    context_object_name = "article"
     form_class = EditArticleForm
     permission_denied_message = "Permission Denied."
     raise_exception = True
 
     def test_func(self):
         article = self.get_object()
-        return self.request.user == article.author or \
-            self.request.user.is_superuser
+        return (
+            self.request.user == article.author
+            or self.request.user.is_superuser
+        )
 
     def get(self, request, *args, **kwargs):
         return super(UpdateArticleView, self).get(request, *args, **kwargs)
@@ -81,20 +86,21 @@ class UpdateArticleView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 class ArticleDetailView(DetailView, BaseCreateView):
     """The detail of each article
     """
+
     model = Article
     form_class = CommentForm
-    template_name = 'article/article_detail.html'
-    context_object_name = 'article'
+    template_name = "article/article_detail.html"
+    context_object_name = "article"
 
     def get(self, request, *args, **kwargs):
-        Day = 24 * 60 * 60 # A day
+        day = 0  # A day
         self.object = super(ArticleDetailView, self).get_object()
         ip = get_real_ip(request)
         visited_ips = cache.get(self.object.slug, set())
 
         if ip not in visited_ips:
             visited_ips.add(ip)
-            cache.set(self.object.slug, visited_ips, Day)
+            cache.set(self.object.slug, visited_ips, day)
             increment_view_times.delay(article_id=self.object.id)
         context = self.get_context_data(object=self.object)
         return self.render_to_response(context)
@@ -102,17 +108,19 @@ class ArticleDetailView(DetailView, BaseCreateView):
 
 class DeleteArticleView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Article
-    login_url = 'account/login/'
-    template_name = 'article/article_confirm.html'
-    success_url = reverse_lazy('articles:manage')
-    context_object_name = 'article'
+    login_url = "account/login/"
+    template_name = "article/article_confirm.html"
+    success_url = reverse_lazy("articles:manage")
+    context_object_name = "article"
     permission_denied_message = "Permission Denied."
     raise_exception = True
 
     def test_func(self):
         article = self.get_object()
-        return self.request.user == article.author or \
-            self.request.user.is_superuser
+        return (
+            self.request.user == article.author
+            or self.request.user.is_superuser
+        )
 
     def get(self, request, *args, **kwargs):
         return super(DeleteArticleView, self).get(request, *args, **kwargs)
@@ -122,24 +130,25 @@ class DeleteArticleView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 
 class ArticleListView(ListView):
-    template_name = 'article/all_articles.html'
+    template_name = "article/all_articles.html"
     model = Article
     paginate_by = 15
-    context_object_name = 'articles'
+    context_object_name = "articles"
 
     def get(self, request, *args, **kwargs):
         return super(ArticleListView, self).get(request, *args, **kwargs)
 
 
 class TaggedArticleListView(ListView):
-    template_name = 'article/index.html'
-    context_object_name = 'articles'
+    template_name = "article/index.html"
+    context_object_name = "articles"
     paginate_by = PER_PAGE
-    context_object_name = 'articles'
+    context_object_name = "articles"
 
     def get_queryset(self, **kwargs):
         queryset = Article.objects.filter(
-            tags__icontains=self.kwargs.get('tag'))
+            tags__icontains=self.kwargs.get("tag")
+        )
         return queryset
 
     def get(self, request, *args, **kwargs):
@@ -147,4 +156,4 @@ class TaggedArticleListView(ListView):
 
 
 class ArticleManagementView(LoginRequiredMixin, TemplateView):
-    template_name = 'article/article_backend.html'
+    template_name = "article/article_backend.html"
