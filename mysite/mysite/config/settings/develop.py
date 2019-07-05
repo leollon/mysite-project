@@ -48,7 +48,6 @@ DATABASES = {
         'CHARSET': 'utf8mb4',
         'COLLATION': 'utf8mb4_unicode_ci',
         'ATOMIC_REQUESTS': True,
-        'CONN_MAX_AGE': 60,
     }
 }
 
