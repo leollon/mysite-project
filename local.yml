@@ -44,7 +44,7 @@ services:
       - blog-net
     ports:
       - "127.0.0.1:8000:8000"  # web service port
-      - "127.0.0.1:8085:8085"  # uwsgi status port
+      - "127.0.0.1:5555:5555"  # flower service port
     links:
       - mysql:blog
       - redis
