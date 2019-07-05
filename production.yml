@@ -48,6 +48,7 @@ services:
     ports:
       - "127.0.0.1:8080:8080"  # web service port
       - "127.0.0.1:8085:8085"  # uwsgi status port
+      - "127.0.0.1:5555:5555"  # flower service port
     depends_on:
       - mysql
       - redis

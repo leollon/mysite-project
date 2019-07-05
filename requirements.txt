@@ -8,11 +8,11 @@ celery==4.2.1
 certifi==2018.10.15
 cffi==1.11.2
 Cython==0.27.3
-Django==2.1.7
+Django==2.1.9
 django-crispy-forms==1.7.0
 django-ipware==2.1.0
 django-redis==4.9.0
-djangorestframework==3.7.7
+djangorestframework==3.9.1
 gevent==1.4.0
 greenlet==0.4.15
 html5lib==1.0b10
@@ -38,10 +38,11 @@ six==1.10.0
 sqlparse==0.2.4
 typed-ast==1.1.0
 Unidecode==1.0.22
-urllib3==1.24
+urllib3==1.24.2
 vine==1.1.4
 webencodings==0.5.1
 pylint==2.1.1
 sentry-sdk==0.4.3
 wrapt==1.10.11
 uwsgi==2.0.17.1
+flower>=0.9

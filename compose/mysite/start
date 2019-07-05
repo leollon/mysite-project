@@ -3,5 +3,6 @@
 set -o errexit
 
 python manage.py makemigrations && python manage.py migrate
-celery -A mysite worker -P gevent -c 500 -l INFO -f log/celery.log -D
 uwsgi --ini /uwsgi.ini
+celery -A mysite worker -P gevent -c 500 -l INFO -f log/celery.log -D
+celery flower -A mysite --adress=127.0.0.1 --port=5555 &
