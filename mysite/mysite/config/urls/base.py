@@ -19,7 +19,7 @@ from django.views.decorators.cache import cache_page
 from django.contrib.sitemaps import views as sitemap_views
 from django.contrib.flatpages import views as flatpage_views
 
-from mysite.config.sitemaps import ArticleSiteMap
+from ..sitemaps import ArticleSiteMap
 
 sitemaps = {
     'Articles': ArticleSiteMap,

@@ -5,7 +5,7 @@ from apps.article.models import Article
 
 
 class ArticleSiteMap(sitemaps.Sitemap):
-    changefreq = 'weekly'
+    changefreq = "weekly"
     priority = 0.3
     protocol = "https"
 
@@ -16,4 +16,4 @@ class ArticleSiteMap(sitemaps.Sitemap):
         return item.created_time
 
     def location(self, item):
-        return reverse("articles:detail", args=(item.slug, ))
+        return reverse("articles:detail", args=(item.slug,))
