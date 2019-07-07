@@ -18,7 +18,7 @@ def message_handle(filename, **kwargs):
     with open(filename) as f:
         message = f.read()
         article_link = DOMAIN_NAME + reverse(
-            'articles:detail', kwargs={'pk': kwargs.get('article_id')})
+            'article:detail', kwargs={'pk': kwargs.get('article_id')})
         message = message.format(
             kwargs.get('username'), article_link, kwargs.get('title'),
             kwargs.get('comment_content'))

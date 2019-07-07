@@ -21,20 +21,22 @@ from django.contrib.flatpages import views as flatpage_views
 
 from ..sitemaps import ArticleSiteMap
 
-sitemaps = {
-    'Articles': ArticleSiteMap,
-}
+sitemaps = {"Article": ArticleSiteMap}
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'', include('apps.article.urls')),
-    url(r'categories/', include('apps.category.urls')),
-    url(r'accounts/', include('apps.user.urls')),
-    url(r'^api/', include('apps.comment.urls')),
-    url(r'^sitemap\.xml$',
-        cache_page(60 * 60 * 24 * 7, cache='redis')(sitemap_views.sitemap),
-        {'sitemaps': sitemaps}),
-    url(r'^(?P<url>.*/)$',
-        cache_page(60 * 60 * 24 * 7, cache='redis')(flatpage_views.flatpage),
-        name='django.contrib.flatpages.views.flatpage'),
+    url(r"^admin/", admin.site.urls),
+    url(r"", include("apps.article.urls")),
+    url(r"categories/", include("apps.category.urls")),
+    url(r"accounts/", include("apps.user.urls")),
+    url(r"comment/", include("apps.comment.urls")),
+    url(
+        r"^sitemap\.xml$",
+        cache_page(60 * 60 * 24 * 7, cache="redis")(sitemap_views.sitemap),
+        {"sitemaps": sitemaps},
+    ),
+    url(
+        r"^(?P<url>.*/)$",
+        cache_page(60 * 60 * 24 * 7, cache="redis")(flatpage_views.flatpage),
+        name="django.contrib.flatpages.views.flatpage",
+    ),
 ]

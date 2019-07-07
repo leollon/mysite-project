@@ -94,11 +94,11 @@ STATICFILES_DIRS = [
 ]
 
 # EMAIL HOST
-EMAIL_HOST = "smtp.qq.com"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+EMAIL_HOST = "127.0.0.1"
+EMAIL_PORT = 1025
+EMAIL_USE_TLS = False
 
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 EMAIL_ACCOUNT = {
     "EMAIL_HOST_USER": os.environ.get("EMAIL_USER"),
@@ -170,6 +170,16 @@ LOGGING = {
             "propagate": True,
         },
         "django": {
+            "level": LOG_LEVEL,
+            "handlers": ["console", "file", "mail_admins"],
+            "propagate": True,
+        },
+        "django.server": {
+            "level": LOG_LEVEL,
+            "handlers": ["console", "file", "mail_admins"],
+            "propagate": True,
+        },
+        "django.template": {
             "level": LOG_LEVEL,
             "handlers": ["console", "file", "mail_admins"],
             "propagate": True,

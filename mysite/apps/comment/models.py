@@ -1,10 +1,8 @@
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
-
+from django.urls import reverse
 from apps.article.models import Article
 
 
-@python_2_unicode_compatible
 class Comment(models.Model):
     username = models.CharField(max_length=32)
     email = models.EmailField(max_length=32, blank=True)
@@ -17,5 +15,8 @@ class Comment(models.Model):
         return "%s" % self.comment_text
 
     class Meta:
-        ordering = ("created_time", )
+        ordering = ("created_time",)
         db_table = "comments"
+
+    def get_absolute_url(self):
+        return reverse("article:detail", args=(self.post.slug,))
