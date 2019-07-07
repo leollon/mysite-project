@@ -14,12 +14,12 @@ class ArticleBaseForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ArticleBaseForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
-        self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'save'))
+        self.helper.form_method = "post"
+        self.helper.add_input(Submit("submit", "save"))
 
     class Meta:
         model = Article
-        fields = ['title', 'article_body', 'category', 'tags']
+        fields = ["title", "article_body", "category", "tags"]
 
 
 class CreateArticleForm(ArticleBaseForm):
@@ -29,7 +29,7 @@ class CreateArticleForm(ArticleBaseForm):
 
     def __init__(self, *args, **kwargs):
         super(CreateArticleForm, self).__init__(*args, **kwargs)
-        self.helper.form_action = reverse('articles:write')
+        self.helper.form_action = reverse("article:write")
 
 
 class EditArticleForm(ArticleBaseForm):

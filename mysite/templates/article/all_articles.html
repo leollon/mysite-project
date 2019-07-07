@@ -9,7 +9,7 @@
         {% for article in articles %}
         <tr>
             <td class="title">
-                <a href="{% url 'articles:detail' article.slug %}">
+                <a href="{% url 'article:detail' article.slug %}">
                     {{ article.title }}
                 </a>
             </td>

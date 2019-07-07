@@ -3,7 +3,7 @@
 {% split_tags article.tags as tags %}
 <div class="post-preview">
     <h2 class="post-title">
-        <a href="{% url 'articles:detail' article.slug %}">
+        <a href="{% url 'article:detail' article.slug %}">
             {{ article.title }}
         </a>
     </h2>
@@ -19,12 +19,12 @@
         </span>
         <span class="fa fa-tag"></span>
         {% for tag in tags %}
-        <a href="{% url 'articles:tag' tag %}">
+        <a href="{% url 'article:tag' tag %}">
             #{{ tag }}
         </a>
         {% endfor %}
         <span class="fa fa-comments"></span>
-        <a href="{% url 'articles:detail' article.slug %}#comments">
+        <a href="{% url 'article:detail' article.slug %}#comments">
             <span>
                 {{ article.comment_set.count }}
                 comment{{ article.comment_set.count|pluralize }}

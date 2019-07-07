@@ -16,4 +16,4 @@ class ArticleSiteMap(sitemaps.Sitemap):
         return item.created_time
 
     def location(self, item):
-        return reverse("articles:detail", args=(item.slug,))
+        return reverse("article:detail", args=(item.slug,))

@@ -5,16 +5,19 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
+  <meta name="viewport"
+    content="width=device-width, shrink-to-fit=no, initial-scale=1">
   <meta name="description" content="">
   <meta name="author" content="">
 
   <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/icon">
-  <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/icon">
+  <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}"
+    type="image/icon">
 
-  <link href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet"
-    type="text/css">
-  <link href="{% static 'vendor/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}"
+    rel="stylesheet" type="text/css">
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.css' %}"
+    rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link href="{% static 'css/simple-sidebar.css' %}" rel="stylesheet">
 
@@ -47,7 +50,7 @@
           <a href="{% url 'user:dashboard' %}">Dashboard</a>
         </li>
         <li>
-          <a href="{% url 'articles:manage' %}">Articles</a>
+          <a href="{% url 'article:manage' %}">Articles</a>
         </li>
         {% if user.is_superuser %}
         <li>
@@ -64,7 +67,7 @@
         </li>
         {% endif %}
         <li>
-          <a href="{% url 'articles:index' %}">
+          <a href="{% url 'article:index' %}">
             Homepage
           </a>
         </li>
@@ -77,7 +80,8 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-lg-12">
-            <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle
+            <a href="#menu-toggle" class="btn btn-default"
+              id="menu-toggle">Toggle
               Menu</a>
           </div>
         </div>

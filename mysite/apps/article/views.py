@@ -80,7 +80,7 @@ class UpdateArticleView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def post(self, request, *args, **kwargs):
         super(UpdateArticleView, self).post(request, *args, **kwargs)
-        return HttpResponseRedirect(reverse("articles:manage"))
+        return HttpResponseRedirect(reverse("article:manage"))
 
 
 class ArticleDetailView(DetailView, BaseCreateView):
@@ -110,7 +110,7 @@ class DeleteArticleView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Article
     login_url = "account/login/"
     template_name = "article/article_confirm.html"
-    success_url = reverse_lazy("articles:manage")
+    success_url = reverse_lazy("article:manage")
     context_object_name = "article"
     permission_denied_message = "Permission Denied."
     raise_exception = True
