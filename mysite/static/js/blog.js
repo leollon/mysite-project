@@ -40,7 +40,7 @@ $("#comment-form").submit(function (event) {
             data: formData,
             enctype: 'multipart/form-data',
             processData: false,
-            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            contentType: false,
             success: function (data, textStatus, xhr) {
                 window.location.reload();
             },
@@ -50,6 +50,11 @@ $("#comment-form").submit(function (event) {
         })
     }
 
+})
+
+$('.reply').click(function (event) {
+    let commentText = $("#id_comment_text").val();
+    $('#id_comment_text').val('@'.concat(this.dataset.commenter).concat(" ").concat(commentText));
 })
 
 function getCSRFToken() {

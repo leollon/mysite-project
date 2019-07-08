@@ -1,44 +1,25 @@
+{% load static %}
 <form class="form-inline" enctype="multipart/form-data" id="comment-form">
     {% csrf_token %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xs-12  col-sm-12 col-md-12 col-lg-12"
-                id="comment-box">
-                <label class="small" for="id_comment_text">
-                    Comment text
+            {% for field in form %}
+            {% if field.label != 'Post' %}
+            <div class="col-xs-12
+                {% if field.label == 'Comment text' %} col-sm-12 col-md-12 col-lg-12
+                {% else %} col-xs-12 col-sm-4 col-md-4 col-lg-4 {% endif %}" id='{{ field.label }}'>
+                <label class="small" for="{{field.id_for_label }}">
+                    {{ field.label }}
                 </label>
-                <div class="input-box"><textarea name="comment_text" cols="40"
-                        rows="10" maxlength="256" placeholder="Comment(needed)"
-                        required="" id="id_comment_text"></textarea></div>
+                <div class="input-box">{{ field }}</div>
             </div>
-            <div class="col-xs-12  col-sm-4 col-md-4 col-lg-4 " id="Username">
-                <label class="small" for="id_username">
-                    Username
-                </label>
-                <div class="input-box"><input type="text" name="username"
-                        maxlength="32" placeholder="Username(needed)"
-                        required="" id="id_username"></div>
-            </div>
-            <div class="col-xs-12  col-sm-4 col-md-4 col-lg-4 " id="Email">
-                <label class="small" for="id_email">
-                    Email
-                </label>
-                <div class="input-box"><input type="email" name="email"
-                        maxlength="32" placeholder="Email(optional)"
-                        id="id_email"></div>
-            </div>
-            <div class="col-xs-12  col-sm-4 col-md-4 col-lg-4 " id="Link">
-                <label class="small" for="id_link">
-                    Link
-                </label>
-                <div class="input-box"><input type="url" name="link"
-                        maxlength="32" placeholder="Link(optional)"
-                        id="id_link"></div>
-            </div>
-            <divid="Post" aria-hidden="true">
-                <div class="input-box"><input type="hidden" name="post"
-                        value="{{article.id}}" id="post_id"></div>
+            {% if field.help_text %}
+            <p class="small">{{ field.help_text }}</p>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
         </div>
-        <input type="submit" class="btn btn-default reply-btn" value="Reply">
+        <input type="hidden" value="{{article.id}}" name="post">
+        <input type="submit" id="reply-btn" class="btn btn-default" value="Reply">
     </div>
 </form>

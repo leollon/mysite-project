@@ -8,8 +8,10 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ("comment_text", "username", "email", "link", "post")
 
-    def __init__(self, *args, **kwargs):
-        super(CommentForm, self).__init__(*args, **kwargs)
+    def __init__(self, label_suffix="", *args, **kwargs):
+        super(CommentForm, self).__init__(
+            label_suffix=label_suffix, *args, **kwargs
+        )
         self.fields["username"].widget.attrs["placeholder"] = "Username(needed)"
         self.fields["email"].widget.attrs["placeholder"] = "Email(optional)"
         self.fields["link"].widget.attrs["placeholder"] = "Link(optional)"

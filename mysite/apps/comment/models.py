@@ -14,9 +14,9 @@ class Comment(models.Model):
     def __str__(self):
         return "%s" % self.comment_text
 
+    def get_absolute_url(self):
+        return reverse("article:detail", args=(self.post.slug,))
+
     class Meta:
         ordering = ("created_time",)
         db_table = "comments"
-
-    def get_absolute_url(self):
-        return reverse("article:detail", args=(self.post.slug,))

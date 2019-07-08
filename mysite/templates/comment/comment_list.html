@@ -10,8 +10,7 @@
             <a href="#{{ forloop.counter }}" class="floor">
                 {{ forloop.counter }}L</a>
             <a href="{% if comment.link %}http://{{ comment.link }}
-                         {% endif %}"
-                class="username">
+                         {% endif %}" class="username">
                 {{ comment.username }}
             </a>
             <span class="datetime">
@@ -20,7 +19,7 @@
             <div class="comment-text">
                 {{ comment.comment_text | banxss | md | safe }}
             </div>
-            <span class="reply" onclick="comment_input('{{ comment.username }}')">
+            <span class="reply" data-commenter='{{ comment.username }}'>
                 Reply
             </span>
         </li>
