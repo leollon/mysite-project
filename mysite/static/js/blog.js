@@ -57,7 +57,16 @@ $('.reply').click(function (event) {
     $('#id_comment_text').val('@'.concat(this.dataset.commenter).concat(" ").concat(commentText));
 })
 
+$('#captcha').click(setCaptcha);
+$('#captcha').ready(setCaptcha);
+
 function getCSRFToken() {
     var cookie = $("input[name='csrfmiddlewaretoken']").attr("value");
     return cookie;
+}
+
+function setCaptcha() {
+    $.getJSON("/refresh/captcha/", function (data) {
+        $("#captcha").src = "data:image/png;base64," + data.captchaAddress;
+    })
 }

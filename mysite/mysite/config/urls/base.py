@@ -29,6 +29,7 @@ urlpatterns = [
     url(r"categories/", include("apps.category.urls")),
     url(r"accounts/", include("apps.user.urls")),
     url(r"comment/", include("apps.comment.urls")),
+    url(r"refresh/", include("apps.captcha.urls")),
     url(
         r"^sitemap\.xml$",
         cache_page(60 * 60 * 24 * 7, cache="redis")(sitemap_views.sitemap),

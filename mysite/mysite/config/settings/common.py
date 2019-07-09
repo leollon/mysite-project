@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     "apps.category.apps.ArticleCategoryConfig",
     "apps.user.apps.UserConfig",
     "apps.comment.apps.CommentConfig",
+    "apps.captcha.apps.CaptchaConfig",
 ]
 
 TEMPLATES = [

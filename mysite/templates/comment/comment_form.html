@@ -1,4 +1,3 @@
-{% load static %}
 <form class="form-inline" enctype="multipart/form-data" id="comment-form">
     {% csrf_token %}
     <div class="container-fluid">
@@ -20,6 +19,8 @@
             {% endfor %}
         </div>
         <input type="hidden" value="{{article.id}}" name="post">
+        <img id="captcha" alt="captcha" src="" />
+        <input type="text" id="captcha-input" name="captcha">
         <input type="submit" id="reply-btn" class="btn btn-default" value="Reply">
     </div>
 </form>

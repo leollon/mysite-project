@@ -86,8 +86,13 @@ CACHES = {
 # tied to app's static, like my_app/static/
 STATIC_URL = "/static/"
 
-# Directory containing all static files
-STATIC_ROOT = str(Path("/home/") / getuser() / "static")
+# Directory containing all collected static files
+STATIC_ROOT = (Path("/home/") / getuser() / "static").as_posix()
+
+# Captcha's directory
+# CAPTCHA_DIR = Path(STATIC_ROOT) / "captcha"
+CAPTCHA_DIR = "/captcha/"
+
 
 STATICFILES_DIRS = [
     os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), "static/")
