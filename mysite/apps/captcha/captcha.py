@@ -16,18 +16,18 @@ class Captcha:
         self,
         img_path=CAPATCHA_BASE,
         suffix="png",
-        size=(160, 60),
+        size=(100, 35),
         chars=ALPHA_NUM,
         mode="RGB",
         bg_color=(128, 128, 128),
-        fg_color=(255, 255, 153),
+        fg_color=(141, 0, 255),
         xy=None,
         font_size=25,
         font_type=None,
-        length=4,
+        length=(4, 6),
         draw_lines=True,
-        num_lines=(3, 5),
-        draw_poits=True,
+        num_lines=(4, 6),
+        draw_points=True,
         point_frequency=5,
         draw_transform=False,
     ):
@@ -42,7 +42,7 @@ class Captcha:
         :type xy:                   tuple, 验证码偏移位置（左右和上下）
         :type font_size:            int, 字体大小
         :type font_type:            str, 字体类型
-        :type length:               int, 验证码字符长度
+        :type length:               tuple, 验证码字符长度范围
         :type draw_lines:           bool, 是否在图片中划线
         :type num_lines:            tuple, 划线的数量
         :type draw_points:          bool, 是否在图片中画点
@@ -63,7 +63,7 @@ class Captcha:
         self._length = length
         self._draw_lines = draw_lines
         self._num_lines = num_lines
-        self._draw_points = draw_poits
+        self._draw_points = draw_points
         self._point_frequency = point_frequency
         self._draw_transform = draw_transform
         self._img = Image.new(mode, size, bg_color)
@@ -80,7 +80,7 @@ class Captcha:
         """
         :rtype: list[str]
         """
-        return random.sample(self._chars, self._length)
+        return random.sample(self._chars, random.randint(*self._length))
 
     def create_lines(self):
         """绘制干扰线
@@ -102,7 +102,7 @@ class Captcha:
         frequency = min(100, max(0, int(self._point_frequency)))
         for w in range(self._width):
             for h in range(self._height):
-                tmp = random.randint(5, frequency)
+                tmp = random.randint(5, 100)
                 if tmp > 100 - frequency:
                     self._draw.point((w, h), fill=self._fg_color)  # 画点，并填充颜色
 
@@ -156,11 +156,12 @@ class Captcha:
 
         if self._draw_points:
             self.create_points()
-        text = self.create_text()  # 将被放到缓存中
+
+        text = self.create_text()  # 将会被放到缓存中
 
         if self._draw_transform:
             self._img = self.transform()
-        self._img = self._img.filter(ImageFilter.EDGE_ENHANCE_MORE)
+        self._img = self._img.filter(ImageFilter.EDGE_ENHANCE_MORE)  # 边界增强
         self._file_name = "%s.%s" % (
             str(self._file_name).replace("-", ""),
             self._suffix,
@@ -171,10 +172,19 @@ class Captcha:
         file_path = captcha_dir / self._file_name
         if file_path.exists():
             file_path.unlink()
-        self._img.save(file_path.as_posix())
-        # req_cap = "/" + "/".join(file_path.as_posix().rsplit("/", 3)[-3:])
-        import base64
-
-        req_cap = base64.b64encode(open(file_path, "rb").read()).decode('utf-8')
-        return (text, req_cap)
+        try:
+            self._img.save(file_path.as_posix())
+            captcha_img_path = "/" + "/".join(
+                file_path.as_posix().rsplit("/", 3)[-3:]
+            )
+            result_status = 0
+            message = "Success"
+        except PermissionError:
+            text, captcha_img_path, result_status, message = (
+                None,
+                None,
+                1,
+                "No permission.",
+            )
+        return (text, captcha_img_path, result_status, message)
 

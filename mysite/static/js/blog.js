@@ -22,15 +22,22 @@ $.ajaxSetup({
         if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
             xhr.setRequestHeader("X-CSRFToken", getCSRFToken());
         }
-
     },
     error: function (event) {
         console.log(event);
     }
 })
 
+$("#captcha-input").on("input", function (event) {
+    $("#captcha-hint").css("display", "none");
+})
+
 $("#comment-form").submit(function (event) {
     event.preventDefault();
+    if ($("#captcha-input").val() == "") {
+        $("#captcha-hint").css("display", "block");
+        return;
+    }
     let formData = new FormData($("#comment-form")[0]);
     if (formData) {
         $.ajax({
@@ -54,7 +61,10 @@ $("#comment-form").submit(function (event) {
 
 $('.reply').click(function (event) {
     let commentText = $("#id_comment_text").val();
-    $('#id_comment_text').val('@'.concat(this.dataset.commenter).concat(" ").concat(commentText));
+    let commenter = '@'.concat(this.dataset.commenter);
+    if (commentText.indexOf(commenter) < 0) {
+        $('#id_comment_text').val(commenter.concat(" ").concat(commentText));
+    }
 })
 
 $('#captcha').click(setCaptcha);
@@ -67,6 +77,6 @@ function getCSRFToken() {
 
 function setCaptcha() {
     $.getJSON("/refresh/captcha/", function (data) {
-        $("#captcha").src = "data:image/png;base64," + data.captchaAddress;
+        $("#captcha").attr("src", data.captchaImgPath);
     })
 }

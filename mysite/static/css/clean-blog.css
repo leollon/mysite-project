@@ -530,8 +530,7 @@ img {
   height: auto;
   display: block;
   margin: auto;
-  border: 1px solid rgba(128, 128, 128, 0.5);
-  border-radius: 8px;
+  border: 0;
 }
 
 #categories li,
@@ -586,6 +585,7 @@ img {
 #comment-list {
   margin-left: 15px;
   padding: 0;
+  word-break: break-word;
 }
 
 .floor {
@@ -619,29 +619,35 @@ img {
   color: white;
 }
 
-.input-box>input,
-.input-box>textarea {
+input,
+textarea {
   border: 1px solid lightgray;
-  border-radius: 2px;
   font-size: 16px;
-  height: 100%;
   width: 100%;
 }
 
 textarea {
-  height: 100px;
-  width: 100%;
+  height: 100%;
   resize: none;
 }
 
+input {
+  height: 38px;
+}
+
 #captcha-input {
-  width: 50px;
-  height: 40px;
+  border-radius: 0px;
+}
+
+#captcha,
+#captcha-input,
+#reply-btn {
+  margin-top: 15px;
+  display: inline-block;
 }
 
 #reply-btn {
-  padding: 5px 15px;
-  margin-top: 15px;
+  padding: 8px 15px;
 }
 
 .error404 {

@@ -90,8 +90,7 @@ STATIC_URL = "/static/"
 STATIC_ROOT = (Path("/home/") / getuser() / "static").as_posix()
 
 # Captcha's directory
-# CAPTCHA_DIR = Path(STATIC_ROOT) / "captcha"
-CAPTCHA_DIR = "/captcha/"
+CAPTCHA_DIR = Path(Path(BASE_DIR).parent.parent) / "static/images" / "captcha"
 
 
 STATICFILES_DIRS = [
