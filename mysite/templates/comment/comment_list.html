@@ -1,14 +1,12 @@
 {% load article_tags %}
 <div class="comment-content" id="comments">
-    <p class="fa fa-comment"> {{ article.comment_set.count }}
-        Comment{{article.comment_set.count | pluralize }}
+    <p class="fa fa-comment"> {{ comments.paginator.count }}
+        Comment{{comments.paginator.count | pluralize }}
     </p>
     <hr id="underline">
     <ul id="comment-list">
-        {% for comment in article.comment_set.all %}
+        {% for comment in comments %}
         <li class="comment">
-            <a href="#{{ forloop.counter }}" class="floor">
-                {{ forloop.counter }}L</a>
             <a href="{% if comment.link %}http://{{ comment.link }}
                          {% endif %}" class="username">
                 {{ comment.username }}
@@ -27,4 +25,25 @@
         <li class="comment">No Comment yet!</li>
         {% endfor %}
     </ul>
+    <nav class="container-fluid" aria-label="Page navigation" style="display: inline-block; text-align: center;">
+        <ul class="pagination">
+            {% if comments.has_previous %}
+            <li class="previous">
+                <a href="?page={{comments.previous_page_number}}">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            {% endif %}
+            {% for page_num in comments.paginator.page_range %}
+            <li><a href="?page={{page_num}}">{{page_num}}</a></li>
+            {% endfor %}
+            {% if comments.has_next %}
+            <li class="next">
+                <a href="?page={{comments.next_page_number}}">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
 </div>

@@ -1,19 +1,19 @@
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.http import HttpResponseForbidden, HttpResponseRedirect
+from django.conf import settings
+from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic import DetailView, ListView
-from django.views.generic.base import TemplateView
+from django.core.paginator import Paginator, Page
+from django.views.generic import DetailView, TemplateView, ListView
 from django.views.generic.detail import SingleObjectTemplateResponseMixin
 from django.views.generic.edit import BaseCreateView, DeleteView, UpdateView
-from django.db.models import F
-from django.conf import settings
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from ipware.ip import get_real_ip
 
-from .forms import CreateArticleForm, EditArticleForm
+from utils import cache
 from .models import Article
+from apps.comment.models import Comment
 from apps.comment.forms import CommentForm
-from utils.cache import cache_decorator, cache
+from .forms import CreateArticleForm, EditArticleForm
 from .tasks import increment_view_times
 
 PER_PAGE = getattr(settings, "PER_PAGE")
@@ -103,7 +103,15 @@ class ArticleDetailView(DetailView, BaseCreateView):
             cache.set(self.object.slug, visited_ips, day)
             increment_view_times.delay(article_id=self.object.id)
         context = self.get_context_data(object=self.object)
-        return self.render_to_response(context)
+        comments = self.get_comment_list(request, *args, **kwargs)
+        context.update({"comments": comments})
+        return super(ArticleDetailView, self).render_to_response(context)
+
+    def get_comment_list(self, request, *args, **kwargs):
+        comments_list = Comment.objects.filter(post=self.object)
+        paginator = Paginator(comments_list, per_page=PER_PAGE, orphans=1)
+        comments = paginator.get_page(request.GET.get("page", 1))
+        return comments
 
 
 class DeleteArticleView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
