@@ -7,24 +7,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="leollon,leollon的小站">
-    <meta name="description"
-        content="A Blog created by leollon based on Django and Bootstrap.">
+    <meta name="description" content="{% block description %}{% endblock %}">
     <meta name="keywords" content="Python,Django,c,c++,Linux,backend,后端">
     <meta name="title" content="leollon的小站,leollon的博客">
-    <meta name="keywords"
-        content="Python,Django,c,c++,Linux,backend,后端,{% block keywords %}{% endblock %}">
+    <meta name="keywords" content="Python,Django,c,c++,Linux,backend,后端,{% block keywords %}{% endblock %}">
 
     <title>{% block title %}leollon的小站{% endblock %}</title>
-    <link rel="icon" href="{% static 'images/favicon.ico' %}"
-        type="image/icon">
-    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}"
-        type="image/icon">
-    <link href="{% static 'vendor/bootstrap/css/bootstrap.css' %}"
-        rel="stylesheet">
-    <link href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}"
-        rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto"
-        rel="stylesheet">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/icon">
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/icon">
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link href="{% static 'css/clean-blog.css' %}" rel="stylesheet">
 </head>
 
@@ -34,19 +27,16 @@
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle"
-                    data-toggle="collapse"
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
                     data-target="#list-in-navbar-to-collapse-1">
                     <span class="sr-only">Toggle navigation</span>
                     Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand"
-                    href="{% url 'article:index' %}">Homepage</a>
+                <a class="navbar-brand" href="{% url 'article:index' %}">Homepage</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse"
-                id="list-in-navbar-to-collapse-1">
+            <div class="collapse navbar-collapse" id="list-in-navbar-to-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     {% if user.is_authenticated %}
                     <li>
@@ -61,8 +51,7 @@
                         <a href="{% url 'article:all' %}">archives</a>
                     </li>
                     <li>
-                        <a
-                            href="{% url 'category:all_category' %}">categories</a>
+                        <a href="{% url 'category:all_category' %}">categories</a>
                     </li>
                     <li>
                         <a href="/about/">about</a>
@@ -79,8 +68,7 @@
     <header class="intro-header">
         <div class="container-fluid">
             <div class="row">
-                <div
-                    class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <div class="site-heading">
                         <h1>{% block blog-head %}Tux{% endblock %}</h1>
                         <hr class="small">
@@ -111,8 +99,7 @@
     <footer>
         <div class="container">
             <div class="row">
-                <div
-                    class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <ul class="list-inline text-center">
                         <li>
                             <a href="https://github.com/leollon">
@@ -124,8 +111,7 @@
                             </a>
                         </li>
                         <li>
-                            <a
-                                href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/">
+                            <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/">
                                 <span class="fa-stack fa-lg">
                                     <i class="fa fa-circle fa-stack-2x"></i>
                                     <i class="fa fa-creative-commons fa-stack-1x
