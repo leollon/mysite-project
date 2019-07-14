@@ -619,19 +619,19 @@ img {
   color: white;
 }
 
-input,
-textarea {
+.input-box input,
+.input-box textarea {
   border: 1px solid lightgray;
   font-size: 16px;
   width: 100%;
 }
 
-textarea {
+.input-box textarea {
   height: 100%;
   resize: none;
 }
 
-input {
+.input-box input {
   height: 38px;
 }
 
