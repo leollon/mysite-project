@@ -162,7 +162,7 @@ CELERY_BEAT_SCHEDULE = {
     "debug-periodic-task": {
         "task": "apps.captcha.tasks.debug_periodic_task",
         "schedule": crontab(minute="*/1"),
-        "args": ("Periodic task",),
+        "args": ("[Periodic task]",),
     },
     "remove-outdated-captcha-image": {
         "task": "apps.captcha.tasks.remove_outdated_captcha_image",

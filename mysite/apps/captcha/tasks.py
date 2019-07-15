@@ -2,13 +2,12 @@ import os
 from datetime import datetime
 
 from django.conf import settings
-
-from mysite import celery_app
+from celery import shared_task
 
 captcha_dir = getattr(settings, "CAPTCHA_DIR")
 
 
-@celery_app.task
+@shared_task
 def remove_outdated_captcha_image():
     for this in captcha_dir.glob("*"):
         if this.is_file():
@@ -18,6 +17,6 @@ def remove_outdated_captcha_image():
                 this.unlink()
 
 
-@celery_app.task
+@shared_task
 def debug_periodic_task(args):
     print(args)
