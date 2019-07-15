@@ -4,5 +4,6 @@ set -o errexit
 
 python manage.py makemigrations && python manage.py migrate
 celery -A mysite worker -P gevent -c 500 -l INFO -f log/celery.log -D
-celery flower -A mysite --adress=127.0.0.1 --port=5555 &
+celery flower -A mysite --adress=127.0.0.1 --port=5555 --auto_refresh=True &
+celery -A mysite beat -s /mysite/celerybeat-schedule --detach
 python manage.py runserver 0.0.0.0:8000

@@ -1,8 +1,10 @@
 import os
-
-from getpass import getuser
-from pathlib import Path
 import socket
+
+from pathlib import Path
+from getpass import getuser
+
+from celery.schedules import crontab
 
 from .common import (
     BASE_DIR,
@@ -91,6 +93,7 @@ STATIC_ROOT = (Path("/home/") / getuser() / "static").as_posix()
 
 # Captcha's directory
 CAPTCHA_DIR = Path(Path(BASE_DIR).parent.parent) / "static/images" / "captcha"
+CAPTCHA_CACHED_TIME = 60  # in second
 
 
 STATICFILES_DIRS = [
@@ -155,8 +158,20 @@ CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 timezone = "Asia/" + TIME_ZONE
 
+CELERY_BEAT_SCHEDULE = {
+    "debug-periodic-task": {
+        "task": "apps.captcha.tasks.debug_periodic_task",
+        "schedule": crontab(minute="*/1"),
+        "args": ("Periodic task",),
+    },
+    "remove-outdated-captcha-image": {
+        "task": "apps.captcha.tasks.remove_outdated_captcha_image",
+        "schedule": crontab(minute="*/1"),
+    },
+}
+
 # Logger: show more details
-LOG_LEVEL = DEBUG
+LOG_LEVEL = "DEBUG"
 
 LOGGING = {
     "version": 1,
