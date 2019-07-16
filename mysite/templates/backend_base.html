@@ -12,12 +12,11 @@
   <link rel="icon" href="/assets/images/favicon.ico" type="image/icon">
   <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/icon">
 
-  <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css"
-    rel="stylesheet">
+  <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
-  <link href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css"
-    rel="stylesheet" type="text/css">
+  <link href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <link href="/assets/css/simple-sidebar.min.css" rel="stylesheet">
+
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
   <title>{% block title %}{% endblock %}</title>
@@ -50,7 +49,7 @@
           <a href="{% url 'user:dashboard' %}">Dashboard</a>
         </li>
         <li>
-          <a href="{% url 'articles:manage' %}">Articles</a>
+          <a href="{% url 'article:manage' %}">Articles</a>
         </li>
         {% if user.is_superuser %}
         <li>
@@ -68,7 +67,7 @@
         </li>
         {% endif %}
         <li>
-          <a href="{% url 'articles:index' %}">
+          <a href="{% url 'article:index' %}">
             Homepage
           </a>
         </li>

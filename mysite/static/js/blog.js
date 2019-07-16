@@ -17,47 +17,66 @@ $("#id_article_body").on("input", function () {
     $("#article-preview-body").html(markdownToHtmlHandler($("#id_article_body").val()));
 })
 
-function comment_input(username) {
-    var commentText = $("#id_comment_text").val();
-    $("#id_comment_text").val("@".concat(username).concat(" ") + commentText);
-}
-
-function createXhrObject() {
-    return new XMLHttpRequest();
-}
-
-function clear_input(eleArray) {
-    for (var i = 0; i < eleArray.length; ++i) {
-        document.getElementsByName(eleArray[i])[0].value = "";
-    }
-}
-
-function postComment(post_id) {
-    var xhRequest = createXhrObject();
-    var url = "/api/comment/";
-    var data = {
-        "username": document.getElementsByName("username")[0].value,
-        "email": document.getElementsByName("email")[0].value,
-        "link": document.getElementsByName("link")[0].value,
-        "comment_text": document.getElementsByName("comment_text")[0].value,
-        "post": post_id
-    }
-    var eleArray = ["username", "email", "link", "comment_text"];
-    var json = JSON.stringify(data);
-    clear_input(eleArray);
-    xhRequest.onreadystatechange = function () {
-        if (xhRequest.readyState == 4 && xhRequest.status == "201") {
-            // reload the current whole page to get latest comment seen.
-            document.location.reload(true);
+$.ajaxSetup({
+    beforeSend: function (xhr, settings) {
+        if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", getCSRFToken());
         }
-    };
-    xhRequest.open("POST", url, true);
-    xhRequest.setRequestHeader("Content-type", "application/json; charset=utf-8");
-    xhRequest.setRequestHeader("X-CSRFToken", getCookie());
-    xhRequest.send(json);
-}
+    },
+    error: function (event) {
+        console.log(event);
+    }
+})
 
-function getCookie() {
+$("#captcha-input").on("input", function (event) {
+    $("#captcha-hint").css("display", "none");
+})
+
+
+$("#comment-form").submit(function (event) {
+    event.preventDefault();
+    if ($("#captcha-input").val() == "") {
+        $("#captcha-hint").css("display", "block");
+        return;
+    }
+    var formData = new FormData($("#comment-form")[0]);
+    if (formData) {
+        $.ajax({
+            url: '/comment/new/',
+            type: 'POST',
+            cache: false,
+            data: formData,
+            enctype: 'multipart/form-data',
+            processData: false,
+            contentType: false,
+            success: function (data, textStatus, xhr) {
+                window.location.reload();
+            },
+            error: function (xhr, textStatus, errorThrow) {
+                console.log(xhr, textStatus, errorThrow)
+            }
+        })
+    }
+})
+
+$('.reply').click(function (event) {
+    var commentText = $("#id_comment_text").val();
+    var commenter = '@'.concat(this.dataset.commenter);
+    if (commentText.indexOf(commenter) < 0) {
+        $('#id_comment_text').val(commenter.concat(" ").concat(commentText));
+    }
+})
+
+$('#captcha').click(setCaptcha);
+$('#captcha').ready(setCaptcha);
+
+function getCSRFToken() {
     var cookie = $("input[name='csrfmiddlewaretoken']").attr("value");
     return cookie;
+}
+
+function setCaptcha() {
+    $.getJSON("/refresh/captcha/", function (data) {
+        $("#captcha").attr("src", data.captchaImgPath);
+    })
 }

@@ -5,9 +5,10 @@ this is used to count pv, uv, vv.
     - vv: online visitors
 """
 import os
+
 from celery import Celery
 
-ENVIRON_MODULE = os.environ.get('DJANGO_MYSITE_PROFILE', 'develop')
+ENVIRON_MODULE = os.environ.get('DJANGO_MYSITE_PROFILE', 'production')
 os.environ.setdefault('DJANGO_SETTINGS_MODULE',
     'mysite.config.settings.%s' % ENVIRON_MODULE)
 

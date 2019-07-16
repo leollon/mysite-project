@@ -7,17 +7,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="leollon,leollon的小站">
-    <meta name="description" content="A Blog created by leollon based on Django and Bootstrap.">
+    <meta name="description" content="{% block description %}{% endblock %}">
     <meta name="keywords" content="Python,Django,c,c++,Linux,backend,后端">
     <meta name="title" content="leollon的小站,leollon的博客">
     <meta name="keywords" content="Python,Django,c,c++,Linux,backend,后端,{% block keywords %}{% endblock %}">
 
     <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/icon">
     <link rel="icon" href="/assets/images/favicon.ico" type="image/icon">
-    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css"
-        rel="stylesheet">
-    <link href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css"
-        rel="stylesheet">
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link href="/assets/css/clean-blog.min.css" rel="stylesheet">
 
@@ -35,7 +33,7 @@
                     <span class="sr-only">Toggle navigation</span>
                     Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="{% url 'articles:index' %}">Homepage</a>
+                <a class="navbar-brand" href="{% url 'article:index' %}">Homepage</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -51,7 +49,7 @@
                     </li>
                     {% endif %}
                     <li>
-                        <a href="{% url 'articles:all' %}">archives</a>
+                        <a href="{% url 'article:all' %}">archives</a>
                     </li>
                     <li>
                         <a href="{% url 'category:all_category' %}">categories</a>
@@ -130,7 +128,8 @@
                         Powered by Django & Bootstrap
                     </p>
                     <p class="blog-arch text-muted">
-                        {{ online_num }} visitor{{ online_num | pluralize }}</p>
+                        {{ online_num }} visitor{{ online_num | pluralize }}
+                    </p>
                     <p class="blog-arch text-muted">Response: RENDER_TIMEs</p>
                 </div>
             </div>

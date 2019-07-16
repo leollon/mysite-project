@@ -7,6 +7,11 @@ then
     rm -f ./celeryd.pid
 fi
 
+if [ -e './celerybeat.pid' ]
+then
+    rm -f ./celerybeat.pid
+fi
+
 if [ ! -d './log' ]
 then
     mkdir log

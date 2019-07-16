@@ -3,6 +3,7 @@ version: '3.7'
 volumes:
   mysql: {}
   redis: {}
+  mysite: {}
 
 services:
 
@@ -37,7 +38,7 @@ services:
       context: ./
       dockerfile: ./compose/mysite/Dockerfile  # the file contains the steps of build images
     entrypoint: /entrypoint
-    command: /start        # The command runs in the containe
+    command: /start             # The command runs in the containe
     restart: always
     volumes:
       - ./mysite:/mysite

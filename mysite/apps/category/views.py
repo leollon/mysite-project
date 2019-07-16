@@ -1,11 +1,10 @@
 from django.conf import settings
-from django.shortcuts import get_object_or_404
-from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
+from django.views.generic import ListView
 
 from apps.article.models import Article
 

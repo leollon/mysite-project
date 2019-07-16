@@ -1,5 +1,6 @@
 {% extends 'article/base.html' %}
 {% load staticfiles %}
+{% block description %}{{article.title}}{% endblock %}
 {% block keywords %}{{ article.tags }}{% endblock %}
 {% load article_tags %}
 {% block blog-head %}

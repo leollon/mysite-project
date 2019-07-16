@@ -1,7 +1,7 @@
 import logging
-
-from hashlib import md5
 from functools import wraps
+from hashlib import md5
+
 from django.core.cache import caches
 from django.core.cache.backends.base import InvalidCacheBackendError
 

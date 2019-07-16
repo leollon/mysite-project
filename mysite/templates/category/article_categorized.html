@@ -13,7 +13,7 @@
 {% for article in articles %}
 <ul>
     <li class="article-categorized-list">
-        <a href="{% url 'articles:detail' article.slug %}">
+        <a href="{% url 'article:detail' article.slug %}">
             {{ article.title }}</a>
     </li>
 </ul>

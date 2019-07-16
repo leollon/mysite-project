@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
-from .views import (manage_category, add_category, delete_category,
-                    edit_category, CategorizeArticleListView, CategoryListView)
+from .views import (CategorizeArticleListView, CategoryListView, add_category,
+                    delete_category, edit_category, manage_category)
 
 app_name = 'category'
 

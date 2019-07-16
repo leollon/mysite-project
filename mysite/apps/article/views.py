@@ -1,19 +1,19 @@
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.http import HttpResponseForbidden, HttpResponseRedirect
+from django.core.paginator import Page, Paginator
+from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic import DetailView, ListView
-from django.views.generic.base import TemplateView
+from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.detail import SingleObjectTemplateResponseMixin
 from django.views.generic.edit import BaseCreateView, DeleteView, UpdateView
-from django.db.models import F
-from django.conf import settings
-
 from ipware.ip import get_real_ip
+
+from apps.comment.forms import CommentForm
+from apps.comment.models import Comment
+from utils import cache
 
 from .forms import CreateArticleForm, EditArticleForm
 from .models import Article
-from apps.comment.forms import CommentForm
-from utils.cache import cache_decorator, cache
 from .tasks import increment_view_times
 
 PER_PAGE = getattr(settings, "PER_PAGE")
@@ -80,7 +80,7 @@ class UpdateArticleView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def post(self, request, *args, **kwargs):
         super(UpdateArticleView, self).post(request, *args, **kwargs)
-        return HttpResponseRedirect(reverse("articles:manage"))
+        return HttpResponseRedirect(reverse("article:manage"))
 
 
 class ArticleDetailView(DetailView, BaseCreateView):
@@ -103,14 +103,22 @@ class ArticleDetailView(DetailView, BaseCreateView):
             cache.set(self.object.slug, visited_ips, day)
             increment_view_times.delay(article_id=self.object.id)
         context = self.get_context_data(object=self.object)
-        return self.render_to_response(context)
+        comments = self.get_comment_list(request, *args, **kwargs)
+        context.update({"comments": comments})
+        return super(ArticleDetailView, self).render_to_response(context)
+
+    def get_comment_list(self, request, *args, **kwargs):
+        comments_list = Comment.objects.filter(post=self.object)
+        paginator = Paginator(comments_list, per_page=PER_PAGE, orphans=1)
+        comments = paginator.get_page(request.GET.get("page", 1))
+        return comments
 
 
 class DeleteArticleView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Article
     login_url = "account/login/"
     template_name = "article/article_confirm.html"
-    success_url = reverse_lazy("articles:manage")
+    success_url = reverse_lazy("article:manage")
     context_object_name = "article"
     permission_denied_message = "Permission Denied."
     raise_exception = True
