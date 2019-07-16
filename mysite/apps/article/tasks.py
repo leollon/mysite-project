@@ -1,7 +1,8 @@
-from django.db.models import F
 from celery import shared_task
+from django.db.models import F
 
 from .models import Article
+
 
 @shared_task
 def increment_view_times(article_id):

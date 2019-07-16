@@ -1,8 +1,8 @@
 from django.conf import settings
 from django.core.cache import cache
+from django.http.response import JsonResponse
 from django.views.generic import View
 from django.views.generic.base import ContextMixin
-from django.http.response import JsonResponse
 
 from .captcha import Captcha
 

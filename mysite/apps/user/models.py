@@ -1,10 +1,9 @@
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
-
-from mysite.config.settings import develop
 
 
 @python_2_unicode_compatible
@@ -14,20 +13,20 @@ class User(AbstractUser):
     make email field unique in users_user table
     """
 
-    email = models.EmailField(_('email address'), unique=True)
+    email = models.EmailField(_("email address"), unique=True)
     is_staff = models.BooleanField(
-        _('staff'),
+        _("staff"),
         default=False,
-        help_text=_('Designates whether the user \
-                                               can log into this site'))
+        help_text=_("Designates whether the user can log into this site"),
+    )
     is_valid = models.BooleanField(
-        _('validation'),
+        _("validation"),
         default=False,
-        help_text="Designates whether the user \
-                                   will be blocked")
-    EMAIL_FIELD = 'email'
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+        help_text="Designates whether the user will be blocked",
+    )
+    EMAIL_FIELD = "email"
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["username"]
 
     def __str__(self):
         return "%s" % self.username
@@ -39,12 +38,11 @@ class User(AbstractUser):
         :param expires_in: after that seconds, token will be valid
         :return: Serial number
         """
-        return Serializer(
-            getattr(develop, 'SERIAL_SECRET_KEY'), expires_in)
+        return Serializer(getattr(settings, "SERIAL_SECRET_KEY"), expires_in)
 
     def generate_valid_token(self):
         serial_number = self.generate_serial()
-        return serial_number.dumps({'pk': self.id}).decode(encoding='ascii')
+        return serial_number.dumps({"pk": self.id}).decode(encoding="ascii")
 
     def valid_account(self, token):
         serial_number = self.generate_serial()
@@ -53,7 +51,7 @@ class User(AbstractUser):
         except:
             return False
 
-        if data.get('pk') != self.id:
+        if data.get("pk") != self.id:
             return False
 
         self.is_valid = True
@@ -62,9 +60,9 @@ class User(AbstractUser):
 
     def generate_email_token(self):
         serial_obj = self.generate_serial(expires_in=1 * 24 * 60 * 60)
-        return serial_obj.dumps({
-            'name': self.username
-        }).decode(encoding="ascii")
+        return serial_obj.dumps({"name": self.username}).decode(
+            encoding="ascii"
+        )
 
     def verify_email_token(self, token):
         serial_obj = self.generate_serial(expires_in=30 * 60)
@@ -73,9 +71,9 @@ class User(AbstractUser):
         except:
             return False
 
-        if data.get('name') != self.username:
+        if data.get("name") != self.username:
             return False
         return True
 
     class Meta:
-        db_table = 'auth_users'
+        db_table = "auth_users"

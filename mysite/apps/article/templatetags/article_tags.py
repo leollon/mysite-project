@@ -1,29 +1,31 @@
 import bleach
+from django.conf import settings
 from django.template.defaultfilters import stringfilter
 from django.template.library import Library
 
 # import customized module
 from utils.cache import cache
+
 from .. import my_renderer
 from ..models import Article
-from mysite.config.settings import develop
 
 register = Library()
 
-allow_content = getattr(develop, 'ALLOWED_CONTENT')
+allow_content = getattr(settings, "ALLOWED_CONTENT")
 
 
-@register.filter(name='banxss')
+@register.filter(name="banxss")
 def bleach_xss(text):
     return bleach.clean(
         text=text,
-        tags=allow_content['ALLOWED_TAGS'],
-        attributes=allow_content['ALLOWED_ATTRIBUTES'],
-        styles=allow_content['ALLOWED_STYLES'],
-        strip=True)
+        tags=allow_content["ALLOWED_TAGS"],
+        attributes=allow_content["ALLOWED_ATTRIBUTES"],
+        styles=allow_content["ALLOWED_STYLES"],
+        strip=True,
+    )
 
 
-@register.filter(name='md')
+@register.filter(name="md")
 @stringfilter
 def md(text):
     """
@@ -33,11 +35,12 @@ def md(text):
     """
     renderer = my_renderer.HightlightRenderer()
     markdown = my_renderer.mistune.Markdown(
-        escape=True, hard_wrap=True, renderer=renderer)
+        escape=True, hard_wrap=True, renderer=renderer
+    )
     return markdown(text)
 
 
-@register.simple_tag(name='article_numbers')
+@register.simple_tag(name="article_numbers")
 def count_article(user):
     """
     count the number of article
@@ -46,7 +49,7 @@ def count_article(user):
     return Article.objects.filter(author=user).count()
 
 
-@register.simple_tag(name='newest_articles')
+@register.simple_tag(name="newest_articles")
 def newest_post(user):
     """
     get the user's newest 10 articles
@@ -56,16 +59,16 @@ def newest_post(user):
     return Article.objects.filter(author=user)[:10]
 
 
-@register.simple_tag(name='all_articles')
+@register.simple_tag(name="all_articles")
 def all_article(user):
     """
     get all of user's articles from article table
     :return:  all of articles
     """
-    return Article.objects.filter(author=user).order_by('-created_time').all()
+    return Article.objects.filter(author=user).order_by("-created_time").all()
 
 
-@register.simple_tag(name='split_tags')
+@register.simple_tag(name="split_tags")
 def split_tags(tags):
     """
     Split article's tag into an array
@@ -78,4 +81,4 @@ def split_tags(tags):
 
 @register.simple_tag(name="online")
 def online():
-    return len(cache.get('online_ips', set()))
+    return len(cache.get("online_ips", set()))

@@ -1,11 +1,10 @@
 import os
-import uuid
 import random
-
+import uuid
 from pathlib import Path
 
 from django.conf import settings
-from PIL import Image, ImageDraw, ImageFont, ImageFilter
+from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 ALPHA_NUM = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 CAPATCHA_BASE = getattr(settings, "CAPTCHA_DIR")
@@ -187,4 +186,3 @@ class Captcha:
                 "No permission.",
             )
         return (text, captcha_img_path, result_status, message)
-

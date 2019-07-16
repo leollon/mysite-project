@@ -82,7 +82,7 @@ PASSWORD_HASHERS = ["django.contrib.auth.hashers.BCryptSHA256PasswordHasher"]
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "Hongkong"
+TIME_ZONE = "Asia/Singapore"
 
 USE_I18N = True
 
@@ -90,7 +90,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-# Show the articles' number in each page
+# Show the list in each page
 PER_PAGE = 6
 
 # In order to preventing XSS, it needs to set `ALLOWED_CONTENT`

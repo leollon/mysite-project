@@ -2,7 +2,6 @@ from django.conf.urls import include, url
 
 from .views import CreateCommentView
 
-
 app_name = "comment"
 
 urlpatterns = [

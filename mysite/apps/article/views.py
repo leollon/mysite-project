@@ -1,19 +1,19 @@
 from django.conf import settings
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.core.paginator import Page, Paginator
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
-from django.core.paginator import Paginator, Page
-from django.views.generic import DetailView, TemplateView, ListView
+from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.detail import SingleObjectTemplateResponseMixin
 from django.views.generic.edit import BaseCreateView, DeleteView, UpdateView
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-
 from ipware.ip import get_real_ip
 
-from utils import cache
-from .models import Article
-from apps.comment.models import Comment
 from apps.comment.forms import CommentForm
+from apps.comment.models import Comment
+from utils import cache
+
 from .forms import CreateArticleForm, EditArticleForm
+from .models import Article
 from .tasks import increment_view_times
 
 PER_PAGE = getattr(settings, "PER_PAGE")

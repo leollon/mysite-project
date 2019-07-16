@@ -1,8 +1,8 @@
 import os
 from datetime import datetime
 
-from django.conf import settings
 from celery import shared_task
+from django.conf import settings
 
 captcha_dir = getattr(settings, "CAPTCHA_DIR")
 

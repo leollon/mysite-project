@@ -1,11 +1,10 @@
 from django.core.cache import cache
-from django.views.generic import CreateView
-from django.template.response import TemplateResponse
 from django.http.response import JsonResponse
+from django.template.response import TemplateResponse
+from django.views.generic import CreateView
 
-
-from .models import Comment
 from .forms import CommentForm
+from .models import Comment
 
 
 class CreateCommentView(CreateView):

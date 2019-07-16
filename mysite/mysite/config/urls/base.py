@@ -15,9 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from django.views.decorators.cache import cache_page
-from django.contrib.sitemaps import views as sitemap_views
 from django.contrib.flatpages import views as flatpage_views
+from django.contrib.sitemaps import views as sitemap_views
+from django.views.decorators.cache import cache_page
 
 from ..sitemaps import ArticleSiteMap
 

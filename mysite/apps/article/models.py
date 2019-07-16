@@ -1,13 +1,13 @@
 import re
-import uuid
 import unicodedata
+import uuid
 
-from django.utils.text import slugify
+from django.conf import settings
 from django.db import models
 from django.shortcuts import reverse
-from django.conf import settings
-
+from django.utils.text import slugify
 from unidecode import unidecode
+
 from apps.category.models import ArticleCategory
 from apps.user.models import User
 

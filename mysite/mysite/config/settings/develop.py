@@ -1,38 +1,19 @@
 import os
 import socket
-
-from pathlib import Path
 from getpass import getuser
+from pathlib import Path
 
 from celery.schedules import crontab
 
-from .common import (
-    BASE_DIR,
-    INSTALLED_APPS,
-    TEMPLATES,
-    MIDDLEWARE,
-    WSGI_APPLICATION,
-    AUTH_PASSWORD_VALIDATORS,
-    PASSWORD_HASHERS,
-    LANGUAGE_CODE,
-    TIME_ZONE,
-    USE_I18N,
-    USE_L10N,
-    USE_TZ,
-    PER_PAGE,
-    ALLOWED_CONTENT,
-    AUTH_USER_MODEL,
-    AUTHENTICATION_BACKENDS,
-    SESSION_CACHE_ALIAS,
-    SESSION_ENGINE,
-    SITE_ID,
-    DATETIME_FORMAT_STRING,
-    TITLE_PATTERN,
-    NAME_PATTERN,
-    TAGS_ARRAY_PATTERN,
-    TAGS_WHITESPACE_PATTERN,
-    TAGS_FILTER_PATTERN,
-)
+from .common import (ALLOWED_CONTENT, AUTH_PASSWORD_VALIDATORS,
+                     AUTH_USER_MODEL, AUTHENTICATION_BACKENDS, BASE_DIR,
+                     DATETIME_FORMAT_STRING, INSTALLED_APPS, LANGUAGE_CODE,
+                     MIDDLEWARE, NAME_PATTERN, PASSWORD_HASHERS, PER_PAGE,
+                     SESSION_CACHE_ALIAS, SESSION_ENGINE, SITE_ID,
+                     TAGS_ARRAY_PATTERN, TAGS_FILTER_PATTERN,
+                     TAGS_WHITESPACE_PATTERN, TEMPLATES, TIME_ZONE,
+                     TITLE_PATTERN, USE_I18N, USE_L10N, USE_TZ,
+                     WSGI_APPLICATION)
 
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -156,7 +137,7 @@ CELERY_BROKER_URL = "redis://redis:6379/1"
 # CELERY_RESULT_BACKEND = 'db+sqlite:///results.sqlite'
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
-timezone = "Asia/" + TIME_ZONE
+timezone = TIME_ZONE
 
 CELERY_BEAT_SCHEDULE = {
     "debug-periodic-task": {
@@ -246,4 +227,3 @@ INTERNAL_IPS = [
     "127.0.0.1",
     socket.gethostbyname(socket.gethostname())[:-1] + "1",
 ]
-

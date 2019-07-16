@@ -1,16 +1,15 @@
 import re
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
 
+from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 from django.db import DataError, IntegrityError
-from django.conf import settings
 
 from apps.article.models import Article
 from apps.category.models import ArticleCategory
 from apps.user.models import User
 from utils.primer import primer_generator
-
 
 IMPORTED = 0
 REPLICA = 1
