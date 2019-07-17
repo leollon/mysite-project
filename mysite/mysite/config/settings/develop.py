@@ -197,7 +197,7 @@ LOGGING = {
             "level": "ERROR",
             "class": "logging.FileHandler",
             "filename": str(
-                Path(BASE_DIR).parent.parent / "log" / "mysite.log"
+                Path(BASE_DIR).parent.parent / "var/log" / "mysite.log"
             ),
             "filters": ["require_debug_true"],
             "formatter": "verbose",

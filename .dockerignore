@@ -12,10 +12,11 @@ docker-compose*
 .idea
 */node_modules
 */__pycache__
-*/package-lock.json
+*/package*
 */gulpfile.js
 */setup.cfg
 */README.md
 */LICENSE
 */log
 */data
+*/run

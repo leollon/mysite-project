@@ -3,7 +3,7 @@ version: '3.7'
 volumes:
   mysql: {}
   redis: {}
-  mysite: {}
+  captcha: {}
 
 services:
 
@@ -39,6 +39,11 @@ services:
     command: /start        # The command runs in the container
     volumes:
       - ./mysite:/mysite
+      - ./var:/mysite/var
+      - ./run:/mysite/run
+      - ./data:/mysite/data
+      - ./captcha:/mysite/static/images/captcha
+      - ./markdown:/mysite/apps/article/management/markdown
     env_file:
       - ./.envs/.django/.local
     networks:

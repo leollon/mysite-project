@@ -27,3 +27,6 @@ RUN chmod 755 -R /entrypoint /start /mysite
 RUN chown -R blog:blog /entrypoint /start /mysite
 
 USER blog:blog
+
+RUN mkdir -p var/log data run
+RUN touch var/log/mysite.log
