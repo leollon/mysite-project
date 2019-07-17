@@ -2,25 +2,9 @@
 
 set -o errexit
 
-if [ -e './celeryd.pid' ]
+if [ -e './run' ]
 then
-    rm -f ./celeryd.pid
-fi
-
-if [ -e './celerybeat.pid' ]
-then
-    rm -f ./celerybeat.pid
-fi
-
-if [ ! -d './log' ]
-then
-    mkdir log
-    touch log/mysite.log
-fi
-
-if [ ! -d './data' ]
-then
-    mkdir data
+    rm -f ./run/*
 fi
 
 mysql_ready() {
