@@ -1,6 +1,6 @@
 var gulp = require("gulp");
 var rename = require("gulp-rename");
-var uglify = require("gulp-uglify");
+var terser = require("gulp-terser");
 var cleanCSS = require("gulp-clean-css");
 var imageMinify = require("gulp-imagemin");
 var del = require("del");
@@ -11,7 +11,7 @@ var paths = {
         dest: "assets/css/"
     },
     js: {
-        orig: "static/js/*.js",
+        orig: ["static/js/*.js", "static/vendor/showdown/*.js"],
         dest: "assets/js/"
     },
     img: {
@@ -26,7 +26,7 @@ function clean() {
 
 function jsMinify() {
     return gulp.src(paths.js.orig) // 1. js 文件目录
-        .pipe(uglify()) // 2. 压缩文件
+        .pipe(terser()) // 2. 压缩文件
         .pipe(rename({
             extname: ".min.js"
         })) // 3. 重命名文件
@@ -46,13 +46,13 @@ function cssMinify() {
         .pipe(gulp.dest(paths.css.dest));
 }
 
-function imgMinifiy() {
+function imgMinify() {
     // 压缩图片
     return gulp.src(paths.img.orig)
         .pipe(imageMinify({
             progressive: true
         }))
-        .pipe(gulp.dest(paths.img.dest))
+        .pipe(gulp.dest(paths.img.dest));
 }
 
 function auto() {
@@ -60,5 +60,5 @@ function auto() {
     gulp.watch("static/js/*.js", jsMinify);
 }
 
-exports.compress = gulp.series(clean, gulp.parallel(cssMinify, jsMinify, imgMinifiy));
-exports.default = gulp.series(clean, gulp.parallel(cssMinify, jsMinify, imgMinifiy), auto);
+gulp.task('compress', gulp.series(clean, gulp.parallel(cssMinify, jsMinify, imgMinify)));
+gulp.task('default', gulp.series(clean, gulp.parallel(cssMinify, jsMinify, imgMinify), auto));
