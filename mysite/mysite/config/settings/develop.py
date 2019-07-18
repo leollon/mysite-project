@@ -142,6 +142,12 @@ timezone = TIME_ZONE
 # Logger: show more details
 LOG_LEVEL = "DEBUG"
 
+def create_log_file():
+    if not (Path(BASE_DIR).parent.parent / "var/log").exists():
+        (Path(BASE_DIR).parent.parent / "var/log").mkdir(parents=True)
+    (Path(BASE_DIR).parent.parent / "var/log" / "mysite.log").touch()
+    return (Path(BASE_DIR).parent.parent / "var/log" / "mysite.log").as_posix()
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": True,
@@ -196,9 +202,7 @@ LOGGING = {
         "file": {
             "level": "ERROR",
             "class": "logging.FileHandler",
-            "filename": str(
-                Path(BASE_DIR).parent.parent / "var/log" / "mysite.log"
-            ),
+            "filename": create_log_file(),
             "filters": ["require_debug_true"],
             "formatter": "verbose",
         },
