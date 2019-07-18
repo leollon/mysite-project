@@ -12,13 +12,11 @@ captcha_dir = getattr(settings, "CAPTCHA_DIR")
 @celery_app.on_after_finalize.connect
 def setup_periodic_task(sender, **kwargs):
     sender.add_periodic_task(
-        schedule=crontab(minute="*/1"),
-        sig=remove_outdated_captcha_image.s(),
-        name="remove outdated captcha image",
+        schedule=crontab(minute="*/30"), sig=remove_outdated_captcha_image.s(), name="remove outdated captcha image"
     )
 
     sender.add_periodic_task(
-        schedule=crontab(minute="*/1"),
+        schedule=crontab(minute="0", hour="0"),
         sig=debug_periodic_task.s(),
         args=("[Debug periodic task]",),
         name="debug periodic task",
