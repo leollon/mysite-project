@@ -301,7 +301,6 @@ footer .copyright {
   margin: 0;
   font-size: .85em;
   line-height: 1.764705882em;
-  vertical-align: baseline;
   opacity: 0;
   -webkit-transition: top .3s,opacity .3s;
   -moz-transition: top .3s,opacity .3s;
@@ -427,8 +426,7 @@ img {
   height: auto;
   display: block;
   margin: auto;
-  border: 1px solid rgba(128,128,128,.5);
-  border-radius: 8px
+  border: 0
 }
 #categories li,
 .article-categorized-list,
@@ -471,7 +469,8 @@ img {
 }
 #comment-list {
   margin-left: 15px;
-  padding: 0
+  padding: 0;
+  word-break: break-word
 }
 .floor {
   font-size: 14px
@@ -498,21 +497,30 @@ img {
   background-color: #2e6da4;
   color: #fff
 }
-.input-box > input,
-.input-box > textarea {
+.input-box input,
+.input-box textarea {
   border: 1px solid #d3d3d3;
-  border-radius: 2px;
   font-size: 16px;
   width: 100%
 }
-textarea {
-  height: 100px;
-  width: 100%;
+.input-box textarea {
+  height: 100%;
   resize: none
 }
-.reply-btn {
-  padding: 5px 15px;
-  margin-top: 15px
+.input-box input {
+  height: 38px
+}
+#captcha-input {
+  border-radius: 0
+}
+#captcha,
+#captcha-input,
+#reply-btn {
+  margin-top: 15px;
+  display: inline-block
+}
+#reply-btn {
+  padding: 8px 15px
 }
 .error404 {
   text-align: center;

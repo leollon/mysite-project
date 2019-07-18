@@ -5,15 +5,33 @@ from pathlib import Path
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
-from .common import (ALLOWED_CONTENT, AUTH_PASSWORD_VALIDATORS,
-                     AUTH_USER_MODEL, AUTHENTICATION_BACKENDS, BASE_DIR,
-                     DATETIME_FORMAT_STRING, INSTALLED_APPS, LANGUAGE_CODE,
-                     MIDDLEWARE, NAME_PATTERN, PASSWORD_HASHERS, PER_PAGE,
-                     SESSION_CACHE_ALIAS, SESSION_ENGINE, SITE_ID,
-                     TAGS_ARRAY_PATTERN, TAGS_FILTER_PATTERN,
-                     TAGS_WHITESPACE_PATTERN, TEMPLATES, TIME_ZONE,
-                     TITLE_PATTERN, USE_I18N, USE_L10N, USE_TZ,
-                     WSGI_APPLICATION)
+from .common import (
+    ALLOWED_CONTENT,
+    AUTH_PASSWORD_VALIDATORS,
+    AUTH_USER_MODEL,
+    AUTHENTICATION_BACKENDS,
+    BASE_DIR,
+    DATETIME_FORMAT_STRING,
+    INSTALLED_APPS,
+    LANGUAGE_CODE,
+    MIDDLEWARE,
+    NAME_PATTERN,
+    PASSWORD_HASHERS,
+    PER_PAGE,
+    SESSION_CACHE_ALIAS,
+    SESSION_ENGINE,
+    SITE_ID,
+    TAGS_ARRAY_PATTERN,
+    TAGS_FILTER_PATTERN,
+    TAGS_WHITESPACE_PATTERN,
+    TEMPLATES,
+    TIME_ZONE,
+    TITLE_PATTERN,
+    USE_I18N,
+    USE_L10N,
+    USE_TZ,
+    WSGI_APPLICATION,
+)
 
 environ = {
     "SECRET_KEY": "ao$DZM2C9KlGksl&Lzl$7Tx0TOlEXoCyZxg7i&6b3LliqRFXHk1YinXBID@B#Ncm",
@@ -79,17 +97,12 @@ CAPTCHA_DIR = Path(Path(BASE_DIR).parent.parent) / "assets/images" / "captcha"
 CAPTCHA_CACHED_TIME = 30 * 60  # in second
 
 # Here stores all static files
-STATICFILES_DIRS = [
-    os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), "assets")
-]
+STATICFILES_DIRS = [os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), "assets")]
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 # Email account
-EMAIL_ACCOUNT = {
-    "EMAIL_HOST_USER": environ.get("EMAIL_USER"),
-    "EMAIL_HOST_PASSWORD": environ.get("EMAIL_PWD"),
-}
+EMAIL_ACCOUNT = {"EMAIL_HOST_USER": environ.get("EMAIL_USER"), "EMAIL_HOST_PASSWORD": environ.get("EMAIL_PWD")}
 
 # Email server related
 EMAIL_HOST = environ.get("EMAIL_HOST")
@@ -116,15 +129,9 @@ X_FRAME_OPTIONS = (
 )  # unless there is a good reason for your site to serve other parts of itself in a frame, you should change it to 'DENY'
 
 # related to django-rest-framework
-REST_FRAMEWORK = {
-    "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",)
-}
+REST_FRAMEWORK = {"DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",)}
 ADMINS = [("root", "email@gmail.com")]
-IMPORT_ARTICLE_USER = {
-    "username": "root",
-    "email": "email@gmail.com",
-    "password": "admin1234",
-}
+IMPORT_ARTICLE_USER = {"username": "root", "email": "email@gmail.com", "password": "admin1234"}
 
 
 # celery-relate configuration
@@ -144,41 +151,23 @@ LOGGING = {
     "version": 1,
     "disable_existing_loggers": True,
     "formatters": {
-        "verbose": {
-            "format": "[%(levelname)s] [%(asctime)s] [%(module)s] pid:%(process)d [%(message)s]"
-        },
+        "verbose": {"format": "[%(levelname)s] [%(asctime)s] [%(module)s] pid:%(process)d [%(message)s]"},
         "simple": {"format": "[%(levelname)s pid:%(process)d [%(message)s]"},
     },
     "loggers": {
         "": {"level": "WARNING", "handlers": ["file"], "propagate": True},
         "django": {"level": LOG_LEVEL, "handlers": ["file"], "propagate": True},
-        "django.template": {
-            "level": LOG_LEVEL,
-            "handlers": ["file"],
-            "propagate": True,
-        },
-        "django.request": {
-            "level": LOG_LEVEL,
-            "handlers": ["file"],
-            "propagate": False,
-        },
-        "django.db.backends": {
-            "level": LOG_LEVEL,
-            "handlers": ["file"],
-            "propagate": False,
-        },
+        "django.template": {"level": LOG_LEVEL, "handlers": ["file"], "propagate": True},
+        "django.request": {"level": LOG_LEVEL, "handlers": ["file"], "propagate": False},
+        "django.db.backends": {"level": LOG_LEVEL, "handlers": ["file"], "propagate": False},
     },
     # Control over which log records are passed from logger to handler.
-    "filters": {
-        "require_debug_false": {"()": "django.utils.log.RequireDebugFalse"}
-    },
+    "filters": {"require_debug_false": {"()": "django.utils.log.RequireDebugFalse"}},
     "handlers": {
         "file": {
             "level": "WARNING",
             "class": "logging.FileHandler",
-            "filename": (
-                Path(BASE_DIR).parent.parent / "log" / "mysite.log"
-            ).as_posix(),
+            "filename": (Path(BASE_DIR).parent.parent / "var/log" / "mysite.log").as_posix(),
             "filters": ["require_debug_false"],
             "formatter": "verbose",
         },
@@ -192,6 +181,4 @@ LOGGING = {
 }
 
 
-sentry_sdk.init(
-    dsn="", integrations=[DjangoIntegration()], server_name="mysite"
-)
+sentry_sdk.init(dsn="", integrations=[DjangoIntegration()], server_name="mysite")

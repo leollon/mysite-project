@@ -1,11 +1,10 @@
-"use strict";
-if ($("#article-editor")[0] !== "undefined") {
+if ($('#article-editor')[0] !== 'undefined') {
     $("#menu-toggle").trigger("click");
 };
 
 function markdownToHtmlHandler(text) {
-    var converter = new showdown.Converter();
-    converter.setFlavor("github");
+    let converter = new showdown.Converter();
+    converter.setFlavor('github');
     return converter.makeHtml(text);
 }
 
@@ -71,7 +70,7 @@ $('#captcha').click(setCaptcha);
 $('#captcha').ready(setCaptcha);
 
 function getCSRFToken() {
-    var cookie = $("input[name='csrfmiddlewaretoken']").attr("value");
+    let cookie = $("input[name='csrfmiddlewaretoken']").attr("value");
     return cookie;
 }
 

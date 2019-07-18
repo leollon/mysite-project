@@ -9,3 +9,13 @@ LICENSE
 .vscode
 */obj
 */bin
+*/node_modules
+*/__pycache__
+*/package*
+*/gulpfile.js
+*/setup.cfg
+*/README.md
+*/LICENSE
+*/log
+*/data
+*/run
