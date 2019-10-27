@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.core.paginator import Page, Paginator
+from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView, TemplateView
@@ -32,9 +32,7 @@ class IndexView(ListView):
         return super(IndexView, self).get(request, *args, **kwargs)
 
 
-class CreateArticleView(
-    LoginRequiredMixin, SingleObjectTemplateResponseMixin, BaseCreateView
-):
+class CreateArticleView(LoginRequiredMixin, SingleObjectTemplateResponseMixin, BaseCreateView):
     """Class-based view function used to write an article
     """
 
@@ -70,10 +68,7 @@ class UpdateArticleView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         article = self.get_object()
-        return (
-            self.request.user == article.author
-            or self.request.user.is_superuser
-        )
+        return self.request.user == article.author or self.request.user.is_superuser
 
     def get(self, request, *args, **kwargs):
         return super(UpdateArticleView, self).get(request, *args, **kwargs)
@@ -93,7 +88,7 @@ class ArticleDetailView(DetailView, BaseCreateView):
     context_object_name = "article"
 
     def get(self, request, *args, **kwargs):
-        day = 0  # A day
+        day = 24 * 60 * 60  # A day
         self.object = super(ArticleDetailView, self).get_object()
         ip = get_real_ip(request)
         visited_ips = cache.get(self.object.slug, set())
@@ -125,10 +120,7 @@ class DeleteArticleView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def test_func(self):
         article = self.get_object()
-        return (
-            self.request.user == article.author
-            or self.request.user.is_superuser
-        )
+        return self.request.user == article.author or self.request.user.is_superuser
 
     def get(self, request, *args, **kwargs):
         return super(DeleteArticleView, self).get(request, *args, **kwargs)
@@ -154,9 +146,7 @@ class TaggedArticleListView(ListView):
     context_object_name = "articles"
 
     def get_queryset(self, **kwargs):
-        queryset = Article.objects.filter(
-            tags__icontains=self.kwargs.get("tag")
-        )
+        queryset = Article.objects.filter(tags__icontains=self.kwargs.get("tag"))
         return queryset
 
     def get(self, request, *args, **kwargs):
