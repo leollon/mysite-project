@@ -17,3 +17,4 @@ run
 data
 captcha
 markdown
+.mypy_cache
