@@ -3,9 +3,7 @@ import socket
 from getpass import getuser
 from pathlib import Path
 
-from celery.schedules import crontab
-
-from .common import (ALLOWED_CONTENT, AUTH_PASSWORD_VALIDATORS,
+from .common import (ALLOWED_CONTENT, AUTH_PASSWORD_VALIDATORS,  # noqa: F401
                      AUTH_USER_MODEL, AUTHENTICATION_BACKENDS, BASE_DIR,
                      DATETIME_FORMAT_STRING, INSTALLED_APPS, LANGUAGE_CODE,
                      MIDDLEWARE, NAME_PATTERN, PASSWORD_HASHERS, PER_PAGE,
@@ -18,8 +16,8 @@ from .common import (ALLOWED_CONTENT, AUTH_PASSWORD_VALIDATORS,
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "p5cuwb&=cb^_jq3=s8lu8b4v*+_zfs7dh$%ij#_5@ca3jijw2i"
-SERIAL_SECRET_KEY = "3NGKnEpCAauyEFZjbFQTTjrSAuQPVUqE89N5WJBawQMGJUjAhF"
+SECRET_KEY = "p5cuwb&=cb^_jq3=s8lu8b4v*+_zfs7dh$%ij#_5@ca3jijw2iUqE89N5WJBawQMGJUjAhF"
+SERIALIZER_SALT = b'jbF9TejrSAuQPVUq'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -76,6 +74,7 @@ STATIC_ROOT = (Path("/home/") / getuser() / "static").as_posix()
 CAPTCHA_DIR = Path(Path(BASE_DIR).parent.parent) / "static/images" / "captcha"
 CAPTCHA_CACHED_TIME = 60  # in second
 
+TOKEN_EXPIRES_IN = 30 * 60  # thirty minutes in total
 
 STATICFILES_DIRS = [
     os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), "static/")
@@ -86,7 +85,7 @@ EMAIL_HOST = "127.0.0.1"
 EMAIL_PORT = 1025
 EMAIL_USE_TLS = False
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 EMAIL_ACCOUNT = {
     "EMAIL_HOST_USER": os.environ.get("EMAIL_USER"),
@@ -110,9 +109,8 @@ SESSION_COOKIE_AGE = 604800  # in seconds
 SECURE_CONTENT_TYPE_NOSNIFF = True  # 'x-content-type-options: nosniff' header
 SECURE_BROWSER_XSS_FILTER = True  # 'x-xss-protection: 1; mode=block' header
 SESSION_COOKIE_SECURE = False  # Using a secure-only session cookie
-X_FRAME_OPTIONS = (
-    "DENY"
-)  # unless there is a good reason for your site to serve other parts of itself in a frame, you should change it to 'DENY'
+# Unless there is a good reason for your site to serve other parts of itself in a frame, you should change it to 'DENY'
+X_FRAME_OPTIONS = "DENY"
 
 ADMINS = [("root", "email@gmail.com")]
 IMPORT_ARTICLE_USER = {
@@ -142,11 +140,13 @@ timezone = TIME_ZONE
 # Logger: show more details
 LOG_LEVEL = "DEBUG"
 
+
 def create_log_file():
     if not (Path(BASE_DIR).parent.parent / "var/log").exists():
         (Path(BASE_DIR).parent.parent / "var/log").mkdir(parents=True)
     (Path(BASE_DIR).parent.parent / "var/log" / "mysite.log").touch()
     return (Path(BASE_DIR).parent.parent / "var/log" / "mysite.log").as_posix()
+
 
 LOGGING = {
     "version": 1,
