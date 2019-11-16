@@ -15,11 +15,11 @@ import MySQLdb
 
 try:
     MySQLdb.connect(
-        db='blog',
-        host='mysql',
-        port=3306,
-        user='blog',
-        password='123456'
+        db='${MYSQL_DATABASE}',
+        host='${MYSQL_HOST}',
+        port=${MYSQL_PORT},
+        user='${MYSQL_USER}',
+        password='${MYSQL_PASSWORD}'
     )
 except MySQLdb.OperationalError:
     sys.exit(-1)
