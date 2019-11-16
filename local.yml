@@ -13,7 +13,7 @@ services:
       '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci',
       '--explicit_defaults_for_timestamp']
     env_file:
-      - ./.envs/.mysql/.env
+      - ./.envs/.mysql
     volumes:
       - ./mysql:/var/lib/mysql
     networks:
@@ -45,7 +45,8 @@ services:
       - ./captcha:/mysite/static/images/captcha
       - ./markdown:/mysite/apps/article/management/markdown
     env_file:
-      - ./.envs/.django/.local
+      - ./.envs/.django
+      - ./.envs/.mysql
     networks:
       - blog-net
     ports:
