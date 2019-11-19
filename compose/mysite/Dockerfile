@@ -6,9 +6,12 @@ ENV PYTHONUNBUFFERED 1
 
 # To support compiling uwsgi
 RUN apk add --no-cache \
+        -X https://mirrors.ustc.edu.cn/alpine/v$(cat /etc/issue | tr -d '[a-zA-Z\(\)\ \\\n]')/main \
         gcc linux-headers libc-dev \
         mariadb-dev python3-dev libffi-dev openssl-dev \
-        jpeg-dev zlib-dev bash
+        jpeg-dev zlib-dev \
+        postgresql-dev \
+        bash
 
 RUN rm -rf \
         /usr/local/share/doc \

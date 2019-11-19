@@ -37,14 +37,13 @@ ROOT_URLCONF = "mysite.config.urls.develop"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.mysql",
+        "ENGINE": "django.db.backends.postgresql",
         "NAME": "blog",
-        "HOST": "mysql",
-        "port": 3306,
+        "HOST": "postgres",
+        "port": 5432,
         "USER": "blog",
         "PASSWORD": "123456",
-        "CHARSET": "utf8mb4",
-        "COLLATION": "utf8mb4_unicode_ci",
+        "CHARSET": "utf8",
         "ATOMIC_REQUESTS": True,
     }
 }

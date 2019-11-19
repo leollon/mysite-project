@@ -32,9 +32,9 @@ then
 fi
 # finish creating
 
-if [ -e "./mysql" ]
+if [ -e "./postgres" ]
 then
-    sudo chown -R $USER:$USER ./mysql;
+    sudo chown -R $USER:$USER ./postgres;
 fi
 
 cp -ruv ./mysite/static "$HOME"         # copy static files, such as js, css and images
