@@ -20,7 +20,7 @@ psycopg2-binary==2.8.4
 pycodestyle==2.5.0
 Pygments==2.2.0
 pylint==2.1.1
-redis==2.10.6
+redis==3.2.0
 sentry-sdk==0.4.3
 tornado==5.1.1
 Unidecode==1.0.22
