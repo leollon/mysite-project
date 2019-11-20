@@ -1,45 +1,44 @@
 version: '3.7'
 
 volumes:
-  mysql: {}
+  postgres: {}
   redis: {}
   captcha: {}
 
 services:
 
-  mysql:
-    image: mysql:5.7
-    command: ['--default-authentication-plugin=mysql_native_password', 
-      '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci',
-      '--explicit_defaults_for_timestamp']
-    restart: always
+  postgres:
+    image: mysite/postgres:9.6-alpine
+    build:
+      context: .
+      dockerfile: ./compose/postgres/Dockerfile
     env_file:
-      - ./.envs/.mysql/.env
+      - ./.envs/.postgres
     volumes:
-      - ./mysql:/var/lib/mysql
+      - ./postgresql:/var/lib/postgresql
     networks:
       - blog-net
     ports:
-      - "127.0.0.1:33069:3306"
+      - "127.0.0.1:55432:5432"
+    restart: always
 
   redis:
-    image: redis:4.0
-    restart: always
+    image: redis:4.0-alpine
     volumes:
       - ./redis:/data
     networks:
       - blog-net
     ports:
       - "127.0.0.1:6369:6379"
+    restart: always
 
   web:
-    image: leollon/mysite
+    image: mysite/blog
     build:
       context: ./
       dockerfile: ./compose/mysite/Dockerfile  # the file contains the steps of build images
     entrypoint: /entrypoint
     command: /start             # The command runs in the containe
-    restart: always
     volumes:
       - ./var:/mysite/var
       - ./run:/mysite/run
@@ -47,7 +46,8 @@ services:
       - ./captcha:/mysite/assets/images/captcha
       - ./markdown:/mysite/apps/article/management/markdown
     env_file:
-      - ./.envs/.django/.production
+      - ./.envs/.django
+      - ./.envs/.postgres
     networks:
       - blog-net
     ports:
@@ -55,8 +55,9 @@ services:
       - "127.0.0.1:8085:8085"  # uwsgi status port
       - "127.0.0.1:5555:5555"  # flower service port
     depends_on:
-      - mysql
+      - postgres
       - redis
+    restart: always
 
 networks:
   blog-net:

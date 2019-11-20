@@ -9,7 +9,7 @@ deploy/
 siteEnv
 node_modules
 backup
-mysql
+postgresql
 redis
 deploy
 var
@@ -17,3 +17,4 @@ run
 data
 captcha
 markdown
+.mypy_cache

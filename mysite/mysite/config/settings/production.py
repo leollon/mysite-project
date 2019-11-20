@@ -5,37 +5,19 @@ from pathlib import Path
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
-from .common import (
-    ALLOWED_CONTENT,
-    AUTH_PASSWORD_VALIDATORS,
-    AUTH_USER_MODEL,
-    AUTHENTICATION_BACKENDS,
-    BASE_DIR,
-    DATETIME_FORMAT_STRING,
-    INSTALLED_APPS,
-    LANGUAGE_CODE,
-    MIDDLEWARE,
-    NAME_PATTERN,
-    PASSWORD_HASHERS,
-    PER_PAGE,
-    SESSION_CACHE_ALIAS,
-    SESSION_ENGINE,
-    SITE_ID,
-    TAGS_ARRAY_PATTERN,
-    TAGS_FILTER_PATTERN,
-    TAGS_WHITESPACE_PATTERN,
-    TEMPLATES,
-    TIME_ZONE,
-    TITLE_PATTERN,
-    USE_I18N,
-    USE_L10N,
-    USE_TZ,
-    WSGI_APPLICATION,
-)
+from .common import (ALLOWED_CONTENT, AUTH_PASSWORD_VALIDATORS,  # noqa F401
+                     AUTH_USER_MODEL, AUTHENTICATION_BACKENDS, BASE_DIR,
+                     DATETIME_FORMAT_STRING, INSTALLED_APPS, LANGUAGE_CODE,
+                     MIDDLEWARE, NAME_PATTERN, PASSWORD_HASHERS, PER_PAGE,
+                     SESSION_CACHE_ALIAS, SESSION_ENGINE, SITE_ID,
+                     TAGS_ARRAY_PATTERN, TAGS_FILTER_PATTERN,
+                     TAGS_WHITESPACE_PATTERN, TEMPLATES, TIME_ZONE,
+                     TITLE_PATTERN, USE_I18N, USE_L10N, USE_TZ,
+                     WSGI_APPLICATION)
 
 environ = {
     "SECRET_KEY": "ao$DZM2C9KlGksl&Lzl$7Tx0TOlEXoCyZxg7i&6b3LliqRFXHk1YinXBID@B#Ncm",
-    "SERIAL_SECRET_KEY": "e885Lufnp24ux@iIMJ2HSC^Og2CTO^fU8y93gd6Y4IRbPlJFV^BL$e9MWTpGMnw&",
+    "SERIALIZER_SALT":  b'jbF9TejrSAuQPVUq',
     "DB_USER": "blog",
     "DB_PWD": "123456",
     "EMAIL_USER": "your_email_account",
@@ -45,11 +27,11 @@ environ = {
 }
 
 SECRET_KEY = environ.get("SECRET_KEY")
-SERIAL_SECRET_KEY = environ.get("SERIAL_SECRET_KEY")
+SERIALIZER_SALT = environ.get("SERIALIZER_SALT")
 
 DEBUG = False
 
-ALLOWED_HOSTS = ["dp.demo.com", "127.0.0.1"]
+ALLOWED_HOSTS = ["prod.django.com", "127.0.0.1"]
 
 DOMAIN_NAME = ALLOWED_HOSTS[0]
 
@@ -57,14 +39,13 @@ ROOT_URLCONF = "mysite.config.urls.production"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.mysql",
+        "ENGINE": "django.db.backends.postgresql",
         "NAME": "blog",
-        "HOST": "mysql",
-        "PORT": "3306",
+        "HOST": "postgres",
+        "port": 5432,
         "USER": environ.get("DB_USER"),
         "PASSWORD": environ.get("DB_PWD"),
-        "CHARSET": "utf8mb4",
-        "COLLATION": "utf8mb4_unicode_ci",
+        "CHARSET": "utf8",
         "ATOMIC_REQUESTS": True,
     }
 }
@@ -124,9 +105,8 @@ SESSION_COOKIE_AGE = 7 * 24 * 60  # in seconds
 SECURE_CONTENT_TYPE_NOSNIFF = True  # x-content-type-options: nosniff header
 SECURE_BROWSER_XSS_FILTER = True  # x-xss-protection: 1; mode=block header
 SESSION_COOKIE_SECURE = False  # Using a secure-only session cookie
-X_FRAME_OPTIONS = (
-    "DENY"
-)  # unless there is a good reason for your site to serve other parts of itself in a frame, you should change it to 'DENY'
+# unless there is a good reason for your site to serve other parts of itself in a frame, you should change it to 'DENY'
+X_FRAME_OPTIONS = "DENY"
 
 # related to django-rest-framework
 REST_FRAMEWORK = {"DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",)}
@@ -147,11 +127,13 @@ timezone = TIME_ZONE
 # Logger: error loglevel
 LOG_LEVEL = "ERROR"
 
+
 def create_log_file():
     if not (Path(BASE_DIR).parent.parent / "var/log").exists():
         (Path(BASE_DIR).parent.parent / "var/log").mkdir(parents=True)
     (Path(BASE_DIR).parent.parent / "var/log" / "mysite.log").touch()
     return (Path(BASE_DIR).parent.parent / "var/log" / "mysite.log").as_posix()
+
 
 LOGGING = {
     "version": 1,

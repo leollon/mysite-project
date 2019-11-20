@@ -2,37 +2,43 @@
 
 set -o errexit
 
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+NOCOLOR='\033[0m'
+
 if [ -e './run' ]
 then
     rm -f ./run/*
 fi
 
-mysql_ready() {
+postgres_ready() {
 python << END
 import sys
-import MySQLdb
+import psycopg2
 
 
 try:
-    MySQLdb.connect(
-        db='blog',
-        host='mysql',
-        port=3306,
-        user='blog',
-        password='123456'
+    conn = psycopg2.connect(
+        dbname='${POSTGRES_DB}',
+        user='${POSTGRES_USER}',
+        password='${POSTGRES_PASSWORD}',
+        host='${POSTGRES_HOST}',
+        port=${POSTGRES_PORT},
     )
-except MySQLdb.OperationalError:
+    cursor = conn.cursor()
+    cursor.execute("SELECT 'Hello, PostgreSQL!'")
+    sys.stdout.write('${GREEN}' + cursor.fetchone()[0] + '${NOCOLOR}\n')
+except psycopg2.OperationalError:
     sys.exit(-1)
 sys.exit(0)
 
 END
 }
 
-until mysql_ready; do
-    >&2 echo "Waiting for MySQL to be available....."
+until postgres_ready; do
+    >&2 echo -e "${YELLOW}Waiting for MySQL to be available.....${NOCOLOR}"
     sleep 1
 done
->&2 echo "MySQL is available!!!"
-
+>&2 echo -e "${GREEN}MySQL is available!!!${NOCOLOR}"
 
 exec "$@"
