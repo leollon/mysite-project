@@ -9,7 +9,7 @@ deploy/
 siteEnv
 node_modules
 backup
-postgres
+postgresql
 redis
 deploy
 var
