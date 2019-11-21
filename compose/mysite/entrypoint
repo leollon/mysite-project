@@ -36,9 +36,9 @@ END
 }
 
 until postgres_ready; do
-    >&2 echo -e "${YELLOW}Waiting for MySQL to be available.....${NOCOLOR}"
+    >&2 echo -e "${YELLOW}Waiting for PostgreSQL to be available.....${NOCOLOR}"
     sleep 1
 done
->&2 echo -e "${GREEN}MySQL is available!!!${NOCOLOR}"
+>&2 echo -e "${GREEN}PostgreSQL is available!!!${NOCOLOR}"
 
 exec "$@"

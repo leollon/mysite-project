@@ -1,6 +1,6 @@
-import os
 import socket
 from getpass import getuser
+from os import environ
 from pathlib import Path
 
 from .common import (ALLOWED_CONTENT, AUTH_PASSWORD_VALIDATORS,  # noqa: F401
@@ -16,8 +16,8 @@ from .common import (ALLOWED_CONTENT, AUTH_PASSWORD_VALIDATORS,  # noqa: F401
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "p5cuwb&=cb^_jq3=s8lu8b4v*+_zfs7dh$%ij#_5@ca3jijw2iUqE89N5WJBawQMGJUjAhF"
-SERIALIZER_SALT = b'jbF9TejrSAuQPVUq'
+SECRET_KEY = environ.get("SECRET_KEY")
+SERIALIZER_SALT = bytes(environ.get("SERIALIZER_SALT"), encoding='utf-8')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -28,7 +28,7 @@ INSTALLED_APPS += ["debug_toolbar"]
 
 MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
 
-DOMAIN_NAME = "http://127.0.0.1:8000"
+HOST = "http://127.0.0.1:8000"
 
 ROOT_URLCONF = "mysite.config.urls.develop"
 
@@ -38,11 +38,11 @@ ROOT_URLCONF = "mysite.config.urls.develop"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "blog",
-        "HOST": "postgres",
-        "port": 5432,
-        "USER": "blog",
-        "PASSWORD": "123456",
+        "NAME": environ.get("PG_USER_DB"),
+        "HOST": environ.get("POSTGRES_HOST"),
+        "port": environ.get("POSTGRES_PORT"),
+        "USER": environ.get("PG_USER"),
+        "PASSWORD": environ.get("PG_USER_PASSWORD"),
         "CHARSET": "utf8",
         "ATOMIC_REQUESTS": True,
     }
@@ -75,21 +75,16 @@ CAPTCHA_CACHED_TIME = 60  # in second
 
 TOKEN_EXPIRES_IN = 30 * 60  # thirty minutes in total
 
-STATICFILES_DIRS = [
-    os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), "static/")
-]
+STATICFILES_DIRS = [Path(BASE_DIR).parent.parent / "static/", ]
 
-# EMAIL HOST
-EMAIL_HOST = "127.0.0.1"
-EMAIL_PORT = 1025
+# EMAIL
+EMAIL_HOST_USER = environ.get("EMAIL_ADDRESS")
+EMAIL_HOST_PASSWORD = environ.get("EMAIL_PASSWORD")
+EMAIL_HOST = environ.get("EMAIL_HOST")
+EMAIL_PORT = environ.get("EMAIL_PORT")
 EMAIL_USE_TLS = False
 
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-
-EMAIL_ACCOUNT = {
-    "EMAIL_HOST_USER": os.environ.get("EMAIL_USER"),
-    "EMAIL_HOST_PASSWORD": os.environ.get("EMAIL_PWD"),
-}
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 EMAIL_RELATED = {
     "REG_NOTIFICATION_FILE": "notification",
@@ -97,17 +92,23 @@ EMAIL_RELATED = {
     "COMMENT_NOTIFICATION": "comment_notification_template",
 }
 
-CSRF_USE_SESSIONS = False  # store csrftoke in the session
-CSRF_COOKIE_SECURE = False  # only sent with an HTTPS connection
-CSRF_COOKIE_HTTPONLY = True  # csrftoken disallow to be read by JS in console.
-CSRF_COOKIE_AGE = (
-    7 * 24 * 60
-)  # in seconds, it's valid for seven days when under development
+# store csrftoke in the session
+CSRF_USE_SESSIONS = False
+# only sent with an HTTPS connection
+CSRF_COOKIE_SECURE = False
+# csrftoken is not allowed to be read by JS in console.
+CSRF_COOKIE_HTTPONLY = True
+# in seconds, it's valid for seven days when under development
+CSRF_COOKIE_AGE = 7 * 24 * 60
 CSRF_USE_SESSIONS = True
-SESSION_COOKIE_AGE = 604800  # in seconds
-SECURE_CONTENT_TYPE_NOSNIFF = True  # 'x-content-type-options: nosniff' header
-SECURE_BROWSER_XSS_FILTER = True  # 'x-xss-protection: 1; mode=block' header
-SESSION_COOKIE_SECURE = False  # Using a secure-only session cookie
+# in seconds
+SESSION_COOKIE_AGE = 604800
+# 'x-content-type-options: nosniff' header
+SECURE_CONTENT_TYPE_NOSNIFF = True
+# 'x-xss-protection: 1; mode=block' header
+SECURE_BROWSER_XSS_FILTER = True
+# Using a secure-only session cookie
+SESSION_COOKIE_SECURE = False
 # Unless there is a good reason for your site to serve other parts of itself in a frame, you should change it to 'DENY'
 X_FRAME_OPTIONS = "DENY"
 
@@ -141,8 +142,7 @@ LOG_LEVEL = "DEBUG"
 
 
 def create_log_file():
-    if not (Path(BASE_DIR).parent.parent / "var/log").exists():
-        (Path(BASE_DIR).parent.parent / "var/log").mkdir(parents=True)
+    (Path(BASE_DIR).parent.parent / "var/log").mkdir(parents=True, exist_ok=True)
     (Path(BASE_DIR).parent.parent / "var/log" / "mysite.log").touch()
     return (Path(BASE_DIR).parent.parent / "var/log" / "mysite.log").as_posix()
 

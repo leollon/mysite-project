@@ -30,6 +30,14 @@ services:
     ports:
       - "127.0.0.1:6369:6379"
 
+  mailhog:
+    image: mailhog/mailhog
+    networks:
+      - blog-net
+    ports:
+    - "127.0.0.1:8025:8025"
+    - "127.0.0.1:1025:1025"
+
   web:
     image: mysite/blog
     build:
@@ -55,6 +63,7 @@ services:
     depends_on:
       - postgres
       - redis
+      - mailhog
 
 networks:
   blog-net:
