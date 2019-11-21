@@ -6,12 +6,11 @@ from django.urls import reverse
 
 from apps.article.models import Article
 
-email_account = getattr(settings, "EMAIL_ACCOUNT")
-email_related = getattr(settings, "EMAIL_RELATED")
-domain_name = getattr(settings, "DOMAIN_NAME")
-message_template_file = email_related.get("COMMENT_NOTIFICATION")
-email_address = email_account.get("EMAIL_HOST_USER")
-email_password = email_account.get("EMAIL_HOST_PWD")
+HOST = getattr(settings, "HOST")
+EMAIL_RELATED = getattr(settings, "EMAIL_RELATED")
+message_template_file = EMAIL_RELATED.get("COMMENT_NOTIFICATION")
+email_address = getattr(settings, "EMAIL_HOST_USER")
+email_password = getattr(settings, "EMAIL_HOST_PWD")
 
 
 def message_handle(filename, **kwargs):
@@ -20,7 +19,7 @@ def message_handle(filename, **kwargs):
     )
     with open(filename) as f:
         message = f.read()
-        article_link = domain_name + reverse(
+        article_link = HOST + reverse(
             "article:detail", kwargs={"pk": kwargs.get("article_id")}
         )
         message = message.format(

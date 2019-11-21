@@ -1,5 +1,5 @@
-import os
 from getpass import getuser
+from os import environ
 from pathlib import Path
 
 import sentry_sdk
@@ -15,36 +15,25 @@ from .common import (ALLOWED_CONTENT, AUTH_PASSWORD_VALIDATORS,  # noqa F401
                      TITLE_PATTERN, USE_I18N, USE_L10N, USE_TZ,
                      WSGI_APPLICATION)
 
-environ = {
-    "SECRET_KEY": "ao$DZM2C9KlGksl&Lzl$7Tx0TOlEXoCyZxg7i&6b3LliqRFXHk1YinXBID@B#Ncm",
-    "SERIALIZER_SALT":  b'jbF9TejrSAuQPVUq',
-    "DB_USER": "blog",
-    "DB_PWD": "123456",
-    "EMAIL_USER": "your_email_account",
-    "EMAIL_PWD": "your_email_authentication_password",
-    "EMAIL_HOST": "your_email_host",
-    "EMAIL_PORT": 587,
-}
-
 SECRET_KEY = environ.get("SECRET_KEY")
-SERIALIZER_SALT = environ.get("SERIALIZER_SALT")
+SERIALIZER_SALT = bytes(environ.get("SERIALIZER_SALT"), encoding='utf-8')
 
 DEBUG = False
 
 ALLOWED_HOSTS = ["prod.django.com", "127.0.0.1"]
 
-DOMAIN_NAME = ALLOWED_HOSTS[0]
+HOST = ALLOWED_HOSTS[0]
 
 ROOT_URLCONF = "mysite.config.urls.production"
 
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "blog",
-        "HOST": "postgres",
-        "port": 5432,
-        "USER": environ.get("DB_USER"),
-        "PASSWORD": environ.get("DB_PWD"),
+        "NAME": environ.get("PG_USER_DB"),
+        "HOST": environ.get("POSTGRES_HOST"),
+        "port": environ.get("POSTGRES_PORT"),
+        "USER": environ.get("PG_USER"),
+        "PASSWORD": environ.get("PG_USER_PASSWORD"),
         "CHARSET": "utf8",
         "ATOMIC_REQUESTS": True,
     }
@@ -74,11 +63,11 @@ STATIC_URL = "/assets/"
 STATIC_ROOT = (Path("/home/") / getuser() / "assets").as_posix()
 
 # Captcha's directory
-CAPTCHA_DIR = Path(Path(BASE_DIR).parent.parent) / "assets/images" / "captcha"
+CAPTCHA_DIR = Path(Path(BASE_DIR).parent.parent) / "assets/images/captcha"
 CAPTCHA_CACHED_TIME = 30 * 60  # in second
 
 # Here stores all static files
-STATICFILES_DIRS = [os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), "assets")]
+STATICFILES_DIRS = [Path(BASE_DIR).parent.parent / "assets/", ]
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 

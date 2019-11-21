@@ -1,3 +1,11 @@
+PYTHONIOENCODING=utf-8
+
+# Django settings
 DJANGO_SETTINGS_MODULE=mysite.config.settings.production
 DJANGO_MYSITE_PROFILE=production
-PYTHONIOENCODING=utf-8
+SECRET_KEY=p5cuwb&=cb^_jq3=s8lu8b4v*+_zfs7dh$%ij#_5@ca3jijw2iUqE89N5WJBawQMGJUjAhF
+SERIALIZER_SALT=jbF9TejrSAuQPVUq
+EMAIL_ADDRESS=email@gmail.com
+EMAIL_PASSWORD=hahahah
+EMAIL_HOST=smtp.example.com
+EMAIL_PORT=1025
