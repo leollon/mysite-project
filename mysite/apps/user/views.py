@@ -9,11 +9,11 @@ from django.utils.translation import ugettext_lazy as _
 from .forms import (PasswordResetForm, PasswordResetRequestForm, UserLoginForm,
                     UserRegisterForm)
 from .models import User
-from .utils import notify_user
+from .tasks import notify_user
 
-EMAIL_RELATED = getattr(settings, "EMAIL_RELATED")
-reg_notification_file = EMAIL_RELATED.get('REG_NOTIFICATION_FILE')
-pwd_change_notification_file = EMAIL_RELATED.get(
+email_related = getattr(settings, "EMAIL_RELATED")
+reg_notification_file = email_related.get('REG_NOTIFICATION_FILE')
+pwd_change_notification_file = email_related.get(
     'PWD_CHANGE_NOTIFICATION_FILE')
 
 
@@ -26,8 +26,9 @@ def register(request):
                 email=form.cleaned_data['email'])
             user.set_password(form.cleaned_data['password1'])
             user.save()
-            notify_user(
-                request=request,
+            notify_user.delay(
+                username=user.username,
+                email=user.email,
                 url="/accounts/validate/",
                 token=user.generate_valid_token(),
                 subject="Confirm your account",
@@ -73,8 +74,9 @@ def resend_email_view(request):
     elif request.user.is_active:
         # if user did not activate his/her account, then resend the email
         # including the token
-        notify_user(
-            request=request,
+        notify_user.delay(
+            username=request.user.username,
+            email=request.user.email,
             url="/accounts/validate/",
             token=request.user.generate_valid_token(),
             subject="Confirm your account",
@@ -132,8 +134,9 @@ def password_reset_request(request):
         # send user email including the token
         form = PasswordResetRequestForm(request.POST)
         if form.is_valid():
-            notify_user(
-                request,
+            notify_user.delay(
+                username=request.user.username,
+                email=request.user.email,
                 url="/accounts/password_reset/",
                 token=request.user.generate_email_token(),
                 subject="Change Password",
