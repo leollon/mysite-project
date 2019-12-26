@@ -155,4 +155,4 @@ TITLE_PATTERN = re.compile(r"[^\-\w]+")  # 获取文章标题
 NAME_PATTERN = re.compile(r"[^\-\w\s]+")  # 获取文章分类名字
 TAGS_ARRAY_PATTERN = re.compile(r"([\[\]])")  # 获取文章的标签
 TAGS_WHITESPACE_PATTERN = re.compile(r"(?:,+\s*)")  # 去除逗号后面多余的空格
-TAGS_FILTER_PATTERN = re.compile(r"[^\w\s\-,{1}]")  # 去除无效字符
+TAGS_FILTER_PATTERN = re.compile(r"[^\w\d\s\-,_]+")  # 去除无效字符
