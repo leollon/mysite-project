@@ -1,6 +1,7 @@
 PYTHONIOENCODING=utf-8
 
 # Django settings
+DJANGO_COLORS=dark;success=green;warning=yellow;error=red;notice=magenta;
 DJANGO_SETTINGS_MODULE=mysite.config.settings.production
 DJANGO_MYSITE_PROFILE=production
 SECRET_KEY=p5cuwb&=cb^_jq3=s8lu8b4v*+_zfs7dh$%ij#_5@ca3jijw2iUqE89N5WJBawQMGJUjAhF

@@ -6,35 +6,11 @@ set -o errexit
 # otherwise PermissionError or FileNotFoundError occurs 
 # when container runs.
 
-if [ ! -d "./run" ]
-then
-    mkdir run;
-fi
-
-if [ ! -d "./var" ] || [ ! -d "./var/log" ]
-then
-    mkdir -p var/log;
-fi
-
-if [ ! -d "./data/" ]
-then
-    mkdir data
-fi
-
-if [ ! -d "./captcha" ]
-then
-    mkdir captcha
-fi
-
-if [ ! -d "./markdown" ]
-then
-    mkdir markdown
-fi
-# finish creating
+mkdir -p var/log run data captcha markdown
 
 if [ -e "./postgresql" ]
 then
-    sudo chown -R $USER:$USER ./postgresql;
+    sudo chown -R "${USER}":"${USER}" ./postgresql;
 fi
 
 cp -ruv ./mysite/assets "$HOME"  # copy static files, such as js, css and images
