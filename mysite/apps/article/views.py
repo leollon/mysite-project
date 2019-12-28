@@ -1,22 +1,25 @@
 from django.conf import settings
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.core.paginator import Page, Paginator
+from django.contrib.auth.mixins import (
+    LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin,
+)
+from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.detail import SingleObjectTemplateResponseMixin
 from django.views.generic.edit import BaseCreateView, DeleteView, UpdateView
 from ipware.ip import get_real_ip
-
-from apps.comment.forms import CommentForm
-from apps.comment.models import Comment
 from utils import cache
 
 from .forms import CreateArticleForm, EditArticleForm
 from .models import Article
 from .tasks import increment_view_times
 
-PER_PAGE = getattr(settings, "PER_PAGE")
+from apps.comment.forms import CommentForm  # noqa: isort:skip
+from apps.comment.models import Comment  # noqa: isort:skip
+
+
+PER_PAGE = settings.PER_PAGE
 
 
 class IndexView(ListView):
@@ -33,7 +36,10 @@ class IndexView(ListView):
 
 
 class CreateArticleView(
-    LoginRequiredMixin, SingleObjectTemplateResponseMixin, BaseCreateView
+    LoginRequiredMixin,
+    PermissionRequiredMixin,
+    SingleObjectTemplateResponseMixin,
+    BaseCreateView,
 ):
     """Class-based view function used to write an article
     """
@@ -43,7 +49,9 @@ class CreateArticleView(
     login_url = "/accounts/login/"
 
     def dispatch(self, request, *args, **kwargs):
-        return super(CreateArticleView, self).dispatch(request, *args, **kwargs)
+        return super(CreateArticleView, self).dispatch(
+            request, *args, **kwargs
+        )
 
     def form_valid(self, form):
         """

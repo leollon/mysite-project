@@ -1,17 +1,16 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views.generic import ListView
 
-from apps.article.models import Article
-
+from ..article.models import Article
 from .forms import CategoryForm
 from .models import ArticleCategory
 
-PER_PAGE = getattr(settings, 'PER_PAGE')
+per_page = settings.PER_PAGE
 
 
 class CategoryListView(ListView):
@@ -28,7 +27,7 @@ class CategorizeArticleListView(ListView):
     """Get all articles based on category name"""
     model = Article
     context_object_name = 'articles'
-    paginate_by = PER_PAGE
+    paginate_by = per_page
     template_name = 'category/article_categorized.html'
 
     def get_queryset(self):

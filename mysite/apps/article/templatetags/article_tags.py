@@ -2,16 +2,15 @@ import bleach
 from django.conf import settings
 from django.template.defaultfilters import stringfilter
 from django.template.library import Library
-
 # import customized module
-from utils.cache import cache
+from utils import cache
 
 from .. import my_renderer
 from ..models import Article
 
 register = Library()
 
-allow_content = getattr(settings, "ALLOWED_CONTENT")
+allow_content = settings.ALLOWED_CONTENT
 
 
 @register.filter(name="banxss")

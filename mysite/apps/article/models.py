@@ -1,5 +1,4 @@
 import re
-import unicodedata
 import uuid
 
 from django.conf import settings
@@ -8,8 +7,8 @@ from django.shortcuts import reverse
 from django.utils.text import slugify
 from unidecode import unidecode
 
-from apps.category.models import ArticleCategory
-from apps.user.models import User
+from ..category.models import ArticleCategory
+from ..user.models import User
 
 
 def default_slug():

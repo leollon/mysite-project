@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 
-from apps.article.models import Article
+from ..article.models import Article
 
 
 class Comment(models.Model):

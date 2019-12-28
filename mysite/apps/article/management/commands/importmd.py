@@ -1,24 +1,25 @@
 import re
+import sys
 from datetime import datetime
 from pathlib import Path
+from typing import Generator, Iterator
 
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 from django.db import DataError, IntegrityError
+from utils import primer_generator
 
-from apps.article.models import Article
-from apps.category.models import ArticleCategory
-from apps.user.models import User
-from utils.primer import primer_generator
+from .constans import Importation
 
-IMPORTED = 0
-REPLICA = 1
-ERROR = 2
+from apps.article.models import Article  # noqa: isort:skip
+from apps.category.models import ArticleCategory  # noqa: isort:skip
+from apps.user.models import User  # noqa: isort:skip
+
 
 try:
     author = User.objects.get(pk=1)
 except User.DoesNotExist:
-    author = User.objects.create_user(**getattr(settings, 'IMPORT_ARTICLE_USER'))
+    author = User.objects.create_user(**settings.IMPORT_ARTICLE_USER)
 
 
 class Command(BaseCommand):
@@ -30,6 +31,9 @@ class Command(BaseCommand):
 
     def __init__(self, *args, **kwargs):
         super().__init__(force_color=True, *args, **kwargs)
+        self._warning = self.style.WARNING
+        self._success = self.style.SUCCESS
+        self._error = self.style.ERROR
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -41,7 +45,7 @@ class Command(BaseCommand):
             help="default: %s." % str(self.parent_dir / 'markdown')
         )
 
-    def handle(self, *args, **options):
+    def handle(self, *args, **options) -> None:
         settings.USE_TZ = False
         if not list(Path(options['dir']).iterdir()):
             raise CommandError(
@@ -54,8 +58,9 @@ class Command(BaseCommand):
                 group.send(file.as_posix())
         group.send(None)
         settings.USE_TZ = True
+        sys.stdout.close()
 
-    def line_handler(self, line):
+    def line_handler(self, line) -> str:
         """
         Examples
 
@@ -71,14 +76,14 @@ class Command(BaseCommand):
         return ret_val
 
     @primer_generator
-    def grouper(self):
+    def grouper(self) -> Generator:
         while True:
             yield from self.read_from_md()
 
-    def read_from_md(self):
+    def read_from_md(self) -> Iterator:
         """
         Read content from markdown file into article model,
-        save the content in MySQL.
+        save the content in PostgreSQL.
         """
         filepath = yield
         article_body, tags = '', ''
@@ -87,7 +92,9 @@ class Command(BaseCommand):
 
         if filepath is None:
             return
-        title = re.sub(settings.TITLE_PATTERN, '-', filepath.split('/')[-1].split('.')[0])
+        title = re.sub(
+            settings.TITLE_PATTERN,
+            '-', filepath.split('/')[-1].split('.')[0])
         try:
             category = ArticleCategory.objects.get(pk=1)
         except ArticleCategory.DoesNotExist:
@@ -110,14 +117,11 @@ class Command(BaseCommand):
                             category.save()
                     elif line.startswith('tags'):
                         tags_string = re.sub(
-                            settings.TAGS_ARRAY_PATTERN, '', self.line_handler(line)
-                        )
+                            settings.TAGS_ARRAY_PATTERN, '', self.line_handler(line))
                         tags_string = re.sub(
-                            settings.TAGS_WHITESPACE_PATTERN, ',', tags_string
-                        )
+                            settings.TAGS_WHITESPACE_PATTERN, ',', tags_string)
                         tags = re.sub(
-                            settings.TAGS_FILTER_PATTERN, '', tags_string
-                        ).strip(',')
+                            settings.TAGS_FILTER_PATTERN, '', tags_string).strip(',')
                     else:
                         article_body += line
 
@@ -130,18 +134,23 @@ class Command(BaseCommand):
                     tags=tags)
                 article.created_time = date
                 article.save()
-                message, flag = self.style.SUCCESS("Finish importing %s." % repr(filepath)), IMPORTED
+                message = self._success(
+                    "Finish importing %s." % repr(filepath))
+                flag = Importation.DONE
             except IntegrityError as e:
-                message, flag = self.style.WARNING("Article %s exists. message: %s" % (repr(title), e)), REPLICA
+                message = self._warning(
+                    "Article %s exists. message: %s" % (repr(title), e))
+                flag = Importation.REPLICA
             except DataError as e:
-                message, flag = self.style.ERROR("Import %s Error, msessage: %s." % (repr(filepath), e)), ERROR
-                self.output_results(ERROR, message)
+                message = self._error(
+                    "Import %s Error, msessage: %s." % (repr(filepath), e))
+                flag = Importation.ERROR
+                self.output_results(flag, message)
             self.output_results(flag, message)
 
-    def output_results(self, flag, message):
-        if flag == REPLICA:
+    def output_results(self, flag: Importation, message: str) -> None:
+        if flag in (Importation.REPLICA, Importation.DONE):
             self.stdout.write(message)
-        elif flag == IMPORTED:
-            self.stdout.write(message)
-        elif flag == ERROR:
+        elif flag == Importation.ERROR.value:
             self.stderr.write(message)
+        sys.stdout.flush()

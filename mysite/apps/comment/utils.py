@@ -4,14 +4,14 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.urls import reverse
 
-from apps.article.models import Article
+from ..article.models import Article
 
-HOST = getattr(settings, "HOST")
-EMAIL_RELATED = getattr(settings, "EMAIL_RELATED")
+HOST = settings.HOST
+email_related = settings.EMAIL_RELATED
 
-message_template_file = EMAIL_RELATED.get("COMMENT_NOTIFICATION")
-email_address = getattr(settings, "EMAIL_HOST_USER")
-email_password = getattr(settings, "EMAIL_HOST_PWD")
+message_template_file = email_related.get("COMMENT_NOTIFICATION")
+email_address = settings.EMAIL_HOST_USER
+email_password = settings.EMAIL_HOST_PWD
 
 
 def message_handle(filename, **kwargs):

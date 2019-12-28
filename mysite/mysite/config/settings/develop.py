@@ -3,15 +3,14 @@ from getpass import getuser
 from os import environ
 from pathlib import Path
 
-from .common import (ALLOWED_CONTENT, AUTH_PASSWORD_VALIDATORS,  # noqa: F401
-                     AUTH_USER_MODEL, AUTHENTICATION_BACKENDS, BASE_DIR,
-                     DATETIME_FORMAT_STRING, INSTALLED_APPS, LANGUAGE_CODE,
-                     MIDDLEWARE, NAME_PATTERN, PASSWORD_HASHERS, PER_PAGE,
-                     SESSION_CACHE_ALIAS, SESSION_ENGINE, SITE_ID,
-                     TAGS_ARRAY_PATTERN, TAGS_FILTER_PATTERN,
-                     TAGS_WHITESPACE_PATTERN, TEMPLATES, TIME_ZONE,
-                     TITLE_PATTERN, USE_I18N, USE_L10N, USE_TZ,
-                     WSGI_APPLICATION)
+from .common import (  # noqa: F401
+    ALLOWED_CONTENT, AUTH_PASSWORD_VALIDATORS, AUTH_USER_MODEL,
+    AUTHENTICATION_BACKENDS, BASE_DIR, DATETIME_FORMAT_STRING, INSTALLED_APPS,
+    LANGUAGE_CODE, MIDDLEWARE, NAME_PATTERN, PASSWORD_HASHERS, PER_PAGE,
+    SESSION_CACHE_ALIAS, SESSION_ENGINE, SITE_ID, TAGS_ARRAY_PATTERN,
+    TAGS_FILTER_PATTERN, TAGS_WHITESPACE_PATTERN, TEMPLATES, TIME_ZONE,
+    TITLE_PATTERN, USE_I18N, USE_L10N, USE_TZ, WSGI_APPLICATION,
+)
 
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -70,7 +69,7 @@ STATIC_URL = "/static/"
 STATIC_ROOT = (Path("/home/") / getuser() / "static").as_posix()
 
 # Captcha's directory
-CAPTCHA_DIR = Path(Path(BASE_DIR).parent.parent) / "static/images" / "captcha"
+CAPTCHA_BASE_DIR = Path(Path(BASE_DIR).parent.parent) / "static/images" / "captcha"
 CAPTCHA_CACHED_TIME = 60  # in second
 
 TOKEN_EXPIRES_IN = 30 * 60  # thirty minutes in total
@@ -109,7 +108,8 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
 # Using a secure-only session cookie
 SESSION_COOKIE_SECURE = False
-# Unless there is a good reason for your site to serve other parts of itself in a frame, you should change it to 'DENY'
+# Unless there is a good reason for the site to serve other parts of itself in
+# a frame, you should change it to 'DENY'
 X_FRAME_OPTIONS = "DENY"
 
 ADMINS = [("root", "email@gmail.com")]
