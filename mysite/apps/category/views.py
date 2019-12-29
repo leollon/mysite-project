@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.db import IntegrityError
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
@@ -45,6 +45,12 @@ class CategorizeArticleListView(ListView):
 
 
 @login_required
+@permission_required(
+    [
+        "category.add_articlecategory", "category.view_articlecategory",
+        "category.change_articlecategory", "category.delete_articlecategory"
+    ],
+    raise_exception=True)
 def manage_category(request):
     """Cagetory dashboard View
     response category dashboard, provide form, template
@@ -63,6 +69,9 @@ def manage_category(request):
 
 
 @login_required
+@permission_required(
+    ("category.add_articlecategory", "category.view_articlecategory"),
+    raise_exception=True)
 def add_category(request):
     """Add category view
     the desination of the datafrom submitted form, process form data
@@ -98,6 +107,9 @@ def add_category(request):
 
 
 @login_required
+@permission_required(
+    ("category.add_articlecategory", "category.view_articlecategory"),
+    raise_exception=True)
 def edit_category(request, name):
     """
     view function for changing category's name
@@ -136,6 +148,9 @@ def edit_category(request, name):
 
 
 @login_required
+@permission_required(
+    ("category.delete_articlecategory", "category.view_articlecategory"),
+    raise_exception=True)
 def delete_category(request, name):
     if request.method == 'POST':
         if request.user.is_superuser:
