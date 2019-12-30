@@ -15,8 +15,8 @@ from .common import (  # noqa: F401
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = environ.get("SECRET_KEY")
-SERIALIZER_SALT = bytes(environ.get("SERIALIZER_SALT"), encoding='utf-8')
+SECRET_KEY = environ.get("SECRET_KEY", "set secret_key!")
+SERIALIZER_SALT = bytes(environ.get("SERIALIZER_SALT", 'serializer salt string'), encoding='utf-8')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

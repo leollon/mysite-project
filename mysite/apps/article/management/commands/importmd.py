@@ -7,6 +7,7 @@ from typing import Generator, Iterator
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 from django.db import DataError, IntegrityError
+
 from utils import primer_generator
 
 from .constans import Importation
@@ -95,10 +96,7 @@ class Command(BaseCommand):
         title = re.sub(
             settings.TITLE_PATTERN,
             '-', filepath.split('/')[-1].split('.')[0])
-        try:
-            category = ArticleCategory.objects.get(pk=1)
-        except ArticleCategory.DoesNotExist:
-            category = ArticleCategory.objects.create(name="uncategorized")
+        category, _ = ArticleCategory.objects.get_or_create(name="uncategorized")
         with open(filepath, 'r') as fp:
             for line in fp.readlines():
                 if not line.startswith('---'):
@@ -110,11 +108,7 @@ class Command(BaseCommand):
                     elif line.startswith('categories'):
                         name = self.line_handler(line).strip("'")
                         name = re.sub(settings.NAME_PATTERN, '', name)
-                        try:
-                            category = ArticleCategory.objects.get(name=name)
-                        except ArticleCategory.DoesNotExist:
-                            category = ArticleCategory(name=name)
-                            category.save()
+                        category, _ = ArticleCategory.objects.get_or_create(name=name)
                     elif line.startswith('tags'):
                         tags_string = re.sub(
                             settings.TAGS_ARRAY_PATTERN, '', self.line_handler(line))

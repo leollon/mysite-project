@@ -48,13 +48,11 @@
         <li>
           <a href="{% url 'article:manage' %}">Articles</a>
         </li>
-        {% if user.is_superuser %}
         <li>
           <a href="{% url 'category:manage' %}">
             Categories
           </a>
-        </li>
-        {% endif %} {% else %}
+        </li>{% else %}
         <li>
           <a href="{% url 'user:login' %}">SignIn</a>
         </li>
