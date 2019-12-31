@@ -39,11 +39,12 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": environ.get("PG_USER_DB"),
         "HOST": environ.get("POSTGRES_HOST"),
-        "port": environ.get("POSTGRES_PORT"),
+        "PORT": environ.get("POSTGRES_PORT"),
         "USER": environ.get("PG_USER"),
         "PASSWORD": environ.get("PG_USER_PASSWORD"),
         "CHARSET": "utf8",
         "ATOMIC_REQUESTS": True,
+        "TEST": {"NAME": "test"},
     }
 }
 
