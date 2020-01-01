@@ -1,9 +1,10 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required, permission_required
 from django.db import IntegrityError
-from django.http import HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
+from django.utils.translation import gettext as _
 from django.views.generic import ListView
 
 from ..article.models import Article
@@ -31,10 +32,13 @@ class CategorizeArticleListView(ListView):
     template_name = 'category/article_categorized.html'
 
     def get_queryset(self):
-        queryset = super(CategorizeArticleListView, self).get_queryset()
-        category = ArticleCategory.objects.get(
-            name=self.kwargs.get('name', 'uncategorized'))
-        return queryset.filter(category=category)
+        name = self.kwargs.get('name', 'uncategoriezed')
+        try:
+            category = ArticleCategory.objects.get(name=name)
+        except ArticleCategory.DoesNotExist:
+            raise Http404(_(repr(name) + " not found"))
+        else:
+            return super(CategorizeArticleListView, self).get_queryset().filter(category=category)
 
     def get_context_data(self, **kwargs):
         context = dict()

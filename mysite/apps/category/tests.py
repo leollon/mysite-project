@@ -1,23 +1,24 @@
-import unittest
-
+from django.contrib.auth.models import AnonymousUser
 from django.test import Client as HTTPClient
-from django.test import RequestFactory
-
-from ..user.models import User
+from django.test import RequestFactory, TestCase
 
 
-class TestCategory(unittest.TestCase):
+class TestCategory(TestCase):
 
     def setUp(self) -> None:
         self.http_client = HTTPClient()
         self.request_factory = RequestFactory()
-        self.user = User.objects.get_or_create(
-            username='test', email='email@test.com',
-            password='test1234', user_permission=[
-                "category.add_articlecategory", "category.view_articlecategory",
-                "category.change_articlecategory", "category.delete_articlecategory"]
-        )
+        self.anonymous_user = AnonymousUser()
 
-    def test_get_categtories_list(self):
+    def test_categtories_list(self):
+
         response = self.http_client.get("/categories/")
         self.assertEqual(response.status_code, 200)
+
+    def test_get_categorized_article_list(self):
+
+        response = self.http_client.get("/categories/Sams-Teach-yourself-TCPIP-in-24-hours/")
+        self.assertEqual(response.status_code, 404)
+
+        response = self.http_client.get("/categories/hello-world/")  # unknown category name
+        self.assertEqual(response.status_code, 404)
