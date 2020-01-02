@@ -44,7 +44,7 @@ DATABASES = {
         "PASSWORD": environ.get("PG_USER_PASSWORD"),
         "CHARSET": "utf8",
         "ATOMIC_REQUESTS": True,
-        "TEST": {"NAME": "test"},
+        "TEST": {"NAME": "blogTestDB"},
     }
 }
 
