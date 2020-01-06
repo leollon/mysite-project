@@ -29,3 +29,4 @@ class ArticleCategory(models.Model):
         db_table = "categories"
         verbose_name = "category"
         verbose_name_plural = "categories"
+        ordering = ('created_time', )
