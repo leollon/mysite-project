@@ -26,7 +26,8 @@ class Article(models.Model):
     slug = models.SlugField(
         max_length=100, null=True, unique=True, default=default_slug
     )
-    view_times = models.PositiveIntegerField(default=0)
+    user_view_times = models.PositiveIntegerField(default=0)
+    page_view_times = models.PositiveIntegerField(default=0)
     category = models.ForeignKey(
         ArticleCategory, null=True, on_delete=models.SET_NULL
     )

@@ -14,7 +14,7 @@ from utils import cache
 
 from .forms import CreateArticleForm, EditArticleForm
 from .models import Article
-from .tasks import increment_view_times
+from .tasks import increment_page_view_times, increment_user_view_times
 
 from apps.comment.forms import CommentForm  # noqa: isort:skip
 from apps.comment.models import Comment  # noqa: isort:skip
@@ -111,7 +111,8 @@ class ArticleDetailView(DetailView, BaseCreateView):
         if ip not in visited_ips:
             visited_ips.add(ip)
             cache.set(self.object.slug, visited_ips, day)
-            increment_view_times.delay(article_id=self.object.id)
+            increment_user_view_times.delay(article_id=self.object.id)
+        increment_page_view_times.delay(article_id=self.object.id)
         context = self.get_context_data(object=self.object)
         comments = self.get_comment_list(request, *args, **kwargs)
         context.update({"comments": comments})

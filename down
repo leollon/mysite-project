@@ -3,6 +3,3 @@
 set -o errexit
 
 docker-compose -f local.yml down
-docker rmi -f $(docker images | grep mysite | awk '{print $3}')
-docker rmi -f $(docker images | grep none | awk '{print $3}')
-docker system prune -f

@@ -5,7 +5,14 @@ from .models import Article
 
 
 @shared_task
-def increment_view_times(article_id):
+def increment_user_view_times(article_id):
     return Article.objects.filter(id=article_id).update(
-        view_times=F("view_times") + 1
+        user_view_times=F("user_view_times") + 1
+    )
+
+
+@shared_task
+def increment_page_view_times(article_id):
+    return Article.objects.filter(id=article_id).update(
+        page_view_times=F("page_view_times") + 1
     )
