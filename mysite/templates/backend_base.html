@@ -16,6 +16,8 @@
   <link href="{% static 'vendor/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link href="{% static 'css/simple-sidebar.css' %}" rel="stylesheet">
+  <script src="{% static 'vendor/jquery/jquery.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.js' %}"></script>
 
   <title>{% block title %}{% endblock %}</title>
 </head>
@@ -91,12 +93,6 @@
   <!-- /#wrapper -->
 
   {% block scripts %}
-  <!-- jQuery -->
-  <script src="{% static 'vendor/jquery/jquery.js' %}"></script>
-
-  <!-- Bootstrap Core JavaScript -->
-  <script src="{% static 'vendor/bootstrap/js/bootstrap.js' %}"></script>
-
   <!-- Menu Toggle Script -->
   <script>
     $("#menu-toggle").click(function (e) {

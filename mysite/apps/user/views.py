@@ -6,12 +6,15 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from .forms import (PasswordResetForm, PasswordResetRequestForm, UserLoginForm,
-                    UserRegisterForm)
+from .forms import (
+    PasswordResetForm, PasswordResetRequestForm, UserLoginForm,
+    UserRegisterForm,
+)
 from .models import User
-from .tasks import notify_user
 
-email_related = getattr(settings, "EMAIL_RELATED")
+from apps.mail.tasks import send_email  # noqa: isort:skip
+
+email_related = settings.EMAIL_RELATED
 reg_notification_file = email_related.get('REG_NOTIFICATION_FILE')
 pwd_change_notification_file = email_related.get(
     'PWD_CHANGE_NOTIFICATION_FILE')
@@ -26,13 +29,14 @@ def register(request):
                 email=form.cleaned_data['email'])
             user.set_password(form.cleaned_data['password1'])
             user.save()
-            notify_user.delay(
-                username=user.username,
+            link = "".join((settings.HOST, reverse("user:validate", args=(user.generate_valid_token(),))))
+            context = {"username": user.username, "link": link}
+            send_email.delay(
                 email=user.email,
-                url="/accounts/validate/",
-                token=user.generate_valid_token(),
                 subject="Confirm your account",
-                filename=reg_notification_file)
+                template_name="user/reg_mail_msg.tpl",
+                ip=request.META.get('REMOTE_ADDR'),
+                context=context)
             return HttpResponseRedirect(reverse('user:login'))
         else:
             return render(request, 'user/register.html', {'form': form})
@@ -74,13 +78,15 @@ def resend_email_view(request):
     elif request.user.is_active:
         # if user did not activate his/her account, then resend the email
         # including the token
-        notify_user.delay(
-            username=request.user.username,
+        link = "".join((settings.HOST, reverse("user:validate", args=(request.user.generate_valid_token(),))))
+
+        context = {"username": request.user.username, "link": link}
+        send_email.delay(
             email=request.user.email,
-            url="/accounts/validate/",
-            token=request.user.generate_valid_token(),
             subject="Confirm your account",
-            filename=reg_notification_file)
+            template_name="user/reg_mail_msg.tpl",
+            ip=request.META.get('REMOTE_ADDR'),
+            context=context)
         msg = {
             "notification": _("The email including token has resent to you.")
         }
@@ -133,14 +139,16 @@ def password_reset_request(request):
     if request.method == "POST":
         # send user email including the token
         form = PasswordResetRequestForm(request.POST)
+        link = "".join((settings.HOST, reverse("user:reset_request", args=(request.user.generate_email_token(),))))
+        context = {"username": request.user.username, "link": link}
         if form.is_valid():
-            notify_user.delay(
+            send_email.delay(
                 username=request.user.username,
                 email=request.user.email,
-                url="/accounts/password_reset/",
-                token=request.user.generate_email_token(),
                 subject="Change Password",
-                filename=pwd_change_notification_file)
+                template_name="user/passwd_change_msg.tpl",
+                ip=request.META.get('REMOTE_ADDR'),
+                context=context)
             msg = {
                 "notification": "The email including token has sent to you."
             }

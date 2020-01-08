@@ -1,8 +1,8 @@
-import os
 import re
+from pathlib import Path
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).parent.parent.as_posix()
 
 # Application definition and Customized APPS
 INSTALLED_APPS = [
@@ -21,15 +21,15 @@ INSTALLED_APPS = [
     "apps.user.apps.UserConfig",
     "apps.comment.apps.CommentConfig",
     "apps.captcha.apps.CaptchaConfig",
+    "apps.mail.apps.MailConfig",
 ]
 
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
-            os.path.join(
-                os.path.dirname(os.path.dirname(BASE_DIR)), "templates/"
-            )
+            Path(BASE_DIR).parent.parent.joinpath("templates/").as_posix(),
+            Path(BASE_DIR).parent.parent.joinpath("mail_templates").as_posix(),
         ],
         "APP_DIRS": True,
         "OPTIONS": {

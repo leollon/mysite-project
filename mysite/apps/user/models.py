@@ -36,10 +36,7 @@ class User(AbstractUser):
         register an account received a activate link in their email.
         :return: Serializer
         """
-        return URLSafeTimedSerializer(
-            getattr(settings, "SECRET_KEY"),
-            salt=getattr(settings, 'SERIALIZER_SALT')
-        )
+        return URLSafeTimedSerializer(settings.SECRET_KEY, salt=settings.SERIALIZER_SALT)
 
     def generate_valid_token(self):
         serializer = self.generate_serializer()
@@ -48,7 +45,7 @@ class User(AbstractUser):
     def validate_account(self, token):
         serializer = self.generate_serializer()
         try:
-            data = serializer.loads(token, max_age=getattr(settings, 'TOKEN_EXPIRES_IN'))
+            data = serializer.loads(token, max_age=settings.TOKEN_EXPIRES_IN)
         except (BadTimeSignature, SignatureExpired):
             return False
 
@@ -61,9 +58,7 @@ class User(AbstractUser):
 
     def generate_email_token(self):
         serializer = self.generate_serializer()
-        return serializer.dumps({"name": self.username}).decode(
-            encoding="ascii"
-        )
+        return serializer.dumps({"name": self.username}).decode(encoding="ascii")
 
     def verify_email_token(self, token):
         """Used to verify email token when reset a user's login password
@@ -73,7 +68,7 @@ class User(AbstractUser):
         """
         serializer = self.generate_serializer()
         try:
-            data = serializer.loads(token, max_age=getattr(settings, 'TOKEN_EXPIRES_IN'))
+            data = serializer.loads(token, max_age=settings.TOKEN_EXPIRES_IN)
         except (BadTimeSignature, SignatureExpired):
             return False
 
