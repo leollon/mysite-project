@@ -651,10 +651,9 @@ img {
 }
 
 .error404 {
-  text-align: center;
   font-size: 30px;
-  font-weight: bold;
-  color: green;
+  font-weight: bolder;
+  color: darkred;
 }
 
 .error404>img {
