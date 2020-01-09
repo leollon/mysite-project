@@ -33,6 +33,6 @@ def send_email(email, subject, ip, template_name, context):
         state, reason = 'error', e.args[0]
     finally:
         EmailRecord.objects.create(
-            username=context.get("username"), mail_message=html_message,
+            username=context.get("username")[:16], mail_message=html_message,
             ip=ip, mail_state=state, reason=reason
         )

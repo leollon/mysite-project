@@ -1,6 +1,0 @@
-<b>Hi, administer:</b>
-<pre><p>{0} leave a comment on <a href="{1}">this article</a>.</p></pre>
-<p>article title is 《{2}》.</p>
-<h2>article_content:</h2>
-<p>{3}</p>
-
