@@ -1,21 +1,18 @@
-import re
 import uuid
 
-from django.conf import settings
 from django.db import models
 from django.shortcuts import reverse
-from django.utils.text import slugify
-from unidecode import unidecode
 
 from ..category.models import ArticleCategory
 from ..user.models import User
+from .mixins import ArticleCleannedMixin
 
 
 def default_slug():
     return str(uuid.uuid4())
 
 
-class Article(models.Model):
+class Article(models.Model, ArticleCleannedMixin):
     """
     an article model - control the way to access data in the database
     """
@@ -42,15 +39,6 @@ class Article(models.Model):
     def save(self, *args, **kwargs):
         self.clean_data()
         super(Article, self).save(*args, **kwargs)
-
-    def clean_data(self):
-        self.slug = slugify(unidecode(self.title))
-        if not self.tags:
-            self.tags = "untagged"
-        else:
-            self.tags = re.sub(
-                settings.TAGS_FILTER_PATTERN, "", self.tags
-            ).strip(",")
 
     @staticmethod
     def get_absolute_url():
