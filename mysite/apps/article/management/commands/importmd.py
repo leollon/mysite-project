@@ -87,21 +87,18 @@ class Command(BaseCommand):
         save the content in PostgreSQL.
         """
         filepath = yield
-        article_body, tags = '', ''
-        date = datetime.now()
+        article_body, title, tags, date = '', '', '', datetime.now()
         message, flag = '', ''
 
         if filepath is None:
             return
-        title = re.sub(
-            settings.TITLE_PATTERN,
-            '-', filepath.split('/')[-1].split('.')[0])
+        slug = filepath.split('/')[-1].split('.')[0]
         category, _ = ArticleCategory.objects.get_or_create(name="uncategorized")
         with open(filepath, 'r') as fp:
             for line in fp.readlines():
                 if not line.startswith('---'):
                     if line.startswith('title'):
-                        continue
+                        title = self.line_handler(line)
                     elif line.startswith('date'):
                         date = datetime.strptime(
                             self.line_handler(line), settings.DATETIME_FORMAT_STRING)
@@ -120,14 +117,14 @@ class Command(BaseCommand):
                         article_body += line
 
             try:
-                article = Article.objects.create(
+                Article.objects.create(
                     title=title,
                     article_body=article_body,
                     category=category,
                     author=author,
-                    tags=tags)
-                article.created_time = date
-                article.save()
+                    tags=tags,
+                    slug=slug,
+                    created_time=date)
                 message = self._success(
                     "Finish importing %s." % repr(filepath))
                 flag = Importation.DONE
