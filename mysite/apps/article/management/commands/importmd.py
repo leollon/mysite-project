@@ -7,6 +7,8 @@ from typing import Generator, Iterator
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 from django.db import DataError, IntegrityError
+from django.utils.text import slugify
+from unidecode import unidecode
 
 from utils import primer_generator
 
@@ -20,7 +22,7 @@ from apps.user.models import User  # noqa: isort:skip
 try:
     author = User.objects.get(pk=1)
 except User.DoesNotExist:
-    author = User.objects.create_user(**settings.IMPORT_ARTICLE_USER)
+    author = User.objects.create_superuser(**settings.IMPORT_ARTICLE_USER, is_valid=True)
 
 
 class Command(BaseCommand):
@@ -61,21 +63,6 @@ class Command(BaseCommand):
         settings.USE_TZ = True
         sys.stdout.close()
 
-    def line_handler(self, line) -> str:
-        """
-        Examples
-
-            >>> line = 'tags: [1, 2, 3]'
-            >>> Command().line_handler(line)
-            '1, 2, 3'
-
-            >>> line = 'title: hello-world'
-            >>> Command().line_handler(line)
-            'hello-world'
-        """
-        ret_val = line.partition(':')[-1].strip()
-        return ret_val
-
     @primer_generator
     def grouper(self) -> Generator:
         while True:
@@ -86,57 +73,53 @@ class Command(BaseCommand):
         Read content from markdown file into article model,
         save the content in PostgreSQL.
         """
-        filepath = yield
-        article_body, title, tags, date = '', '', '', datetime.now()
-        message, flag = '', ''
 
+        filepath = yield
         if filepath is None:
             return
-        slug = filepath.split('/')[-1].split('.')[0]
-        category, _ = ArticleCategory.objects.get_or_create(name="uncategorized")
+
+        message, flag = '', ''
+        slug = slugify(unidecode(filepath.split('/')[-1].split('.')[0]))
+        article_body, title = '', slug
+        category_name, tags, date = 'uncategorized', 'untagged', datetime.now()
+        category, _ = ArticleCategory.objects.get_or_create(name=category_name)
+
         with open(filepath, 'r') as fp:
             for line in fp.readlines():
                 if not line.startswith('---'):
                     if line.startswith('title'):
-                        title = self.line_handler(line)
+                        title = re.search(settings.TITLE_PATTERN, line).group(1)
                     elif line.startswith('date'):
                         date = datetime.strptime(
-                            self.line_handler(line), settings.DATETIME_FORMAT_STRING)
-                    elif line.startswith('categories'):
-                        name = self.line_handler(line).strip("'")
-                        name = re.sub(settings.NAME_PATTERN, '', name)
-                        category, _ = ArticleCategory.objects.get_or_create(name=name)
+                            re.search(settings.DATETIME_PATTERN, line).group(1), settings.DATETIME_FORMAT_STRING)
+                    elif line.startswith('categories') or line.startswith('category'):
+                        result = re.search(settings.CATEGORY_PATTERN, line)
+                        if result:
+                            category, _ = ArticleCategory.objects.get_or_create(
+                                name=re.sub(settings.CATEGORY_FILTER_PATTERN, '-', result.group(1)))
                     elif line.startswith('tags'):
-                        tags_string = re.sub(
-                            settings.TAGS_ARRAY_PATTERN, '', self.line_handler(line))
-                        tags_string = re.sub(
-                            settings.TAGS_WHITESPACE_PATTERN, ',', tags_string)
-                        tags = re.sub(
-                            settings.TAGS_FILTER_PATTERN, '', tags_string).strip(',')
+                        tags = re.search(settings.TAGS_ARRAY_PATTERN, line).group(1)
+                        tags = re.sub(settings.TAGS_WHITESPACE_PATTERN, ',', tags)
+                        tags = re.sub(settings.TAGS_FILTER_PATTERN, '', tags).strip(',')
                     else:
                         article_body += line
 
             try:
                 Article.objects.create(
-                    title=title,
-                    article_body=article_body,
-                    category=category,
-                    author=author,
-                    tags=tags,
-                    slug=slug,
+                    title=title, article_body=article_body,
+                    category=category, author=author,
+                    tags=tags, slug=slug,
                     created_time=date)
-                message = self._success(
-                    "Finish importing %s." % repr(filepath))
+                message = self._success("Finish importing %s." % repr(filepath))
                 flag = Importation.DONE
             except IntegrityError as e:
                 message = self._warning(
-                    "Article %s exists. message: %s" % (repr(title), e))
+                    "Article %s already exists. message: %s" % (repr(title), e))
                 flag = Importation.REPLICA
             except DataError as e:
                 message = self._error(
                     "Import %s Error, msessage: %s." % (repr(filepath), e))
                 flag = Importation.ERROR
-                self.output_results(flag, message)
             self.output_results(flag, message)
 
     def output_results(self, flag: Importation, message: str) -> None:

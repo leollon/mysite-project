@@ -1,13 +1,15 @@
 import re
 
+from django.conf import settings
 from django.db import models
+from django.utils import timezone
 
 
 class ArticleCategory(models.Model):
     """each article category"""
 
     name = models.CharField(max_length=64, blank=False, unique=True)
-    created_time = models.DateTimeField(null=True, auto_now_add=True)
+    created_time = models.DateTimeField(null=True, default=timezone.now)
 
     def count_number(self):
         return self.article_set.count()
@@ -22,8 +24,7 @@ class ArticleCategory(models.Model):
         super(ArticleCategory, self).save(*args, **kwargs)
 
     def filter_data(self):
-        pat = re.compile(r'[^\-\w\s]+')
-        self.name = re.sub(pat, '', self.name)
+        self.name = re.sub(settings.CATEGORY_FILTER_PATTERN, '-', self.name)
 
     class Meta:
         db_table = "categories"

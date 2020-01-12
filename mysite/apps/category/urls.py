@@ -1,7 +1,9 @@
 from django.conf.urls import url
 
-from .views import (CategorizeArticleListView, CategoryListView, add_category,
-                    delete_category, edit_category, manage_category)
+from .views import (
+    CategorizeArticleListView, CategoryListView, add_category, delete_category,
+    edit_category, manage_category,
+)
 
 app_name = 'category'
 
@@ -16,7 +18,7 @@ urlpatterns = [
 # urlpatterns for site visistor
 urlpatterns += [
     url(r'^$', CategoryListView.as_view(), name='all_category'),
-    url(r'^(?P<name>[\-\w\s]+)/$',
+    url(r'^(?P<name>[\-\w\d\ ]+)/$',
         CategorizeArticleListView.as_view(),
         name='all_article'),
 ]

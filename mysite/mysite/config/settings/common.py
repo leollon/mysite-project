@@ -151,8 +151,19 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 SITE_ID = 1
 
 DATETIME_FORMAT_STRING = "%Y-%m-%d %H:%M:%S"
-TITLE_PATTERN = re.compile(r"[^\-\w]+")  # 获取文章标题
-NAME_PATTERN = re.compile(r"[^\-\w\s]+")  # 获取文章分类名字
-TAGS_ARRAY_PATTERN = re.compile(r"([\[\]])")  # 获取文章的标签
+# 获取文章标题
+TITLE_PATTERN = re.compile(
+    r"title:\ *([\w\d\-,.!?'\"&/<>:\ \u4e00-\u9fa5\u30a0-\u30ff\u3040-\u309f\u4e00-\u9fcf\(\)\[\]]*)\s*"
+)
+# 获取时间
+DATETIME_PATTERN = re.compile(r"date:\ *(\d{4}\-\d{2}\-\d{2}\ *\d{2}:\d{2}:\d{2})\s*")
+# 获取文章分类名字
+CATEGORY_PATTERN = re.compile(
+    r"categor(?:y|ies):\ *([\w\d\-'\ \[\]/.\u4e00-\u9fa5\u30a0-\u30ff\u3040-\u309f\u4e00–\u9fcf]*)\s*")
+CATEGORY_FILTER_PATTERN = re.compile(r'[^\-\w\d]+')
+# 获取文章的标签
+TAGS_ARRAY_PATTERN = re.compile(
+    r"tags:\ *\[([\w\d\ \-.\"',/\u4e00-\u9fa5\u30a0-\u30ff\u3040-\u309f\u4e00–\u9fcf]*)\]\s*")
+# 文章标签过滤规则
 TAGS_WHITESPACE_PATTERN = re.compile(r"(?:,+\s*)")  # 去除逗号后面多余的空格
-TAGS_FILTER_PATTERN = re.compile(r"[^\w\d\s\-,_]+")  # 去除无效字符
+TAGS_FILTER_PATTERN = re.compile(r"[^\w\d\ \-,]+")  # 去除无效字符

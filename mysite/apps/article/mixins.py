@@ -6,7 +6,7 @@ from django.utils.text import slugify
 from unidecode import unidecode
 
 
-class ArticleCleannedMixin:
+class ArticleCleanedMixin:
 
     def clean_data(self):
         if not self.slug:
