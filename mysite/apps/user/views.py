@@ -14,11 +14,6 @@ from .models import User
 
 from apps.mail.tasks import send_email  # noqa: isort:skip
 
-email_related = settings.EMAIL_RELATED
-reg_notification_file = email_related.get('REG_NOTIFICATION_FILE')
-pwd_change_notification_file = email_related.get(
-    'PWD_CHANGE_NOTIFICATION_FILE')
-
 
 def register(request):
     if request.method == 'POST':

@@ -1,34 +1,23 @@
 import random
+import string
 import uuid
 from pathlib import Path
 
 from django.conf import settings
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
-alpha_num = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+alpha_num = "".join((string.ascii_letters, string.digits))
 captcha_base_dir = settings.CAPTCHA_BASE_DIR
 
 
 class Captcha:
     def __init__(
-        self,
-        img_path=captcha_base_dir,
-        suffix="png",
-        size=(100, 35),
-        chars=alpha_num,
-        mode="RGB",
-        bg_color=(128, 128, 128),
-        fg_color=(141, 0, 255),
-        xy=None,
-        font_size=25,
-        font_type=None,
-        length=(4, 6),
-        draw_lines=True,
-        num_lines=(4, 6),
-        draw_points=True,
-        point_frequency=5,
-        draw_transform=False,
-    ):
+            self, img_path=captcha_base_dir, suffix="png",
+            size=(100, 35), chars=alpha_num, mode="RGB",
+            bg_color=(128, 128, 128), fg_color=(141, 0, 255), xy=None,
+            font_size=25, font_type=None, length=(4, 6), draw_lines=True,
+            num_lines=(4, 6), draw_points=True, point_frequency=5,
+            draw_transform=False,):
         """
         :type img_path:             str, 图片存储目录
         :type suffix:               str, 图片后缀

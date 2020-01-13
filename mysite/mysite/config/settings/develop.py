@@ -87,12 +87,6 @@ EMAIL_USE_TLS = False
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
-EMAIL_RELATED = {
-    "REG_NOTIFICATION_FILE": "notification",
-    "PWD_CHANGE_NOTIFICATION_FILE": "pwd_change",
-    "COMMENT_NOTIFICATION": "comment_notification_template",
-}
-
 # store csrftoke in the session
 CSRF_USE_SESSIONS = False
 # only sent with an HTTPS connection
