@@ -11,7 +11,7 @@ class ArticleAdmin(admin.ModelAdmin):
     list_display = ('title', 'article_preview', 'category', 'created_time')
     list_filter = ('created_time', 'user_view_times', 'page_view_times', )
     ordering = ('created_time', 'user_view_times', 'page_view_times', )
-    readonly_fields = ('user_view_times', 'page_view_times', )
+    readonly_fields = ('user_view_times', 'page_view_times', 'slug', )
     search_fields = ('title',)
     list_per_page = 15
 

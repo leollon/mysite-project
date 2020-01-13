@@ -9,8 +9,7 @@ from unidecode import unidecode
 class ArticleCleanedMixin:
 
     def clean_data(self):
-        if not self.slug:
-            self.slug = slugify(unidecode(self.title))[:100]
+        self.slug = slugify(unidecode(self.title))[:100]
         if not self.tags:
             self.tags = "untagged"
         else:

@@ -22,7 +22,7 @@ class Article(models.Model, ArticleCleanedMixin):
     article_body = models.TextField()
     created_time = models.DateTimeField(default=timezone.now)
     slug = models.SlugField(
-        max_length=100, null=True, unique=True, default=default_slug
+        max_length=100, unique=True, default=default_slug
     )
     user_view_times = models.PositiveIntegerField(default=0)
     page_view_times = models.PositiveIntegerField(default=0)
