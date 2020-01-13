@@ -5,15 +5,15 @@ from pathlib import Path
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
-from .common import (ALLOWED_CONTENT, AUTH_PASSWORD_VALIDATORS,  # noqa F401
-                     AUTH_USER_MODEL, AUTHENTICATION_BACKENDS, BASE_DIR,
-                     DATETIME_FORMAT_STRING, INSTALLED_APPS, LANGUAGE_CODE,
-                     MIDDLEWARE, NAME_PATTERN, PASSWORD_HASHERS, PER_PAGE,
-                     SESSION_CACHE_ALIAS, SESSION_ENGINE, SITE_ID,
-                     TAGS_ARRAY_PATTERN, TAGS_FILTER_PATTERN,
-                     TAGS_WHITESPACE_PATTERN, TEMPLATES, TIME_ZONE,
-                     TITLE_PATTERN, USE_I18N, USE_L10N, USE_TZ,
-                     WSGI_APPLICATION)
+from .common import (  # noqa: F401
+    ALLOWED_CONTENT, AUTH_PASSWORD_VALIDATORS, AUTH_USER_MODEL,
+    AUTHENTICATION_BACKENDS, BASE_DIR, CATEGORY_FILTER_PATTERN,
+    CATEGORY_PATTERN, DATETIME_FORMAT_STRING, DATETIME_PATTERN, INSTALLED_APPS,
+    LANGUAGE_CODE, MIDDLEWARE, PASSWORD_HASHERS, PER_PAGE, SESSION_CACHE_ALIAS,
+    SESSION_ENGINE, SITE_ID, TAGS_ARRAY_PATTERN, TAGS_FILTER_PATTERN,
+    TAGS_WHITESPACE_PATTERN, TEMPLATES, TIME_ZONE, TITLE_PATTERN, USE_I18N,
+    USE_L10N, USE_TZ, WSGI_APPLICATION,
+)
 
 SECRET_KEY = environ.get("SECRET_KEY")
 SERIALIZER_SALT = bytes(environ.get("SERIALIZER_SALT"), encoding='utf-8')
@@ -62,12 +62,12 @@ STATIC_URL = "/assets/"
 # for production deployed, use nginx to response static file requested
 STATIC_ROOT = (Path("/home/") / getuser() / "assets").as_posix()
 
-# Captcha's directory
-CAPTCHA_DIR = Path(Path(BASE_DIR).parent.parent) / "assets/images/captcha"
+# Captcha's directory# Captcha's directory
+CAPTCHA_BASE_DIR = (Path(Path(BASE_DIR).parent.parent) / "assets/images/captcha").as_posix()
 CAPTCHA_CACHED_TIME = 30 * 60  # in second
 
 # Here stores all static files
-STATICFILES_DIRS = [Path(BASE_DIR).parent.parent / "assets/", ]
+STATICFILES_DIRS = [(Path(BASE_DIR).parent.parent / "assets/").as_posix(), ]
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
@@ -78,13 +78,6 @@ EMAIL_ACCOUNT = {"EMAIL_HOST_USER": environ.get("EMAIL_USER"), "EMAIL_HOST_PASSW
 EMAIL_HOST = environ.get("EMAIL_HOST")
 EMAIL_PORT = environ.get("EMAIL_PORT")
 EMAIL_USE_TLS = True
-
-# Email message content template related
-EMAIL_RELATED = {
-    "REG_NOTIFICATION_FILE": "notification",
-    "PWD_CHANGE_NOTIFICATION_FILE": "pwd_change",
-    "COMMENT_NOTIFICATION": "comment_notification_template",
-}
 
 CSRF_USE_SESSIONS = False  # store csrftoke in the session
 CSRF_COOKIE_SECURE = False  # only sent with an HTTPS connection
@@ -118,8 +111,7 @@ LOG_LEVEL = "ERROR"
 
 
 def create_log_file():
-    if not (Path(BASE_DIR).parent.parent / "var/log").exists():
-        (Path(BASE_DIR).parent.parent / "var/log").mkdir(parents=True)
+    (Path(BASE_DIR).parent.parent / "var/log").mkdir(parents=True, exist_ok=True)
     (Path(BASE_DIR).parent.parent / "var/log" / "mysite.log").touch()
     return (Path(BASE_DIR).parent.parent / "var/log" / "mysite.log").as_posix()
 

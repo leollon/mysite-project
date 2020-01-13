@@ -1,22 +1,22 @@
-import os
 import random
+import string
 import uuid
 from pathlib import Path
 
 from django.conf import settings
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
-ALPHA_NUM = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-CAPATCHA_BASE = getattr(settings, "CAPTCHA_DIR")
+alpha_num = string.ascii_letters + string.digits
+captcha_base_dir = settings.CAPTCHA_BASE_DIR
 
 
 class Captcha:
     def __init__(
         self,
-        img_path=CAPATCHA_BASE,
+        img_path=captcha_base_dir,
         suffix="png",
         size=(100, 35),
-        chars=ALPHA_NUM,
+        chars=alpha_num,
         mode="RGB",
         bg_color=(128, 128, 128),
         fg_color=(141, 0, 255),
@@ -165,7 +165,7 @@ class Captcha:
             str(self._file_name).replace("-", ""),
             self._suffix,
         )
-        captcha_dir = Path(CAPATCHA_BASE)
+        captcha_dir = Path(captcha_base_dir)
         if not captcha_dir.exists():
             captcha_dir.mkdir(parents=True)
         file_path = captcha_dir / self._file_name

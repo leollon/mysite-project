@@ -1,5 +1,7 @@
 from django.conf import settings
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import (
+    LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin,
+)
 from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
@@ -7,16 +9,16 @@ from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.detail import SingleObjectTemplateResponseMixin
 from django.views.generic.edit import BaseCreateView, DeleteView, UpdateView
 from ipware.ip import get_real_ip
-
-from apps.comment.forms import CommentForm
-from apps.comment.models import Comment
 from utils import cache
 
 from .forms import CreateArticleForm, EditArticleForm
 from .models import Article
-from .tasks import increment_view_times
+from .tasks import increment_page_view_times, increment_user_view_times
 
-PER_PAGE = getattr(settings, "PER_PAGE")
+from apps.comment.forms import CommentForm  # noqa: isort:skip
+from apps.comment.models import Comment  # noqa: isort:skip
+
+PER_PAGE = settings.PER_PAGE
 
 
 class IndexView(ListView):
@@ -32,16 +34,21 @@ class IndexView(ListView):
         return super(IndexView, self).get(request, *args, **kwargs)
 
 
-class CreateArticleView(LoginRequiredMixin, SingleObjectTemplateResponseMixin, BaseCreateView):
+class CreateArticleView(
+        LoginRequiredMixin, PermissionRequiredMixin,
+        SingleObjectTemplateResponseMixin, BaseCreateView):
     """Class-based view function used to write an article
     """
 
     template_name = "article/editor.html"
     form_class = CreateArticleForm
     login_url = "/accounts/login/"
+    permission_required = ("article.add_article",)
 
     def dispatch(self, request, *args, **kwargs):
-        return super(CreateArticleView, self).dispatch(request, *args, **kwargs)
+        return super(CreateArticleView, self).dispatch(
+            request, *args, **kwargs
+        )
 
     def form_valid(self, form):
         """
@@ -54,7 +61,9 @@ class CreateArticleView(LoginRequiredMixin, SingleObjectTemplateResponseMixin, B
         return super(CreateArticleView, self).form_valid(form)
 
 
-class UpdateArticleView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class UpdateArticleView(
+        LoginRequiredMixin, PermissionRequiredMixin,
+        UserPassesTestMixin, UpdateView):
     """View function for editing a posted article
     """
 
@@ -96,7 +105,8 @@ class ArticleDetailView(DetailView, BaseCreateView):
         if ip not in visited_ips:
             visited_ips.add(ip)
             cache.set(self.object.slug, visited_ips, day)
-            increment_view_times.delay(article_id=self.object.id)
+            increment_user_view_times.delay(article_id=self.object.id)
+        increment_page_view_times.delay(article_id=self.object.id)
         context = self.get_context_data(object=self.object)
         comments = self.get_comment_list(request, *args, **kwargs)
         context.update({"comments": comments})
@@ -109,13 +119,16 @@ class ArticleDetailView(DetailView, BaseCreateView):
         return comments
 
 
-class DeleteArticleView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class DeleteArticleView(
+        LoginRequiredMixin, PermissionRequiredMixin,
+        UserPassesTestMixin, DeleteView):
     model = Article
     login_url = "account/login/"
     template_name = "article/article_confirm.html"
     success_url = reverse_lazy("article:manage")
     context_object_name = "article"
     permission_denied_message = "Permission Denied."
+    permission_required = ("article.delete_article", )
     raise_exception = True
 
     def test_func(self):
@@ -153,5 +166,8 @@ class TaggedArticleListView(ListView):
         return super(TaggedArticleListView, self).get(request, *args, **kwargs)
 
 
-class ArticleManagementView(LoginRequiredMixin, TemplateView):
+class ArticleManagementView(LoginRequiredMixin, PermissionRequiredMixin, TemplateView):
     template_name = "article/article_backend.html"
+    permission_required = (
+        "article.add_article", "article.view_article",
+        "article.change_article", "article.view_article")

@@ -523,10 +523,9 @@ img {
   padding: 8px 15px
 }
 .error404 {
-  text-align: center;
   font-size: 30px;
-  font-weight: 700;
-  color: green
+  font-weight: bolder;
+  color: #8b0000
 }
 .error404 > img {
   max-width: 80%;

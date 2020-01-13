@@ -11,13 +11,13 @@
 
   <link rel="icon" href="/assets/images/favicon.ico" type="image/icon">
   <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/icon">
-
   <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-
   <link href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <link href="/assets/css/simple-sidebar.min.css" rel="stylesheet">
-
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+  <script src="https://cdn.staticfile.org/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
   <title>{% block title %}{% endblock %}</title>
 </head>
@@ -51,14 +51,11 @@
         <li>
           <a href="{% url 'article:manage' %}">Articles</a>
         </li>
-        {% if user.is_superuser %}
         <li>
           <a href="{% url 'category:manage' %}">
             Categories
           </a>
-        </li>
-        {% endif %}
-        {% else %}
+        </li>{% else %}
         <li>
           <a href="{% url 'user:login' %}">SignIn</a>
         </li>
@@ -98,9 +95,6 @@
   <!-- /#wrapper -->
 
   {% block scripts %}
-  <script src="https://cdn.staticfile.org/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <!-- Menu Toggle Script -->
   <script>
     $("#menu-toggle").click(function (e) {
       e.preventDefault();

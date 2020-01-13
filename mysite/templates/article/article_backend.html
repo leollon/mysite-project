@@ -42,7 +42,7 @@
           <a href="{% url 'category:manage' %}">{{ article.category.name }}</a>
         </div>
       </td>
-      <td>{{ article.view_times }}</td>
+      <td>{{ article.user_view_times }}</td>
       <td>{{ article.created_time|date:"Y/m/d H:i:s O" }}</td>
     </tr>
     {% endfor %}

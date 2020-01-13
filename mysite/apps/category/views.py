@@ -1,17 +1,17 @@
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
+from django.utils.translation import gettext as _
 from django.views.generic import ListView
 
-from apps.article.models import Article
-
+from ..article.models import Article
 from .forms import CategoryForm
 from .models import ArticleCategory
 
-PER_PAGE = getattr(settings, 'PER_PAGE')
+per_page = settings.PER_PAGE
 
 
 class CategoryListView(ListView):
@@ -28,14 +28,17 @@ class CategorizeArticleListView(ListView):
     """Get all articles based on category name"""
     model = Article
     context_object_name = 'articles'
-    paginate_by = PER_PAGE
+    paginate_by = per_page
     template_name = 'category/article_categorized.html'
 
     def get_queryset(self):
-        queryset = super(CategorizeArticleListView, self).get_queryset()
-        category = ArticleCategory.objects.get(
-            name=self.kwargs.get('name', 'uncategorized'))
-        return queryset.filter(category=category)
+        name = self.kwargs.get('name', 'uncategoriezed')
+        try:
+            category = ArticleCategory.objects.get(name=name)
+        except ArticleCategory.DoesNotExist:
+            raise Http404(_(repr(name) + " not found"))
+        else:
+            return super(CategorizeArticleListView, self).get_queryset().filter(category=category)
 
     def get_context_data(self, **kwargs):
         context = dict()
@@ -46,6 +49,12 @@ class CategorizeArticleListView(ListView):
 
 
 @login_required
+@permission_required(
+    [
+        "category.add_articlecategory", "category.view_articlecategory",
+        "category.change_articlecategory", "category.delete_articlecategory"
+    ],
+    raise_exception=True)
 def manage_category(request):
     """Cagetory dashboard View
     response category dashboard, provide form, template
@@ -64,6 +73,9 @@ def manage_category(request):
 
 
 @login_required
+@permission_required(
+    ("category.add_articlecategory", "category.view_articlecategory"),
+    raise_exception=True)
 def add_category(request):
     """Add category view
     the desination of the datafrom submitted form, process form data
@@ -99,6 +111,9 @@ def add_category(request):
 
 
 @login_required
+@permission_required(
+    ("category.add_articlecategory", "category.view_articlecategory"),
+    raise_exception=True)
 def edit_category(request, name):
     """
     view function for changing category's name
@@ -137,6 +152,9 @@ def edit_category(request, name):
 
 
 @login_required
+@permission_required(
+    ("category.delete_articlecategory", "category.view_articlecategory"),
+    raise_exception=True)
 def delete_category(request, name):
     if request.method == 'POST':
         if request.user.is_superuser:

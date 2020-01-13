@@ -1,24 +1,28 @@
 import re
+import sys
 from datetime import datetime
 from pathlib import Path
+from typing import Generator, Iterator
 
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 from django.db import DataError, IntegrityError
+from django.utils.text import slugify
+from unidecode import unidecode
 
-from apps.article.models import Article
-from apps.category.models import ArticleCategory
-from apps.user.models import User
-from utils.primer import primer_generator
+from utils import primer_generator
 
-IMPORTED = 0
-REPLICA = 1
-ERROR = 2
+from .constans import Importation
+
+from apps.article.models import Article  # noqa: isort:skip
+from apps.category.models import ArticleCategory  # noqa: isort:skip
+from apps.user.models import User  # noqa: isort:skip
+
 
 try:
     author = User.objects.get(pk=1)
 except User.DoesNotExist:
-    author = User.objects.create_user(**getattr(settings, 'IMPORT_ARTICLE_USER'))
+    author = User.objects.create_superuser(**settings.IMPORT_ARTICLE_USER, is_valid=True)
 
 
 class Command(BaseCommand):
@@ -30,6 +34,9 @@ class Command(BaseCommand):
 
     def __init__(self, *args, **kwargs):
         super().__init__(force_color=True, *args, **kwargs)
+        self._warning = self.style.WARNING
+        self._success = self.style.SUCCESS
+        self._error = self.style.ERROR
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -41,7 +48,7 @@ class Command(BaseCommand):
             help="default: %s." % str(self.parent_dir / 'markdown')
         )
 
-    def handle(self, *args, **options):
+    def handle(self, *args, **options) -> None:
         settings.USE_TZ = False
         if not list(Path(options['dir']).iterdir()):
             raise CommandError(
@@ -54,94 +61,70 @@ class Command(BaseCommand):
                 group.send(file.as_posix())
         group.send(None)
         settings.USE_TZ = True
-
-    def line_handler(self, line):
-        """
-        Examples
-
-            >>> line = 'tags: [1, 2, 3]'
-            >>> Command().line_handler(line)
-            '1, 2, 3'
-
-            >>> line = 'title: hello-world'
-            >>> Command().line_handler(line)
-            'hello-world'
-        """
-        ret_val = line.partition(':')[-1].strip()
-        return ret_val
+        sys.stdout.close()
 
     @primer_generator
-    def grouper(self):
+    def grouper(self) -> Generator:
         while True:
             yield from self.read_from_md()
 
-    def read_from_md(self):
+    def read_from_md(self) -> Iterator:
         """
         Read content from markdown file into article model,
-        save the content in MySQL.
+        save the content in PostgreSQL.
         """
-        filepath = yield
-        article_body, tags = '', ''
-        date = datetime.now()
-        message, flag = '', ''
 
+        filepath = yield
         if filepath is None:
             return
-        title = re.sub(settings.TITLE_PATTERN, '-', filepath.split('/')[-1].split('.')[0])
-        try:
-            category = ArticleCategory.objects.get(pk=1)
-        except ArticleCategory.DoesNotExist:
-            category = ArticleCategory.objects.create(name="uncategorized")
+
+        message, flag = '', ''
+        slug = slugify(unidecode(filepath.split('/')[-1].split('.')[0]))
+        article_body, title = '', slug
+        category_name, tags, date = 'uncategorized', 'untagged', datetime.now()
+        category, _ = ArticleCategory.objects.get_or_create(name=category_name)
+
         with open(filepath, 'r') as fp:
             for line in fp.readlines():
                 if not line.startswith('---'):
                     if line.startswith('title'):
-                        continue
+                        title = re.search(settings.TITLE_PATTERN, line).group(1)
                     elif line.startswith('date'):
                         date = datetime.strptime(
-                            self.line_handler(line), settings.DATETIME_FORMAT_STRING)
-                    elif line.startswith('categories'):
-                        name = self.line_handler(line).strip("'")
-                        name = re.sub(settings.NAME_PATTERN, '', name)
-                        try:
-                            category = ArticleCategory.objects.get(name=name)
-                        except ArticleCategory.DoesNotExist:
-                            category = ArticleCategory(name=name)
-                            category.save()
+                            re.search(settings.DATETIME_PATTERN, line).group(1), settings.DATETIME_FORMAT_STRING)
+                    elif line.startswith('categories') or line.startswith('category'):
+                        result = re.search(settings.CATEGORY_PATTERN, line)
+                        if result:
+                            category, _ = ArticleCategory.objects.get_or_create(
+                                name=re.sub(settings.CATEGORY_FILTER_PATTERN, '-', result.group(1)))
                     elif line.startswith('tags'):
-                        tags_string = re.sub(
-                            settings.TAGS_ARRAY_PATTERN, '', self.line_handler(line)
-                        )
-                        tags_string = re.sub(
-                            settings.TAGS_WHITESPACE_PATTERN, ',', tags_string
-                        )
-                        tags = re.sub(
-                            settings.TAGS_FILTER_PATTERN, '', tags_string
-                        ).strip(',')
+                        tags = re.search(settings.TAGS_ARRAY_PATTERN, line).group(1)
+                        tags = re.sub(settings.TAGS_WHITESPACE_PATTERN, ',', tags)
+                        tags = re.sub(settings.TAGS_FILTER_PATTERN, '', tags).strip(',')
                     else:
                         article_body += line
 
             try:
-                article = Article.objects.create(
-                    title=title,
-                    article_body=article_body,
-                    category=category,
-                    author=author,
-                    tags=tags)
-                article.created_time = date
-                article.save()
-                message, flag = self.style.SUCCESS("Finish importing %s." % repr(filepath)), IMPORTED
+                Article.objects.create(
+                    title=title, article_body=article_body,
+                    category=category, author=author,
+                    tags=tags, slug=slug,
+                    created_time=date)
+                message = self._success("Finish importing %s." % repr(filepath))
+                flag = Importation.DONE
             except IntegrityError as e:
-                message, flag = self.style.WARNING("Article %s exists. message: %s" % (repr(title), e)), REPLICA
+                message = self._warning(
+                    "Article %s already exists. message: %s" % (repr(title), e))
+                flag = Importation.REPLICA
             except DataError as e:
-                message, flag = self.style.ERROR("Import %s Error, msessage: %s." % (repr(filepath), e)), ERROR
-                self.output_results(ERROR, message)
+                message = self._error(
+                    "Import %s Error, msessage: %s." % (repr(filepath), e))
+                flag = Importation.ERROR
             self.output_results(flag, message)
 
-    def output_results(self, flag, message):
-        if flag == REPLICA:
+    def output_results(self, flag: Importation, message: str) -> None:
+        if flag in (Importation.REPLICA, Importation.DONE):
             self.stdout.write(message)
-        elif flag == IMPORTED:
-            self.stdout.write(message)
-        elif flag == ERROR:
+        elif flag == Importation.ERROR.value:
             self.stderr.write(message)
+        sys.stdout.flush()

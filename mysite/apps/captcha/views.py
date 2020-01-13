@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.core.cache import cache
+from django.http import HttpResponseNotAllowed
 from django.http.response import JsonResponse
 from django.views.generic import View
 from django.views.generic.base import ContextMixin
@@ -10,7 +11,7 @@ captcha_cached_time = getattr(settings, "CAPTCHA_CACHED_TIME", 30 * 60)
 
 
 class CaptchaView(ContextMixin, View):
-    http_method_names = ["get"]
+    http_method_names = ("get",)
 
     def get(self, request, *args, **kwargs):
         captcha = Captcha()
@@ -27,12 +28,11 @@ class CaptchaView(ContextMixin, View):
         )
 
     def http_method_not_allowed(self, request, *args, **kwargs):
-        HTTP_405_METHOD_NOT_ALLOWED = 405
         return JsonResponse(
             {
                 "captchaImgPath": None,
                 "message": "Not allowed",
                 "resultStatus": 2,
             },
-            status=HTTP_405_METHOD_NOT_ALLOWED,
+            status=HttpResponseNotAllowed.status_code,
         )

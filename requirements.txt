@@ -8,6 +8,7 @@ django-ipware==2.1.0
 django-redis==4.10.0
 djangorestframework==3.9.1
 flake8==3.7.8
+flake8-bugbear==19.8.0
 flower==0.9.3
 gevent==1.4.0
 isort==4.3.4

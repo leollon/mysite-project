@@ -1,33 +1,31 @@
-import re
-import unicodedata
 import uuid
 
-from django.conf import settings
 from django.db import models
 from django.shortcuts import reverse
-from django.utils.text import slugify
-from unidecode import unidecode
+from django.utils import timezone
 
-from apps.category.models import ArticleCategory
-from apps.user.models import User
+from ..category.models import ArticleCategory
+from ..user.models import User
+from .mixins import ArticleCleanedMixin
 
 
 def default_slug():
     return str(uuid.uuid4())
 
 
-class Article(models.Model):
+class Article(models.Model, ArticleCleanedMixin):
     """
     an article model - control the way to access data in the database
     """
 
     title = models.CharField(max_length=256)
     article_body = models.TextField()
-    created_time = models.DateTimeField(auto_now_add=True)
+    created_time = models.DateTimeField(default=timezone.now)
     slug = models.SlugField(
         max_length=100, null=True, unique=True, default=default_slug
     )
-    view_times = models.PositiveIntegerField(default=0)
+    user_view_times = models.PositiveIntegerField(default=0)
+    page_view_times = models.PositiveIntegerField(default=0)
     category = models.ForeignKey(
         ArticleCategory, null=True, on_delete=models.SET_NULL
     )
@@ -42,15 +40,6 @@ class Article(models.Model):
     def save(self, *args, **kwargs):
         self.clean_data()
         super(Article, self).save(*args, **kwargs)
-
-    def clean_data(self):
-        self.slug = slugify(unidecode(self.title))
-        if not self.tags:
-            self.tags = "untagged"
-        else:
-            self.tags = re.sub(
-                settings.TAGS_FILTER_PATTERN, "", self.tags
-            ).strip(",")
 
     @staticmethod
     def get_absolute_url():

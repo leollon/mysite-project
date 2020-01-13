@@ -8,20 +8,17 @@ class CategoryForm(forms.Form):
     """
     error_messages = {'required': _("category name is required.")}
     name = forms.CharField(
-        max_length=64,
-        label='Name',
+        max_length=64, label='Name',
         widget=forms.TextInput(attrs={
             "class": 'form-control',
-            "placeholder": 'Category name'
-        }),
-        error_messages={'required': _('category name is '
-                                      'required.')})
+            "placeholder": 'Category name'}),
+        error_messages={'required': _('category name is required.')})
 
     # 用于初始化表单instance数据
-    def __int__(self, data=None, *args, **kwargs):
-        super(CategoryForm, self).__int__(data, args, kwargs)
+    def __int__(self, data, *args, **kwargs):
+        super(CategoryForm, self).__int__(data, *args, *kwargs)
 
-    def clean(self):
+    def clean_name(self):
         name = self.cleaned_data.get('name')
         if name == '' or name is None:
             raise forms.ValidationError(

@@ -24,7 +24,7 @@ from ..sitemaps import ArticleSiteMap
 sitemaps = {"Article": ArticleSiteMap}
 
 urlpatterns = [
-    url(r"^admin/", admin.site.urls),
+    url(r"^accounts/backstage/", admin.site.urls),
     url(r"", include("apps.article.urls")),
     url(r"categories/", include("apps.category.urls")),
     url(r"accounts/", include("apps.user.urls")),
