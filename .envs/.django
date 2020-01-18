@@ -10,3 +10,7 @@ EMAIL_ADDRESS=email@gmail.com
 EMAIL_PASSWORD=hahahah
 EMAIL_HOST=mailhog
 EMAIL_PORT=1025
+
+# Flower settings
+FLOWER_USER=flower
+FLOWER_PASSWORD=flower-password
