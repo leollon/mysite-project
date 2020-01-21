@@ -8,6 +8,5 @@ class HightlightRenderer(mistune.Renderer):
 
     def block_code(self, code, lang):
         if lang:
-            return '<pre class="block-code"><code>%s</code></pre>' % \
-                mistune.escape(code)
-        return '<pre><code>%s</code></pre>' % mistune.escape(code)
+            return '<pre><code class="%s">%s</code></pre>' % (lang, mistune.escape(code))
+        return '<pre><code class="plaintext">%s</code></pre>' % mistune.escape(code)

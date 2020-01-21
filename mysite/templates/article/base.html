@@ -21,6 +21,7 @@
     <link href="{% static 'css/clean-blog.css' %}" rel="stylesheet">
     <script src="{% static 'vendor/jquery/jquery.js' %}"></script>
     <script src="{% static 'vendor/bootstrap/js/bootstrap.js' %}"></script>
+    <script src="{% static 'vendor/highlight/highlight.min.js' %}"></script>
 </head>
 
 <body>
@@ -138,6 +139,7 @@
     </footer>
     {% block scripts %}
     <script src="{% static 'js/clean-blog.js' %}"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
     {% endblock %}
 
 </body>
