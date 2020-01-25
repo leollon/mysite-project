@@ -131,6 +131,7 @@ CELERY_BROKER_URL = "redis://redis:6379/1"
 # CELERY_RESULT_BACKEND = 'db+sqlite:///results.sqlite'
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
+CELERYD_POOL_RESTARTS = True
 timezone = TIME_ZONE
 
 # Logger: show more details
