@@ -167,3 +167,9 @@ TAGS_ARRAY_PATTERN = re.compile(
 # 文章标签过滤规则
 TAGS_WHITESPACE_PATTERN = re.compile(r"(?:,+\s*)")  # 去除逗号后面多余的空格
 TAGS_FILTER_PATTERN = re.compile(r"[^\w\d\ \-,]+")  # 去除无效字符
+
+DEFAULT_RENDERER_CLASSES = ['rest_framework.renderers.JSONRenderer', ]
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.CursorPagination',
+    'PAGE_SIZE': 100,
+}
