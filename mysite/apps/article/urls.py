@@ -1,6 +1,5 @@
 from django.conf.urls import url
 
-from .apis_v1 import ArticleAPIView
 from .views import (
     ArticleDetailView, ArticleListView, ArticleManagementView,
     CreateArticleView, DeleteArticleView, IndexView, TaggedArticleListView,
@@ -11,7 +10,6 @@ app_name = "article"
 
 urlpatterns = [
     url(r"^$", IndexView.as_view(), name="index"),
-    url(r"^articles/$", ArticleAPIView.as_view()),
     url(r"^archives/$", ArticleListView.as_view(), name="all"),
     url(
         r"^archives/(?P<slug>[\-\w]+)/$",

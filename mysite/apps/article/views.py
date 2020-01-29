@@ -9,17 +9,27 @@ from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.detail import SingleObjectTemplateResponseMixin
 from django.views.generic.edit import BaseCreateView, DeleteView, UpdateView
 from ipware.ip import get_real_ip
+from rest_framework import generics, mixins
 
 from utils import cache
 
+from ..pagination import CustomizedCursorPagination
 from .forms import CreateArticleForm, EditArticleForm
 from .models import Article
+from .serializers import ArticleModelSerializer
 from .tasks import increment_page_view_times, increment_user_view_times
 
 from apps.comment.forms import CommentForm  # noqa: isort:skip
 from apps.comment.models import Comment  # noqa: isort:skip
 
 PER_PAGE = settings.PER_PAGE
+
+
+class BaseArticleAPI(mixins.ListModelMixin, generics.GenericAPIView):
+
+    serializer_class = ArticleModelSerializer
+    pagination_class = CustomizedCursorPagination
+    http_method_names = ('get', 'options', )
 
 
 class IndexView(ListView):
@@ -181,3 +191,11 @@ class ArticleManagementView(LoginRequiredMixin, PermissionRequiredMixin, Templat
     permission_required = (
         "article.add_article", "article.view_article",
         "article.change_article", "article.view_article")
+
+
+class ArticleAPIView(BaseArticleAPI):
+
+    queryset = Article.objects.all()
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)

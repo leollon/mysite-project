@@ -26,6 +26,7 @@ sitemaps = {"Article": ArticleSiteMap}
 urlpatterns = [
     url(r"^accounts/backstage/", admin.site.urls),
     url(r"", include("apps.article.urls")),
+    url(r"^api/v1/", include("mysite.config.urls.apis_v1")),
     url(r"categories/", include("apps.category.urls")),
     url(r"accounts/", include("apps.user.urls")),
     url(r"comment/", include("apps.comment.urls")),
