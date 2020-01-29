@@ -2,14 +2,14 @@ from django.db import models
 from django.urls import reverse
 
 from ..article.models import Article
+from ..model_base import MyModelBase
 
 
-class Comment(models.Model):
+class Comment(MyModelBase):
     username = models.CharField(max_length=32)
     email = models.EmailField(max_length=32, blank=True)
     link = models.URLField(max_length=32, blank=True)
     comment_text = models.TextField(max_length=256)
-    created_time = models.DateTimeField(auto_now=True, null=True)
     post = models.ForeignKey(Article, on_delete=models.CASCADE)
 
     def __str__(self):

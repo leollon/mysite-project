@@ -1,15 +1,15 @@
 from django.db import models
-from django.utils import timezone
+
+from ..model_base import MyModelBase
 
 
-class EmailRecord(models.Model):
+class EmailRecord(MyModelBase):
 
     username = models.CharField(max_length=16)
     mail_message = models.TextField()
     ip = models.GenericIPAddressField()
     mail_state = models.CharField(max_length=16)
     reason = models.TextField(blank=True)
-    created_time = models.DateTimeField(default=timezone.now)
 
     class Meta:
         db_table = "email_records"

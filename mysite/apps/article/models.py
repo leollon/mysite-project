@@ -2,25 +2,24 @@ import uuid
 
 from django.db import models
 from django.shortcuts import reverse
-from django.utils import timezone
 
 from ..category.models import ArticleCategory
+from ..model_base import MyModelBase
 from ..user.models import User
-from .mixins import ArticleCleanedMixin
+from .mixins import ArticleCleanedMixins
 
 
 def default_slug():
     return str(uuid.uuid4())
 
 
-class Article(models.Model, ArticleCleanedMixin):
+class Article(ArticleCleanedMixins, MyModelBase):
     """
     an article model - control the way to access data in the database
     """
 
     title = models.CharField(max_length=256)
     article_body = models.TextField()
-    created_time = models.DateTimeField(default=timezone.now)
     slug = models.SlugField(
         max_length=100, unique=True, default=default_slug
     )

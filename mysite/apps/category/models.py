@@ -2,14 +2,14 @@ import re
 
 from django.conf import settings
 from django.db import models
-from django.utils import timezone
+
+from ..model_base import MyModelBase
 
 
-class ArticleCategory(models.Model):
+class ArticleCategory(MyModelBase):
     """each article category"""
 
     name = models.CharField(max_length=64, blank=False, unique=True)
-    created_time = models.DateTimeField(null=True, default=timezone.now)
 
     def count_number(self):
         return self.article_set.count()
