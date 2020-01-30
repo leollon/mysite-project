@@ -1,15 +1,20 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required, permission_required
 from django.db import IntegrityError
+from django.db.models import Q
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.utils.translation import gettext as _
 from django.views.generic import ListView
+from rest_framework import generics, mixins
 
 from ..article.models import Article
+from ..article.serializers import ArticleModelSerializer
+from ..pagination import CustomizedCursorPagination
 from .forms import CategoryForm
 from .models import ArticleCategory
+from .serializers import ArticleCategoryModelSerializer
 
 per_page = settings.PER_PAGE
 
@@ -44,8 +49,35 @@ class CategorizeArticleListView(ListView):
         context = dict()
         context['category'] = ArticleCategory.objects.get(
             name=self.kwargs.get('name', 'uncategorized'))
-        return super(CategorizeArticleListView, self).get_context_data(
-            **context)
+        return super(CategorizeArticleListView, self).get_context_data(**context)
+
+
+class ArticleCategoryAPIView(
+        mixins.ListModelMixin,
+        generics.GenericAPIView):
+
+    serializer_class = ArticleCategoryModelSerializer
+    http_method_names = ('get', 'options',)
+    queryset = ArticleCategory.objects.all()
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+
+class CategorizedArticleAPIView(mixins.ListModelMixin, generics.GenericAPIView):
+
+    serializer_class = ArticleModelSerializer
+    http_method_names = ('get', 'options', )
+    pagination_class = CustomizedCursorPagination
+    lookup_field = lookup_url_kwargs = 'name'
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def get_queryset(self):
+        name = self.kwargs.get(self.lookup_url_kwargs)
+        queryset = Article.objects.filter(Q(category__name=name))
+        return queryset
 
 
 @login_required
