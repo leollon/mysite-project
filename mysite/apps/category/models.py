@@ -3,7 +3,7 @@ import re
 from django.conf import settings
 from django.db import models
 
-from ..model_base import MyModelBase
+from apps.core import MyModelBase  # noqa: isort:skip
 
 
 class ArticleCategory(MyModelBase):

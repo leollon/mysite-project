@@ -1,6 +1,6 @@
 from django.db import models
 
-from ..model_base import MyModelBase
+from apps.core import MyModelBase  # noqa: isort:skip
 
 
 class EmailRecord(MyModelBase):

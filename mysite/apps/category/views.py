@@ -7,14 +7,15 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.utils.translation import gettext as _
 from django.views.generic import ListView
-from rest_framework import generics, mixins
+from rest_framework import generics
 
 from ..article.models import Article
 from ..article.serializers import ArticleModelSerializer
-from ..pagination import CustomizedCursorPagination
 from .forms import CategoryForm
 from .models import ArticleCategory
 from .serializers import ArticleCategoryModelSerializer
+
+from apps.core import CustomizedCursorPagination  # noqa: isort:skip
 
 per_page = settings.PER_PAGE
 
@@ -52,27 +53,19 @@ class CategorizeArticleListView(ListView):
         return super(CategorizeArticleListView, self).get_context_data(**context)
 
 
-class ArticleCategoryAPIView(
-        mixins.ListModelMixin,
-        generics.GenericAPIView):
+class ArticleCategoryAPIView(generics.ListAPIView):
 
     serializer_class = ArticleCategoryModelSerializer
     http_method_names = ('get', 'options',)
     queryset = ArticleCategory.objects.all()
 
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
 
-
-class CategorizedArticleAPIView(mixins.ListModelMixin, generics.GenericAPIView):
+class CategorizedArticleAPIView(generics.ListAPIView):
 
     serializer_class = ArticleModelSerializer
     http_method_names = ('get', 'options', )
     pagination_class = CustomizedCursorPagination
     lookup_field = lookup_url_kwargs = 'name'
-
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
 
     def get_queryset(self):
         name = self.kwargs.get(self.lookup_url_kwargs)

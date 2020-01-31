@@ -4,9 +4,10 @@ from django.db import models
 from django.shortcuts import reverse
 
 from ..category.models import ArticleCategory
-from ..model_base import MyModelBase
 from ..user.models import User
 from .mixins import ArticleCleanedMixins
+
+from apps.core import MyModelBase  # noqa: isort:skip
 
 
 def default_slug():

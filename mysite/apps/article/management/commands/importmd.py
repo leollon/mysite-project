@@ -9,12 +9,11 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db import DataError, IntegrityError
 from django.utils.text import slugify
 from unidecode import unidecode
-
 from utils import primer_generator
 
-from .constans import Importation
+from ....article.models import Article
+from .constants import Importation
 
-from apps.article.models import Article  # noqa: isort:skip
 from apps.category.models import ArticleCategory  # noqa: isort:skip
 from apps.user.models import User  # noqa: isort:skip
 

@@ -9,23 +9,23 @@ from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.detail import SingleObjectTemplateResponseMixin
 from django.views.generic.edit import BaseCreateView, DeleteView, UpdateView
 from ipware.ip import get_real_ip
-from rest_framework import generics, mixins
+from rest_framework import generics
 
 from utils import cache
 
-from ..pagination import CustomizedCursorPagination
 from .forms import CreateArticleForm, EditArticleForm
 from .models import Article
 from .serializers import ArticleModelSerializer
 from .tasks import increment_page_view_times, increment_user_view_times
 
+from apps.core import CustomizedCursorPagination  # noqa: isort:skip
 from apps.comment.forms import CommentForm  # noqa: isort:skip
 from apps.comment.models import Comment  # noqa: isort:skip
 
 PER_PAGE = settings.PER_PAGE
 
 
-class BaseArticleAPI(mixins.ListModelMixin, generics.GenericAPIView):
+class BaseArticleAPI(generics.ListAPIView):
 
     serializer_class = ArticleModelSerializer
     pagination_class = CustomizedCursorPagination

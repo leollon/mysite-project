@@ -5,9 +5,8 @@ from typing import Generator, Tuple
 from django.core.management.base import BaseCommand
 from utils import primer_generator
 
-from .constans import Exportation
-
-from apps.article.models import Article  # noqa: isort:skip
+from ....article.models import Article
+from .constants import Exportation
 
 
 class Command(BaseCommand):

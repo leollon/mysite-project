@@ -2,7 +2,8 @@ from django.db import models
 from django.urls import reverse
 
 from ..article.models import Article
-from ..model_base import MyModelBase
+
+from apps.core import MyModelBase  # noqa: isort:skip
 
 
 class Comment(MyModelBase):
