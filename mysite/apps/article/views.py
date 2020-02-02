@@ -1,11 +1,15 @@
+from collections import Counter, OrderedDict
+
 from django.conf import settings
 from django.contrib.auth.mixins import (
     LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin,
 )
 from django.core.paginator import Paginator
-from django.http import HttpResponseRedirect
+from django.db.models import Q
+from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView, TemplateView
+from django.views.generic.base import View
 from django.views.generic.detail import SingleObjectTemplateResponseMixin
 from django.views.generic.edit import BaseCreateView, DeleteView, UpdateView
 from ipware.ip import get_real_ip
@@ -199,3 +203,32 @@ class ArticleAPIView(BaseArticleAPI):
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
+
+
+class TaggedArticleListAPIView(BaseArticleAPI):
+    """Get all article belonging to a specified tag
+    """
+
+    lookup_field = lookup_url_kwargs = 'tag'
+
+    def get_queryset(self):
+
+        queryset = Article.objects.filter(Q(tags__icontains=self.kwargs.get(self.lookup_url_kwargs)))
+        return queryset
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+
+class TagsListAPIView(View):
+    """Get all tags"""
+
+    http_method_names = ('get', 'options', )
+
+    def get(self, request, *args, **kwargs):
+
+        tags_str_list = Article.objects.values_list('tags', flat=True)
+        tags_counter = Counter()
+        for tag_str in tags_str_list:
+            tags_counter.update(tag_str.split(','))
+        return JsonResponse(OrderedDict([('tags', tags_counter), ('count', len(tags_counter.keys())), ]))
