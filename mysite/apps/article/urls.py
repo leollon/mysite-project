@@ -1,9 +1,7 @@
 from django.conf.urls import url
 
 from .views import (
-    ArticleDetailView, ArticleListView, ArticleManagementView,
-    CreateArticleView, DeleteArticleView, IndexView, TaggedArticleListView,
-    UpdateArticleView,
+    ArticleDetailView, ArticleListView, IndexView, TaggedArticleListView,
 )
 
 app_name = "article"
@@ -18,23 +16,5 @@ urlpatterns = [
     ),
     url(
         r"tag/(?P<tag>[\-\w\s]+)/$", TaggedArticleListView.as_view(), name="tag"
-    ),
-]
-
-# urlpatterns used by backend
-urlpatterns += [
-    url(
-        r"articles/dashboard/$", ArticleManagementView.as_view(), name="manage"
-    ),
-    url(r"^new/articles/$", CreateArticleView.as_view(), name="write"),
-    url(
-        r"^edit/articles/(?P<slug>[\-\w]+)/$",
-        UpdateArticleView.as_view(),
-        name="edit",
-    ),
-    url(
-        r"delete/articles/(?P<slug>[\-\w]+)/$",
-        DeleteArticleView.as_view(),
-        name="delete",
     ),
 ]

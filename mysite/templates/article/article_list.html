@@ -1,4 +1,16 @@
 {% load article_tags %}
+{% if category %}
+<blockquote id="category-header">
+    有<span class="badge">{{ category.article_set.count }}</span>篇文章属于<strong>
+        <div class="label label-primary">
+            <span class="fa fa-folder-open">
+                {{ category.name }}
+            </span>
+        </div>
+    </strong>
+    分类：
+</blockquote>
+{% endif %}
 {% for article in articles %}
 {% split_tags article.tags as tags %}
 <div class="post-preview">

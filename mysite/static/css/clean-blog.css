@@ -587,13 +587,18 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
 }
 
 .post-preview,
+.article-body,
+#category-header {
+  margin-top: 20px;
+}
+
+.post-preview,
 .article-body {
   /* 边框阴影 */
   -webkit-box-shadow: 0 0 5px #ccc;
   -moz-box-shadow: 0 0 5px #ccc;
   border: 0;
   border-radius: 0;
-  margin-top: 20px;
   padding: 2px 20px 10px 20px;
   box-shadow: 0 0 5px #0f3741;
   word-break: break-word;

@@ -2,6 +2,7 @@ import bleach
 from django.conf import settings
 from django.template.defaultfilters import stringfilter
 from django.template.library import Library
+
 # import customized module
 from utils import cache
 
@@ -39,15 +40,6 @@ def md(text):
     return markdown(text)
 
 
-@register.simple_tag(name="article_numbers")
-def count_article(user):
-    """
-    count the number of article
-    :return: article number
-    """
-    return Article.objects.filter(author=user).count()
-
-
 @register.simple_tag(name="newest_articles")
 def newest_post(user):
     """
@@ -56,15 +48,6 @@ def newest_post(user):
     :return: article list
     """
     return Article.objects.filter(author=user)[:10]
-
-
-@register.simple_tag(name="all_articles")
-def all_article(user):
-    """
-    get all of user's articles from article table
-    :return:  all of articles
-    """
-    return Article.objects.filter(author=user).order_by("-created_time").all()
 
 
 @register.simple_tag(name="split_tags")

@@ -41,15 +41,9 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="list-in-navbar-to-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    {% if user.is_authenticated %}
                     <li>
-                        <a href="{% url 'user:dashboard' %}">dashboard</a>
+                        <a href="{% url 'admin:login' %}">backstage</a>
                     </li>
-                    {% else %}
-                    <li>
-                        <a href="{% url 'user:login' %}">backend</a>
-                    </li>
-                    {% endif %}
                     <li>
                         <a href="{% url 'article:all' %}">archives</a>
                     </li>
