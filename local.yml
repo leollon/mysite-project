@@ -64,6 +64,22 @@ services:
       - postgres
       - redis
       - mailhog
+  
+  frontend:
+    image: mysite/frontend
+    build:
+      context: .
+      dockerfile: ./compose/frontend/Dockerfile
+    entrypoint: /entrypoint
+    command: /start
+    volumes:
+      - ./frontend:/frontend
+    networks:
+      - blog-net
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      - web
 
 networks:
   blog-net:
