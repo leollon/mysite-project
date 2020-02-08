@@ -41,6 +41,11 @@ class IndexView(ListView):
     def get(self, request, *args, **kwargs):
         return super(IndexView, self).get(request, *args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+        context['category'] = ''
+        return context
+
 
 class ArticleListView(ListView):
     template_name = "article/all_articles.html"
@@ -97,6 +102,11 @@ class TaggedArticleListView(ListView):
 
     def get(self, request, *args, **kwargs):
         return super(TaggedArticleListView, self).get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(TaggedArticleListView, self).get_context_data(**kwargs)
+        context['category'] = ''
+        return context
 
 
 class ArticleListAPIView(BaseArticleAPI):
