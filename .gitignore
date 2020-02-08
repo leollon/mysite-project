@@ -18,3 +18,5 @@ data
 captcha
 markdown
 .mypy_cache
+*/.next
+*/package-lock.json

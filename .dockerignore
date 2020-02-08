@@ -12,7 +12,8 @@ docker-compose*
 .idea
 */node_modules
 */__pycache__
-*/package*
+*/.next
+*/package-lock.json
 */gulpfile.js
 */setup.cfg
 */README.md
