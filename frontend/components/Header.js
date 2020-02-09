@@ -5,13 +5,19 @@ const linkStyle = {
 };
 
 const Header = () => (
-    <div>
-        <Link href="/">
-            <a>Hom3</a>
-        </Link>
-        <Link href="/about">
-            <a>AboutMe</a>
-        </Link>
+    <div style={linkStyle}>
+        <ul>
+            <li key="home">
+                <Link href="/">
+                    <a>Hom3</a>
+                </Link>
+            </li>
+            <li key="about">
+                <Link href="/about">
+                <a>AboutMe</a>
+                </Link>
+            </li>
+        </ul>
     </div>
 );
 

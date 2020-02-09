@@ -1,13 +1,23 @@
 import useSWR from 'swr';
+import fetch from 'isomorphic-unfetch';
 import { useRouter } from 'next/router';
-// import Link from 'next/link';
-import List from '../components/PostList';
+import ArticleList from '../components/Post';
 
-
-let fetcher = url => {
-    return fetch(url).then(r => r.json());
+function checkStatus(response) {
+    if (response.ok) {
+        return response;
+    } else {
+        var error = new Error(response.statusText);
+        error.response = response;
+        return Promise.reject(error);
+    }
 };
 
+let fetcher = url => {
+    return fetch(url)
+        .then(checkStatus)
+        .then(r => r.json());
+};
 
 export default function Index() {
 
@@ -20,8 +30,8 @@ export default function Index() {
     if (!data) { data = { results: [{ title: 'hello world', slug: 'slug', }] } };
 
     return (
-        <main className="center">
-            <List articles={data.results} />
-        </main>
+        <div className="center">
+            <ArticleList articles={data.results} />
+        </div>
     );
 };
