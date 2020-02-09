@@ -12,8 +12,7 @@ class CustomizedCursorPagination(pagination.CursorPagination):
 
     def get_paginated_response(self, data):
         return Response(OrderedDict([
-            ('next', self.get_next_link()),
-            ('previous', self.get_previous_link()),
-            ('count', len(data)),
             ('results', data),
+            ('count', len(data)),
+            ('links', OrderedDict([('next', self.get_next_link()), ('previous', self.get_previous_link())])),
         ]))
