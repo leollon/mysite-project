@@ -5,16 +5,16 @@ const linkStyle = {
 };
 
 const Header = () => (
-    <div style={linkStyle}>
+    <div>
         <ul>
             <li key="home">
                 <Link href="/">
-                    <a>Hom3</a>
+                    <a style={linkStyle}>Home</a>
                 </Link>
             </li>
             <li key="about">
                 <Link href="/about">
-                <a>AboutMe</a>
+                <a style={linkStyle}>AboutMe</a>
                 </Link>
             </li>
         </ul>
