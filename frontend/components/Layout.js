@@ -1,3 +1,5 @@
+// components/Layout.js
+
 import Header from './Header';
 
 const layoutStyle = {
@@ -6,11 +8,14 @@ const layoutStyle = {
     border: '1px solid #DDD'
 };
 
+
 const Layout = function (props) {
     return (
         <div style={layoutStyle}>
             <Header />
-            {props.children}
+            <div className="center">
+                {props.children}
+            </div>
         </div>
     )
 };

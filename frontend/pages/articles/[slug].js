@@ -1,3 +1,5 @@
+// pages/articles/[slug].js
+
 import Markdown from 'react-markdown';
 import fetch from 'isomorphic-unfetch';
 import Layout from '../../components/Layout';
