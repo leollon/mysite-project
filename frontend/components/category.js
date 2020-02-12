@@ -1,13 +1,14 @@
-// components/Category.js
+// components/category.js
 
+import React from 'react';
 import Link from 'next/link';
+import PropTypes from 'prop-types'
 
-
-export default CategoryList = (props) => {
+export default function CategoryList(props) {
     return (
         <ul>
             {props.categories.map(category => (
-                <li>
+                <li key={category.name}>
                     <Link href="/categories/[name]" as={`/categories/${category.name}`}>
                         <a>{category.name}</a>
                     </Link>
@@ -16,4 +17,8 @@ export default CategoryList = (props) => {
             }
         </ul>
     );
-};
+}
+
+CategoryList.propTypes = {
+    categories: PropTypes.object.isRequired
+}
