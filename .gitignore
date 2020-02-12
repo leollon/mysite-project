@@ -19,4 +19,4 @@ captcha
 markdown
 .mypy_cache
 */.next
-*/package-lock.json
+**/package-lock.json

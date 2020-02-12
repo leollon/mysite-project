@@ -5,7 +5,8 @@ LABEL Name=mysite/frontend Version=1.0.0
 WORKDIR /
 
 COPY ./frontend/package.json ./
-RUN npm install --registry=https://registry.npm.taobao.org
+RUN npm config set registry https://registry.npm.taobao.org
+RUN npm install
 RUN npx next telemetry disable
 
 FROM node-alpine
