@@ -5,12 +5,14 @@ from .article.views import (
     TagsListAPIView,
 )
 from .category.views import ArticleCategoryAPIView, CategorizedArticleAPIView
+from .comment.views import CommentListAPIView
 
 urlpatterns = [
     url(r"articles/(?P<slug>[\-\w]+)/$", ArticleDetailAPIView.as_view()),
     url(r"tags/(?P<tag>[\-\w\ ]+)/$", TaggedArticleListAPIView.as_view()),
     url(r"categories/(?P<name>[\-\w\ ]+)/$", CategorizedArticleAPIView.as_view()),
-    url(r"tags/", TagsListAPIView.as_view()),
-    url(r"articles/", ArticleListAPIView.as_view()),
+    url(r"tags/$", TagsListAPIView.as_view()),
+    url(r"articles/$", ArticleListAPIView.as_view()),
     url(r"categories/$", ArticleCategoryAPIView.as_view()),
+    url(r"articles/(?P<slug>[\-\w]+)/comments/$", CommentListAPIView.as_view()),
 ]

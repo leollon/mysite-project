@@ -1,16 +1,20 @@
 from django.conf import settings
 from django.core.cache import cache
+from django.db.models import Q
 from django.http import HttpResponseNotFound
 from django.http.response import JsonResponse
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.views.generic import CreateView
+from rest_framework import generics
 
 from .forms import CommentForm
 from .models import Comment
+from .serializers import CommentModelSerializer
 
 from apps.article.models import Article  # noqa: isort:skip
 from apps.mail.tasks import send_email  # noqa: isort:skip
+from apps.core import CustomizedCursorPagination  # noqa: isort:skip
 
 email = settings.EMAIL_HOST_USER
 
@@ -52,3 +56,20 @@ class CreateCommentView(CreateView):
 
     def http_method_not_allowed(self, request, *args, **kwargs):
         return TemplateResponse(request, template=self.template_name)
+
+
+class CommentListAPIView(generics.ListAPIView):
+
+    http_method_names = ('get', 'options', )
+    lookup_filed = lookup_url_kwargs = 'slug'
+
+    serializer_class = CommentModelSerializer
+    pagination_class = CustomizedCursorPagination
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def get_queryset(self):
+        slug = self.kwargs.get(self.lookup_filed)
+        queryset = Comment.objects.filter(Q(post__slug=slug))
+        return queryset
