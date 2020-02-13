@@ -25,7 +25,7 @@ export default function PageList(props) {
         </li>}
       {next && 
         <li key={next}>
-          <Link href={`${next}`}>
+        <Link href={next} as={`${next}`}>
             <a>next</a>
           </Link>
         </li>}
@@ -35,6 +35,4 @@ export default function PageList(props) {
 
 PageList.propTypes = {
     links: PropTypes.object.isRequired,
-    'links.previous': PropTypes.string.isRequired,
-    'links.next': PropTypes.string.isRequired
 }
