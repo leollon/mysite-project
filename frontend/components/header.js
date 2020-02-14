@@ -1,6 +1,7 @@
 // components/header.js
 
 import React from 'react';
+import Head from 'next/head';
 import Link from 'next/link';
 
 const linkStyle = {
@@ -10,6 +11,9 @@ const linkStyle = {
 
 const Header = () => (
   <div>
+    <Head>
+      <link href="/static/css/blog.css" rel="stylesheet" type="text/css" />
+    </Head>
     <nav>
         <Link href="/">
           <a style={linkStyle}>Home</a>
