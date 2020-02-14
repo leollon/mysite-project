@@ -89,13 +89,12 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 # store csrftoke in the session
 CSRF_USE_SESSIONS = False
+# csrftoken is allowed to be read by JS in console.
+CSRF_COOKIE_HTTPONLY = False
 # only sent with an HTTPS connection
 CSRF_COOKIE_SECURE = False
-# csrftoken is not allowed to be read by JS in console.
-CSRF_COOKIE_HTTPONLY = True
 # in seconds, it's valid for seven days when under development
 CSRF_COOKIE_AGE = 7 * 24 * 60
-CSRF_USE_SESSIONS = True
 # in seconds
 SESSION_COOKIE_AGE = 604800
 # 'x-content-type-options: nosniff' header
