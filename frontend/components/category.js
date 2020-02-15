@@ -20,5 +20,5 @@ export default function CategoryList(props) {
 }
 
 CategoryList.propTypes = {
-    categories: PropTypes.object.isRequired
+    categories: PropTypes.array.isRequired
 }

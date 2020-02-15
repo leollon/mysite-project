@@ -21,5 +21,5 @@ export default function TagList(props) {
 
 
 TagList.propTypes = {
-    tags: PropTypes.object
+    tags: PropTypes.object.isRequired
 }

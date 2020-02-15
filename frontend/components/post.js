@@ -21,5 +21,5 @@ export default function ArticleList(props) {
 
 
 ArticleList.propTypes = {
-    articles: PropTypes.object.isRequired
+    articles: PropTypes.array.isRequired
 }
