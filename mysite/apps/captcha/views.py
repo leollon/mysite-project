@@ -2,6 +2,7 @@ from django.conf import settings
 from django.core.cache import cache
 from django.http import HttpResponseNotAllowed
 from django.http.response import JsonResponse
+from django.middleware.csrf import get_token
 from django.views.generic import View
 from django.views.generic.base import ContextMixin
 
@@ -24,6 +25,7 @@ class CaptchaView(ContextMixin, View):
                 "captchaImgPath": captcha_img_path,
                 "message": message,
                 "resultStatus": result_status,
+                "CSRFToken": get_token(request),
             }
         )
 
@@ -33,6 +35,7 @@ class CaptchaView(ContextMixin, View):
                 "captchaImgPath": None,
                 "message": "Not allowed",
                 "resultStatus": 2,
+                "CSRFToken": None,
             },
             status=HttpResponseNotAllowed.status_code,
         )

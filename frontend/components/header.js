@@ -4,28 +4,25 @@ import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 
-const linkStyle = {
-    marginRight: 15
-};
 
+const Header = (props) => (
 
-const Header = () => (
   <div>
     <Head>
-      <link href="/static/css/blog.css" rel="stylesheet" type="text/css" />
+      <link href="/static/css/blog.css" rel="stylesheet" type="text/css" media="screen" />
     </Head>
     <nav>
         <Link href="/">
-          <a style={linkStyle}>Home</a>
+          <a className="navigation">Home</a>
         </Link>
         <Link href="/categories">
-          <a style={linkStyle}>Categories</a>
+          <a className="navigation">Categories</a>
         </Link>
         <Link href="/tags">
-          <a style={linkStyle}>Tags</a>
+          <a className="navigation">Tags</a>
         </Link>
         <Link href="/about">
-          <a style={linkStyle}>AboutMe</a>
+          <a className="navigation">AboutMe</a>
         </Link>
     </nav>
   </div>

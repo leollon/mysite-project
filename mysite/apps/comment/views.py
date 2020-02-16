@@ -58,16 +58,13 @@ class CreateCommentView(CreateView):
         return TemplateResponse(request, template=self.template_name)
 
 
-class CommentListAPIView(generics.ListAPIView):
+class CommentListAPIView(generics.ListAPIView, generics.CreateAPIView):
 
-    http_method_names = ('get', 'options', )
+    http_method_names = ('get', 'post', 'options', )
     lookup_filed = lookup_url_kwargs = 'slug'
 
     serializer_class = CommentModelSerializer
     pagination_class = CustomizedCursorPagination
-
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
 
     def get_queryset(self):
         slug = self.kwargs.get(self.lookup_filed)

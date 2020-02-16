@@ -4,16 +4,10 @@ import React from 'react';
 import Header from './header';
 import PropTypes from 'prop-types'
 
-const layoutStyle = {
-    margin: 20,
-    padding: 20,
-    border: '1px solid #DDD'
-}
-
 
 const Layout = function (props) {
   return (
-    <div style={layoutStyle}>
+    <div className="root" id="root">
       <Header />
       <div className="center">
         {props.children}

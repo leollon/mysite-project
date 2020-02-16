@@ -8,9 +8,9 @@ export default function ArticleList(props) {
   return (
     <>
       <h1>My blog</h1>
-      <ul>
+      <ul id="article-list">
         {props.articles.map(article => (
-          <li key={article.title}>
+          <li key={article.title} className="article">
               <a href={`/articles/${article.slug}`}>{article.title}</a>
           </li>
           ))}

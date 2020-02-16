@@ -1,33 +1,29 @@
 // static/js/blog.js
 
-const csrfToken = getCookie('csrftoken');
-const commentSubmitButton = document.getElementById("#comment-submit-btn");
+const api_host = "http://dev.django.com"
+const commentSubmitButton = document.getElementById("comment-submit-btn");
 
-document.addEventListener('DOMContentLoaded', (event) => { setCaptcha();})
-document.getElementById('captcha').addEventListener('click', (event) => (setCaptcha()));
+document.addEventListener('DOMContentLoaded', (event) => { getCaptcha();})
+document.getElementById('captcha').addEventListener('click', (event) => (getCaptcha()));
+
+function getCaptcha() {
+  let xhRequest = new XMLHttpRequest();
+  xhRequest.onloadend = setCaptcha;
+  xhRequest.open("GET", api_host + "/refresh/captcha/", true);
+  xhRequest.send();
+}
 
 function setCaptcha() {
-  fetch("http://dev.django.com/refresh/captcha/")
-    .then((response) => { return response.json() })
-    .then((json) => {
-      document.getElementById("captcha").src =  'http://dev.django.com' + json.captchaImgPath;
-    });
+  const response = JSON.parse(this.responseText);
+  document.getElementById("captcha").src = api_host + response.captchaImgPath;
+  document.getElementById("csrftoken").value = response.CSRFToken;
 }
 
-function getCookie(name) {
-  var cookieValue = null;
-  if (document.cookie && document.cookie !== '') {
-    var cookies = document.cookie.split(';');
-    for (var i = 0; i < cookies.length; i++) {
-      var cookie = cookies[i].trim();
-      // Does this cookie string begin with the name we want?
-      if (cookie.substring(0, name.length + 1) === (name + '=')) {
-          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-          break;
-      }
-    }
-  }
-  return cookieValue;
-}
-
-
+commentSubmitButton.addEventListener('click', function (event) {
+  event.preventDefault();
+  let formData = new FormData(document.getElementById("comment-form"));
+  const xhRequest = new XMLHttpRequest();
+  xhRequest.onloadend = function (event) { window.location.reload(); };
+  xhRequest.open("POST", api_host + '/api/v1/articles/hello-world/comments/', true);
+  xhRequest.send(formData);
+})
