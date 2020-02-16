@@ -10,7 +10,7 @@ export default function CategoryList(props) {
             {props.categories.map(category => (
                 <li key={category.name}>
                     <Link href="/categories/[name]" as={`/categories/${category.name}`}>
-                        <a>{category.name}</a>
+                        <a>{category.name}<sup>{category.article_statistics}</sup></a>
                     </Link>
                     
                 </li>))

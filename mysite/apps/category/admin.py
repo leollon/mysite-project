@@ -4,7 +4,7 @@ from .models import ArticleCategory
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'count_number', 'created_time')
+    list_display = ('name', 'article_statistics', 'created_time')
     ordering = ('created_time', )
     list_per_page = 20
 

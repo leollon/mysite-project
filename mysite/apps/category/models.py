@@ -11,10 +11,13 @@ class ArticleCategory(MyModelBase):
 
     name = models.CharField(max_length=64, blank=False, unique=True)
 
-    def count_number(self):
+    @property
+    def article_statistics(self):
         return self.article_set.count()
 
-    count_number.short_description = 'article number'
+    @article_statistics.setter
+    def article_statistics(self, value):
+        raise NotImplementedError
 
     def __str__(self):
         return '%s' % self.name
