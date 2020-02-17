@@ -18,7 +18,7 @@ const Post = props => {
     >
       <h1>{props.article.title}</h1>
       <Markdown source={props.article.article_body} />
-      <Comments comments={props.comments} />
+      <Comments comments={props.comments} statistics={props.article.comment_statistics} />
       <script src="/static/js/blog.js" />
     </Layout>
   );

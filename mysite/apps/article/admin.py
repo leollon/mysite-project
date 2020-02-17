@@ -8,7 +8,7 @@ class ArticleAdmin(admin.ModelAdmin):
     """
         Article model should be editable in thd admin interface.
     """
-    list_display = ('title', 'article_preview', 'category', 'created_time')
+    list_display = ('title', 'article_preview', 'category', 'created_time', 'comment_statistics', )
     list_filter = ('created_time', 'user_view_times', 'page_view_times', )
     ordering = ('created_time', 'user_view_times', 'page_view_times', )
     readonly_fields = ('user_view_times', 'page_view_times', 'slug', )

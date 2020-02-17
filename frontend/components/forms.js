@@ -22,7 +22,7 @@ export default function CommentForm(props) {
             <input type="text" id="link" placeholder="Link" />
           </div>
           <div className="form-input">
-            <input type="text" id="captcha-input" placeholder="Captcha (required)" required /><span id="catcha-hint"> required</span>
+            <input type="text" id="captcha-input" name="captcha" placeholder="Captcha (required)" required /><span id="catcha-hint"> required</span>
             <p><img src="" alt="captcha" id="captcha" /></p>
           </div>
           <div className="form-input">

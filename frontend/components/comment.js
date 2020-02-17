@@ -7,11 +7,12 @@ import PageList from './pagination';
 
 
 export default function Comments(props) {
+  const statistics = props.statistics;
   const comments = props.comments.results;
-  const post_id = comments ? comments[0].post : '';
+  const post_id = comments[0] ? comments[0].post : '';
   return (
     <div>
-      <h3>Comment list</h3>
+      <h3>{statistics} Comment{statistics != 1 ? 's' : ''}</h3>
       <ul id="comment-list">
         {props.comments.results.map(comment => (
           <li className="comment" key={comment.username + comment.created_time}>

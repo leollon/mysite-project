@@ -8,6 +8,7 @@ class ArticleModelSerializer(serializers.ModelSerializer):
     category = serializers.CharField(source='category.name')
     author = serializers.CharField(source='author.username')
     created_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S %z")
+    comment_statistics = serializers.IntegerField()
 
     class Meta:
         model = Article

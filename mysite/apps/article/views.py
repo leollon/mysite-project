@@ -75,4 +75,5 @@ class TagsListAPIView(View):
         tags_counter = Counter()
         for tag_str in tags_str_list:
             tags_counter.update(tag_str.split(','))
-        return JsonResponse(OrderedDict([('tags', tags_counter), ('count', len(tags_counter.keys())), ]))
+        return JsonResponse(
+            OrderedDict([('tags', tags_counter), ('count', len(tags_counter.keys())), ]))

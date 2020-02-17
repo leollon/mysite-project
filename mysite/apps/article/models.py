@@ -34,6 +34,14 @@ class Article(ArticleCleanedMixins, MyModelBase):
         max_length=64, default="untagged", blank=True, help_text="使用逗号分隔"
     )
 
+    @property
+    def comment_statistics(self):
+        return self.comment_set.count()
+
+    @comment_statistics.setter
+    def comment_statistics(self, value):
+        raise NotImplementedError
+
     def __str__(self):
         return "%s" % self.title
 
