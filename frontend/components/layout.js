@@ -8,7 +8,10 @@ import PropTypes from 'prop-types'
 const Layout = function (props) {
   return (
     <div className="root" id="root">
-      <Header />
+      <Header
+        title={props.title}
+        description={props.description}
+      />
       <div className="center">
         {props.children}
       </div>
