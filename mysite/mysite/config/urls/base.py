@@ -26,9 +26,6 @@ sitemaps = {"Article": ArticleSiteMap}
 urlpatterns = [
     url(r"^accounts/backstage/", admin.site.urls),
     url(r"^api/v1/", include("apps.urls")),
-    url(r"", include("apps.article.urls")),
-    url(r"categories/", include("apps.category.urls")),
-    url(r"comment/", include("apps.comment.urls")),
     url(r"refresh/", include("apps.captcha.urls")),
     url(
         r"^sitemap\.xml$",

@@ -28,8 +28,8 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
-            Path(BASE_DIR).parent.parent.joinpath("templates/").as_posix(),
             Path(BASE_DIR).parent.parent.joinpath("mail_templates").as_posix(),
+            Path(BASE_DIR).parent.parent.joinpath("templates/").as_posix(),
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -89,51 +89,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-# Show the list in each page
-PER_PAGE = 6
-
-# In order to preventing XSS, it needs to set `ALLOWED_CONTENT`
-ALLOWED_CONTENT = {
-    "ALLOWED_TAGS": [
-        "blockquote",
-        "ul",
-        "li",
-        "ol",
-        "pre",
-        "code",
-        "p",
-        "h1",
-        "h2",
-        "h3",
-        "h4",
-        "h5",
-        "h6",
-        "a",
-        "q",
-        "section",
-        "img",
-        "table",
-        "thead",
-        "tbody",
-        "tr",
-        "th",
-        "td",
-        "br",
-    ],
-    "ALLOWED_ATTRIBUTES": {
-        "*": ["class", "style"],
-        "a": ["href"],
-        "img": ["src", "alt", "width", "height"],
-    },
-    "ALLOWED_STYLES": [
-        "color",
-        "background-image",
-        "background",
-        "font",
-        "text-align",
-    ],
-}
 
 # Customize User model
 AUTH_USER_MODEL = "user.User"
