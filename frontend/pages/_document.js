@@ -14,6 +14,8 @@ class CustomDocument extends Document {
       <Html lang="en">
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+
         <meta name="google-site-verification" content="" />
         
         <link rel="icon" type="image/x-icon" href="" />
@@ -24,14 +26,62 @@ class CustomDocument extends Document {
         <link rel="logo" type="image/svg" href="" />
         <link rel="preconnect" href="https://cdn.jsdelivr.net/" />
         
-        <link href="/static/css/blog.css" rel="stylesheet" type="text/css" media="screen" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
         
+        <link href="/static/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" />
+        <link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="/static/css/clean-blog.css" rel="stylesheet" type="text/css" media="screen" />
+        <script src="/static/vendor/jquery/jquery.js"></script>
+        <script src="/static/vendor/bootstrap/js/bootstrap.js"></script>
         <script async src="https://www.googletagmanager.com/gtag/js?id={GOOGLE ANALYTICS CODE}"></script>
         <title key="site-title">leollon的小站🤔</title>
 
         <Head />
         <body>
+
           <Main />
+
+          <hr />
+          <footer>
+            <div className="container">
+              <div className="row">
+                <div className="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                  <ul className="list-inline text-center">
+                    <li key="github">
+                      <a href="https://github.com/leollon">
+                        <span className="fa-stack fa-lg">
+                          <i className="fa fa-circle fa-stack-2x"></i>
+                          <i className="fa fa-github fa-stack-1x fa-inverse"></i>
+                        </span>
+                      </a>
+                    </li>
+                    <li key="creativecommons">
+                      <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/">
+                        <span className="fa-stack fa-lg">
+                          <i className="fa fa-circle fa-stack-2x"></i>
+                          <i className="fa fa-creative-commons fa-stack-1x fa-inverse"></i>
+                        </span>
+                      </a>
+                    </li>
+                  </ul>
+                  <p className="copyright text-muted">
+                    Copyright &copy; Leo's blog 2017
+                  </p>
+                  <p className="blog-arch text-muted">
+                    Powered by Django & Bootstrap
+                  </p>
+                  <p className="blog-arch text-muted">
+                    online_count
+                  </p>
+                  <p className="blog-arch text-muted">Response: response time</p>
+                </div>
+              </div>
+            </div>
+          </footer>
+          <script src="/static/js/clean-blog.js"></script>
+          <script>
+            hljs.initHighlightingOnLoad();
+          </script>
           <NextScript />
         </body>
       </Html>

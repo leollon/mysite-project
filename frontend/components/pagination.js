@@ -16,18 +16,16 @@ export default function PageList(props) {
   const previous = getCursor(props.links.previous);
   const next = getCursor(props.links.next);
   return (
-    <ul id="page-list">
+    <ul class="pager">
       {previous &&
-        <li key={previous} className="page">
+        <li class="previous">
           <Link href={previous} as={`${previous}`}>
-            <a>previous</a>
+            <a href={previous}>&larr; Newer Posts</a>
           </Link>
         </li>}
-      {next && 
-        <li key={next} className="page">
-        <Link href={next} as={`${next}`}>
-            <a>next</a>
-          </Link>
+      {next &&
+        <li class="next">
+          <a href={next}>Older Posts &rarr;</a>
         </li>}
     </ul>
   );
