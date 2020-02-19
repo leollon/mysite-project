@@ -9,29 +9,27 @@ import PageList from './pagination';
 export default function Comments(props) {
   const statistics = props.statistics;
   const comments = props.comments.results;
-  const post_id = comments[0] ? comments[0].post : '';
+  
   return (
-    <div>
-      <h3>{statistics} Comment{statistics != 1 ? 's' : ''}</h3>
+    <div className="comment-content" id="comments">
+      <p className="fa fa-comment"> {statistics} Comment{statistics != 1 ? 's' : ''}</p>
+      <hr id="underline" />
       <ul id="comment-list">
-        {props.comments.results.map(comment => (
-          <li className="comment" key={comment.username + comment.created_time}>
-            <div className="image-cropper">
-              <img src="/static/img/favicon.png" className="avatar" alt="avatar" />
-            </div>
-            <div className="comment-content">
-              <a href={comment.link ? comment.link : ''} className="author">
-                {comment.username + ' '}
-              </a>
-              <a href={'#' + comment.username} className="timestamp">
-                      @ {comment.created_time} :
-              </a>
-              <ReactMarkdown source={comment.comment_text} />
-            </div>
-          </li>))}
+        {comments.length ? (comments.map(comment => (
+        <li className="comment" key={comment.username + comment.created_time}>
+          <a href={comment.link ? comment.link : ''} className="username">{comment.username}</a>
+          <span className="timestamp"> @ 
+            <a href={'#' + comment.username}> {comment.created_time}
+            </a> :
+          </span>
+          <div className="comment-text">
+            <ReactMarkdown source={comment.comment_text} />
+          </div>
+          <span className="reply" data-commenter={comment.username}>Reply</span>
+        </li>))) : (<li className="empty comment" key="empty-comment">No Comments yet!</li>)}
       </ul>
       <PageList links={props.comments.links} />
-      <CommentForm post_id={post_id} />
+      <CommentForm slug={props.slug} post_id={props.id} />
     </div>
   );
 }

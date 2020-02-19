@@ -22,20 +22,20 @@ const Header = (props) => (
       <title key="site-title">{props.title ? props.title + ' | ' : ''}leollon的小站🤔</title>
     </Head>
 
-    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header page-scroll">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#list-in-navbar-to-collapse-1">
-            <span class="sr-only">Toggle navigation</span>
-            Menu <i class="fa fa-bars"></i>
+    <nav className="navbar navbar-default navbar-custom navbar-fixed-top">
+      <div className="container-fluid">
+        <div className="navbar-header page-scroll">
+          <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#list-in-navbar-to-collapse-1">
+            <span className="sr-only">Toggle navigation</span>
+            Menu <i className="fa fa-bars"></i>
           </button>
           <Link href="/">
-            <a class="navbar-brand">Home</a>
+            <a className="navbar-brand">Home</a>
           </Link>
         </div>
 
-        <div class="collapse navbar-collapse" id="list-in-navbar-to-collapse-1">
-          <ul class="nav navbar-nav navbar-right">
+        <div className="collapse navbar-collapse" id="list-in-navbar-to-collapse-1">
+          <ul className="nav navbar-nav navbar-right">
             <li>
                 <Link href="/categories">
                   <a>categories</a>
@@ -56,27 +56,20 @@ const Header = (props) => (
       </div>
     </nav>
 
-    <header class="intro-header">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-            <div class="site-heading">
+    <header className="intro-header">
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div className="site-heading">
                 <h1 key="head">{props.title ? props.title + ' | ' : ''}Tux</h1>
-              <hr class="small" />
-              <span class="subheading">KISS</span>
+              <hr className="small" />
+              <span className="subheading">KISS</span>
             </div>
           </div>
         </div>
       </div>
     </header>
-
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-          {props.children}
-        </div>
-      </div>
-    </div>
+    {props.children}
   </>
 )
 

@@ -12,10 +12,10 @@ class CustomDocument extends Document {
   render() {
     return (
       <Html lang="en">
-        <meta charset="UTF-8" />
+        <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-
+        <meta name="keywords" key="keywords" content="Python,Django,c,c++,Linux,backend,后端" />
         <meta name="google-site-verification" content="" />
         
         <link rel="icon" type="image/x-icon" href="" />
@@ -26,13 +26,16 @@ class CustomDocument extends Document {
         <link rel="logo" type="image/svg" href="" />
         <link rel="preconnect" href="https://cdn.jsdelivr.net/" />
         
-        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro&display=swap" rel="stylesheet"/> 
         
         <link href="/static/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" />
         <link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <link href="/static/css/clean-blog.css" rel="stylesheet" type="text/css" media="screen" />
         <script src="/static/vendor/jquery/jquery.js"></script>
         <script src="/static/vendor/bootstrap/js/bootstrap.js"></script>
+        <script src="/static/vendor/highlight/highlight.min.js"></script>
+
         <script async src="https://www.googletagmanager.com/gtag/js?id={GOOGLE ANALYTICS CODE}"></script>
         <title key="site-title">leollon的小站🤔</title>
 

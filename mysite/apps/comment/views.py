@@ -16,7 +16,7 @@ from apps.core import CustomizedCursorPagination  # noqa: isort:skip
 email = settings.EMAIL_HOST_USER
 
 
-class CommentListAPIView(generics.ListAPIView, generics.CreateAPIView):
+class ArticleCommentListAPIView(generics.ListAPIView, generics.CreateAPIView):
 
     http_method_names = ('get', 'post', 'options', )
     lookup_filed = lookup_url_kwargs = 'slug'
@@ -31,7 +31,9 @@ class CommentListAPIView(generics.ListAPIView, generics.CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         captcha_text = request.POST.get("captcha", None)
-        cached_captcha_text = cache.get(captcha_text, None)
+        cached_captcha_text = None
+        if captcha_text:
+            cached_captcha_text = cache.get(captcha_text.lower(), None)
         if not cached_captcha_text:
             return JsonResponse(
                 data={"message": "Invalid captcha", "status": 1},
@@ -56,4 +58,4 @@ class CommentListAPIView(generics.ListAPIView, generics.CreateAPIView):
             send_email.delay(
                 email=email, subject=subject, ip=ip,
                 template_name="comment/comment_mail_msg.tpl", context=context)
-        return super(CommentListAPIView, self).post(request, *args, **kwargs)
+        return super(ArticleCommentListAPIView, self).post(request, *args, **kwargs)

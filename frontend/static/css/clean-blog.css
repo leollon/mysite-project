@@ -4,6 +4,7 @@ body {
   color: #333333;
   margin: 0;
   padding: 0;
+  word-break: break-word;
 }
 
 p {
@@ -417,7 +418,7 @@ form .row:first-child .floating-label-form-group {
 }
 
 .pager {
-  margin: 20px 0 0;
+  margin: 20px 0 20px 0;
 }
 
 .pager li>a,
@@ -590,7 +591,7 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
 
 .post-preview,
 .article-body,
-#category-header {
+#sub-header {
   margin-top: 20px;
 }
 
@@ -603,7 +604,6 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   border-radius: 0;
   padding: 2px 20px 10px 20px;
   box-shadow: 0 0 5px #0f3741;
-  word-break: break-word;
 }
 
 .post-preview:hover,
@@ -615,6 +615,12 @@ p {
   margin: 0;
 }
 
+input,
+textarea,
+pre code {
+  font-family: 'Source Code Pro', monospace;
+}
+
 img {
   max-width: 90%;
   height: auto;
@@ -624,29 +630,15 @@ img {
 }
 
 #categories li,
-.article-categorized-list,
 .comment {
   list-style: none;
 }
 
-#article-table {
-  margin: 20px 0 15px;
+#categories li a:hover {
+  text-decoration: none;
+  color:white;
 }
 
-#title-header,
-#created-time-header {
-  text-transform: capitalize;
-}
-
-#title-header,
-#created-time-header,
-.title,
-.created-time {
-  padding: 0 !important;
-}
-
-
-.article-categorized-list,
 .empty {
   text-align: center;
 }
@@ -663,8 +655,22 @@ img {
   font-size: 14px !important;
 }
 
+.article-extra span {
+  margin-right: 5px;
+}
+
+h1,
+.username {
+  text-transform: capitalize;
+}
+
 #eof {
   text-align: center;
+}
+
+.comment-form-input {
+  margin: 0;
+  padding: 0;
 }
 
 .comment-content {
@@ -675,35 +681,25 @@ img {
 #comment-list {
   margin-left: 15px;
   padding: 0;
-  word-break: break-word;
 }
 
-.floor {
-  font-size: 14px;
-}
-
-.datetime,
+.timestamp,
+.timestamp a,
 .reply {
-  margin-left: 10px;
-  color: grey;
-}
-
-.datetime {
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .comment-text {
   padding-left: 20px;
+  font-size: 16px;
 }
 
 .reply {
-  font-size: 14px;
-  color: black;
+  color: grey;
 }
 
 .reply:hover {
   display: inline-block;
-  border-radius: 2px;
   padding: 1px 4px;
   background-color: #2e6da4;
   color: white;
@@ -723,21 +719,27 @@ img {
 
 .input-box input {
   height: 38px;
-}
-
-#captcha-input {
-  border-radius: 0px;
+  margin-top: 10px;
 }
 
 #captcha,
 #captcha-input,
-#reply-btn {
-  margin-top: 15px;
+#comment-submit-btn {
+  margin-top: 10px;
   display: inline-block;
 }
 
-#reply-btn {
+#comment-submit-btn {
   padding: 8px 15px;
+  width: 100%;
+}
+
+.error {
+  color: red;
+}
+
+.no-error {
+  display: none;
 }
 
 .error404 {

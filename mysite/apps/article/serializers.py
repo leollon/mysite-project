@@ -12,4 +12,5 @@ class ArticleModelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Article
-        exclude = ("id", "page_view_times")
+        exclude = ("page_view_times", )
+        read_only_fields = ('category', 'author', )

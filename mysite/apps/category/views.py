@@ -9,14 +9,14 @@ from .serializers import ArticleCategoryModelSerializer
 from apps.core import CustomizedCursorPagination  # noqa: isort:skip
 
 
-class ArticleCategoryAPIView(generics.ListAPIView):
+class ArticleCategoryListAPIView(generics.ListAPIView):
 
     serializer_class = ArticleCategoryModelSerializer
     http_method_names = ('get', 'options',)
     queryset = ArticleCategory.objects.all()
 
 
-class CategorizedArticleAPIView(generics.ListAPIView):
+class CategorizedArticleListAPIView(generics.ListAPIView):
 
     serializer_class = ArticleModelSerializer
     http_method_names = ('get', 'options', )

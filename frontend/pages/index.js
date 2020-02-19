@@ -24,7 +24,10 @@ export default function Index() {
   if (error) { return <div>error</div> }
   
   return (
-    <Layout>
+    <Layout
+      title="I'm 🤔"
+      description="Leollon の blog powered by Django and Bootstrap"
+    >
       <ArticleList articles={data.results} />
       <PageList links={data.links} />
     </Layout>

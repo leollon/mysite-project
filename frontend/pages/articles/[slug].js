@@ -14,12 +14,19 @@ const Post = props => {
   return (
     <Layout
       title={props.article.title}
-      description={props.article.article_body}
+      description={props.article.title}
     >
-      <h1>{props.article.title}</h1>
-      <Markdown source={props.article.article_body} />
-      <Comments comments={props.comments} statistics={props.article.comment_statistics} />
-      <script src="/static/js/blog.js" />
+      <article className="article-body">
+        <h1 className="post-title">{props.article.title}</h1>
+        <Markdown source={props.article.article_body} />
+        <p className="text-muted" id="eof">-- EOF --</p>
+        <Comments
+          id={props.article.id}
+          slug={props.article.slug}
+          comments={props.comments}
+          statistics={props.article.comment_statistics} />
+        <script src="/static/js/blog.js" />
+      </article>
     </Layout>
   );
 }
@@ -35,10 +42,10 @@ Post.getInitialProps = async function (context) {
   const slug = query.slug;
   const cursor = query.cur ? '?cur=' + query.cur : '';
   
-  const articleResponse = await fetch(`${API_URL}${slug}/`);
+  const articleResponse = await fetch(`${API_URL}${slug}`);
   const article = await articleResponse.json();
 
-  const commentsResponse = await fetch(`${API_URL}${slug}/comments/${cursor}`);
+  const commentsResponse = await fetch(`${API_URL}${slug}/comments${cursor}`);
   const comments = await commentsResponse.json();
 
   return { article, comments };
