@@ -8,7 +8,7 @@ import Layout from '../../components/layout';
 import CategoryList from '../../components/category';
 
 
-const API_URL = 'http://dev.django.com/api/v1/categories/';
+const API_URL = 'http://dev.django.com/api/v1/categories';
 
 
 export default function Categories() {
@@ -18,10 +18,11 @@ export default function Categories() {
   if (error) { return <div>error</div> }
 
   return (
-    <Layout>
-        <div className="center">
-          <CategoryList categories={data} />
-        </div>
+    <Layout
+      title="categories"
+      description="categories"
+    >
+      <CategoryList categories={data} />
     </Layout>
   );
 }

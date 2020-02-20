@@ -16,7 +16,7 @@ export default function CategorizedArticles() {
   const { name } = router.query;
 
   const { data, error } = useSWR(
-    `${API_URL}${name}/${router.query.cur ? '?cur=' + router.query.cur : ''}`,
+    `${API_URL}${name}/articles${router.query.cur ? '?cur=' + router.query.cur : ''}`,
     fetcher
   );
 
@@ -24,8 +24,11 @@ export default function CategorizedArticles() {
   if (error) { return <div>error</div> }
   
   return (
-    <Layout>
-      <ArticleList articles={data.results} />
+    <Layout
+      title={name}
+      description='categories'
+    >
+      <ArticleList articles={data.results} category_name={name} statistics={data.article_statistics}/>
       <PageList links={data.links} />
     </Layout>
   )

@@ -1,8 +1,9 @@
 // components/layout.js
 
 import React from 'react';
-import Header from './header';
 import PropTypes from 'prop-types'
+
+import Header from './header';
 
 
 const Layout = function (props) {

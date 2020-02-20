@@ -18,10 +18,10 @@ export default function ArticleList(props) {
     <>
       {props.category_name &&
         <blockquote id="sub-header">
-          有<span className="badge">{statistics}</span>篇文章属于<strong>
+          有<span className="badge">{props.statistics}</span>篇文章属于<strong>
             <div className="label label-primary">
               <span className="fa fa-folder-open">
-                categoryname
+                {props.category_name}
               </span>
             </div>
           </strong>
@@ -29,39 +29,43 @@ export default function ArticleList(props) {
         </blockquote>
       }
 
-      {props.articles ? (props.articles.map(article => (
-        <div className="post-preview">
-          <h2 className="post-title">
-            <a href={`/articles/${article.slug}`}>{article.title}</a>
-          </h2>
-          <article className="post-subtitle">
-            <Markdown source={truncateContent(article.article_body, length=140)} />
-          </article>
-          <div className="article-extra">
+      {props.articles.length ? (props.articles.map(article => {
+        const tags = article.tags.split(',');
+        return (
+          <div className="post-preview">
+            <h2 className="post-title">
+              <a href={`/articles/${article.slug}`}>{article.title}</a>
+            </h2>
+            <article className="post-subtitle">
+              <Markdown source={truncateContent(article.article_body, length = 140)} />
+            </article>
+            <div className="article-extra">
               <span className="fa fa-folder">
                 <a href={`/categories/${article.category}`}>
                   {article.category}
                 </a>
               </span>
-              <span className="fa fa-tag">
                 {article.tags.split(',').map(tag => (
-                  <a href={`/tags/${tag}`}>
-                    #{tag + ', '}
-                  </a>))}
-              </span>
+                  <span className="fa fa-tag">
+                    <a href={`/tags/${tag}`}>
+                      #{tag}
+                    </a>{tags.indexOf(tag) != tags.length - 1 ? ', ' : ''}
+                    </span>))}
+                
               <span className="fa fa-comments">
                 <a href={`/articles/${article.slug}#comments`}>
                   <span>{article.comment_statistics}</span>
                 </a>
               </span>
               <span className="fa fa-eye">{article.user_view_times}</span>
-          </div>
+            </div>
             <p className="post-meta">
               Posted by {article.author} on {article.created_time}
             </p>
-        </div>))) : (
-        <div className="post-preview">
-          <h2 className="post-title">No Articles yet!</h2>
+          </div>)
+      })) : (
+          <div className="post-preview">
+          <h2 className="post-title empty">No Articles yet!</h2>
         </div>)
       }
     </>);
