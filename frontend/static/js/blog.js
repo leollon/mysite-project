@@ -2,6 +2,9 @@
 
 const api_host = "http://dev.django.com";
 
+$('#captcha').ready(setCaptcha);
+$('#captcha').click(setCaptcha);
+
 $("#comment_text").on("input", function (event) {
     $("#comment-text-error").removeClass("error").addClass("no-error");
 })
@@ -18,9 +21,6 @@ $("#captcha-input").on("input", function (event) {
     $("#captcha-error").removeClass("error").addClass("no-error");
 })
 
-$('#captcha').ready(setCaptcha);
-$('#captcha').click(setCaptcha);
-
 $('.reply').click(function (event) {
     event.preventDefault()
     let commentText = $("#comment_text").val();
@@ -33,9 +33,10 @@ $('.reply').click(function (event) {
     }
 })
 
-async function sendData(request) {
+async function sendRequest(request) {
     const response = await fetch(request)
         .then((response) => {
+            // Check where the fetch request was successful not.
             if (!response.ok) {
                 throw new Error(response.status + ' ' + response.statusText);
             }
@@ -58,21 +59,27 @@ $("#comment-submit-btn").click(function (event) {
         credentials: 'include',
         redirect: 'follow',
     })
-    sendData(postCommentReq)
+    sendRequest(postCommentReq)
         .then(() => {
             // Reload current page, so that the newest comment can be showed off.
             window.location.reload();
         })
-        .catch(error => {
-            console.log(error);
+        .catch((error) => {
+            alert(error.message);
         });
 })
 
 function setCaptcha() {
     const url = api_host + "/refresh/captcha/";
 
-    $.getJSON(url, function (data) {
-        $("#captcha").attr("src", api_host + data.captchaImgPath);
-        $("#csrftoken").attr("value", data.CSRFToken);
-    })
+    const getCaptchaReq = new Request(url);
+    sendRequest(getCaptchaReq)
+        .then((responseData) => {
+            $("#captcha-error").addClass("no-error").removeClass("error");
+            $("#captcha").attr("src", api_host + responseData.captchaImgPath);
+            $("#csrftoken").attr("value", responseData.CSRFToken);
+        })
+        .catch((error) => {
+            $("#captcha-error").removeClass("no-error").addClass("error").text("Can get the captcha");
+        })
 }

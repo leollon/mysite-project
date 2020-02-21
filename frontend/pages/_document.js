@@ -41,7 +41,6 @@ class CustomDocument extends Document {
 
         <Head />
         <body>
-
           <Main />
 
           <hr />

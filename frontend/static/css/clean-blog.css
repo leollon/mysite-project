@@ -617,6 +617,12 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   margin: 3px;
 }
 
+th,
+td {
+  border: 1px dotted lightgray;
+  padding: 5px;
+}
+
 p {
   margin: 0;
 }
