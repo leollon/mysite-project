@@ -17,7 +17,7 @@ export default function TaggedArticles() {
   const { name } = router.query;
 
   const { data, error } = useSWR(
-    `${API_URL}${name}/${router.query.cur ? '?cur=' + router.query.cur : ''}`,
+    `${API_URL}${name}/articles${router.query.cur ? '?cur=' + router.query.cur : ''}`,
     fetcher
   )
   
@@ -25,7 +25,10 @@ export default function TaggedArticles() {
   if (error) { return <div>Error</div>; }
 
   return (
-    <Layout>
+    <Layout
+      title={name}
+      description={name}
+    >
       <ArticleList articles={data.results} />
       <PageList links={data.links} />
     </Layout>

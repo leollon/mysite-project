@@ -580,10 +580,12 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   }
 }
 
+#tags,
 #categories {
   margin-top: 10px;
 }
 
+#tags li,
 #categories li {
   float: left;
   margin: 2px;
@@ -638,6 +640,7 @@ img {
   list-style: none;
 }
 
+#tags li a:hover,
 #categories li a:hover {
   text-decoration: none;
   color:white;
