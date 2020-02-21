@@ -19,7 +19,7 @@ class CaptchaView(ContextMixin, View):
         text, captcha_img_path, result_status, message = (
             captcha.generate_captcha()
         )
-        cache.set(key=text, value=text, timeout=captcha_cached_time)
+        cache.set(key=text.lower(), value=text, timeout=captcha_cached_time)
         return JsonResponse(
             {
                 "captchaImgPath": captcha_img_path,
