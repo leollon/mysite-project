@@ -25,7 +25,7 @@ $('.reply').click(function (event) {
     event.preventDefault()
     let commentText = $("#comment_text").val();
     let commenter = '@'.concat(this.dataset.commenter);
-    if (commentText && commentText.match(/@[\w\d\ ]+/).length) {
+    if (commentText && commentText.match(/@[\w\d\s]+/).length) {
         commentText = commentText.replace(/(@[\w\d]+)/, '').trim();
     }
     if (commentText.indexOf(commenter) < 0) {

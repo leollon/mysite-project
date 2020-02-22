@@ -25,6 +25,7 @@ export default function Index() {
   
   return (
     <Layout
+      title="I'm 🤔"
       description="Leollon の blog powered by Django and Bootstrap"
     >
       <ArticleList articles={data.results} />

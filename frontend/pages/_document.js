@@ -1,5 +1,6 @@
 // pages/_document.js
 
+import React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 
 
@@ -32,12 +33,12 @@ class CustomDocument extends Document {
         <link href="/static/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" />
         <link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <link href="/static/css/clean-blog.css" rel="stylesheet" type="text/css" media="screen" />
-        <script src="/static/vendor/jquery/jquery.js"></script>
-        <script src="/static/vendor/bootstrap/js/bootstrap.js"></script>
-        <script src="/static/vendor/highlight/highlight.min.js"></script>
+        <script src="/static/vendor/jquery/jquery.js" />
+        <script src="/static/vendor/bootstrap/js/bootstrap.js" />
+        <script src="/static/vendor/highlight/highlight.min.js" />
 
-        <script async src="https://www.googletagmanager.com/gtag/js?id={GOOGLE ANALYTICS CODE}"></script>
-        <title key="site-title">leollon的小站🤔</title>
+        <script async src="https://www.googletagmanager.com/gtag/js?id={GOOGLE ANALYTICS CODE}" />
+        <title key="site-title">I&apos;m 🤔</title>
 
         <Head />
         <body>
@@ -52,22 +53,22 @@ class CustomDocument extends Document {
                     <li key="github">
                       <a href="https://github.com/leollon">
                         <span className="fa-stack fa-lg">
-                          <i className="fa fa-circle fa-stack-2x"></i>
-                          <i className="fa fa-github fa-stack-1x fa-inverse"></i>
+                          <i className="fa fa-circle fa-stack-2x" />
+                          <i className="fa fa-github fa-stack-1x fa-inverse" />
                         </span>
                       </a>
                     </li>
                     <li key="creativecommons">
                       <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/">
                         <span className="fa-stack fa-lg">
-                          <i className="fa fa-circle fa-stack-2x"></i>
-                          <i className="fa fa-creative-commons fa-stack-1x fa-inverse"></i>
+                          <i className="fa fa-circle fa-stack-2x" />
+                          <i className="fa fa-creative-commons fa-stack-1x fa-inverse" />
                         </span>
                       </a>
                     </li>
                   </ul>
                   <p className="copyright text-muted">
-                    Copyright &copy; Leo's blog 2017
+                    Copyright &copy; Leo&apos;s blog 2017
                   </p>
                   <p className="blog-arch text-muted">
                     Powered by Django & Bootstrap
@@ -80,7 +81,7 @@ class CustomDocument extends Document {
               </div>
             </div>
           </footer>
-          <script src="/static/js/clean-blog.js"></script>
+          <script src="/static/js/clean-blog.js" />
           <script>
             hljs.initHighlightingOnLoad();
           </script>

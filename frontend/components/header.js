@@ -3,11 +3,12 @@
 import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
+import PropTypes from 'prop-types';
 
 
 const Header = (props) => (
 
-  <>
+  <div>
     <Head>
       <meta property="og:site_name" content="I'm Leollon" />
       <meta property="og:type" content="article" />
@@ -18,8 +19,8 @@ const Header = (props) => (
       <meta name="twitter:creator" content="@lnr" />
       <meta name="twitter:site" content="@lnr" />
       <meta name="twitter:card" content="summary_large_image" />
-        
-      <title key="site-title">I'm 🤔{props.title ? ' | ' + props.title : ''}</title>
+
+      <title key="site-title">I&apos;m 🤔{props.title ? ' | ' + props.title : ''}</title>
     </Head>
 
     <nav className="navbar navbar-default navbar-custom navbar-fixed-top">
@@ -27,7 +28,7 @@ const Header = (props) => (
         <div className="navbar-header page-scroll">
           <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#list-in-navbar-to-collapse-1">
             <span className="sr-only">Toggle navigation</span>
-            Menu <i className="fa fa-bars"></i>
+            Menu <i className="fa fa-bars" />
           </button>
           <Link href="/">
             <a className="navbar-brand">Home</a>
@@ -70,7 +71,13 @@ const Header = (props) => (
       </div>
     </header>
     {props.children}
-  </>
+  </div>
 )
+
+Header.propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string.isRequired,
+  children: PropTypes.node,
+}
 
 export default Header;

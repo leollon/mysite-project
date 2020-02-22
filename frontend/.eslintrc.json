@@ -13,9 +13,12 @@
     },
     "env": {
         "es6": true,
-        "node": true
+        "node": true,
+        "jquery": true,
+        "browser": true
     },
     "extends": [
+        "plugin:jquery/slim",
         "eslint:recommended",
         "plugin:react/recommended"
     ],
@@ -32,6 +35,8 @@
     },
     "plugins": [
         "react",
+        "jquery",
+        "dollar-sign",
         "react-hooks"
     ],
     "rules": {

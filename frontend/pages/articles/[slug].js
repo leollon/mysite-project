@@ -34,6 +34,7 @@ const Post = props => {
 
 Post.propTypes = {
   article: PropTypes.object.isRequired,
+  comments: PropTypes.array.isRequired,
 }
 
 

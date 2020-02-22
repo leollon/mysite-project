@@ -14,7 +14,7 @@ export default function TagList(props) {
           <Link href="/tags/[name]" as={`/tags/${array[0]}`}>
             <a>{array[0]}<sup>{array[1]}</sup></a>
           </Link>
-        </li>)) : (<h2 class="empty"><strong>No tags yet!</strong></h2>)}
+        </li>)) : (<h2 className="empty"><strong>No tags yet!</strong></h2>)}
     </ul>
   );
 }
