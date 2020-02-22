@@ -1,27 +1,27 @@
-var gulp = require("gulp");
-var rename = require("gulp-rename");
-var terser = require("gulp-terser");
-var cleanCSS = require("gulp-clean-css");
-var imageMinify = require("gulp-imagemin");
-var del = require("del");
+const gulp = require("gulp");
+const rename = require("gulp-rename");
+const terser = require("gulp-terser");
+const cleanCSS = require("gulp-clean-css");
+const imageMinify = require("gulp-imagemin");
+const del = require("del");
 
-var paths = {
+const paths = {
     css: {
         orig: "static/css/*.css",
-        dest: "assets/css/"
+        dest: "public/css/"
     },
     js: {
-        orig: ["static/js/*.js", "static/vendor/showdown/*.js"],
-        dest: "assets/js/"
+        orig: ["static/js/*.js", ],
+        dest: "public/js/"
     },
     img: {
-        orig: "static/images/*.*",
-        dest: "assets/images/"
+        orig: "static/img/*.*",
+        dest: "public/img/"
     }
 };
 
 function clean() {
-    return del(["assets/**"]);
+    return del(["public/**"]);
 }
 
 function jsMinify() {
@@ -37,7 +37,6 @@ function cssMinify() {
     // 压缩css文件
     return gulp.src(paths.css.orig)
         .pipe(cleanCSS({
-            format: "beautify",
             level: 2
         }))
         .pipe(rename({

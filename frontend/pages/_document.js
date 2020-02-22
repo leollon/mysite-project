@@ -19,7 +19,7 @@ class CustomDocument extends Document {
         <meta name="keywords" key="keywords" content="Python,Django,c,c++,Linux,backend,后端" />
         <meta name="google-site-verification" content="" />
         
-        <link rel="icon" type="image/x-icon" href="" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="76x76" href="/static/img/touch-icon-ipad.d5027c9927dc.png" />
         <link rel="apple-touch-icon" sizes="120x120" href="/static/img/touch-icon-iphone-retina.007e7a910a86.png" />
         <link rel="apple-touch-icon" sizes="152x152" href="/static/img/touch-icon-ipad-retina.87ac62f8dd0e.png" />
