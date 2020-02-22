@@ -1,5 +1,6 @@
 from django.db.models import Q
 from rest_framework import generics
+from rest_framework.response import Response
 
 from ..article.models import Article
 from ..article.serializers import ArticleModelSerializer
@@ -27,3 +28,9 @@ class CategorizedArticleListAPIView(generics.ListAPIView):
         name = self.kwargs.get(self.lookup_url_kwargs)
         queryset = Article.objects.filter(Q(category__name=name))
         return queryset
+
+    def list(self, request, *args, **kwargs):
+        serializer = super(CategorizedArticleListAPIView, self).list(request, *args, **kwargs)
+        article_statistics = ArticleCategory.objects.get(name=self.kwargs.get(self.lookup_field)).article_statistics
+        serializer.data['article_statistics'] = article_statistics
+        return Response(serializer.data)
