@@ -70,7 +70,7 @@ $("#comment-submit-btn").click(function (event) {
 })
 
 function setCaptcha() {
-    const url = api_host + "/refresh/captcha/";
+    const url = api_host + "/api/v1/refresh/captcha/";
 
     const getCaptchaReq = new Request(url);
     sendRequest(getCaptchaReq)
@@ -80,6 +80,6 @@ function setCaptcha() {
             $("#csrftoken").attr("value", responseData.CSRFToken);
         })
         .catch((error) => {
-            $("#captcha-error").removeClass("no-error").addClass("error").text("Can get the captcha");
+            $("#captcha-error").removeClass("no-error").addClass("error").text("Can't get the captcha");
         })
 }

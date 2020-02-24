@@ -4,6 +4,7 @@ from .article.views import (
     ArticleDetailAPIView, ArticleListAPIView, TaggedArticleListAPIView,
     TagsListAPIView,
 )
+from .captcha.views import CaptchaView
 from .category.views import (
     ArticleCategoryListAPIView, CategorizedArticleListAPIView,
 )
@@ -22,4 +23,5 @@ urlpatterns = [
     url(r"tags/$", TagsListAPIView.as_view(), name="tag_list"),
     url(r"articles/$", ArticleListAPIView.as_view(), name="article_list"),
     url(r"categories/$", ArticleCategoryListAPIView.as_view(), name="category_list"),
+    url(r"refresh/captcha", CaptchaView.as_view(), name="captcha"),
 ]

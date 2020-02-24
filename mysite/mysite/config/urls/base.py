@@ -26,7 +26,6 @@ sitemaps = {"Article": ArticleSiteMap}
 urlpatterns = [
     url(r"^accounts/backstage/", admin.site.urls),
     url(r"^api/v1/", include("apps.urls")),
-    url(r"refresh/", include("apps.captcha.urls")),
     url(
         r"^sitemap\.xml$",
         cache_page(60 * 60 * 24 * 7, cache="redis")(sitemap_views.sitemap),
