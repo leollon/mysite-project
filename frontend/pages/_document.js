@@ -35,7 +35,6 @@ class CustomDocument extends Document {
         <link href="/static/css/clean-blog.css" rel="stylesheet" type="text/css" media="screen" />
         <script src="/static/vendor/jquery/jquery.js" />
         <script src="/static/vendor/bootstrap/js/bootstrap.js" />
-        <script src="/static/vendor/highlight/highlight.min.js" />
 
         <script async src="https://www.googletagmanager.com/gtag/js?id={GOOGLE ANALYTICS CODE}" />
         <title key="site-title">I&apos;m 🤔</title>
@@ -82,9 +81,6 @@ class CustomDocument extends Document {
             </div>
           </footer>
           <script src="/static/js/clean-blog.js" />
-          <script>
-            hljs.initHighlightingOnLoad();
-          </script>
           <NextScript />
         </body>
       </Html>

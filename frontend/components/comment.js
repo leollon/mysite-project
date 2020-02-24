@@ -2,7 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactMarkdown from 'react-markdown';
+import SyntaxHighlight from '../lib/syntax-highlight';
 
 import CommentForm from './forms';
 import PageList from './pagination';
@@ -26,7 +26,7 @@ export default function Comments(props) {
                 </a> :
               </span>
               <div className="comment-text">
-                <ReactMarkdown source={comment.comment_text} />
+                <SyntaxHighlight content={comment.comment_text} />
               </div>
               <span className="reply" data-commenter={comment.username}>Reply</span>
             </li>)))

@@ -1,9 +1,10 @@
 // pages/articles/[slug].js
 
 import React from 'react';
-import PropTypes from 'prop-types'
-import Markdown from 'react-markdown';
+import PropTypes from 'prop-types';
 import fetch from 'isomorphic-unfetch';
+import SyntaxHighlight from '../../lib/syntax-highlight';
+
 
 import Layout from '../../components/layout';
 import Comments from '../../components/comment';
@@ -18,8 +19,8 @@ const Post = props => {
       description={props.article.title}
     >
       <article className="article-body">
-        <h1>{props.article.title}</h1>
-        <Markdown source={props.article.article_body} />
+        <SyntaxHighlight
+          content={props.article.article_body} />
 
         <p className="text-muted" id="eof">-- EOF --</p>
         <Comments
