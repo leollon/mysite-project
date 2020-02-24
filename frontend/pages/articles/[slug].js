@@ -4,6 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import Markdown from 'react-markdown';
 import fetch from 'isomorphic-unfetch';
+
 import Layout from '../../components/layout';
 import Comments from '../../components/comment';
 
@@ -17,8 +18,9 @@ const Post = props => {
       description={props.article.title}
     >
       <article className="article-body">
-        <h1 className="post-title">{props.article.title}</h1>
+        <h1>{props.article.title}</h1>
         <Markdown source={props.article.article_body} />
+
         <p className="text-muted" id="eof">-- EOF --</p>
         <Comments
           id={props.article.id}
@@ -34,7 +36,7 @@ const Post = props => {
 
 Post.propTypes = {
   article: PropTypes.object.isRequired,
-  comments: PropTypes.array.isRequired,
+  comments: PropTypes.object.isRequired,
 }
 
 

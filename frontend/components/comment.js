@@ -42,6 +42,6 @@ export default function Comments(props) {
 Comments.propTypes = {
   id: PropTypes.number.isRequired,
   slug: PropTypes.string.isRequired,
-  comments: PropTypes.array.isRequired,
+  comments: PropTypes.object.isRequired,
   statistics: PropTypes.number.isRequired,
 }
