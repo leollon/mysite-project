@@ -5,7 +5,7 @@ LABEL Name=mysite/frontend Version=1.0.0
 WORKDIR /
 
 COPY ./frontend/package.json ./
-RUN npm config set registry https://registry.npm.taobao.org
+RUN npm config set registry http://mirrors.cloud.tencent.com/npm/
 RUN npm install
 RUN npx next telemetry disable
 
