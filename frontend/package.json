@@ -23,6 +23,7 @@
     "gulp-imagemin": "^6.0.0",
     "gulp-rename": "^1.4.0",
     "gulp-terser": "^1.2.0",
+    "insane": "^2.6.2",
     "isomorphic-unfetch": "^3.0.0",
     "marked": "^0.6.3",
     "next": "^9.2.1",
