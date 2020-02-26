@@ -31,6 +31,12 @@ class CategorizedArticleListAPIView(generics.ListAPIView):
 
     def list(self, request, *args, **kwargs):
         serializer = super(CategorizedArticleListAPIView, self).list(request, *args, **kwargs)
-        article_statistics = ArticleCategory.objects.get(name=self.kwargs.get(self.lookup_field)).article_statistics
+        article_statistics = 0
+        try:
+            category = ArticleCategory.objects.get(name=self.kwargs.get(self.lookup_field))
+        except ArticleCategory.DoesNotExist:
+            pass
+        else:
+            article_statistics = category.article_statistics
         serializer.data['article_statistics'] = article_statistics
         return Response(serializer.data)

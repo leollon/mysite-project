@@ -3,7 +3,7 @@
 import React from 'react';
 import useSWR from 'swr';
 
-import fetcher from '../../utils/fetchData';
+import fetcher from '../../lib/fetch';
 import Layout from '../../components/layout';
 import CategoryList from '../../components/category';
 

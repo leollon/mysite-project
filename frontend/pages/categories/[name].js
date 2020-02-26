@@ -1,35 +1,32 @@
 // pages/categories/[name].js
 
 import React from 'react';
-import useSWR from 'swr';
-import { useRouter } from 'next/router';
-import fetcher from '../../utils/fetchData';
+import fetcher from '../../lib/fetch';
 import Layout from '../../components/layout';
 import ArticleList from '../../components/post';
 import PageList from '../../components/pagination';
 
-const API_URL = 'http://dev.django.com/api/v1/categories/';
+const API_URL = 'http://web:8000/api/v1/categories/';
 
 
-export default function CategorizedArticles() {
-  const router = useRouter();
-  const { name } = router.query;
+export default function CategorizedArticles({data, name}) {
 
-  const { data, error } = useSWR(
-    `${API_URL}${name}/articles${router.query.cur ? '?cur=' + router.query.cur : ''}`,
-    fetcher
-  );
-
-  if (!data) { return <div>Loading...</div>; }
-  if (error) { return <div>error</div> }
-  
   return (
     <Layout
       title={name}
       description='categories'
     >
-      <ArticleList articles={data.results} category_name={name} statistics={data.article_statistics}/>
+      <ArticleList
+        articles={data.results}
+        category_name={name}
+        statistics={data.article_statistics} />
       <PageList links={data.links} />
     </Layout>
-  )
+  );
+}
+
+CategorizedArticles.getInitialProps = async (context) => {
+  const { name, cur } = context.query;
+  const data = await fetcher(`${API_URL}${name}/articles${cur ? '?cur=' + cur : ''}`);
+  return { data, name };
 }

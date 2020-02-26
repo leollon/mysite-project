@@ -4,16 +4,18 @@ import React from 'react';
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
 
-import fetcher from '../utils/fetchData';
+import fetcher from '../lib/fetch';
 import Layout from './../components/layout';
 import ArticleList from '../components/post';
 import PageList from '../components/pagination';
 
+const isServer = typeof window === 'undefined';
 const API_URL = 'http://dev.django.com/api/v1/articles/'
 
 
 export default function Index() {
-  const { query } = useRouter();
+  const router = useRouter();
+  const query = router.query;
 
   let { data, error } = useSWR(
     `${API_URL}${query.cur ? '?cur=' + query.cur : ''}`,

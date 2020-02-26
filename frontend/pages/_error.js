@@ -23,5 +23,3 @@ Error.getInitialProps = ({ res, err }) => {
 }
 
 export default Error;
-
-

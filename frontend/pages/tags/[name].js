@@ -1,29 +1,21 @@
 // pages/tags/[name].js
 
 import React from 'react';
-import useSWR from 'swr';
-import { useRouter } from 'next/router';
+import Error from '../_error';
 
-import fetcher from '../../utils/fetchData';
+import fetcher from '../../lib/fetch';
 import Layout from '../../components/layout';
 import ArticleList from '../../components/post';
 import PageList from '../../components/pagination';
 
-const API_URL = 'http://dev.django.com/api/v1/tags/';
+const API_URL = 'http://web:8000/api/v1/tags/';
 
 
-export default function TaggedArticles() {
-  const router = useRouter();
-  const { name } = router.query;
+export default function taggedArticles({ data, name, errorCode }) {
 
-  const { data, error } = useSWR(
-    `${API_URL}${name}/articles${router.query.cur ? '?cur=' + router.query.cur : ''}`,
-    fetcher
-  )
-  
-  if (!data) { return <div>Loading...</div>; }
-  if (error) { return <div>Error</div>; }
-
+  if (errorCode) {
+    return <Error statusCode={errorCode} />
+  }
   return (
     <Layout
       title={name}
@@ -33,4 +25,16 @@ export default function TaggedArticles() {
       <PageList links={data.links} />
     </Layout>
   );
+}
+
+
+taggedArticles.getInitialProps = async function (context) {
+  const { name, cur } = context.query;
+  let errorCode = false;
+  const data = await fetcher(`${API_URL}${name}/article${cur ? '?cur=' + cur : ''}`)
+    .then((response) => response.json())
+    .catch((error) => {
+      errorCode = error.message;
+    });
+  return { data, name, errorCode};
 }
