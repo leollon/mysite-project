@@ -15,7 +15,6 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.flatpages",
     "rest_framework",
-    "crispy_forms",
     "apps.article.apps.ArticleConfig",
     "apps.category.apps.ArticleCategoryConfig",
     "apps.user.apps.UserConfig",
