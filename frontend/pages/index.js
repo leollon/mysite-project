@@ -9,7 +9,6 @@ import Layout from './../components/layout';
 import ArticleList from '../components/post';
 import PageList from '../components/pagination';
 
-const isServer = typeof window === 'undefined';
 const API_URL = 'http://dev.django.com/api/v1/articles/'
 
 

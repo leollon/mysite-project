@@ -31,10 +31,16 @@ export default function taggedArticles({ data, name, errorCode }) {
 taggedArticles.getInitialProps = async function (context) {
   const { name, cur } = context.query;
   let errorCode = false;
-  const data = await fetcher(`${API_URL}${name}/article${cur ? '?cur=' + cur : ''}`)
-    .then((response) => response.json())
+  const data = await fetcher(`${API_URL}${name}/articles/${cur ? '?cur=' + cur : ''}`)
+    .then((data) => data)
     .catch((error) => {
-      errorCode = error.message;
+      if (error.name === "FetchError") {
+        errorCode = "500 Internal Server Error";
+      } else if(error.name === "AbortError") {
+        errorCode = "Request Cancelled"
+      } else {
+        errorCode = error.message;
+      }
     });
   return { data, name, errorCode};
 }
