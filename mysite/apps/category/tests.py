@@ -2,6 +2,7 @@ from django.db.utils import IntegrityError
 from django.test import Client as HTTPClient
 from django.test import TestCase
 from django.urls import reverse
+from django.urls.exceptions import NoReverseMatch
 
 from .models import ArticleCategory
 
@@ -16,14 +17,14 @@ class TestArticleCategoryModel(TestCase):
             raise
         self.assertRaises(IntegrityError)
 
-    def test_category_article_statistics(self):
+    def test_category_article_statisticss(self):
         category_name = "abcd*())*"
         category = ArticleCategory.objects.create(name=category_name)
 
         self.assertEqual(category.article_statistics, 0)
 
         try:
-            category.article_statistics = 1
+            category.article_statisticss = 1
         except NotImplementedError:
             self.assertRaises(NotImplementedError)
 
@@ -91,23 +92,67 @@ class TestCategorizedArticleListAPIView(CategoryAPIViewBase):
 
     def test_get_categorized_article_list(self):
 
+        # HTTP GET
         response = self.http_client.get(
-            reverse("api:categorized_articles", args=("Sams-Teach-yourself-TCPIP-in-24-hours",)))
-        assert len(response.data.get("results")) >= 0
+            reverse("api:categorized_articles", args=("Sams-Teach-yourself-TCPIP-in-24-hours", )))
+        self.assertGreaterEqual(len(response.data.get("results")), 0)
+        self.assertGreaterEqual(response.data.get("article_statistics"), 0)
         self.assertEqual(response.status_code, 200)
 
+        # HTTP POST
+        response = self.http_client.post(
+            reverse("api:categorized_articles", args=("Sams-Teach-yourself-TCPIP-in-24-hours", )),
+            data={"username": "commentor", "comment_text": "comment text", "captcha": "fjeisl"})
+        self.assertEqual(response.status_code, 405)
+
+        # HTTP PUT
+        response = self.http_client.put(
+            reverse("api:categorized_articles", args=("Sams-Teach-yourself-TCPIP-in-24-hours", )),
+            data={"username": "commentor", "comment_text": "comment text", "captcha": "fjeisl"})
+        self.assertEqual(response.status_code, 405)
+
+        # HTTP PATCH
+        response = self.http_client.patch(
+            reverse("api:categorized_articles", args=("Sams-Teach-yourself-TCPIP-in-24-hours", )),
+            data={"username": "commentor", "comment_text": "comment text", "captcha": "fjeisl"})
+        self.assertEqual(response.status_code, 405)
+
+        # HTTP DELETE
+        response = self.http_client.delete(
+            reverse("api:categorized_articles", args=("Sams-Teach-yourself-TCPIP-in-24-hours", )),
+            data={"username": "commentor", "comment_text": "comment text", "captcha": "fjeisl"})
+        self.assertEqual(response.status_code, 405)
+
+        # HTTP HEAD
+        response = self.http_client.head(
+            reverse("api:categorized_articles", args=("Sams-Teach-yourself-TCPIP-in-24-hours", )),
+            data={"username": "commentor", "comment_text": "comment text", "captcha": "fjeisl"})
+        self.assertEqual(response.status_code, 405)
+
+        # HTTP OPTIONS
+        response = self.http_client.options(
+            reverse("api:categorized_articles", args=("Sams-Teach-yourself-TCPIP-in-24-hours", )),
+            data={"username": "commentor", "comment_text": "comment text", "captcha": "fjeisl"})
+        self.assertEqual(response.status_code, 200)
+
+        # HTTP GET
         response = self.http_client.get(
-            reverse("api:categorized_articles", args=("undefined",)))
+            reverse("api:categorized_articles", args=("undefined", )))
         self.assertEqual(response.data.get("results"), [])
-        assert len(response.data.get("results")) >= 0
+        self.assertGreaterEqual(len(response.data.get("results")), 0)
+        self.assertEqual(response.data.get("article_statistics"), 0)
         self.assertEqual(response.status_code, 200)
 
-        response = self.http_client.get(
-            reverse("api:categorized_articles", args=("undefined",)), data={"name": "WhatDoUThink"})
-        self.assertEqual(response.status_code, 200)
+        # HTTP GET
+        try:
+            response = self.http_client.get(
+                reverse("api:categorized_articles", args=("", )))
+        except NoReverseMatch:
+            self.assertRaises(NoReverseMatch)
 
-        response = self.http_client.post(reverse("api:category_list"), data={"name": "WhatDoUThink"})
-        self.assertEqual(response.status_code, 405)
-
-        response = self.http_client.post(reverse("api:category_list"), data={"name": "WhatDoUThink"})
-        self.assertEqual(response.status_code, 405)
+        # HTTP GET
+        try:
+            response = self.http_client.get(
+                reverse("api:categorized_articles", args=(" ", )))
+        except NoReverseMatch:
+            self.assertRaises(NoReverseMatch)
