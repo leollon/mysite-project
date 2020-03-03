@@ -34,6 +34,7 @@ class ArticleDetailAPIView(generics.RetrieveAPIView):
     serializer_class = ArticleModelSerializer
     lookup_field = lookup_url_kwargs = 'slug'
     queryset = Article.objects.all()
+    http_method_names = ("get", "options", )
 
     def get(self, request, *args, **kwargs):
         day = 0
