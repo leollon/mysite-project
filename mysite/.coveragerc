@@ -1,0 +1,43 @@
+[run]
+branch = True
+command_line = manage.py test
+omit = 
+    # omit __init__.py
+    */__init__.py
+    # omit admin.py
+    */admin.py
+    # omit tests.py
+    */tests.py
+    # omit model_base.py
+    */model_base.py
+    # omit serializers
+    */serializers.py
+    # omit apps.py
+    */apps.py
+    # omit pagination.py
+    */pagination.py
+    # omit constants.py
+    */constants.py
+    # omit manage.py
+    manage.py
+    # omit django migrations
+    */migrations/*
+    # omit config
+    mysite/config/*
+    # omit static files
+    static/*
+    # omit templates files
+    *templates/*
+    # omit site running data
+    */run/*
+    */var/*
+    */data/*
+    */markdown/*
+    
+
+[report]
+
+ignore_errors = True
+
+[html]
+directory = coverage_html_report

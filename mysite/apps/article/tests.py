@@ -2,18 +2,100 @@ from io import StringIO
 from json import loads as json_loads
 
 from django.core.management import call_command
+from django.db.utils import IntegrityError
 from django.test import Client as HTTPClient
 from django.test import TestCase
 from django.urls import reverse
 
+from .models import Article
+
 from apps.user.models import User  # noqa isort:skip
+from apps.category.models import ArticleCategory  # noqa isort:skip
+
+
+class TestArticleModel(TestCase):
+
+    def setUp(self):
+        self.category = ArticleCategory.objects.create(name="test category")
+        self.user = User.objects.create_user(
+            username="root", email="email@gmail.com", password="admin1234")
+
+    def test_article_integrity(self):
+        title = "article integrity error"
+        article_body = "```python\nimport os\nprint('article integrity error')\n"
+        Article.objects.create(
+            title=title, article_body=article_body, author=self.user)
+        try:
+            Article.objects.create(title=title, article_body=article_body, author=self.user)
+        except IntegrityError:
+            self.assertRaises(IntegrityError)
+
+    def test_article_comment_statistics(self):
+
+        title = "halo world"
+        article_body = "hello world article content"
+        Article.objects.create(
+            title=title, article_body=article_body, author=self.user, category=self.category)
+        article = Article.objects.get(slug="halo-world")
+        self.assertEqual(article.comment_statistics, 0)
+
+        try:
+            article.comment_statistics = 1
+        except NotImplementedError:
+            self.assertRaises(NotImplementedError)
+
+    def test_article(self):
+        title = "*(#UOJFDEJ(*#@J(*#@89343"
+        article_body = "hello world"
+        article = Article.objects.create(
+            title=title, article_body=article_body, author=self.user, category=self.category)
+
+        # test slug
+        self.assertEqual("uojfdejj89343", article.slug)
+        # test category name
+        self.assertEqual(self.category.name, article.category.name)
+        # test article's tags
+        self.assertEqual("untagged", article.tags)
+
+        title = "-"
+        article_body = "content"
+        article = Article.objects.create(
+            title=title, article_body=article_body, author=self.user)
+
+        # test slug
+        self.assertEqual("-", article.slug)
+        # test category name
+        self.assertIsNone(article.category)
+        # test article's tags
+        self.assertEqual("untagged", article.tags)
+
+        # test article with author
+        title = "article without author"
+        article_body = "article without author"
+
+        try:
+            article = Article.objects.create(
+                title=title, article_body=article, category=self.category)
+        except IntegrityError:
+            self.assertRaises(IntegrityError)
+
+        # test article's tags
+        tags = "J*(J#JFKE*(#@)#*#U,J*#LFJLD"
+        title = "article with specified tags"
+        article_body = "article with specified tags content"
+        article = Article.objects.create(
+            title=title, article_body=article_body, author=self.user, category=self.category,
+            tags=tags
+        )
+        self.assertEqual("JJJFKEU,JLFJLD", article.tags)
 
 
 class APIViewTestCaseBase(TestCase):
 
     def setUp(self) -> None:
         self.http_client = HTTPClient()
-        User.objects.create_user(username="root", email="email@test.com", password="admin1234")
+        User.objects.create_user(
+            username="root", email="email@test.com", password="admin1234")
 
 
 class TestArticleListAPIView(APIViewTestCaseBase):
