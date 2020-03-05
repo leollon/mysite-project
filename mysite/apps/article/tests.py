@@ -1,5 +1,6 @@
 from io import StringIO
 from json import loads as json_loads
+from unittest.mock import patch
 
 from django.core.management import call_command
 from django.db.utils import IntegrityError
@@ -8,9 +9,58 @@ from django.test import TestCase
 from django.urls import reverse
 
 from .models import Article
+from .tasks import increment_page_view_times, increment_user_view_times
 
 from apps.user.models import User  # noqa isort:skip
 from apps.category.models import ArticleCategory  # noqa isort:skip
+
+
+class TestIncreUVTasks(TestCase):
+
+    def setUp(self) -> None:
+
+        category = ArticleCategory.objects.create(
+            name="test increment user view times task")
+        user = User.objects.create_user(
+            username="tasks", email="tasks@gmail.com", password="taskpassed2233")
+        Article.objects.create(
+            title="halo world", article_body="test increment user view times",
+            author=user, category=category)
+
+    @patch('apps.article.tasks.Article.user_view_times')
+    def test_increment_user_view_times(self, *args):
+
+        article = Article.objects.get(title="halo world")
+
+        self.assertEqual(increment_user_view_times(100), 0)
+        self.assertEqual(increment_user_view_times(article.id), 1)
+        self.assertEqual(Article.objects.get(title="halo world").user_view_times, 1)
+        self.assertEqual(increment_user_view_times(article.id), 1)
+        self.assertEqual(Article.objects.get(title="halo world").user_view_times, 2)
+
+
+class TestIncrePVTasks(TestCase):
+
+    def setUp(self) -> None:
+
+        category = ArticleCategory.objects.create(
+            name="test increment user view times task")
+        user = User.objects.create_user(
+            username="tasks", email="tasks@gmail.com", password="taskpassed2233")
+        Article.objects.create(
+            title="halo world", article_body="test increment user view times",
+            author=user, category=category)
+
+    @patch('apps.article.tasks.Article.page_view_times')
+    def test_increment_page_view_times(self, *args):
+
+        article = Article.objects.get(title="halo world")
+
+        self.assertEqual(increment_page_view_times(100), 0)
+        self.assertEqual(increment_page_view_times(article.id), 1)
+        self.assertEqual(Article.objects.get(title="halo world").page_view_times, 1)
+        self.assertEqual(increment_page_view_times(article.id), 1)
+        self.assertEqual(Article.objects.get(title="halo world").page_view_times, 2)
 
 
 class TestArticleModel(TestCase):
@@ -199,5 +249,6 @@ class TestTaggedArticleListAPIView(APIViewTestCaseBase):
         response = self.http_client.post(
             reverse("api:tagged_articles", args=("unttaged",)),
             data={
-                "title": "unttaged_article_title", "article_body": "untagged_article_body", "author": 1, "category": 1})
+                "title": "unttaged_article_title", "article_body": "untagged_article_body",
+                "author": 1, "category": 1})
         self.assertEqual(response.status_code, 405)

@@ -4,7 +4,7 @@ from .article.views import (
     ArticleDetailAPIView, ArticleListAPIView, TaggedArticleListAPIView,
     TagsListAPIView,
 )
-from .captcha.views import CaptchaView
+from .captcha.views import CaptchaAPIView
 from .category.views import (
     ArticleCategoryListAPIView, CategorizedArticleListAPIView,
 )
@@ -14,7 +14,7 @@ app_name = 'api'
 
 urlpatterns = [
     url(r"^tags/$", TagsListAPIView.as_view(), name="tag_list"),
-    url(r"^refresh/captcha/$", CaptchaView.as_view(), name="captcha"),
+    url(r"^refresh/captcha/$", CaptchaAPIView.as_view(), name="captcha"),
     url(r"^articles/$", ArticleListAPIView.as_view(), name="article_list"),
     url(r"^categories/$", ArticleCategoryListAPIView.as_view(), name="category_list"),
     url(r"^articles/(?P<slug>[\-\w]+)/$", ArticleDetailAPIView.as_view(), name="article_detail"),

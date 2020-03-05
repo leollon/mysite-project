@@ -37,8 +37,8 @@ class OnlineMiddleware(object):
         self.get_response = get_response
 
     def __call__(self, request):
-        resposne = self.get_response(request)
-        return resposne
+        response = self.get_response(request)
+        return response
 
     def process_view(self, request, view_func, view_args, view_kwargs):
         http_user_agent = request.META.get("HTTP_USER_AGENT", '')

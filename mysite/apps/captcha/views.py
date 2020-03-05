@@ -11,7 +11,7 @@ from .captcha import Captcha
 captcha_cached_time = getattr(settings, "CAPTCHA_CACHED_TIME", 30 * 60)
 
 
-class CaptchaView(ContextMixin, View):
+class CaptchaAPIView(ContextMixin, View):
     http_method_names = ("get", )
 
     def get(self, request, *args, **kwargs):
