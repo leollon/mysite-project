@@ -37,7 +37,7 @@ class ArticleDetailAPIView(generics.RetrieveAPIView):
     http_method_names = ("get", "options", )
 
     def get(self, request, *args, **kwargs):
-        day = 0
+        day = int((60 * 60 * 24) / (6 * 60 * 24))  # ten seconds
         self.object = super(ArticleDetailAPIView, self).get_object()
         ip = get_real_ip(request)
         visited_ips = cache.get(self.object.slug, set())

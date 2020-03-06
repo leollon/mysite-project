@@ -1,5 +1,4 @@
 import re
-import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Generator, Iterator
@@ -49,9 +48,15 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options) -> None:
         settings.USE_TZ = False
-        if not list(Path(options['dir']).iterdir()):
-            raise CommandError(
-                "please specify a directory containing markdown files")
+
+        try:
+            file_list = list(Path(options['dir']).iterdir())
+        except FileNotFoundError:
+            raise CommandError(self.parent_dir.joinpath(options['dir']).as_posix() + " directory does not exist.")
+        else:
+            if not file_list:
+                raise CommandError(
+                    "please specify a directory containing markdown files")
         path = Path(options['dir']).glob('**/*')
 
         group = self.grouper()
@@ -60,7 +65,7 @@ class Command(BaseCommand):
                 group.send(file.as_posix())
         group.send(None)
         settings.USE_TZ = True
-        sys.stdout.close()
+        self.stdout.close()
 
     @primer_generator
     def grouper(self) -> Generator:
@@ -126,4 +131,4 @@ class Command(BaseCommand):
             self.stdout.write(message)
         elif flag == Importation.ERROR.value:
             self.stderr.write(message)
-        sys.stdout.flush()
+        self.stdout.flush()

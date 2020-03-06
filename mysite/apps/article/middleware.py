@@ -1,26 +1,10 @@
 import logging
 import re
-from datetime import datetime
 
 from ipware.ip import get_real_ip
 from utils import cache
 
 logger = logging.getLogger(__name__)
-
-
-class ResponseTimeMiddleware(object):
-    def __init__(self, get_response):
-        self.get_response = get_response
-
-    def __call__(self, request):
-        self.beg_time = datetime.now().timestamp()
-        response = self.get_response(request)
-        end_time = datetime.now().timestamp() - self.beg_time
-        content = response.content.decode('utf-8')
-        response.content = content.replace(
-            "RENDER_TIME",
-            str(end_time)[:5]).encode('utf-8')
-        return response
 
 
 class OnlineMiddleware(object):
@@ -55,10 +39,3 @@ class OnlineMiddleware(object):
         online_ips.add(ip)
 
         cache.set("online_ips", online_ips)
-
-
-class VerifyMiddleware(object):
-    """
-    评论回复验证码
-    """
-    pass

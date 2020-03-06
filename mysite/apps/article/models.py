@@ -49,9 +49,8 @@ class Article(ArticleCleanedMixins, MyModelBase):
         self.clean_data()
         super(Article, self).save(*args, **kwargs)
 
-    @staticmethod
-    def get_absolute_url():
-        return reverse("article:manage")
+    def get_absolute_url(self):
+        return reverse("api:article_detail", args=(self.slug,))
 
     class Meta:
         ordering = ("-created_time",)

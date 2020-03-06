@@ -1,8 +1,10 @@
+import unittest
 from io import StringIO
 from json import loads as json_loads
 from unittest.mock import patch
 
 from django.core.management import call_command
+from django.core.management.base import CommandError
 from django.db.utils import IntegrityError
 from django.test import Client as HTTPClient
 from django.test import TestCase
@@ -106,6 +108,8 @@ class TestArticleModel(TestCase):
         self.assertEqual(self.category.name, article.category.name)
         # test article's tags
         self.assertEqual("untagged", article.tags)
+        # test article absolute url
+        self.assertURLEqual(article.get_absolute_url(), reverse("api:article_detail", args=(article.slug,)))
 
         title = "-"
         article_body = "content"
@@ -138,13 +142,16 @@ class TestArticleModel(TestCase):
             tags=tags
         )
         self.assertEqual("JJJFKEU,JLFJLD", article.tags)
+        # test blank article tags
+        article.tags = ''
+        article.save()
 
 
 class APIViewTestCaseBase(TestCase):
 
     def setUp(self) -> None:
         self.http_client = HTTPClient()
-        User.objects.create_user(
+        self.user = User.objects.create_user(
             username="root", email="email@test.com", password="admin1234")
 
 
@@ -177,6 +184,13 @@ class TestArticleDetailAPIView(APIViewTestCaseBase):
         # import test article data
         out = StringIO()
         call_command('importmd', stdout=out)
+        self.assertIn("Finish importing", out.getvalue())
+
+        # HTTP GET
+        response = self.http_client.get(reverse("api:article_detail", args=("hello-world",)))
+        self.assertEqual(response.status_code, 200)
+        assert isinstance(response.data, dict)
+        self.assertEqual(response.data.get("title").lower(), "hello world")
 
         # HTTP GET
         response = self.http_client.get(reverse("api:article_detail", args=("hello-world",)))
@@ -222,6 +236,33 @@ class TestTagListAPIView(APIViewTestCaseBase):
         self.assertGreaterEqual(len(response_content.get("tags")), 0)
         self.assertIsNone(response_content.get("tags").get("notes"))
 
+        category = ArticleCategory.objects.create(name="hello world")
+        Article.objects.create(
+            title="test tag list api view", article_body="tagged articles",
+            author=self.user, category=category, tags="a,b,c,C")
+
+        # HTTP GET
+        response = self.http_client.get(reverse("api:tag_list"))
+        self.assertEqual(response.status_code, 200)
+        self.assertRegexpMatches(response.content.decode('utf-8'), "tags")
+        response_content = json_loads(response.content.decode('utf-8'))
+        self.assertGreaterEqual(response_content.get("count"), 1)
+        self.assertGreaterEqual(len(response_content.get("tags")), 3)
+        self.assertIsNotNone(response_content.get("tags").get("a"))
+
+        Article.objects.create(
+            title="test tag list api view 2", article_body="tagged articles 2",
+            author=self.user, category=category, tags="a,b,B,c,C,,")
+
+        # HTTP GET
+        response = self.http_client.get(reverse("api:tag_list"))
+        self.assertEqual(response.status_code, 200)
+        self.assertRegexpMatches(response.content.decode('utf-8'), "tags")
+        response_content = json_loads(response.content.decode('utf-8'))
+        self.assertGreaterEqual(response_content.get("count"), 1)
+        self.assertGreaterEqual(len(response_content.get("tags")), 3)
+        self.assertIsNotNone(response_content.get("tags").get("a"))
+
         # HTTP POST
         response = self.http_client.post(reverse("api:tag_list"), data={"name": "test_tag_name"})
         self.assertEqual(response.status_code, 405)
@@ -252,3 +293,50 @@ class TestTaggedArticleListAPIView(APIViewTestCaseBase):
                 "title": "unttaged_article_title", "article_body": "untagged_article_body",
                 "author": 1, "category": 1})
         self.assertEqual(response.status_code, 405)
+
+
+class TestOnlineMiddleware(TestCase):
+
+    def setUp(self):
+        category = ArticleCategory.objects.create(name="middleware test")
+        user = User.objects.create_user(username="middleware", email="middleware@gmail.com", password="pa4ssmiddleware")
+        self.article = Article.objects.create(
+            title="online middleware test", article_body="online middleware test",
+            author=user, category=category)
+
+    def test_with_no_specified_ua(self):
+        http_client = HTTPClient(HTTP_USER_AGENT='Mozilla/5.0')
+
+        response = http_client.get(reverse("api:article_detail", args=(self.article.slug,)))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data.get('title'), self.article.title)
+
+    def test_with_special_ua(self):
+        http_client = HTTPClient(HTTP_USER_AGENT="curl/7.58.0")
+
+        response = http_client.get(reverse("api:article_detail", args=(self.article.slug,)))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data.get('title'), self.article.title)
+
+
+class TestImportmd(unittest.TestCase):
+
+    def test_import_success(self):
+
+        out = StringIO()
+        call_command('importmd', stdout=out)
+        self.assertIn('already exists', out.getvalue())
+
+    def test_import_failure(self):
+
+        out = StringIO()
+        try:
+            call_command('importmd', dir='a', stdout=out)
+        except CommandError:
+            self.assertRaises(CommandError)
+
+        # directory without markdown files
+        try:
+            call_command('importmd', dir='data', stdout=out)
+        except CommandError:
+            self.assertRaises(CommandError)

@@ -54,7 +54,6 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     # customized middleware
     "apps.article.middleware.OnlineMiddleware",
-    "apps.article.middleware.ResponseTimeMiddleware",
 ]
 
 WSGI_APPLICATION = "mysite.config.wsgi.application"
