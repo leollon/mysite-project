@@ -71,7 +71,7 @@ STATIC_URL = "/static/"
 STATIC_ROOT = (Path("/home/") / getuser() / "static").as_posix()
 
 # Captcha's directory
-CAPTCHA_BASE_DIR = Path(Path(BASE_DIR).parent.parent) / "static/images" / "captcha"
+CAPTCHA_BASE_DIR = Path(Path(BASE_DIR).parent.parent) / "static/images/captcha"
 CAPTCHA_CACHED_TIME = 60  # in second
 
 TOKEN_EXPIRES_IN = 30 * 60  # thirty minutes in total

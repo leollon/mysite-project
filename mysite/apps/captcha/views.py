@@ -8,7 +8,7 @@ from django.views.generic.base import ContextMixin
 
 from .captcha import Captcha
 
-captcha_cached_time = getattr(settings, "CAPTCHA_CACHED_TIME", 30 * 60)
+captcha_cached_time = settings.CAPTCHA_CACHED_TIME or (30 * 60)
 
 
 class CaptchaAPIView(ContextMixin, View):

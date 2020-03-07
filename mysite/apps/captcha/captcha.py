@@ -154,8 +154,7 @@ class Captcha:
             self._suffix,
         )
         captcha_dir = Path(captcha_base_dir)
-        if not captcha_dir.exists():
-            captcha_dir.mkdir(parents=True)
+        captcha_dir.mkdir(parents=True, exist_ok=True)
         file_path = captcha_dir / self._file_name
         if file_path.exists():
             file_path.unlink()
