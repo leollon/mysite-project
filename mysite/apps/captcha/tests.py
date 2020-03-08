@@ -11,12 +11,19 @@ class TestCaptcha(SimpleTestCase):
         self.captcha_without_draw_line = Captcha(draw_lines=False)
         self.captcha_without_draw_points = Captcha(draw_points=False)
         self.captcha_with_draw_transform = Captcha(draw_transform=True)
+        self.captcha_with_xy = Captcha(xy=(1, 2))
 
     def test_generate_captch(self):
         self.captcha.generate_captcha()
         self.captcha_without_draw_line.generate_captcha()
         self.captcha_with_draw_transform.generate_captcha()
         self.captcha_without_draw_points.generate_captcha()
+        self.captcha_with_xy.generate_captcha()
+
+        try:
+            setattr(self.captcha, "_draw", None)
+        except AttributeError:
+            self.assertRaises(AttributeError)
 
 
 class TestCaptchaAPIView(TestCase):
