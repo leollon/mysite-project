@@ -154,8 +154,8 @@ class Captcha:
             self._suffix,
         )
         if self._img_path.exists():
-            self._img_path.chmod(0o744)
-        self._img_path.mkdir(mode=0o744, parents=True, exist_ok=True)
+            self._img_path.chmod(0o755)
+        self._img_path.mkdir(mode=0o755, parents=True, exist_ok=True)
         file_path = self._img_path / self._file_name
         if file_path.exists():
             file_path.unlink()

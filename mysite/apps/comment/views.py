@@ -1,10 +1,10 @@
 from django.conf import settings
-from django.core.cache import cache
 from django.db.models import Q
 from django.http import HttpResponseNotFound
-from django.http.response import JsonResponse
 from django.urls import reverse
 from rest_framework import generics
+from rest_framework.response import Response
+from utils import cache
 
 from .models import Comment
 from .serializers import CommentModelSerializer
@@ -35,11 +35,11 @@ class ArticleCommentListAPIView(generics.ListAPIView, generics.CreateAPIView):
         if captcha_text:
             cached_captcha_text = cache.get(captcha_text.lower(), None)
         if not cached_captcha_text:
-            return JsonResponse(
-                data={"message": "Invalid captcha", "status": 1},
+            return Response(
+                data={"message": "Invalid captcha"},
                 status=HttpResponseNotFound.status_code,
             )
-        cache.set(key=captcha_text, value=captcha_text, timeout=0)
+        cache.delete(key=captcha_text)
         username = request.POST.get("username", None)
         comment = request.POST.get("comment_text", None)
         ip = request.META.get("REMOTE_ADDR")
@@ -47,7 +47,7 @@ class ArticleCommentListAPIView(generics.ListAPIView, generics.CreateAPIView):
         try:
             article = Article.objects.get(pk=article_id)
         except (Article.DoesNotExist, Exception):
-            return JsonResponse(
+            return Response(
                 data={"message": "The article does not exist."},
                 status=HttpResponseNotFound.status_code)
         else:

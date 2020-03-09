@@ -1,10 +1,10 @@
 from django.conf import settings
-from django.core.cache import cache
 from django.http import HttpResponseNotAllowed
 from django.http.response import JsonResponse
 from django.middleware.csrf import get_token
 from django.views.generic import View
 from django.views.generic.base import ContextMixin
+from utils import cache
 
 from .captcha import Captcha
 
