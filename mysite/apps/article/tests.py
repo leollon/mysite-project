@@ -1,3 +1,5 @@
+import random
+import string
 import unittest
 from io import StringIO
 from json import loads as json_loads
@@ -92,8 +94,8 @@ class TestArticleModel(TestCase):
 
         try:
             article.comment_statistics = 1
-        except NotImplementedError:
-            self.assertRaises(NotImplementedError)
+        except AttributeError:
+            self.assertRaises(AttributeError)
 
     def test_article(self):
         title = '*(#UOJFDEJ(*#@J(*#@89343'
@@ -330,12 +332,59 @@ class TestImportmd(unittest.TestCase):
 
         out = StringIO()
         try:
-            call_command('importmd', dir='a', stdout=out)
-        except CommandError:
+            call_command('importmd', dir='a', stderr=out)
+        except CommandError as e:
             self.assertRaises(CommandError)
+            self.assertIn('a directory does not exist.', str(e.args))
 
         # directory without markdown files
         try:
-            call_command('importmd', dir='data', stdout=out)
+            call_command('importmd', dir='data', stderr=out)
+        except CommandError as e:
+            self.assertRaises(CommandError)
+            self.assertIn('please specify a directory containing markdown', str(e.args))
+
+
+class TestExportmd(unittest.TestCase):
+
+    def setUp(self) -> None:
+
+        user, _ = User.objects.get_or_create(
+            username='exportmd user', email='exportmd@mail.com',
+            password='exportarticles')
+        category, _ = ArticleCategory.objects.get_or_create(name='exportmd')
+        for _ in range(100):
+            Article.objects.get_or_create(
+                title=''.join(random.sample(string.digits + string.ascii_letters, random.randint(2, 62))),
+                article_body=''.join(random.sample(string.printable, random.randint(1, 100))),
+                author=user,
+                category=category)
+
+    def test_export_success(self):
+
+        out = StringIO()
+
+        # export all article
+        call_command('exportmd', stdout=out)
+        self.assertIn('Exported', out.getvalue())
+
+        # export specified articles
+        call_command(
+            'exportmd', post=[article.id for article in Article.objects.all()[1:random.randint(2, 100)]], stdout=out)
+        self.assertIn('Exported', out.getvalue())
+
+    def test_export_failure(self):
+
+        out = StringIO()
+        try:
+            call_command('exportmd', post=[101], stdout=out, stderr=out)
         except CommandError:
             self.assertRaises(CommandError)
+        self.assertIn("Not exists the article corresponding", out.getvalue())
+
+        destination = '/root'
+        try:
+            call_command('exportmd', dest=destination, stdout=out, stderr=out)
+        except PermissionError:
+            self.assertRaises(PermissionError)
+        self.assertIn('Permisson Error, can not export articles', out.getvalue())

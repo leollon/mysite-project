@@ -56,7 +56,7 @@ class Command(BaseCommand):
         else:
             if not file_list:
                 raise CommandError(
-                    "please specify a directory containing markdown files")
+                    "please specify a directory containing markdown files.")
         path = Path(options['dir']).glob('**/*')
 
         group = self.grouper()

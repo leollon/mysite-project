@@ -39,7 +39,7 @@ class Article(ArticleCleanedMixins, MyModelBase):
         return self.comment_set.count()
 
     @comment_statistics.setter
-    def comment_statistics(self, value):
+    def set_comment_statistics(self, value):
         raise NotImplementedError
 
     def __str__(self):
