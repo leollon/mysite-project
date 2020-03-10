@@ -29,6 +29,9 @@ class ArticleCommentListAPIView(generics.ListAPIView, generics.CreateAPIView):
         queryset = Comment.objects.filter(Q(post__slug=slug))
         return queryset
 
+    def get(self, request, *args, **kwargs):
+        return super(ArticleCommentListAPIView, self).get(request, *args, **kwargs)
+
     def post(self, request, *args, **kwargs):
         captcha_text = request.POST.get("captcha", None)
         cached_captcha_text = None

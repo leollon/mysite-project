@@ -14,11 +14,11 @@ class Comment(MyModelBase):
     post = models.ForeignKey(Article, on_delete=models.CASCADE)
 
     def __str__(self):
-        return "%s" % self.comment_text
+        return '%s' % self.comment_text
 
     def get_absolute_url(self):
-        return reverse("article:detail", args=(self.post.slug,))
+        return reverse('api:article_detail', args=(self.post.slug,))
 
     class Meta:
-        ordering = ("created_time",)
-        db_table = "comments"
+        ordering = ('created_time',)
+        db_table = 'comments'
