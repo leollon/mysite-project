@@ -120,9 +120,3 @@ TAGS_ARRAY_PATTERN = re.compile(
 # 文章标签过滤规则
 TAGS_WHITESPACE_PATTERN = re.compile(r"(?:,+\s*)")  # 去除逗号后面多余的空格
 TAGS_FILTER_PATTERN = re.compile(r"[^\w\d\ \-,]+")  # 去除无效字符
-
-REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer', ),
-}

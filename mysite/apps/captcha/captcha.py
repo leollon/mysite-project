@@ -37,7 +37,7 @@ class Captcha:
         :type draw_transform:       bool, 是否将验证码字体进行变形
         """
         self._img_path = img_path
-        self._file_name = uuid.uuid1()
+        self._file_name = uuid.uuid4()
         self._suffix = suffix
         self._width = size[0]
         self._height = size[1]
@@ -61,7 +61,7 @@ class Captcha:
 
     @_draw.setter
     def set_draw(self):
-        raise AttributeError("Can not set draw")
+        raise AttributeError
 
     def get_chars(self):
         """

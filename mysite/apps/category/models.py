@@ -16,7 +16,7 @@ class ArticleCategory(MyModelBase):
         return self.article_set.count()
 
     @article_statistics.setter
-    def article_statistics(self, value):
+    def set_article_statistics(self, value):
         raise NotImplementedError
 
     def __str__(self):

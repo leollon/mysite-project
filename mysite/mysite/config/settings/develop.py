@@ -13,8 +13,6 @@ from .common import (  # noqa: F401
     WSGI_APPLICATION,
 )
 
-# See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = environ.get("SECRET_KEY", "set secret_key!")
 SERIALIZER_SALT = bytes(environ.get("SERIALIZER_SALT", 'serializer salt string'), encoding='utf-8')
@@ -33,7 +31,6 @@ HOST = "http://127.0.0.1:8000"
 ROOT_URLCONF = "mysite.config.urls.develop"
 
 # Database
-# https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
 DATABASES = {
     "default": {

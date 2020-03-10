@@ -27,11 +27,12 @@ class TestArticleCategoryModel(TestCase):
         category = ArticleCategory.objects.create(name=category_name)
 
         self.assertEqual(category.article_statistics, 0)
+        self.assertEqual('abcd-', str(category))
 
         try:
             category.article_statisticss = 1
-        except NotImplementedError:
-            self.assertRaises(NotImplementedError)
+        except AttributeError:
+            self.assertRaises(AttributeError)
 
     def test_category_with_punctuation(self):
         category_name = 'random#*&@#(*&R#@'
@@ -172,10 +173,11 @@ class TestCategorizedArticleListAPIView(CategoryAPIViewBase):
         except NoReverseMatch:
             self.assertRaises(NoReverseMatch)
 
-        self.generate_test_articles()
         # HTTP GET
+        self.generate_test_articles()
+        category = ArticleCategory.objects.all().first()
         response = self.http_client.get(
-            reverse('api:categorized_articles', args=('Python',)))
+            reverse('api:categorized_articles', args=(category.name,)))
         self.assertGreaterEqual(response.data.get('article_statistics'), 1)
         self.assertEqual(response.status_code, 200)
         self.assertGreaterEqual(len(response.data.get('results')), 1)
