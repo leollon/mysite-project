@@ -86,7 +86,7 @@ class Command(BaseCommand):
         slug = slugify(unidecode(filepath.split('/')[-1].split('.')[0]))
         article_body, title = '', slug
         category_name, tags, date = 'uncategorized', 'untagged', datetime.now()
-        category, _ = ArticleCategory.objects.get_or_create(name=category_name)
+        category, __ = ArticleCategory.objects.get_or_create(name=category_name)
 
         with open(filepath, 'r') as fp:
             for line in fp.readlines():
@@ -99,7 +99,7 @@ class Command(BaseCommand):
                     elif line.startswith('categories') or line.startswith('category'):
                         result = re.search(settings.CATEGORY_PATTERN, line)
                         if result:
-                            category, _ = ArticleCategory.objects.get_or_create(
+                            category, __ = ArticleCategory.objects.get_or_create(
                                 name=re.sub(settings.CATEGORY_FILTER_PATTERN, '-', result.group(1)))
                     elif line.startswith('tags'):
                         tags = re.search(settings.TAGS_ARRAY_PATTERN, line).group(1)

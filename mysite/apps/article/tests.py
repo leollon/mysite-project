@@ -349,11 +349,11 @@ class TestExportmd(unittest.TestCase):
 
     def setUp(self) -> None:
 
-        user, _ = User.objects.get_or_create(
+        user, __ = User.objects.get_or_create(
             username='exportmd user', email='exportmd@mail.com',
             password='exportarticles')
-        category, _ = ArticleCategory.objects.get_or_create(name='exportmd')
-        for _ in range(100):
+        category, __ = ArticleCategory.objects.get_or_create(name='exportmd')
+        for __ in range(100):
             Article.objects.get_or_create(
                 title=''.join(random.sample(string.digits + string.ascii_letters, random.randint(2, 62))),
                 article_body=''.join(random.sample(string.printable, random.randint(1, 100))),

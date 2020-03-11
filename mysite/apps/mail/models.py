@@ -5,7 +5,7 @@ from apps.core import MyModelBase  # noqa: isort:skip
 
 class EmailRecord(MyModelBase):
 
-    username = models.CharField(max_length=16)
+    username = models.CharField(max_length=64)
     mail_message = models.TextField()
     ip = models.GenericIPAddressField()
     mail_state = models.CharField(max_length=16)

@@ -9,7 +9,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from .models import EmailRecord
 
-host = settings.HOST
 email_user = settings.EMAIL_HOST_USER
 email_password = settings.EMAIL_HOST_PASSWORD
 
@@ -33,6 +32,6 @@ def send_email(email, subject, ip, template_name, context):
         state, reason = 'error', e.args[0]
     finally:
         EmailRecord.objects.create(
-            username=context.get("username")[:16], mail_message=html_message,
+            username=context.get("username")[:64], mail_message=html_message,
             ip=ip, mail_state=state, reason=reason
         )

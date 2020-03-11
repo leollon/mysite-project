@@ -1,6 +1,6 @@
 [run]
 branch = True
-command_line = manage.py test
+command_line = manage.py test --noinput --failfast --settings=mysite.config.settings.test
 omit = 
     # omit __init__.py
     */__init__.py

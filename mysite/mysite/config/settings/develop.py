@@ -27,6 +27,7 @@ INSTALLED_APPS += ["debug_toolbar"]
 MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
 
 HOST = "http://127.0.0.1:8000"
+FRONTEND_HOST = "http://localhost:3000"
 
 ROOT_URLCONF = "mysite.config.urls.develop"
 

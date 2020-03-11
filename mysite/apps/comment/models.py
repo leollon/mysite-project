@@ -7,7 +7,7 @@ from apps.core import MyModelBase  # noqa: isort:skip
 
 
 class Comment(MyModelBase):
-    username = models.CharField(max_length=32)
+    username = models.CharField(max_length=64)
     email = models.EmailField(max_length=32, blank=True)
     link = models.URLField(max_length=32, blank=True)
     comment_text = models.TextField(max_length=256)

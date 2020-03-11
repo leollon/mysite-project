@@ -17,6 +17,9 @@
         blockquote p::after {
             content: '\201D';
         }
+        footer {
+            float: right;
+        }
     </style>
 </head>
 <body>

@@ -97,9 +97,9 @@ class TestCategorizedArticleListAPIView(CategoryAPIViewBase):
         category_list = ('Python', 'hello-world', 'Network', 'system-design', 'Docker')
         user = User.objects.create_user(
             username="categorizedArticlesList", email="categorize@gmail.com", password="djangopasswod")
-        for _ in range(random.randint(1, 30)):
-            category, _ = ArticleCategory.objects.get_or_create(name=random.choice(category_list))
-            for _ in range(random.randint(1, 20)):
+        for __ in range(random.randint(1, 30)):
+            category, __ = ArticleCategory.objects.get_or_create(name=random.choice(category_list))
+            for __ in range(random.randint(1, 20)):
                 Article.objects.create(
                     title=''.join(random.sample(string.printable, random.randint(10, 10))),
                     article_body=''.join(random.sample(string.printable, random.randint(5, len(string.printable)))),

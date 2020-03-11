@@ -147,8 +147,9 @@ class TestArticleCommentListAPIView(TestCaseBase):
         response = self.http_client.post(
             reverse('api:article_comment_list', args=(self.article.slug,)),
             data={
-                'username': 'cfeodafdmmentorfjeijiodsajhfhde32', 'comment_text': 'too long username',
-                'post': self.article.id, 'link': 'http://a.b.eomcmmejsk', 'captcha': 'abifed'})
+                'username': 'cfeodafdmmentorfjeijiodsajhfhde32cfeodafdmmentorfjeijiodsajhfhde32',
+                'comment_text': 'too long username', 'post': self.article.id,
+                'link': 'http://a.b.eomcmmejsk', 'captcha': 'abifed'})
         self.assertContains(response, "username", status_code=400)
 
 
