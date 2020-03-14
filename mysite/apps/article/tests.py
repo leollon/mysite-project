@@ -3,12 +3,16 @@ import string
 import unittest
 from io import StringIO
 from json import loads as json_loads
+from pathlib import Path
 from unittest.mock import patch
 
+from django.conf import settings
 from django.core.management import call_command
 from django.core.management.base import CommandError
+from django.core.management.commands import flush
 from django.db.utils import IntegrityError
 from django.test import TestCase
+from django.test.testcases import SerializeMixin
 from django.urls import reverse
 
 from .models import Article
@@ -320,7 +324,11 @@ class TestOnlineMiddleware(TestCase):
         self.assertEqual(response.data.get('title'), self.article.title)
 
 
-class TestImportmd(unittest.TestCase):
+class CommandTestBase(unittest.TestCase, SerializeMixin):
+    lockfile = __file__
+
+
+class TestImportmd(CommandTestBase):
 
     def test_import_success(self):
 
@@ -328,24 +336,40 @@ class TestImportmd(unittest.TestCase):
         call_command('importmd', stdout=out)
         self.assertIn('already exists', out.getvalue())
 
+        # not a file
+        cmd = flush.Command()
+        call_command(cmd, interactive=False)
+        markdown_dir = Path(settings.BASE_DIR).parent.parent.joinpath('data')
+        Path(markdown_dir).joinpath('empty_dir').mkdir(exist_ok=True)
+        call_command('importmd', dir='data', stdout=out, stderr=out)
+        call_command(cmd, interactive=False)
+
     def test_import_failure(self):
 
         out = StringIO()
+        markdown_dir = Path(settings.BASE_DIR).parent.parent.joinpath('data')
+        Path(markdown_dir).joinpath('empty_dir').mkdir(exist_ok=True)
         try:
-            call_command('importmd', dir='a', stderr=out)
+            call_command('importmd', dir='data/empty_dir', stdout=out, stderr=out)
+        except CommandError:
+            self.assertRaises(CommandError)
+
+        # directory does not exist
+        try:
+            call_command('importmd', dir='a', stdout=out, stderr=out)
         except CommandError as e:
             self.assertRaises(CommandError)
             self.assertIn('a directory does not exist.', str(e.args))
 
         # directory without markdown files
         try:
-            call_command('importmd', dir='data', stderr=out)
+            call_command('importmd', dir='data', stdout=out, stderr=out)
         except CommandError as e:
             self.assertRaises(CommandError)
             self.assertIn('please specify a directory containing markdown', str(e.args))
 
 
-class TestExportmd(unittest.TestCase):
+class TestExportmd(CommandTestBase):
 
     def setUp(self) -> None:
 
@@ -353,7 +377,7 @@ class TestExportmd(unittest.TestCase):
             username='exportmd user', email='exportmd@mail.com',
             password='exportarticles')
         category, __ = ArticleCategory.objects.get_or_create(name='exportmd')
-        for __ in range(100):
+        for __ in range(10):
             Article.objects.get_or_create(
                 title=''.join(random.sample(string.digits + string.ascii_letters, random.randint(2, 62))),
                 article_body=''.join(random.sample(string.printable, random.randint(1, 100))),
@@ -377,7 +401,7 @@ class TestExportmd(unittest.TestCase):
 
         out = StringIO()
         try:
-            call_command('exportmd', post=[101], stdout=out, stderr=out)
+            call_command('exportmd', post=[11], stdout=out, stderr=out)
         except CommandError:
             self.assertRaises(CommandError)
         self.assertIn("Not exists the article corresponding", out.getvalue())
