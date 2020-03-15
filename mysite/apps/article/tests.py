@@ -1,5 +1,7 @@
+import datetime
 import random
 import string
+import tempfile
 import unittest
 from io import StringIO
 from json import loads as json_loads
@@ -10,7 +12,7 @@ from django.conf import settings
 from django.core.management import call_command
 from django.core.management.base import CommandError
 from django.core.management.commands import flush
-from django.db.utils import IntegrityError
+from django.db.utils import DataError, IntegrityError
 from django.test import TestCase
 from django.test.testcases import SerializeMixin
 from django.urls import reverse
@@ -18,8 +20,8 @@ from django.urls import reverse
 from .models import Article
 from .tasks import increment_page_view_times, increment_user_view_times
 
-from apps.user.models import User  # noqa isort:skip
 from apps.category.models import ArticleCategory  # noqa isort:skip
+from apps.user.models import User  # noqa isort:skip
 
 
 class TestIncreUVTasks(TestCase):
@@ -326,47 +328,83 @@ class TestOnlineMiddleware(TestCase):
 
 class CommandTestBase(unittest.TestCase, SerializeMixin):
     lockfile = __file__
+    out = StringIO()
+
+    def setUp(self):
+
+        self.temp_dir = tempfile.mkdtemp()
 
 
 class TestImportmd(CommandTestBase):
 
     def test_import_success(self):
 
-        out = StringIO()
-        call_command('importmd', stdout=out)
-        self.assertIn('already exists', out.getvalue())
+        call_command('importmd', stdout=self.out)
+        self.assertIn('already exists', self.out.getvalue())
 
         # not a file
         cmd = flush.Command()
         call_command(cmd, interactive=False)
         markdown_dir = Path(settings.BASE_DIR).parent.parent.joinpath('data')
         Path(markdown_dir).joinpath('empty_dir').mkdir(exist_ok=True)
-        call_command('importmd', dir='data', stdout=out, stderr=out)
+        call_command('importmd', dir='data', stdout=self.out, stderr=self.out)
         call_command(cmd, interactive=False)
 
     def test_import_failure(self):
 
-        out = StringIO()
-        markdown_dir = Path(settings.BASE_DIR).parent.parent.joinpath('data')
-        Path(markdown_dir).joinpath('empty_dir').mkdir(exist_ok=True)
+        # empty directory
         try:
-            call_command('importmd', dir='data/empty_dir', stdout=out, stderr=out)
+            call_command('importmd', dir=self.temp_dir, stdout=self.out, stderr=self.out)
         except CommandError:
             self.assertRaises(CommandError)
 
         # directory does not exist
         try:
-            call_command('importmd', dir='a', stdout=out, stderr=out)
+            call_command('importmd', dir='a', stdout=self.out, stderr=self.out)
         except CommandError as e:
             self.assertRaises(CommandError)
             self.assertIn('a directory does not exist.', str(e.args))
 
         # directory without markdown files
         try:
-            call_command('importmd', dir='data', stdout=out, stderr=out)
+            call_command('importmd', dir='data', stdout=self.out, stderr=self.out)
         except CommandError as e:
             self.assertRaises(CommandError)
             self.assertIn('please specify a directory containing markdown', str(e.args))
+
+    def test_import_error(self):
+
+        md_base_dir = self.temp_dir
+
+        def generage_markdown_file(title, tags=['untagged']):
+
+            article_body = ''.join([random.choice(string.printable) for __ in range(random.randint(1, 2 ** 9))])
+            date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+            hexo_markdown = (
+                '---\ntitle: %s\ndate: %s\ncategories: uncategorized\ntags: %s\n---\n\n%s') % (title, date, tags, article_body)
+
+            with open(md_base_dir + '/' + title + '.md', 'w+') as fp:
+                fp.write(hexo_markdown)
+
+        # too long title
+        title = ''.join([random.choice(string.digits + string.ascii_letters) for __ in range(65)])
+        generage_markdown_file(title=title)
+        try:
+            call_command('importmd', dir=self.temp_dir, stdout=self.out, stderr=self.out)
+        except DataError as e:
+            self.assertRaises(DataError)
+            self.assertIn('Error, msessage', str(e))
+
+        # too long tags
+        title = ''.join([random.choice(string.digits + string.ascii_letters) for __ in range(20)])
+        tags = [str(random.choice(string.digits + string.ascii_letters)) for __ in range(65)]
+        generage_markdown_file(title, tags=tags)
+        try:
+            call_command('importmd', dir=self.temp_dir, stdout=self.out, stderr=self.out)
+        except DataError as e:
+            self.assertRaises(DataError)
+            self.assertIn('Error, msessage', str(e))
 
 
 class TestExportmd(CommandTestBase):
@@ -386,29 +424,26 @@ class TestExportmd(CommandTestBase):
 
     def test_export_success(self):
 
-        out = StringIO()
-
         # export all article
-        call_command('exportmd', stdout=out)
-        self.assertIn('Exported', out.getvalue())
+        call_command('exportmd', stdout=self.out)
+        self.assertIn('Exported', self.out.getvalue())
 
         # export specified articles
         call_command(
-            'exportmd', post=[article.id for article in Article.objects.all()[1:random.randint(2, 100)]], stdout=out)
-        self.assertIn('Exported', out.getvalue())
+            'exportmd', post=[article.id for article in Article.objects.all()[1:random.randint(2, 100)]], stdout=self.out)
+        self.assertIn('Exported', self.out.getvalue())
 
     def test_export_failure(self):
 
-        out = StringIO()
         try:
-            call_command('exportmd', post=[11], stdout=out, stderr=out)
+            call_command('exportmd', post=[11], stdout=self.out, stderr=self.out)
         except CommandError:
             self.assertRaises(CommandError)
-        self.assertIn("Not exists the article corresponding", out.getvalue())
+        self.assertIn("Not exists the article corresponding", self.out.getvalue())
 
         destination = '/root'
         try:
-            call_command('exportmd', dest=destination, stdout=out, stderr=out)
+            call_command('exportmd', dest=destination, stdout=self.out, stderr=self.out)
         except PermissionError:
             self.assertRaises(PermissionError)
-        self.assertIn('Permisson Error, can not export articles', out.getvalue())
+        self.assertIn('Permisson Error, can not export articles', self.out.getvalue())

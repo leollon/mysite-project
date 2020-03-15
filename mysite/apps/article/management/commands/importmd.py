@@ -55,8 +55,7 @@ class Command(BaseCommand):
             raise CommandError(self.parent_dir.joinpath(options['dir']).as_posix() + " directory does not exist.")
         else:
             if not file_list:
-                raise CommandError(
-                    "please specify a directory containing markdown files.")
+                raise CommandError("please specify a directory containing markdown files.")
         path = Path(options['dir']).glob('**/*')
 
         group = self.grouper()

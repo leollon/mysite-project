@@ -18,6 +18,8 @@ omit =
     */pagination.py
     # omit constants.py
     */constants.py
+    # omit cache.py
+    */utils/cache.py
     # omit manage.py
     manage.py
     # omit django migrations
