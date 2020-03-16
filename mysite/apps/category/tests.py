@@ -5,6 +5,7 @@ from django.db.utils import IntegrityError
 from django.test import TestCase
 from django.urls import reverse
 from django.urls.exceptions import NoReverseMatch
+from rest_framework.exceptions import NotFound
 
 from .models import ArticleCategory
 
@@ -109,11 +110,14 @@ class TestCategorizedArticleListAPIView(CategoryAPIViewBase):
     def test_get_categorized_article_list(self):
 
         # HTTP GET
-        response = self.http_client.get(
-            reverse('api:categorized_articles', args=('Sams-Teach-yourself-TCPIP-in-24-hours', )))
-        self.assertEqual(len(response.data.get('results')), 0)
-        self.assertEqual(response.data.get('article_statistics'), 0)
-        self.assertEqual(response.status_code, 200)
+        self.http_client.get(
+            reverse('api:categorized_articles', args=('Sams-Teach-yourself-TCPIP-in-24-hours',)))
+        self.assertRaises(NotFound)
+
+        # HTTP GET
+        self.http_client.get(
+            reverse('api:categorized_articles', args=('undefined', )))
+        self.assertRaises(NotFound)
 
         # HTTP POST
         response = self.http_client.post(
@@ -149,14 +153,6 @@ class TestCategorizedArticleListAPIView(CategoryAPIViewBase):
         response = self.http_client.options(
             reverse('api:categorized_articles', args=('Sams-Teach-yourself-TCPIP-in-24-hours', )),
             data={'username': 'commentor', 'comment_text': 'comment text', 'captcha': 'fjeisl'})
-        self.assertEqual(response.status_code, 200)
-
-        # HTTP GET
-        response = self.http_client.get(
-            reverse('api:categorized_articles', args=('undefined', )))
-        self.assertEqual(response.data.get('results'), [])
-        self.assertGreaterEqual(len(response.data.get('results')), 0)
-        self.assertEqual(response.data.get('article_statistics'), 0)
         self.assertEqual(response.status_code, 200)
 
         # HTTP GET

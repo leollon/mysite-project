@@ -1,6 +1,6 @@
 from django.db.models import Q
 from rest_framework import generics
-from rest_framework.response import Response
+from rest_framework.exceptions import NotFound
 
 from ..article.models import Article
 from ..article.serializers import ArticleModelSerializer
@@ -30,13 +30,11 @@ class CategorizedArticleListAPIView(generics.ListAPIView):
         return queryset
 
     def list(self, request, *args, **kwargs):
-        serializer = super(CategorizedArticleListAPIView, self).list(request, *args, **kwargs)
-        article_statistics = 0
         try:
             category = ArticleCategory.objects.get(name=self.kwargs.get(self.lookup_field))
         except ArticleCategory.DoesNotExist:
-            pass
+            raise NotFound
         else:
-            article_statistics = category.article_statistics
-        serializer.data['article_statistics'] = article_statistics
-        return Response(serializer.data)
+            serializer = super(CategorizedArticleListAPIView, self).list(request, *args, **kwargs)
+            serializer.data['article_statistics'] = category.article_statistics
+        return serializer
