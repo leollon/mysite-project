@@ -1,0 +1,4 @@
+{
+    "title": "about",
+    "article_body": "## 关于我\n\n**Contact:**\n\n```bash\n$ echo ZW1haWxAZXhhbXBsZS5jb20K | base64 -d # Linux\n$ echo ZW1haWxAZXhhbXBsZS5jb20K | base64 -D # macOS\n```\n\n\n\n## 关于本站\n\n使用 `Django` + `Python3.7.x`开发，使用 `Bootstrap3`，魔改来自 [startbootstrap.com](https://startbootstrap.com/template-overviews/clean-blog) 的模板，采用 `Nginx` + `uwsgi`部署上线，图片存储在使用 `Flask` + `MongoDB` 开发的图床上，使用 cloudflare 提供 CDN 。\n\n于 2017.08.05 成功部署在 [vultr](https://www.vultr.com/?ref=7109674) 上.\n\n目的：问题解决记录，学习笔记，想有一个记录的过程。\n\n## 工具集\n\n\n- zsh/tmux/vim\n\n- chrome(常用)/firefox\n\n- bionic(客户端)/jessie(服务器)\n\n- v2ray\n\n## 域名使用历史:\n\n- b4i7.com\n\n\tShort but not good. Already exired.\n\n- quantuminit.com\n\n\tNot much long but sounds good to me."
+}

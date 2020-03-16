@@ -47,6 +47,11 @@ const Header = (props) => (
                 <a>tags</a>
               </Link>
             </li>
+            <li key="friends">
+              <Link href="/friends">
+                <a>Friends</a>
+              </Link>
+            </li>
             <li key="about">
               <Link href="/about">
                 <a>about</a>

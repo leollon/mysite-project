@@ -19,5 +19,6 @@ docker-compose*
 */README.md
 */LICENSE
 */log
-*/data
+**/data
 */run
+!**/frontend/data

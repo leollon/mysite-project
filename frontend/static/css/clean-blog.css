@@ -766,3 +766,30 @@ h1,
   max-height: 80%;
   border-radius: 5px;
 }
+
+#friends {
+  list-style: none;
+  margin-top: 6px;
+}
+
+.friend {
+  float: left;
+  margin: 5px;
+  border: 1px solid silver;
+}
+
+.avatar {
+  width: 50px;
+  min-width: 50px;
+}
+
+.friend-info {
+  margin-right: 6px;
+  display: flex;
+  height: auto;
+  flex-direction: row;
+}
+
+#description {
+  font-size: 14px;
+}
