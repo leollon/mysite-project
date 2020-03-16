@@ -24,6 +24,6 @@ export default function SyntaxHighlight(options) {
     )
   }
   return (
-    <main dangerouslySetInnerHTML={{__html: insane(marked(options.content))}}></main>
+    <main dangerouslySetInnerHTML={{__html: insane(marked(options.content))}} />
   )
 }

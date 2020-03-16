@@ -2,17 +2,20 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import fetch from 'isomorphic-unfetch';
-import SyntaxHighlight from '../../lib/syntax-highlight';
 
-
+import Error from '../_error';
+import fetcher from '../../lib/fetch';
 import Layout from '../../components/layout';
 import Comments from '../../components/comment';
+import SyntaxHighlight from '../../lib/syntax-highlight';
 
 const API_URL = 'http://web:8000/api/v1/articles/';
 
 
 const Post = props => {
+  if (props.errorCode) {
+    return (<Error errorCode={props.errorCode} />);
+  }
   return (
     <Layout
       title={props.article.title}
@@ -36,6 +39,7 @@ const Post = props => {
 
 
 Post.propTypes = {
+  errorCode: PropTypes.any.isRequired,
   article: PropTypes.object.isRequired,
   comments: PropTypes.object.isRequired,
 }
@@ -45,14 +49,34 @@ Post.getInitialProps = async function (context) {
   const query = context.query;
   const slug = query.slug;
   const cursor = query.cur ? '?cur=' + query.cur : '';
+  let errorCode = false,
+    article = {},
+    comments = {};
   
-  const articleResponse = await fetch(`${API_URL}${slug}`);
-  const article = await articleResponse.json();
+  article = await fetcher(`${API_URL}${slug}`)
+    .catch((error) => {
+      if (error.name === "FetchError") {
+        errorCode = "500 Server Error";
+      } else if(error.name === "AbortError") {
+        errorCode = "Request Cancelled"
+      } else {
+        errorCode = error.message;
+      }
+    });
 
-  const commentsResponse = await fetch(`${API_URL}${slug}/comments${cursor}`);
-  const comments = await commentsResponse.json();
-
-  return { article, comments };
+  if (!errorCode) {
+    comments = await fetcher(`${API_URL}${article.slug}/comments${cursor}`)
+      .catch((error) => {
+        if (error.name === "FetchError") {
+          errorCode = "500 Server Error";
+        } else if(error.name === "AbortError") {
+          errorCode = "Request Cancelled"
+        } else {
+          errorCode = error.message;
+        }
+      });
+  }
+  return { errorCode, article, comments, };
 }
 
 export default Post;
