@@ -3,6 +3,7 @@
 import React from 'react';
 import useSWR from 'swr';
 
+import Error from '../_error';
 import fetcher from '../../lib/fetch';
 import Layout from '../../components/layout';
 import CategoryList from '../../components/category';
@@ -14,8 +15,13 @@ const API_URL = 'http://dev.django.com/api/v1/categories';
 export default function Categories() {
   let { data, error } = useSWR(`${API_URL}`, fetcher);
 
-  if (!data) { return <div>Loading...</div> }
-  if (error) { return <div>error</div> }
+  if (error) { return (<Error errorCode={error.message} />); }
+  if (!data) {
+    return (
+      <Layout title={'Loading'} description={'Loading'}>
+        <div className="empty"><h1>Loading</h1></div>
+      </Layout>);
+  }
 
   return (
     <Layout

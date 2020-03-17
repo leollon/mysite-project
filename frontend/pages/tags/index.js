@@ -3,6 +3,7 @@
 import React from 'react';
 import useSWR from 'swr';
 
+import Error from '../_error';
 import fetcher from '../../lib/fetch';
 import TagList from '../../components/tag';
 import Layout from '../../components/layout';
@@ -13,8 +14,13 @@ const API_URL = 'http://dev.django.com/api/v1/tags';
 export default function Tags() {
   let { data, error } = useSWR(`${API_URL}`, fetcher);
 
-  if (!data) { return <div>Loading...</div>; }
-  if (error) { return <div>Error</div>; }
+  if (error) { return (<Error errorCode={error.message} />); }
+  if (!data) {
+    return (
+      <Layout title={'Loading'} description={'Loading'}>
+        <div className="empty"><h1>Loading</h1></div>
+      </Layout>);
+  }
 
   return (
     <Layout

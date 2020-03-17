@@ -4,6 +4,7 @@ import React from 'react';
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
 
+import Error from './_error';
 import fetcher from '../lib/fetch';
 import Layout from './../components/layout';
 import ArticleList from '../components/post';
@@ -21,9 +22,14 @@ export default function Index() {
     fetcher
   );
 
-  if (!data) { return <div>Loading...</div> }
-  if (error) { return <div>error</div> }
-  
+  if (error) { return (<Error errorCode={error.message} />); }
+  if (!data) {
+    return (
+      <Layout title={'Loading'} description={'Loading'}>
+        <div className="empty"><h1>Loading</h1></div>
+      </Layout>);
+  }
+
   return (
     <Layout
       title="I'm 🤔"
