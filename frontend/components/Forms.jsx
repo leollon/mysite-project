@@ -1,4 +1,4 @@
-// components/forms.js
+// components/Froms.js
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -35,7 +35,7 @@ export default function CommentForm(props) {
               <p className="small text-muted no-error" id="captcha-error" />
             </div>
             <div className="col-xs-12 col-sm-4 col-md-4 col-lg-4 input-box comment-form-input">
-              <input type="text" id="captcha-input" name="captcha" placeholder="Captcha (required)" required/>
+              <input type="text" id="captcha-input" name="captcha" placeholder="Captcha (required)" required />
               <p className="small text-muted no-error" id="captcha-input-error">Fill the captcha.</p>
             </div>
             <div className="col-xs-12 col-sm-4 col-md-4 col-lg-4 comment-form-input">

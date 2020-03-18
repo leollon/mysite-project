@@ -2,10 +2,10 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import SyntaxHighlight from '../lib/syntax-highlight';
 
-import CommentForm from './forms';
-import PageList from './pagination';
+import CommentForm from './Forms';
+import PageList from './Pagination';
+import SyntaxHighlight from './SyntaxHighlight';
 
 
 export default function Comments(props) {

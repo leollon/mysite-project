@@ -1,8 +1,9 @@
 // pages/_error.js
 
 import React from 'react';
+
 import PropTypes from 'prop-types';
-import Layout from '../components/layout';
+import Layout from '../components/Layout';
 
 function Error({ errorCode }) {
   return (

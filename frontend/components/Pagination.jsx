@@ -1,4 +1,4 @@
-// components/pagination.js
+// components/Pagination.js
 
 import React from 'react';
 import Link from 'next/link';

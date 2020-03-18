@@ -2,8 +2,9 @@
 
 import React from 'react';
 
-import Layout from '../../components/layout';
+import Layout from '../../components/Layout';
 import allFriends from '../../data/friends.json';
+
 
 export default function Friends() {
   return (

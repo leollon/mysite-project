@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 
 import Error from '../_error';
 import fetcher from '../../lib/fetch';
-import Layout from '../../components/layout';
-import Comments from '../../components/comment';
-import SyntaxHighlight from '../../lib/syntax-highlight';
+import Layout from '../../components/Layout';
+import Comments from '../../components/Comment';
+import SyntaxHighlight from '../../components/SyntaxHighlight';
 
 const API_URL = 'http://web:8000/api/v1/articles/';
 
@@ -23,14 +23,16 @@ const Post = props => {
     >
       <article className="article-body">
         <SyntaxHighlight
-          content={props.article.article_body} />
+          content={props.article.article_body}
+        />
 
         <p className="text-muted" id="eof">-- EOF --</p>
         <Comments
           id={props.article.id}
           slug={props.article.slug}
           comments={props.comments}
-          statistics={props.article.comment_statistics} />
+          statistics={props.article.comment_statistics}
+        />
         <script src="/static/js/blog.js" />
       </article>
     </Layout>

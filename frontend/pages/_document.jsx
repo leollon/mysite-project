@@ -28,7 +28,7 @@ class CustomDocument extends Document {
         <link rel="preconnect" href="https://cdn.jsdelivr.net/" />
         
         <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro&display=swap" rel="stylesheet"/> 
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro&display=swap" rel="stylesheet" /> 
         
         <link href="/static/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" />
         <link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />

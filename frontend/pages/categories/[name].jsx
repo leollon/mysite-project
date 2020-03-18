@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 
 import Error from '../_error';
 import fetcher from '../../lib/fetch';
-import Layout from '../../components/layout';
-import ArticleList from '../../components/post';
-import PageList from '../../components/pagination';
+import Layout from '../../components/Layout';
+import ArticleList from '../../components/Post';
+import PageList from '../../components/Pagination';
 
 const API_URL = 'http://web:8000/api/v1/categories/';
 
@@ -21,12 +21,13 @@ export default function CategorizedArticles({ articles, name, errorCode }) {
   return (
     <Layout
       title={name}
-      description='categories'
+      description="categories"
     >
       <ArticleList
         articles={articles.results}
         category_name={name}
-        statistics={articles.article_statistics} />
+        statistics={articles.article_statistics}
+      />
       <PageList links={articles.links} />
     </Layout>
   );

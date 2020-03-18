@@ -2,7 +2,10 @@
   "name": "frontend",
   "version": "1.0.0",
   "description": "The frontend of mysite, which uses react, nextjs, react-dom.",
-  "main": "index.js",
+  "main": "index.jsx",
+  "directories": {
+    "lib": "lib"
+  },
   "scripts": {
     "dev": "next",
     "build": "next build",

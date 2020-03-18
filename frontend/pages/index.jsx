@@ -6,9 +6,9 @@ import { useRouter } from 'next/router';
 
 import Error from './_error';
 import fetcher from '../lib/fetch';
-import Layout from './../components/layout';
-import ArticleList from '../components/post';
-import PageList from '../components/pagination';
+import Layout from '../components/Layout';
+import ArticleList from '../components/Post';
+import PageList from '../components/Pagination';
 
 const API_URL = 'http://dev.django.com/api/v1/articles/'
 

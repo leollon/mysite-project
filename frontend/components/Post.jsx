@@ -1,4 +1,4 @@
-// components/post.js
+// components/Post.js
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -64,8 +64,8 @@ export default function ArticleList(props) {
               </div>)}))
         : (
           <div className="post-preview">
-          <h2 className="post-title empty">No Articles yet!</h2>
-        </div>)
+            <h2 className="post-title empty">No Articles yet!</h2>
+          </div>)
       }
     </>);
 }

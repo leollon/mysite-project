@@ -5,8 +5,8 @@ import useSWR from 'swr';
 
 import Error from '../_error';
 import fetcher from '../../lib/fetch';
-import TagList from '../../components/tag';
-import Layout from '../../components/layout';
+import TagList from '../../components/Tag';
+import Layout from '../../components/Layout';
 
 const API_URL = 'http://dev.django.com/api/v1/tags';
 
@@ -24,8 +24,8 @@ export default function Tags() {
 
   return (
     <Layout
-      title='tags'
-      description='tags'
+      title="tags"
+      description="tags"
     >
       <TagList tags={data.tags} count={data.count} />
     </Layout>

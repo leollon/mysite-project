@@ -1,4 +1,4 @@
-// components/header.js
+// components/Header.js
 
 import React from 'react';
 import Head from 'next/head';
