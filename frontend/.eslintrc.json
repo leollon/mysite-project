@@ -20,7 +20,10 @@
     "extends": [
         "plugin:jquery/slim",
         "eslint:recommended",
-        "plugin:react/recommended"
+        "plugin:react/recommended",
+        "plugin:jsx-a11y/recommended",
+        "plugin:import/errors",
+        "plugin:import/warnings"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -147,6 +150,7 @@
         ],
         "no-with": "warn",
         "no-whitespace-before-property": "warn",
+        "jsx-quotes": "warn",
         "react-hooks/exhaustive-deps": "warn",
         "react/forbid-foreign-prop-types": ["warn", { "allowInPropTypes": true }],
         "react/jsx-no-comment-textnodes": "warn",
@@ -160,6 +164,11 @@
             "ignore": []
         }
         ],
+        "react/jsx-curly-spacing": "warn",
+        "react/jsx-tag-spacing": "warn",
+        "react/jsx-filename-extension": "warn",
+        "react/jsx-closing-bracket-location": "warn",
+        "react/jsx-closing-tag-location": "warn",
         "react/jsx-uses-react": "warn",
         "react/jsx-uses-vars": "warn",
         "react/self-closing-comp": "error",
