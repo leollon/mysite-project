@@ -7,6 +7,7 @@ import Error from '../_error';
 import fetcher from '../../lib/fetch';
 import Layout from '../../components/Layout';
 import ArticleList from '../../components/Post';
+import Summary from '../../components/SubHeader';
 import PageList from '../../components/Pagination';
 
 const API_URL = 'http://web:8000/api/v1/categories/';
@@ -23,10 +24,9 @@ export default function CategorizedArticles({ articles, name, errorCode }) {
       title={name}
       description="categories"
     >
+      <Summary category_name={name} statistics={articles.article_statistics} />
       <ArticleList
         articles={articles.results}
-        category_name={name}
-        statistics={articles.article_statistics}
       />
       <PageList links={articles.links} />
     </Layout>

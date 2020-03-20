@@ -16,19 +16,6 @@ function truncateContent(content, length = 100) {
 export default function ArticleList(props) {
   return (
     <>
-      {props.category_name &&
-        <blockquote id="sub-header">
-          有<span className="badge">{props.statistics}</span>篇文章属于<strong>
-            <div className="label label-primary">
-              <span className="fa fa-folder-open">
-                {props.category_name}
-              </span>
-            </div>
-          </strong>
-          分类：
-        </blockquote>
-      }
-
       {props.articles.length
         ? (props.articles.map(article => {
             const tags = article.tags.split(',');
@@ -73,6 +60,4 @@ export default function ArticleList(props) {
 
 ArticleList.propTypes = {
   articles: PropTypes.array.isRequired,
-  statistics: PropTypes.number,
-  category_name: PropTypes.string,
 }
