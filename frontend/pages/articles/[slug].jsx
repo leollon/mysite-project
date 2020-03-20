@@ -26,7 +26,7 @@ const Post = props => {
           content={props.article.article_body}
         />
 
-        <p className="text-muted" id="eof">-- EOF --</p>
+        <p className="text-muted empty">-- EOF --</p>
         <Comments
           id={props.article.id}
           slug={props.article.slug}

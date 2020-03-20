@@ -16,7 +16,7 @@ export default function About() {
     >
       <article className="article-body">
         <SyntaxHighlight content={about.article_body} />
-        <p className="text-muted" id="eof">-- EOF --</p>
+        <p className="text-muted empty">-- EOF --</p>
       </article>
     </Layout>);
 }
