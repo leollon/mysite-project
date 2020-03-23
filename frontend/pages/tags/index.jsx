@@ -8,7 +8,7 @@ import fetcher from '../../lib/fetch';
 import TagList from '../../components/Tag';
 import Layout from '../../components/Layout';
 
-const API_URL = 'http://dev.django.com/api/v1/tags';
+const API_URL = 'http://dev.django.com/api/v1/tags/';
 
 
 export default function Tags() {

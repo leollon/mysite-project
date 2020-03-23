@@ -29,7 +29,7 @@ export default function taggedArticles({ articles, name, errorCode }) {
 }
 
 taggedArticles.propTypes = {
-  articles: PropTypes.array.isRequired,
+  articles: PropTypes.object.isRequired,
   name: PropTypes.string.isRequired,
   errorCode: PropTypes.any.isRequired,
 }
