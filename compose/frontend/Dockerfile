@@ -1,21 +1,12 @@
-FROM node:10.15.3-alpine AS node-alpine
+FROM node:10.15.3-alpine
 
 LABEL Name=mysite/frontend Version=1.0.0
-
-WORKDIR /
-
-COPY ./frontend/package.json ./
-RUN npm config set registry http://mirrors.cloud.tencent.com/npm/
-RUN npm install
-RUN npx next telemetry disable
-
-FROM node-alpine
 
 RUN mkdir /frontend
 COPY ./compose/frontend/entrypoint ./compose/frontend/start /
 COPY ./frontend /frontend
 
+WORKDIR /frontend
+
 RUN chmod +x /entrypoint /start
 RUN chmod -R 755 /frontend
-
-WORKDIR /frontend

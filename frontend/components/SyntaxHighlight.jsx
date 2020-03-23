@@ -16,14 +16,13 @@ const Highlight = dynamic(() => import('react-highlight'));
 
 export default function SyntaxHighlight(options) {
 
+  const html = insane(marked(options.content));
+
   if (/```/.test(options.content) || /~~~/.test(options.content)) {
-    return (
-      <main>
-        <Highlight innerHTML>{insane(marked(options.content))}</Highlight>
-      </main>
-    )
+    return (<Highlight innerHTML={true}>{html}</Highlight>);
   }
+
   return (
-    <main dangerouslySetInnerHTML={{__html: insane(marked(options.content))}} />
-  )
+    <div dangerouslySetInnerHTML={{ __html: html }} />
+  );
 }

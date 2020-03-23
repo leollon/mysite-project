@@ -1,4 +1,4 @@
-// components/Tag.js
+// components/Tag.jsx
 
 import React from 'react';
 import PropTypes from 'prop-types'

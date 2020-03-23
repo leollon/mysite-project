@@ -18,7 +18,7 @@ run
 captcha
 markdown
 .mypy_cache
-**/.next
+**/build
 **/package-lock.json
 coverage_html_report/
 .coverage
