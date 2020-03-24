@@ -25,8 +25,8 @@ Error.propTypes = {
 
 
 Error.getInitialProps = ({ res, err }) => {
-  const errorCode = res ? res.statusCode.toString() : err ? err.statusCode.toString() : '404 Not Found';
-  return { errorCode };
+  const errorCode = res ? (res.statusCode) : (err ? err.statusCode : '404 Not Found');
+  return { errorCode: (errorCode ? errorCode.toString() : errorCode) };
 }
 
 export default Error;
