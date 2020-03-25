@@ -1,12 +1,12 @@
 // pages/tags/index.js
 
-import React from 'react';
-import useSWR from 'swr';
+import React from 'react'
+import useSWR from 'swr'
 
-import Error from '../_error';
-import fetcher from '../../lib/fetch';
-import TagList from '../../components/Tag';
-import Layout from '../../components/Layout';
+import Error from '../_error'
+import fetcher from '../../lib/fetch'
+import TagList from '../../components/Tag'
+import Layout from '../../components/Layout'
 
 const API_URL = 'http://dev.django.com/api/v1/tags/';
 

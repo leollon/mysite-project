@@ -1,7 +1,7 @@
-// components/Category.js
+// components/Category.jsx
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
 
 const label = ['default', 'primary', 'info', 'success', 'warning', 'danger']

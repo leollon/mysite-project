@@ -1,11 +1,11 @@
-// pages/articles/[slug]/comments.js
+// components/Comments.jsx
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import CommentForm from './Forms';
-import PageList from './Pagination';
-import SyntaxHighlight from './SyntaxHighlight';
+import CommentForm from './Forms'
+import PageList from './Pagination'
+import SyntaxHighlight from './SyntaxHighlight'
 
 
 export default function Comments(props) {

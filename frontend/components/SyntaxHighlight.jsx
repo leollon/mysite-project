@@ -1,9 +1,9 @@
-// lib/syntax-highlight.js
+// components/SyntaxHighlight.jsx
 
-import React from 'react';
-import marked from 'marked';
-import dynamic from 'next/dynamic';
-import insane from 'insane';
+import React from 'react'
+import marked from 'marked'
+import dynamic from 'next/dynamic'
+import insane from 'insane'
 
 marked.setOptions({
   gfm: true,

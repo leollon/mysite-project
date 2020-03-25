@@ -1,14 +1,14 @@
 // pages/categories/[name].js
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import Error from '../_error';
-import fetcher from '../../lib/fetch';
-import Layout from '../../components/Layout';
-import ArticleList from '../../components/Post';
-import Summary from '../../components/SubHeader';
-import PageList from '../../components/Pagination';
+import Error from '../_error'
+import fetcher from '../../lib/fetch'
+import Layout from '../../components/Layout'
+import ArticleList from '../../components/Post'
+import Summary from '../../components/SubHeader'
+import PageList from '../../components/Pagination'
 
 const API_URL = 'http://web:8000/api/v1/categories/';
 

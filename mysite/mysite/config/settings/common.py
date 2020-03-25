@@ -52,7 +52,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     # customized middleware
-    "apps.article.middleware.OnlineMiddleware",
+    "apps.core.middleware.OnlineMiddleware",
 ]
 
 WSGI_APPLICATION = "mysite.config.wsgi.application"

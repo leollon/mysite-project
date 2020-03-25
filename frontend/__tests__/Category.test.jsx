@@ -1,8 +1,8 @@
-// __tests__/Category.test.js
+// __tests__/Category.test.jsx
 
-import React from 'react';
-import { render, unmountComponentAtNode } from "react-dom";
-import CategoryList from '../components/Category';
+import React from 'react'
+import { render, unmountComponentAtNode } from 'react-dom'
+import CategoryList from '../components/Category'
 
 let container;
 

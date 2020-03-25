@@ -1,15 +1,15 @@
 // pages/articles/[slug].js
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import Error from '../_error';
-import fetcher from '../../lib/fetch';
-import Layout from '../../components/Layout';
-import Comments from '../../components/Comment';
-import SyntaxHighlight from '../../components/SyntaxHighlight';
+import Error from '../_error'
+import fetcher from '../../lib/fetch'
+import Layout from '../../components/Layout'
+import Comments from '../../components/Comment'
+import SyntaxHighlight from '../../components/SyntaxHighlight'
 
-const API_URL = 'http://web:8000/api/v1/articles/';
+const API_URL = 'http://web:8000/api/v1/articles/'
 
 
 const Post = props => {

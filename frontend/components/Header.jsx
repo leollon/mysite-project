@@ -1,9 +1,9 @@
-// components/Header.js
+// components/Header.jsx
 
-import React from 'react';
-import Head from 'next/head';
-import Link from 'next/link';
-import PropTypes from 'prop-types';
+import React from 'react'
+import Head from 'next/head'
+import Link from 'next/link'
+import PropTypes from 'prop-types'
 
 
 const Header = (props) => (

@@ -1,6 +1,6 @@
 // pages/_document.js
 
-import React from 'react';
+import React from 'react'
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 
 
@@ -18,7 +18,7 @@ class CustomDocument extends Document {
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="keywords" key="keywords" content="Python,Django,c,c++,Linux,backend,后端" />
         <meta name="google-site-verification" content="" />
-        
+
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="76x76" href="/static/img/touch-icon-ipad.d5027c9927dc.png" />
         <link rel="apple-touch-icon" sizes="120x120" href="/static/img/touch-icon-iphone-retina.007e7a910a86.png" />
@@ -26,10 +26,10 @@ class CustomDocument extends Document {
         <link rel="alternate" type="application/rss+xml" title="" href="" />
         <link rel="logo" type="image/svg" href="" />
         <link rel="preconnect" href="https://cdn.jsdelivr.net/" />
-        
+
         <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro&display=swap" rel="stylesheet" /> 
-        
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro&display=swap" rel="stylesheet" />
+
         <link href="/static/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" />
         <link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <link href="/static/css/clean-blog.css" rel="stylesheet" type="text/css" media="screen" />
@@ -50,7 +50,7 @@ class CustomDocument extends Document {
                 <div className="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                   <ul className="list-inline text-center">
                     <li key="github">
-                      <a href="https://github.com/leollon">
+                      <a href={"https://github.com/" + process.env.github}>
                         <span className="fa-stack fa-lg">
                           <i className="fa fa-circle fa-stack-2x" />
                           <i className="fa fa-github fa-stack-1x fa-inverse" />
@@ -66,22 +66,19 @@ class CustomDocument extends Document {
                       </a>
                     </li>
                   </ul>
+                  <p className="blog-arch text-muted" id="online"></p>
                   <p className="copyright text-muted">
                     Copyright &copy; Leo&apos;s blog 2017
-                  </p>
+                </p>
                   <p className="blog-arch text-muted">
-                    Powered by Django & Bootstrap
-                  </p>
-                  <p className="blog-arch text-muted">
-                    online_count
-                  </p>
-                  <p className="blog-arch text-muted">Response: response time</p>
+                    Built with Django & Bootstrap
+                </p>
                 </div>
               </div>
             </div>
           </footer>
-          <script src="/static/js/clean-blog.js" />
           <NextScript />
+          <script src="/static/js/clean-blog.js" />
         </body>
       </Html>
     )

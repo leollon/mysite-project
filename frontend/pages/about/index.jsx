@@ -1,10 +1,11 @@
 // pages/about/index.js
 
-import React from 'react';
+import React from 'react'
 
-import about from '../../data/about.json';
-import Layout from '../../components/Layout';
-import SyntaxHighlight from '../../components/SyntaxHighlight';
+import about from '../../data/about.json'
+
+import Layout from '../../components/Layout'
+import SyntaxHighlight from '../../components/SyntaxHighlight'
 
 
 export default function About() {

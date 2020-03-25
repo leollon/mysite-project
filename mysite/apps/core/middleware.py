@@ -8,13 +8,12 @@ logger = logging.getLogger(__name__)
 
 
 class OnlineMiddleware(object):
-    """访问IP
-    统计网站五分钟内容访问的IP
-        args:
-            :request type: HttpRequest
-            :view_func type: Python function
-            :view_args type: tuple, positional arguments
-            :view_kwargs type: dict, keyword arguments
+    """统计网站五分钟内访问的IP
+    args:
+        :request type: HttpRequest
+        :view_func type: Python function
+        :view_args type: tuple, positional arguments
+        :view_kwargs type: dict, keyword arguments
     """
 
     def __init__(self, get_response):
@@ -26,8 +25,7 @@ class OnlineMiddleware(object):
 
     def process_view(self, request, view_func, view_args, view_kwargs):
         http_user_agent = request.META.get("HTTP_USER_AGENT", '')
-        re_pat = re.compile(
-            r".*bot.*|.*spider.*|.*curl.*|.*request.*|.*wget.*")
+        re_pat = re.compile(r".*bot.*|.*spider.*|.*curl.*|.*request.*|.*wget.*")
         if re.search(re_pat, http_user_agent):
             # 不统计爬虫IP
             return
