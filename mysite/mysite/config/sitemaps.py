@@ -1,7 +1,6 @@
 from django.contrib import sitemaps
-from django.urls import reverse
 
-from apps.article.models import Article
+from apps.article.models import Article  # noqa: isort:skip
 
 
 class ArticleSiteMap(sitemaps.Sitemap):
@@ -16,4 +15,4 @@ class ArticleSiteMap(sitemaps.Sitemap):
         return item.created_time
 
     def location(self, item):
-        return reverse("article:detail", args=(item.slug,))
+        return item.get_absolute_url()

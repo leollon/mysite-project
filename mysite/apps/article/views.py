@@ -5,13 +5,13 @@ from django.http import JsonResponse
 from django.views.generic.base import View
 from ipware.ip import get_real_ip
 from rest_framework import generics
-from utils import cache
 
 from .models import Article
 from .serializers import ArticleModelSerializer
 from .tasks import increment_page_view_times, increment_user_view_times
 
 from apps.core import CustomizedCursorPagination  # noqa: isort:skip
+from apps.core import cache  # noqa: isort:skip
 
 
 class BaseArticleAPI(generics.ListAPIView):

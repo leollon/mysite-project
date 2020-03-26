@@ -2,7 +2,8 @@ import logging
 import re
 
 from ipware.ip import get_real_ip
-from utils import cache
+
+from .cache import cache
 
 logger = logging.getLogger(__name__)
 

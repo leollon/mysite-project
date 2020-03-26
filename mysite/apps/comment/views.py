@@ -3,7 +3,6 @@ from django.db.models import Q
 from django.http import HttpResponseNotFound
 from rest_framework import generics
 from rest_framework.response import Response
-from utils import cache
 
 from .models import Comment
 from .serializers import CommentModelSerializer
@@ -11,6 +10,7 @@ from .serializers import CommentModelSerializer
 from apps.article.models import Article  # noqa: isort:skip
 from apps.mail.tasks import send_email  # noqa: isort:skip
 from apps.core import CustomizedCursorPagination  # noqa: isort:skip
+from apps.core import cache  # noqa: isort:skip
 
 email = settings.EMAIL_HOST_USER
 

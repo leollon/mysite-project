@@ -4,12 +4,12 @@ import string
 from django.db.utils import DataError
 from django.test import TestCase
 from django.urls import reverse
-from utils import cache
 
 from .models import Comment
 
 from apps.article.models import Article  # noqa: isort:skip
 from apps.category.models import ArticleCategory  # noqa: isort:skip
+from apps.core import cache  # noqa: isort:skip
 from apps.user.models import User  # noqa: isort:skip
 
 

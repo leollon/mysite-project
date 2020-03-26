@@ -4,9 +4,10 @@ from django.http.response import JsonResponse
 from django.middleware.csrf import get_token
 from django.views.generic import View
 from django.views.generic.base import ContextMixin
-from utils import cache
 
 from .captcha import Captcha
+
+from apps.core import cache  # noqa: isort:skip
 
 captcha_cached_time = settings.CAPTCHA_CACHED_TIME or (30 * 60)
 

@@ -2,10 +2,11 @@ from pathlib import Path
 from typing import Generator, Tuple
 
 from django.core.management.base import BaseCommand
-from utils import primer_generator
 
 from ....article.models import Article
 from .constants import Exportation
+
+from apps.core import primer_generator  # noqa: isort:skip
 
 
 class Command(BaseCommand):

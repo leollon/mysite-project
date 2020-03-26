@@ -8,12 +8,12 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db import DataError, IntegrityError
 from django.utils.text import slugify
 from unidecode import unidecode
-from utils import primer_generator
 
 from ....article.models import Article
 from .constants import Importation
 
 from apps.category.models import ArticleCategory  # noqa: isort:skip
+from apps.core import primer_generator  # noqa: isort:skip
 from apps.user.models import User  # noqa: isort:skip
 
 

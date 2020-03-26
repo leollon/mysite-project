@@ -28,6 +28,8 @@ TEMPLATES = [
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
             Path(BASE_DIR).parent.parent.joinpath("mail_templates").as_posix(),
+            Path(BASE_DIR).parent.parent.joinpath("templates").as_posix(),
+
         ],
         "APP_DIRS": True,
         "OPTIONS": {
