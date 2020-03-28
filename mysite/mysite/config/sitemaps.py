@@ -15,4 +15,4 @@ class ArticleSiteMap(sitemaps.Sitemap):
         return item.created_time
 
     def location(self, item):
-        return item.get_absolute_url()
+        return '/'.join(['', 'articles', item.slug])

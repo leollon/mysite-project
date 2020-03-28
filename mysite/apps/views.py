@@ -1,4 +1,4 @@
-from django.contrib.syndication.views import Feed
+from django.contrib.syndication.views import Feed as RSSFeedView
 from django.http import JsonResponse
 from django.utils.feedgenerator import Atom1Feed
 
@@ -11,11 +11,11 @@ def online(request):
     return JsonResponse({'online_statistics': len(online_ips)})
 
 
-class RSSArticleFeed(Feed):
+class RSSArticleFeedView(RSSFeedView):
 
     title = 'Articles'
-    link = '/articles/'
-    description = 'article list'
+    link = '/'
+    subtitle = description = 'article list'
 
     def items(self):
         return Article.objects.all()
@@ -28,10 +28,9 @@ class RSSArticleFeed(Feed):
 
     # item_link is only needed if NewsItem has no get_absolute_url method.
     def item_link(self, item):
-        return item.get_absolute_url()
+        return '/'.join(['', 'articles', item.slug])
 
 
-class AtomArticleFeed(RSSArticleFeed):
+class AtomArticleFeedView(RSSArticleFeedView):
 
     feed_type = Atom1Feed
-    subtitle = RSSArticleFeed.description

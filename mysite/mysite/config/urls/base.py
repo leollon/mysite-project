@@ -15,29 +15,23 @@ Including another URLconf
 """
 from django.conf.urls import include
 from django.contrib import admin
-from django.contrib.flatpages import views as flatpage_views
 from django.contrib.sitemaps import views as sitemap_views
 from django.urls import path, re_path
 from django.views.decorators.cache import cache_page
 
 from ..sitemaps import ArticleSiteMap
 
-from apps.views import RSSArticleFeed, AtomArticleFeed  # noqa: isort:skip
+from apps.views import RSSArticleFeedView, AtomArticleFeedView  # noqa: isort:skip
 
 sitemaps = {"Article": ArticleSiteMap}
 
 urlpatterns = [
-    path("rss/", RSSArticleFeed()),
-    path("atom.xml", AtomArticleFeed()),
+    path("rss/", RSSArticleFeedView()),
+    path("atom.xml", AtomArticleFeedView()),
     path(
         "sitemap.xml", cache_page(60 * 60 * 24 * 7, cache="redis")(sitemap_views.sitemap),
         {"sitemaps": sitemaps},
     ),
     re_path(r"^accounts/backstage/", admin.site.urls),
     re_path(r"^api/v1/", include("apps.urls")),
-    re_path(
-        r"^(?P<url>.*/)$",
-        cache_page(60 * 60 * 24 * 7, cache="redis")(flatpage_views.flatpage),
-        name="django.contrib.flatpages.views.flatpage",
-    ),
 ]
