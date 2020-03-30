@@ -10,20 +10,20 @@ import SyntaxHighlight from './SyntaxHighlight'
 
 export default function Comments(props) {
   const statistics = props.statistics;
-  const comments = props.comments.results;
+  const commentArray = props.comments.results;
   
   return (
     <div className="comment-content" id="comments">
       <p className="fa fa-comment"> {statistics} Comment{statistics !== 1 ? 's' : ''}</p>
       <hr id="underline" />
       <ul id="comment-list">
-        {comments.length
-          ? (comments.map(comment => (
+        {commentArray.length
+          ? (commentArray.map(comment => (
             <li className="comment" key={comment.username + comment.created_time}>
               <a href={comment.link ? comment.link : ''} className="username">{comment.username}</a>
               <span className="timestamp"> @ 
                 <a href={'#' + comment.username}> {comment.created_time}
-                </a> :
+                </a> said:
               </span>
               <div className="comment-text">
                 <SyntaxHighlight content={comment.comment_text} />

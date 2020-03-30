@@ -1,60 +1,55 @@
 {
-  "name": "frontend",
-  "version": "1.0.0",
-  "description": "The frontend of mysite, which uses react, nextjs, react-dom.",
-  "main": "index.jsx",
-  "directories": {
-    "lib": "lib"
-  },
-  "scripts": {
-    "dev": "next",
-    "build": "next build",
-    "start": "next start",
-    "test": "jest"
-  },
-  "jest": {
-    "transform": {
-      ".+\\.[t|j]sx?$": "babel-jest"
+    "name": "frontend",
+    "version": "1.0.0",
+    "description": "The frontend of mysite, which uses react, nextjs, react-dom.",
+    "main": "index.jsx",
+    "directories": {
+        "lib": "lib"
+    },
+    "scripts": {
+        "dev": "next",
+        "build": "next build",
+        "start": "next start",
+        "test": "jest"
+    },
+    "keywords": [
+        "reactjs",
+        "react",
+        "nextjs"
+    ],
+    "author": "leollon",
+    "license": "MIT",
+    "dependencies": {
+        "del": "^3.0.0",
+        "gulp": "^4.0.0",
+        "gulp-clean-css": "^3.10.0",
+        "gulp-imagemin": "^6.0.0",
+        "gulp-rename": "^1.4.0",
+        "gulp-terser": "^1.2.0",
+        "insane": "^2.6.2",
+        "isomorphic-unfetch": "^3.0.0",
+        "marked": "^0.8.0",
+        "next": "^9.2.1",
+        "prop-types": "^15.5.7",
+        "react": "^16.12.0",
+        "react-dom": "^16.12.0",
+        "react-highlight": "^0.12.0",
+        "react-markdown": "^4.3.1",
+        "swr": "^0.1.16"
+    },
+    "devDependencies": {
+        "@babel/preset-env": "^7.9.0",
+        "@babel/preset-react": "^7.9.4",
+        "babel-eslint": "^9.0.0",
+        "babel-jest": "^23.6.0",
+        "eslint": "^6.8.0",
+        "eslint-plugin-dollar-sign": "^1.0.2",
+        "eslint-plugin-import": "^2.20.1",
+        "eslint-plugin-jquery": "^1.5.1",
+        "eslint-plugin-jsx-a11y": "^6.2.3",
+        "eslint-plugin-react": "^7.18.3",
+        "eslint-plugin-react-hooks": "^2.3.0",
+        "jest": "^25.2.4",
+        "react-test-renderer": "^16.12.0"
     }
-  },
-  "keywords": [
-    "reactjs",
-    "react",
-    "nextjs"
-  ],
-  "author": "leollon",
-  "license": "MIT",
-  "dependencies": {
-    "del": "^3.0.0",
-    "gulp": "^4.0.0",
-    "gulp-clean-css": "^3.10.0",
-    "gulp-imagemin": "^6.0.0",
-    "gulp-rename": "^1.4.0",
-    "gulp-terser": "^1.2.0",
-    "insane": "^2.6.2",
-    "isomorphic-unfetch": "^3.0.0",
-    "marked": "^0.8.0",
-    "next": "^9.2.1",
-    "prop-types": "^15.5.7",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-highlight": "^0.12.0",
-    "react-markdown": "^4.3.1",
-    "swr": "^0.1.16"
-  },
-  "devDependencies": {
-    "@babel/preset-env": "^7.0.0",
-    "@babel/preset-react": "^7.0.0",
-    "babel-eslint": "^9.0.0",
-    "babel-jest": "^23.4.2",
-    "eslint": "^6.8.0",
-    "eslint-plugin-dollar-sign": "^1.0.2",
-    "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-jquery": "^1.5.1",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.18.3",
-    "eslint-plugin-react-hooks": "^2.3.0",
-    "jest": "^25.1.0",
-    "react-test-renderer": "^16.12.0"
-  }
 }
