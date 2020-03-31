@@ -38,20 +38,20 @@ services:
     - "127.0.0.1:8025:8025"
     - "127.0.0.1:1025:1025"
 
-  web:
-    image: mysite/blog
+  backend:
+    image: mysite/backend
     build:
       context: .
-      dockerfile: ./compose/mysite/Dockerfile  # the file contains the steps of build images
+      dockerfile: ./compose/backend/Dockerfile  # the file contains the steps of build images
     entrypoint: /entrypoint
     command: /start        # The command runs in the container
     volumes:
-      - ./mysite:/mysite
-      - ./var:/mysite/var
-      - ./run:/mysite/run
-      - ./data:/mysite/data
-      - ./captcha:/mysite/static/images/captcha
-      - ./markdown:/mysite/apps/article/management/markdown
+      - ./backend:/backend
+      - ./var:/backend/var
+      - ./run:/backend/run
+      - ./data:/backend/data
+      - ./captcha:/backend/static/images/captcha
+      - ./markdown:/backend/apps/article/management/markdown
     env_file:
       - ./.envs/.django
       - ./.envs/.postgres
@@ -79,7 +79,7 @@ services:
     ports:
       - "127.0.0.1:3000:3000"
     depends_on:
-      - web
+      - backend
 
 networks:
   blog-net:

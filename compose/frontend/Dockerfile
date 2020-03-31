@@ -1,6 +1,6 @@
 FROM node:10.15.3-alpine
 
-LABEL Name=mysite/frontend Version=1.0.0
+LABEL Name=backend/frontend Version=1.0.0
 
 RUN mkdir /frontend
 COPY ./compose/frontend/entrypoint ./compose/frontend/start /

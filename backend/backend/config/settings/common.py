@@ -13,7 +13,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
-    "django.contrib.flatpages",
     "rest_framework",
     "apps.article.apps.ArticleConfig",
     "apps.category.apps.ArticleCategoryConfig",
@@ -57,7 +56,7 @@ MIDDLEWARE = [
     "apps.core.middleware.OnlineMiddleware",
 ]
 
-WSGI_APPLICATION = "mysite.config.wsgi.application"
+WSGI_APPLICATION = "backend.config.wsgi.application"
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators

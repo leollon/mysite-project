@@ -9,7 +9,7 @@ import Layout from '../../components/Layout'
 import Comments from '../../components/Comment'
 import SyntaxHighlight from '../../components/SyntaxHighlight'
 
-const API_URL = 'http://web:8000/api/v1/articles/'
+const API_URL = 'http://backend:8000/api/v1/articles/'
 
 const Post = (props) => {
     if (props.errorCode) {

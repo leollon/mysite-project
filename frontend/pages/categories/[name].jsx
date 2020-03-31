@@ -10,7 +10,7 @@ import ArticleList from '../../components/Post'
 import Summary from '../../components/SubHeader'
 import PageList from '../../components/Pagination'
 
-const API_URL = 'http://web:8000/api/v1/categories/'
+const API_URL = 'http://backend:8000/api/v1/categories/'
 
 export default function CategorizedArticles({ articles, name, errorCode }) {
     if (errorCode) {

@@ -1,5 +1,5 @@
 
-# Mysite built with Django
+# backend built with Django
 
 ## TODO
 - [x] Article

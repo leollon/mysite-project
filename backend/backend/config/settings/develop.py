@@ -29,7 +29,7 @@ MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
 HOST = "http://127.0.0.1:8000"
 FRONTEND_HOST = "http://localhost:3000"
 
-ROOT_URLCONF = "mysite.config.urls.develop"
+ROOT_URLCONF = "backend.config.urls.develop"
 
 # Database
 
@@ -137,8 +137,8 @@ LOG_LEVEL = "DEBUG"
 
 def create_log_file():
     (Path(BASE_DIR).parent.parent / "var/log").mkdir(parents=True, exist_ok=True)
-    (Path(BASE_DIR).parent.parent / "var/log" / "mysite.log").touch()
-    return (Path(BASE_DIR).parent.parent / "var/log" / "mysite.log").as_posix()
+    (Path(BASE_DIR).parent.parent / "var/log" / "backend.log").touch()
+    return (Path(BASE_DIR).parent.parent / "var/log" / "backend.log").as_posix()
 
 
 LOGGING = {

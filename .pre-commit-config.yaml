@@ -7,7 +7,7 @@ repos:
     rev: master
     hooks:
       - id: trailing-whitespace
-        files: (^|/)mysite/.+\.(py|html|sh|css|js)$
+        files: (^|/)backend/.+\.(py|html|sh|css|js)$
 
 -   repo: local
     hooks:
@@ -16,7 +16,7 @@ repos:
         entry: flake8
         language: python
         types: [python]
-        files: (^|/)mysite/.+\.py
+        files: (^|/)backend/.+\.py
 
 -   repo: local
     hooks:
@@ -25,7 +25,7 @@ repos:
         entry: isort
         language: python
         types: [python]
-        files: (^|/)mysite/.+\.py
+        files: (^|/)backend/.+\.py
 
 -   repo: local
     hooks:

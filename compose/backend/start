@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -o errexit
+
+python manage.py makemigrations --no-input && python manage.py migrate
+celery flower --basic_auth="${FLOWER_USER}":"${FLOWER_PASSWORD}" -A backend --adress=127.0.0.1 --port=5555 --auto_refresh=True &
+celery -A backend worker -P gevent -c 500 -l DEBUG -f var/log/celery.log --pidfile run/celeryd.pid -D
+celery -A backend beat -s /backend/run/celerybeat-schedule --pidfile run/celerybeat.pid --detach
+python manage.py runserver 0.0.0.0:8000

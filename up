@@ -13,5 +13,5 @@ then
     sudo chown -R "${USER}":"${USER}" ./postgresql;
 fi
 
-cp -ruv ./mysite/static "$HOME"         # copy static files, such as js, css and images
+cp -ruv ./backend/static "$HOME"         # copy static files, such as js, css and images
 docker-compose -f local.yml up "$@"     # start building images

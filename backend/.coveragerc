@@ -1,6 +1,6 @@
 [run]
 branch = True
-command_line = manage.py test --noinput --failfast --settings=mysite.config.settings.test
+command_line = manage.py test --noinput --failfast --settings=backend.config.settings.test
 omit = 
     # omit __init__.py
     */__init__.py
@@ -25,7 +25,7 @@ omit =
     # omit django migrations
     */migrations/*
     # omit config
-    mysite/config/*
+    backend/config/*
     # omit static files
     static/*
     # omit templates files

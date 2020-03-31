@@ -2,4 +2,4 @@
 
 set -o errexit
 
-docker container exec -it mysite-project_web_1 python manage.py exportmd "$@"
+docker container exec -it mysite-project_backend_1 python manage.py exportmd "$@"

@@ -1,6 +1,6 @@
 FROM python:3.7-alpine
 
-LABEL Name=mysite Version=1.0.0
+LABEL Name=backend Version=1.0.0
 
 ENV PYTHONUNBUFFERED 1
 
@@ -27,7 +27,7 @@ RUN rm -rf \
         /usr/local/share/man \
     && find /usr/local -name '*.a' -delete
 
-# Start building mysite image
+# Start building backend image
 RUN adduser -s /bin/bash -DH blog
 RUN echo 'blog ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN echo 'blog:local' | chpasswd
@@ -35,22 +35,21 @@ RUN echo 'blog:local' | chpasswd
 COPY ./requirements.txt /
 RUN pip install -r requirements.txt -i https://pypi.douban.com/simple && rm -f requirements.txt
 
-RUN mkdir /mysite
-WORKDIR /mysite
+RUN mkdir /backend
+WORKDIR /backend
 
-COPY mysite/apps       apps
-COPY mysite/utils      utils
-COPY mysite/templates  templates
-COPY mysite/static     static
-COPY mysite/mysite     mysite
-COPY mysite/manage.py  manage.py
+COPY backend/apps       apps
+COPY backend/templates  templates
+COPY backend/static     static
+COPY backend/backend     backend
+COPY backend/manage.py  manage.py
 
-COPY ./compose/mysite/entrypoint ./compose/mysite/start /
+COPY ./compose/backend/entrypoint ./compose/backend/start /
 
-RUN chmod 755 -R /entrypoint /start /mysite
-RUN chown -R blog:blog /entrypoint /start /mysite
+RUN chmod 755 -R /entrypoint /start /backend
+RUN chown -R blog:blog /entrypoint /start /backend
 
 USER blog:blog
 
 RUN mkdir -p var/log data run
-RUN touch var/log/mysite.log
+RUN touch var/log/backend.log

@@ -8,12 +8,12 @@ import os
 
 from celery import Celery
 
-ENVIRON_MODULE = os.environ.get('DJANGO_MYSITE_PROFILE', 'develop')
+ENVIRON_MODULE = os.environ.get('DJANGO_BACKEND_PROFILE', 'develop')
 os.environ.setdefault(
-    'DJANGO_SETTINGS_MODULE', 'mysite.config.settings.%s' % ENVIRON_MODULE
+    'DJANGO_SETTINGS_MODULE', 'backend.config.settings.%s' % ENVIRON_MODULE
 )
 
-app = Celery('mysite')
+app = Celery('backend')
 
 app.config_from_object('django.conf:settings', namespace='CELERY')
 

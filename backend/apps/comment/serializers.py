@@ -12,4 +12,7 @@ class CommentModelSerializer(serializers.ModelSerializer):
         model = Comment
         exclude = ('id', )
         read_only_fields = ('created_time',)
-        extra_kwargs = {'email': {'write_only': True}}
+        extra_kwargs = {
+            'email': {'write_only': True},
+            'post': {'write_only': True}
+        }

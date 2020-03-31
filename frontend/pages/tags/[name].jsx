@@ -9,7 +9,7 @@ import Layout from '../../components/Layout'
 import ArticleList from '../../components/Post'
 import PageList from '../../components/Pagination'
 
-const API_URL = 'http://web:8000/api/v1/tags/'
+const API_URL = 'http://backend:8000/api/v1/tags/'
 
 export default function taggedArticles({ articles, name, errorCode }) {
     if (errorCode) {
