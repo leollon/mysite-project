@@ -1,15 +1,18 @@
-{
+// .eslintrc.js
+
+module.exports = {
+
     "settings": {
-      "react": {
-        "createClass": "createReactClass", // Regex for Component Factory to use,
-                                          // default to "createReactClass"
-        "pragma": "React",  // Pragma to use, default to "React"
-        "version": "detect", // React version. "detect" automatically picks the version you have installed.
-                            // You can also use `16.0`, `16.3`, etc, if you want to override the detected value.
-                            // default to latest and warns if missing
-                            // It will default to "detect" in the future
-        "flowVersion": "0.53" // Flow version
-      }
+        "react": {
+            "createClass": "createReactClass", // Regex for Component Factory to use,
+            // default to "createReactClass"
+            "pragma": "React", // Pragma to use, default to "React"
+            "version": "detect", // React version. "detect" automatically picks the version you have installed.
+            // You can also use `16.0`, `16.3`, etc, if you want to override the detected value.
+            // default to latest and warns if missing
+            // It will default to "detect" in the future
+            "flowVersion": "0.53" // Flow version
+        }
     },
     "env": {
         "es6": true,
@@ -38,12 +41,7 @@
         "ecmaVersion": 2018,
         "sourceType": "module"
     },
-    "plugins": [
-        "react",
-        "jquery",
-        "dollar-sign",
-        "react-hooks"
-    ],
+    "plugins": ["react", "jquery", "dollar-sign", "react-hooks"],
     "rules": {
         "array-callback-return": "warn",
         "default-case": ["warn", { "commentPattern": "^no default$" }],
@@ -77,16 +75,16 @@
         "no-lone-blocks": "warn",
         "no-loop-func": "warn",
         "no-mixed-operators": [
-          "warn",
-          {
-            "groups": [
-              ["&", "|", "^", "~", "<<", ">>", ">>>"],
-              ["==", "!=", "===", "!==", ">", ">=", "<", "<="],
-              ["&&", "||"],
-              ["in", "instanceof"]
-            ],
-            "allowSamePrecedence": false
-          }
+            "warn",
+            {
+                "groups": [
+                    ["&", "|", "^", "~", "<<", ">>", ">>>"],
+                    ["==", "!=", "===", "!==", ">", ">=", "<", "<="],
+                    ["&&", "||"],
+                    ["in", "instanceof"]
+                ],
+                "allowSamePrecedence": false
+            }
         ],
         "no-multi-str": "warn",
         "no-native-reassign": "warn",
@@ -114,27 +112,27 @@
         "no-unexpected-multiline": "warn",
         "no-unreachable": "warn",
         "no-unused-expressions": [
-          "error",
-          {
-            "allowShortCircuit": true,
-            "allowTernary": true,
-            "allowTaggedTemplates": true
-          }
+            "error",
+            {
+                "allowShortCircuit": true,
+                "allowTernary": true,
+                "allowTaggedTemplates": true
+            }
         ],
         "no-unused-labels": "warn",
         "no-unused-vars": [
-          "warn",
-          {
-            "args": "none",
-            "ignoreRestSiblings": true
-          }
+            "warn",
+            {
+                "args": "none",
+                "ignoreRestSiblings": true
+            }
         ],
         "no-use-before-define": [
             "warn",
             {
-            "functions": false,
-            "classes": false,
-            "variables": false
+                "functions": false,
+                "classes": false,
+                "variables": false
             }
         ],
         "no-useless-computed-key": "warn",
@@ -144,26 +142,29 @@
         "no-useless-rename": [
             "warn",
             {
-            "ignoreDestructuring": false,
-            "ignoreImport": false,
-            "ignoreExport": false
+                "ignoreDestructuring": false,
+                "ignoreImport": false,
+                "ignoreExport": false
             }
         ],
         "no-with": "warn",
         "no-whitespace-before-property": "warn",
         "jsx-quotes": "warn",
         "react-hooks/exhaustive-deps": "warn",
-        "react/forbid-foreign-prop-types": ["warn", { "allowInPropTypes": true }],
+        "react/forbid-foreign-prop-types": [
+            "warn",
+            { "allowInPropTypes": true }
+        ],
         "react/jsx-no-comment-textnodes": "warn",
         "react/jsx-no-duplicate-props": "warn",
         "react/jsx-no-target-blank": "warn",
         "react/jsx-no-undef": "error",
         "react/jsx-pascal-case": [
-        "warn",
-        {
-            "allowAllCaps": true,
-            "ignore": []
-        }
+            "warn",
+            {
+                "allowAllCaps": true,
+                "ignore": []
+            }
         ],
         "react/jsx-curly-spacing": "warn",
         "react/jsx-tag-spacing": "warn",

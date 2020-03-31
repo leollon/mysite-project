@@ -29,12 +29,21 @@ repos:
 
 -   repo: local
     hooks:
+      - id: prettier
+        name: prettier
+        entry: prettier
+        language: node
+        types: [javascript]
+        files: (^|/)frontend/.+\.[t|j]sx?
+
+-   repo: local
+    hooks:
       - id: eslint
         name: eslint
         entry: eslint
         language: node
         types: [javascript]
-        files: (^|/)frontend/.+\.(js|jsx)
+        files: (^|/)frontend/.+\.[t|j]sx?
         additional_dependencies:
           - eslint@6.8.0
           - eslint-config-airbnb@18.1.0
