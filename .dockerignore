@@ -22,3 +22,4 @@ docker-compose*
 **/data
 */run
 !**/frontend/data
+!**/apps/captcha
