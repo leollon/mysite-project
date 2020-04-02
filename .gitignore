@@ -1,26 +1,38 @@
-.idea/
-.vscode/
+# diretories
+
+.idea
+.vscode
+.mypy_cache
+backup
+cache
+coverage_html_report
+postgresql
+redis
+run
+siteEnv
+var
+captcha
+markdown
+**/data/**
+**/build/**
+**/node_modules/**
+
+
+# files
+
+.coverage
 *.pyc
 *.sqlite3
 *.tags*
-deploy/
 *.sql
 *.bak
-siteEnv
-node_modules
-backup
-postgresql
-redis
-deploy
-var
-run
-**/data
-captcha
-markdown
-.mypy_cache
-**/build
 **/package-lock.json
-coverage_html_report/
-.coverage
+
+
+# not ignored directories
+
 !**/frontend/data
 !**/apps/captcha
+
+
+# not ignored files

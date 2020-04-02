@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -o errexit
+set -xe
 
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'

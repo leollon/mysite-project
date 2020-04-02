@@ -74,6 +74,8 @@ services:
     command: /start
     volumes:
       - ./frontend:/frontend
+      # https://jdlm.info/articles/2016/03/06/lessons-building-node-app-docker.html
+      - /frontend/node_modules
     networks:
       - blog-net
     ports:
