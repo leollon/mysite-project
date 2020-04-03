@@ -1,15 +1,15 @@
 // components/Comments.jsx
 
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import CommentForm from './Forms'
-import PageList from './Pagination'
-import SyntaxHighlight from './SyntaxHighlight'
+import CommentForm from './Forms';
+import PageList from './Pagination';
+import SyntaxHighlight from './SyntaxHighlight';
 
 export default function Comments(props) {
-    const statistics = props.statistics
-    const commentArray = props.comments.results
+    const statistics = props.statistics;
+    const commentArray = props.comments.results;
 
     return (
         <div className="comment-content" id="comments">
@@ -62,7 +62,7 @@ export default function Comments(props) {
             <PageList links={props.comments.links} />
             <CommentForm slug={props.slug} post_id={props.id} />
         </div>
-    )
+    );
 }
 
 Comments.propTypes = {
@@ -70,4 +70,4 @@ Comments.propTypes = {
     slug: PropTypes.string.isRequired,
     comments: PropTypes.object.isRequired,
     statistics: PropTypes.number.isRequired,
-}
+};

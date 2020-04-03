@@ -1,9 +1,9 @@
 // pages/friends/index.js
 
-import React from 'react'
+import React from 'react';
 
-import Layout from '../../components/Layout'
-import allFriends from '../../data/friends.json'
+import Layout from '../../components/Layout';
+import allFriends from '../../data/friends.json';
 
 export default function Friends() {
     return (
@@ -30,5 +30,5 @@ export default function Friends() {
                 ))}
             </ul>
         </Layout>
-    )
+    );
 }

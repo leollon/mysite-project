@@ -5,30 +5,30 @@ $(function () {
             $(this).toggleClass(
                 'floating-label-form-group-with-value',
                 !!$(e.target).val()
-            )
+            );
         })
         .on('focus', '.floating-label-form-group', function () {
-            $(this).addClass('floating-label-form-group-with-focus')
+            $(this).addClass('floating-label-form-group-with-focus');
         })
         .on('blur', '.floating-label-form-group', function () {
-            $(this).removeClass('floating-label-form-group-with-focus')
-        })
-})
+            $(this).removeClass('floating-label-form-group-with-focus');
+        });
+});
 
 // Navigation Scripts to Show Header on Scroll-Up
 jQuery(document).ready(function ($) {
-    var MQL = 1170
+    var MQL = 1170;
 
     //primary navigation slide-in effect
     if ($(window).width() > MQL) {
-        var headerHeight = $('.navbar-custom').height()
+        var headerHeight = $('.navbar-custom').height();
         $(window).on(
             'scroll',
             {
                 previousTop: 0,
             },
             function () {
-                var currentTop = $(window).scrollTop()
+                var currentTop = $(window).scrollTop();
                 //check if user is scrolling up
                 if (currentTop < this.previousTop) {
                     //if scrolling up...
@@ -36,24 +36,24 @@ jQuery(document).ready(function ($) {
                         currentTop > 0 &&
                         $('.navbar-custom').hasClass('is-fixed')
                     ) {
-                        $('.navbar-custom').addClass('is-visible')
+                        $('.navbar-custom').addClass('is-visible');
                     } else {
-                        $('.navbar-custom').removeClass('is-visible is-fixed')
+                        $('.navbar-custom').removeClass('is-visible is-fixed');
                     }
                 } else if (currentTop > this.previousTop) {
                     //if scrolling down...
-                    $('.navbar-custom').removeClass('is-visible')
+                    $('.navbar-custom').removeClass('is-visible');
                     if (
                         currentTop > headerHeight &&
                         !$('.navbar-custom').hasClass('is-fixed')
                     )
-                        $('.navbar-custom').addClass('is-fixed')
+                        $('.navbar-custom').addClass('is-fixed');
                 }
-                this.previousTop = currentTop
+                this.previousTop = currentTop;
             }
-        )
+        );
     }
-})
+});
 
 jQuery(document).ready(function () {
     fetch('http://dev.django.com/api/v1/online/', {
@@ -64,7 +64,7 @@ jQuery(document).ready(function () {
     })
         .then((response) => {
             if (response.status === 200) {
-                return response.json()
+                return response.json();
             }
         })
         .then((data) => {
@@ -72,6 +72,6 @@ jQuery(document).ready(function () {
                 data.online_statistics > 1
                     ? data.online_statistics + ' vistors'
                     : data.online_statistics + ' visitor'
-            )
-        })
-})
+            );
+        });
+});

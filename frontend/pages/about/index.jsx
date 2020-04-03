@@ -1,11 +1,11 @@
 // pages/about/index.js
 
-import React from 'react'
+import React from 'react';
 
-import about from '../../data/about.json'
+import about from '../../data/about.json';
 
-import Layout from '../../components/Layout'
-import SyntaxHighlight from '../../components/SyntaxHighlight'
+import Layout from '../../components/Layout';
+import SyntaxHighlight from '../../components/SyntaxHighlight';
 
 export default function About() {
     return (
@@ -15,5 +15,5 @@ export default function About() {
                 <p className="text-muted empty">-- EOF --</p>
             </article>
         </Layout>
-    )
+    );
 }

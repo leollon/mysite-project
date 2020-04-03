@@ -1,9 +1,9 @@
 // components/Layout.jsx
 
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import Header from './Header'
+import Header from './Header';
 
 const Layout = function (props) {
     return (
@@ -17,13 +17,13 @@ const Layout = function (props) {
                 </div>
             </div>
         </>
-    )
-}
+    );
+};
 
 Layout.propTypes = {
     children: PropTypes.node,
     title: PropTypes.string,
     description: PropTypes.string,
-}
+};
 
-export default Layout
+export default Layout;

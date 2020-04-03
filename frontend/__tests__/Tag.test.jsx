@@ -1,36 +1,36 @@
 // __tests__/components/Tag.text.jsx
 
-import React from 'react'
-import { render, unmountComponentAtNode } from 'react-dom'
-import TagList from '../components/Tag'
+import React from 'react';
+import { render, unmountComponentAtNode } from 'react-dom';
+import TagList from '../components/Tag';
 
-let container = null
+let container = null;
 
 beforeEach(() => {
-    container = document.createElement('div')
-    document.body.appendChild(container)
-})
+    container = document.createElement('div');
+    document.body.appendChild(container);
+});
 
 afterEach(() => {
-    unmountComponentAtNode(container)
-    container.remove()
-    container = null
-})
+    unmountComponentAtNode(container);
+    container.remove();
+    container = null;
+});
 
 it('renders tag component', () => {
-    let tagData = { count: 0, tags: {} }
+    let tagData = { count: 0, tags: {} };
 
     // have no tag
-    render(<TagList tags={tagData.tags} count={tagData.count} />, container)
+    render(<TagList tags={tagData.tags} count={tagData.count} />, container);
 
-    expect(container.querySelector('strong').textContent).toBe('No tags yet!')
+    expect(container.querySelector('strong').textContent).toBe('No tags yet!');
 
     // have only one tag
-    tagData = { count: 1, tags: { untagged: 1 } }
+    tagData = { count: 1, tags: { untagged: 1 } };
 
-    render(<TagList tags={tagData.tags} count={tagData.count} />, container)
+    render(<TagList tags={tagData.tags} count={tagData.count} />, container);
 
-    expect(container.querySelector('a').textContent).toBe('untagged')
+    expect(container.querySelector('a').textContent).toBe('untagged');
 
     // have more than one tag
     tagData = {
@@ -47,10 +47,10 @@ it('renders tag component', () => {
             tag0: 10,
             tag6: 66,
         },
-    }
+    };
 
-    render(<TagList tags={tagData.tags} count={tagData.count} />, container)
+    render(<TagList tags={tagData.tags} count={tagData.count} />, container);
 
-    expect(container.querySelector('a').textContent).toBe('tag1')
-    expect(container.querySelector('sup').textContent).toBe('1')
-})
+    expect(container.querySelector('a').textContent).toBe('tag1');
+    expect(container.querySelector('sup').textContent).toBe('1');
+});

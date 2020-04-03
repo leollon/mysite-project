@@ -1,28 +1,30 @@
 // __tests__/component/Comment.test.jsx
 
-import React from 'react'
-import { render, unmountComponentAtNode } from 'react-dom'
+import React from 'react';
+import { render, unmountComponentAtNode } from 'react-dom';
 
-import Comments from '../components/Comment'
+import Comments from '../components/Comment';
 
-let container = null
+let container = null;
 
 beforeEach(() => {
-    container = document.createElement('div')
-    document.body.appendChild(container)
-})
+    container = document.createElement('div');
+    document.body.appendChild(container);
+});
 
 afterEach(() => {
-    unmountComponentAtNode(container)
-    container.remove()
-    container = null
-})
+    unmountComponentAtNode(container);
+    container.remove();
+    container = null;
+});
 
 describe('rendering comment component', () => {
-    let commentData = { results: [], links: { previous: null, next: null } }
-
     // render without comments
     it('renders without comment', () => {
+        const commentData = {
+            results: [],
+            links: { previous: null, next: null },
+        };
         render(
             <Comments
                 comments={commentData}
@@ -31,14 +33,14 @@ describe('rendering comment component', () => {
                 statistics={0}
             />,
             container
-        )
+        );
 
-        expect(container.textContent).toContain('No Comments yet!')
-    })
+        expect(container.textContent).toContain('No Comments yet!');
+    });
 
     // render with one comment
     it('renders with one comment', () => {
-        commentData = {
+        const commentData = {
             results: [
                 {
                     created_time: 'Tue, 31 Mar 2020 16:21:16 +0800',
@@ -48,7 +50,7 @@ describe('rendering comment component', () => {
                 },
             ],
             links: { previous: null, next: null },
-        }
+        };
 
         render(
             <Comments
@@ -58,14 +60,14 @@ describe('rendering comment component', () => {
                 statistics={1}
             />,
             container
-        )
+        );
 
-        expect(container.textContent).toContain('1 Comment')
-    })
+        expect(container.textContent).toContain('1 Comment');
+    });
 
     // render with more than one comment
     it('renders with one comment', () => {
-        commentData = {
+        const commentData = {
             results: [
                 {
                     created_time: 'Tue, 31 Mar 2020 16:21:16 +0800',
@@ -94,7 +96,7 @@ describe('rendering comment component', () => {
                 },
             ],
             links: { previous: null, next: null },
-        }
+        };
 
         render(
             <Comments
@@ -104,10 +106,10 @@ describe('rendering comment component', () => {
                 statistics={1}
             />,
             container
-        )
+        );
 
-        expect(container.textContent).toContain('head 1')
-        expect(container.textContent).toContain('import os')
-        expect(container.textContent).toContain('quotation goes here')
-    })
-})
+        expect(container.textContent).toContain('head 1');
+        expect(container.textContent).toContain('import os');
+        expect(container.textContent).toContain('quotation goes here');
+    });
+});

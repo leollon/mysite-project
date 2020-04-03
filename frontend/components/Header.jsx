@@ -1,9 +1,9 @@
 // components/Header.jsx
 
-import React from 'react'
-import Head from 'next/head'
-import Link from 'next/link'
-import PropTypes from 'prop-types'
+import React from 'react';
+import Head from 'next/head';
+import Link from 'next/link';
+import PropTypes from 'prop-types';
 
 const Header = (props) => (
     <div>
@@ -88,12 +88,12 @@ const Header = (props) => (
         </header>
         {props.children}
     </div>
-)
+);
 
 Header.propTypes = {
     title: PropTypes.string,
     description: PropTypes.string.isRequired,
     children: PropTypes.node,
-}
+};
 
-export default Header
+export default Header;

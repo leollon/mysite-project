@@ -1,14 +1,14 @@
 // components/Post.jsx
 
-import React from 'react'
-import PropTypes from 'prop-types'
-import Markdown from 'react-markdown'
+import React from 'react';
+import PropTypes from 'prop-types';
+import Markdown from 'react-markdown';
 
 function truncateContent(content, length = 100) {
-    if (content.indexOf('。') < length) {
-        length = content.indexOf('。')
+    if (content.indexOf('。') > 0 && content.indexOf('。') < length) {
+        length = content.indexOf('。');
     }
-    return content.substring(0, length) + '....'
+    return content.substring(0, length) + '....';
 }
 
 export default function ArticleList(props) {
@@ -16,7 +16,7 @@ export default function ArticleList(props) {
         <>
             {props.articles.length ? (
                 props.articles.map((article) => {
-                    const tags = article.tags.split(',')
+                    const tags = article.tags.split(',');
                     return (
                         <div key={article.slug} className="post-preview">
                             <h2 className="post-title">
@@ -38,18 +38,12 @@ export default function ArticleList(props) {
                                         {article.category}
                                     </a>
                                 </span>
-                                {article.tags
-                                    .trim(',')
-                                    .split(',')
-                                    .map((tag) => (
-                                        <span key={tag} className="fa fa-tag">
-                                            <a href={`/tags/${tag}`}>#{tag}</a>
-                                            {tags.indexOf(tag) !==
-                                            tags.length - 1
-                                                ? ', '
-                                                : ''}
-                                        </span>
-                                    ))}
+                                {tags.map((tag) => (
+                                    <span key={tag} className="fa fa-tag">
+                                        <a href={`/tags/${tag}`}>#{tag}</a>
+                                        {tags.indexOf(tag) !== tags.length - 1 ? ', ' : ''}
+                                    </span>
+                                ))}
                                 <span className="fa fa-comments">
                                     <a
                                         href={`/articles/${article.slug}#comments`}
@@ -64,11 +58,10 @@ export default function ArticleList(props) {
                                 </span>
                             </div>
                             <p className="post-meta">
-                                Posted by {article.author} on{' '}
-                                {article.created_time}
+                                Posted by {article.author} on { article.created_time}
                             </p>
                         </div>
-                    )
+                    );
                 })
             ) : (
                 <div className="post-preview">
@@ -76,9 +69,9 @@ export default function ArticleList(props) {
                 </div>
             )}
         </>
-    )
+    );
 }
 
 ArticleList.propTypes = {
     articles: PropTypes.array.isRequired,
-}
+};

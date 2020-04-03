@@ -1,7 +1,7 @@
 // components/Forms.jsx
 
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function CommentForm(props) {
     return (
@@ -114,10 +114,10 @@ export default function CommentForm(props) {
                 </div>
             </form>
         </div>
-    )
+    );
 }
 
 CommentForm.propTypes = {
     slug: PropTypes.string.isRequired,
     post_id: PropTypes.number.isRequired,
-}
+};

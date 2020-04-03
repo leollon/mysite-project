@@ -1,9 +1,9 @@
-const gulp = require('gulp')
-const rename = require('gulp-rename')
-const terser = require('gulp-terser')
-const cleanCSS = require('gulp-clean-css')
-const imageMinify = require('gulp-imagemin')
-const del = require('del')
+const gulp = require('gulp');
+const rename = require('gulp-rename');
+const terser = require('gulp-terser');
+const cleanCSS = require('gulp-clean-css');
+const imageMinify = require('gulp-imagemin');
+const del = require('del');
 
 const paths = {
     css: {
@@ -18,10 +18,10 @@ const paths = {
         orig: 'static/img/*.*',
         dest: 'public/img/',
     },
-}
+};
 
 function clean() {
-    return del(['public/**'])
+    return del(['public/**']);
 }
 
 function jsMinify() {
@@ -33,7 +33,7 @@ function jsMinify() {
                 extname: '.min.js',
             })
         ) // 3. 重命名文件
-        .pipe(gulp.dest(paths.js.dest)) // 4. 另存压缩后的文件
+        .pipe(gulp.dest(paths.js.dest)); // 4. 另存压缩后的文件
 }
 
 function cssMinify() {
@@ -50,7 +50,7 @@ function cssMinify() {
                 extname: '.min.css',
             })
         )
-        .pipe(gulp.dest(paths.css.dest))
+        .pipe(gulp.dest(paths.css.dest));
 }
 
 function imgMinify() {
@@ -62,19 +62,19 @@ function imgMinify() {
                 progressive: true,
             })
         )
-        .pipe(gulp.dest(paths.img.dest))
+        .pipe(gulp.dest(paths.img.dest));
 }
 
 function auto() {
-    gulp.watch('static/css/*.css', cssMinify)
-    gulp.watch('static/js/*.js', jsMinify)
+    gulp.watch('static/css/*.css', cssMinify);
+    gulp.watch('static/js/*.js', jsMinify);
 }
 
 gulp.task(
     'compress',
     gulp.series(clean, gulp.parallel(cssMinify, jsMinify, imgMinify))
-)
+);
 gulp.task(
     'default',
     gulp.series(clean, gulp.parallel(cssMinify, jsMinify, imgMinify), auto)
-)
+);

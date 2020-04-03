@@ -1,9 +1,9 @@
 // components/Category.jsx
 
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const label = ['default', 'primary', 'info', 'success', 'warning', 'danger']
+const label = ['default', 'primary', 'info', 'success', 'warning', 'danger'];
 
 export default function CategoryList(props) {
     return (
@@ -30,9 +30,9 @@ export default function CategoryList(props) {
                 </h2>
             )}
         </ul>
-    )
+    );
 }
 
 CategoryList.propTypes = {
     categories: PropTypes.array.isRequired,
-}
+};

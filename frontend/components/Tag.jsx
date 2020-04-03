@@ -1,10 +1,17 @@
 // components/Tag.jsx
 
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function TagList(props) {
-    const label = ['default', 'primary', 'info', 'success', 'warning', 'danger']
+    const label = [
+        'default',
+        'primary',
+        'info',
+        'success',
+        'warning',
+        'danger',
+    ];
     return (
         <ul id="tags">
             {props.count ? (
@@ -27,10 +34,10 @@ export default function TagList(props) {
                 </h2>
             )}
         </ul>
-    )
+    );
 }
 
 TagList.propTypes = {
     tags: PropTypes.object.isRequired,
     count: PropTypes.number.isRequired,
-}
+};
