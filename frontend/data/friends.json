@@ -1,0 +1,68 @@
+[
+    {
+        "name": "blog1",
+        "site": "/friends",
+        "avatar": "/favicon.ico",
+        "description": "friends page description"
+    },
+    {
+        "name": "blog2",
+        "site": "/friends",
+        "avatar": "/favicon.ico",
+        "description": "friends page description friends page"
+    },
+    {
+        "name": "blog3",
+        "site": "/friends",
+        "avatar": "/favicon.ico",
+        "description": "friends page description"
+    },
+    {
+        "name": "blog4",
+        "site": "/friends",
+        "avatar": "/favicon.ico",
+        "description": "friends page description"
+    },
+    {
+        "name": "blog5",
+        "site": "/friends",
+        "avatar": "/favicon.ico",
+        "description": "friends page description"
+    },
+    {
+        "name": "blog6",
+        "site": "/friends",
+        "avatar": "/favicon.ico",
+        "description": "friends page description"
+    },
+    {
+        "name": "blog7",
+        "site": "/friends",
+        "avatar": "/favicon.ico",
+        "description": "friends page description"
+    },
+    {
+        "name": "blog8",
+        "site": "/friends",
+        "avatar": "/favicon.ico",
+        "description": "friends page description"
+    },
+    {
+        "name": "blog9",
+        "site": "/friends",
+        "avatar": "/favicon.ico",
+        "description": "friends page description"
+    },
+    {
+        "name": "blog10",
+        "site": "/friends",
+        "avatar": "/favicon.ico",
+        "description": "friends page description"
+    },
+    {
+        "name": "blog11",
+        "site": "/friends",
+        "avatar": "/favicon.ico",
+        "description": "friends page description"
+    }
+]

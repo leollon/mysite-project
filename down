@@ -1,5 +1,5 @@
 #!/bin/bash
 
-set -o errexit
+set -xe
 
 docker-compose -f production.yml down

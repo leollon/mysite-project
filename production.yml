@@ -32,19 +32,21 @@ services:
       - "127.0.0.1:6369:6379"
     restart: always
 
-  web:
-    image: mysite/blog
+  backend:
+    image: mysite/backend
     build:
-      context: ./
-      dockerfile: ./compose/mysite/Dockerfile  # the file contains the steps of build images
+      context: .
+      dockerfile: ./compose/backend/Dockerfile  # the file contains the steps of build images
     entrypoint: /entrypoint
     command: /start             # The command runs in the containe
     volumes:
-      - ./var:/mysite/var
-      - ./run:/mysite/run
-      - ./data:/mysite/data
-      - ./captcha:/mysite/assets/images/captcha
-      - ./markdown:/mysite/apps/article/management/markdown
+      - ./backend:/backend
+      - ./var:/backend/var
+      - ./run:/backend/run
+      - ./data:/backend/data
+      - ./dj_assets:/backend/dj_assets
+      - ./captcha:/backend/assets/images/captcha
+      - ./markdown:/backend/apps/article/management/markdown
     env_file:
       - ./.envs/.django
       - ./.envs/.postgres
@@ -58,6 +60,27 @@ services:
       - postgres
       - redis
     restart: always
+  
+  frontend:
+    image: mysite/frontend
+    build:
+      context: .
+      dockerfile: ./compose/frontend/Dockerfile
+    entrypoint: /entrypoint
+    command: /start
+    volumes:
+      - ./frontend:/frontend
+      # https://jdlm.info/articles/2016/03/06/lessons-building-node-app-docker.html
+      - /frontend/node_modules
+      - /frontend/build
+    env_file:
+      - ./.envs/.frontend
+    networks:
+      - blog-net
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      - backend
 
 networks:
   blog-net:

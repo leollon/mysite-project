@@ -1,17 +1,16 @@
 #!/bin/bash
 
-set -o errexit
+set -xe
 
 # create volumes's source before build images,
 # otherwise PermissionError or FileNotFoundError occurs 
 # when container runs.
 
-mkdir -p var/log run data captcha markdown
+mkdir -p var/log run data captcha markdown dj_assets
 
 if [ -e "./postgresql" ]
 then
     sudo chown -R "${USER}":"${USER}" ./postgresql;
 fi
 
-cp -ruv ./mysite/assets "$HOME"  # copy static files, such as js, css and images
 docker-compose -f production.yml up "$@"

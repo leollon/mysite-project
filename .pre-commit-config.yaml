@@ -7,7 +7,7 @@ repos:
     rev: master
     hooks:
       - id: trailing-whitespace
-        files: (^|/)mysite/.+\.(py|html|sh|css|js)$
+        files: (^|/)backend/.+\.(py|html|sh|css|js)$
 
 -   repo: local
     hooks:
@@ -16,7 +16,7 @@ repos:
         entry: flake8
         language: python
         types: [python]
-        files: (^|/)mysite/.+\.py
+        files: (^|/)backend/.+\.py
 
 -   repo: local
     hooks:
@@ -25,4 +25,31 @@ repos:
         entry: isort
         language: python
         types: [python]
-        files: (^|/)mysite/.+\.py
+        files: (^|/)backend/.+\.py
+
+-   repo: local
+    hooks:
+      - id: prettier
+        name: prettier
+        entry: prettier
+        language: node
+        types: [javascript]
+        files: (^|/)frontend/.+\.[t|j]sx?
+
+-   repo: local
+    hooks:
+      - id: eslint
+        name: eslint
+        entry: eslint
+        language: node
+        types: [javascript]
+        files: (^|/)frontend/.+\.[t|j]sx?
+        additional_dependencies:
+          - eslint@6.8.0
+          - eslint-config-airbnb@18.1.0
+          - eslint-plugin-dollar-sign@1.0.2
+          - eslint-plugin-import@2.20.1
+          - eslint-plugin-jquery@1.5.1
+          - eslint-plugin-jsx-a11y@6.2.3
+          - eslint-plugin-react@7.18.3
+          - eslint-plugin-react-hooks@2.3.0
