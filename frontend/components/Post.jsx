@@ -41,7 +41,9 @@ export default function ArticleList(props) {
                                 {tags.map((tag) => (
                                     <span key={tag} className="fa fa-tag">
                                         <a href={`/tags/${tag}`}>#{tag}</a>
-                                        {tags.indexOf(tag) !== tags.length - 1 ? ', ' : ''}
+                                        {tags.indexOf(tag) !== tags.length - 1
+                                            ? ', '
+                                            : ''}
                                     </span>
                                 ))}
                                 <span className="fa fa-comments">
@@ -58,7 +60,8 @@ export default function ArticleList(props) {
                                 </span>
                             </div>
                             <p className="post-meta">
-                                Posted by {article.author} on { article.created_time}
+                                Posted by {article.author} on{' '}
+                                {article.created_time}
                             </p>
                         </div>
                     );

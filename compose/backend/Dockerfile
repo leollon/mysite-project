@@ -19,35 +19,54 @@ RUN apk add --no-cache \
         # shell to used
         bash
 
+# remove man page and documentation
+# for reducing image size
 RUN rm -rf \
         /usr/local/share/doc \
         /usr/local/share/man \
     && find /usr/local -name '*.a' -delete
 
 # Start building backend image
+
+# create an normal user
 RUN adduser -s /bin/bash -DH blog
 RUN echo 'blog ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN echo 'blog:local' | chpasswd
 
+# copy start and entrypoint script
 COPY ./compose/backend/ /
+# copy backend requirements
 COPY ./requirements.txt /
 
+# install requirements and remove requirements.txt for reducing image size
 RUN pip install -r requirements.txt -i https://pypi.douban.com/simple \
     && rm -f requirements.txt
+
+# code directory
 RUN mkdir /backend
 
+# current work directory for the following commands
 WORKDIR /backend
 
-COPY backend/apps       apps
-COPY backend/templates  templates
-COPY backend/static     static
-COPY backend/backend    backend
-COPY backend/manage.py  manage.py
+# copy backend code
+COPY backend/ ./
 
+# change mode to rwxr-xr-x
 RUN chmod 755 -R /entrypoint /start /backend
+# change ownership, username:group name
 RUN chown -R blog:blog /entrypoint /start /backend
 
+# User run the following instrucstions, only for RUN, CMD and ENTRYPOINT
 USER blog:blog
 
-RUN mkdir -p var/log data run
+# prepare neccessary data directories,
+# in case when starting backend, it occurrs some
+# denied permissions.
+RUN mkdir -p var/log data run dj_static
+
+# create log for django running log
 RUN touch var/log/backend.log
+
+# collectstatic files, such as css,
+# images and javascript files.
+RUN python manage.py collectstatic --no-input

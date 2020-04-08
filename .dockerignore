@@ -4,15 +4,14 @@
 .idea
 .vscode
 .mypy_cache
-cache
-*/__pycache__
-*/bin
-*/obj
-*/log
-*/run
-**/build
+**/cache
+**/dj_static
+**/__pycache__
+**/log
+**/run
+**/build/**
 **/compose/**
-**/data
+**/data/**
 **/node_modules
 
 
@@ -21,13 +20,12 @@ cache
 .dockerignore
 .gitignore
 docker-compose*
-npm-debug.log
-*.pid
-*/LICENSE
-*/package-lock.json
-*/gulpfile.js
-*/setup.cfg
-*/README.md
+**/*.pid
+**/LICENSE
+**/package-lock.json
+**/README.md
+**/gulpfile.js
+**/setup.cfg
 
 
 # directories not to be ignored
@@ -40,3 +38,4 @@ npm-debug.log
 
 !**/entrypoint
 !**/start
+!**/*.sh

@@ -50,7 +50,8 @@ services:
       - ./var:/backend/var
       - ./run:/backend/run
       - ./data:/backend/data
-      - ./captcha:/backend/static/images/captcha
+      - ./captcha:/backend/captcha
+      - ./dj_static:/backend/dj_static
       - ./markdown:/backend/apps/article/management/markdown
     env_file:
       - ./.envs/.django
@@ -76,6 +77,8 @@ services:
       - ./frontend:/frontend
       # https://jdlm.info/articles/2016/03/06/lessons-building-node-app-docker.html
       - /frontend/node_modules
+    env_file:
+      - ./.envs/.frontend
     networks:
       - blog-net
     ports:

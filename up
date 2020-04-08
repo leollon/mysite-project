@@ -6,12 +6,11 @@ set -o errexit
 # otherwise PermissionError or FileNotFoundError occurs 
 # when container runs.
 
-mkdir -p var/log run data captcha markdown
+mkdir -p var/log run data captcha markdown dj_static "$HOME/static/"
 
 if [ -e "./postgresql" ]
 then
     sudo chown -R "${USER}":"${USER}" ./postgresql;
 fi
 
-cp -ruv ./backend/static "$HOME"         # copy static files, such as js, css and images
 docker-compose -f local.yml up "$@"     # start building images

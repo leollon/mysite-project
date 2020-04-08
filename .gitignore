@@ -5,14 +5,15 @@
 .mypy_cache
 backup
 cache
+dj_static
 coverage_html_report
+markdown
 postgresql
 redis
 run
 siteEnv
 var
 captcha
-markdown
 **/data/**
 **/build/**
 **/node_modules/**
@@ -22,10 +23,6 @@ markdown
 
 .coverage
 *.pyc
-*.sqlite3
-*.tags*
-*.sql
-*.bak
 **/package-lock.json
 
 

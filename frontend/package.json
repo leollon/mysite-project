@@ -7,7 +7,7 @@
         "lib": "lib"
     },
     "scripts": {
-        "dev": "next",
+        "dev": "node server.js",
         "build": "next build",
         "start": "next start",
         "test": "jest"

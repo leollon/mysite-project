@@ -1,5 +1,4 @@
 import socket
-from getpass import getuser
 from os import environ
 from pathlib import Path
 
@@ -66,15 +65,17 @@ CACHES = {
 STATIC_URL = "/static/"
 
 # Directory containing all collected static files
-STATIC_ROOT = (Path("/home/") / getuser() / "static").as_posix()
+STATICFILES_DIRS = [Path(BASE_DIR).parent.parent / "static/", ]
+
+# serve static file in productionf
+STATIC_ROOT = (Path(BASE_DIR).parent.parent / "dj_static").as_posix()
 
 # Captcha's directory
-CAPTCHA_BASE_DIR = Path(Path(BASE_DIR).parent.parent) / "static/images/captcha"
+CAPTCHA_BASE_DIR = Path(Path(BASE_DIR).parent.parent / "captcha")
 CAPTCHA_CACHED_TIME = 60  # in second
 
 TOKEN_EXPIRES_IN = 30 * 60  # thirty minutes in total
 
-STATICFILES_DIRS = [Path(BASE_DIR).parent.parent / "static/", ]
 
 # EMAIL
 EMAIL_HOST_USER = environ.get("EMAIL_ADDRESS")
@@ -134,13 +135,6 @@ timezone = TIME_ZONE
 # Logger: show more details
 LOG_LEVEL = "DEBUG"
 
-
-def create_log_file():
-    (Path(BASE_DIR).parent.parent / "var/log").mkdir(parents=True, exist_ok=True)
-    (Path(BASE_DIR).parent.parent / "var/log" / "backend.log").touch()
-    return (Path(BASE_DIR).parent.parent / "var/log" / "backend.log").as_posix()
-
-
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": True,
@@ -195,7 +189,7 @@ LOGGING = {
         "file": {
             "level": "ERROR",
             "class": "logging.FileHandler",
-            "filename": create_log_file(),
+            "filename": (Path(BASE_DIR).parent.parent / "var/log" / "backend.log").as_posix(),
             "filters": ["require_debug_true"],
             "formatter": "verbose",
         },

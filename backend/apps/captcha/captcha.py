@@ -162,7 +162,7 @@ class Captcha:
         try:
             self._img.save(file_path.as_posix())
             captcha_img_path = "/" + "/".join(
-                file_path.as_posix().rsplit("/", 3)[-3:]
+                file_path.as_posix().rsplit("/", 2)[-2:]
             )
             result_status = 0
             message = "Success"
