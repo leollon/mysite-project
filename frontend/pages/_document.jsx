@@ -74,7 +74,7 @@ class CustomDocument extends Document {
                     type="text/css"
                 />
                 <link
-                    href="/css/clean-blog.min.css"
+                    href="/assets/css/clean-blog.min.css"
                     rel="stylesheet"
                     type="text/css"
                     media="screen"
@@ -135,7 +135,7 @@ class CustomDocument extends Document {
                         </div>
                     </footer>
                     <NextScript />
-                    <script src="/js/clean-blog.min.js" />
+                    <script src="/assets/js/clean-blog.min.js" />
                 </body>
             </Html>
         );

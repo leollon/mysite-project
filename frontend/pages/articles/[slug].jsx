@@ -27,7 +27,7 @@ const Post = (props) => {
                     comments={props.comments}
                     statistics={props.article.comment_statistics}
                 />
-                <script src="/js/blog.min.js" />
+                <script src="/assets/js/blog.min.js" />
             </article>
         </Layout>
     );

@@ -3,17 +3,16 @@
 .idea
 .vscode
 .mypy_cache
-backup
 cache
 captcha
 coverage_html_report
 dj_assets
+markdown
 postgresql
 redis
 run
 siteEnv
 var
-markdown
 **/public
 **/data/**
 **/build/**
@@ -22,12 +21,6 @@ markdown
 
 # files
 
-.coverage
-*.pyc
-*.sqlite3
-*.tags*
-*.sql
-*.bak
 **/package-lock.json
 
 
@@ -38,3 +31,4 @@ markdown
 
 
 # not ignored files
+!**/public/*.ico

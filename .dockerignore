@@ -5,17 +5,15 @@
 .idea
 .vscode
 .mypy_cache
-cache
 captcha
 data
 dj_assets
-**/public
-*/__pycache__
-*/bin
-*/obj
-*/log
-*/run
-**/build
+**/cache
+**/dj_assets
+**/__pycache__
+**/log
+**/run
+**/build/**
 **/compose/**
 **/node_modules
 
@@ -25,17 +23,18 @@ dj_assets
 .dockerignore
 .gitignore
 docker-compose*
-npm-debug.log
-*.pid
-*/LICENSE
-*/package-lock.json
-*/setup.cfg
-*/README.md
+**/*.pid
+**/LICENSE
+**/package-lock.json
+**/README.md
+**/setup.cfg
 
 
 # directories not to be ignored
 
+!**/frontend/data
 !**/apps/captcha
+
 
 
 # files not to be ignored

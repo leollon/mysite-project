@@ -63,7 +63,7 @@ STATICFILES_DIRS = [(Path(BASE_DIR).parent.parent / "assets/").as_posix(), ]
 STATIC_ROOT = (Path(BASE_DIR).parent.parent / "dj_assets").as_posix()
 
 # Captcha's directory# Captcha's directory
-CAPTCHA_BASE_DIR = (Path(BASE_DIR).parent.parent / "assets/images/captcha").as_posix()
+CAPTCHA_BASE_DIR = Path(BASE_DIR).parent.parent / "captcha"
 CAPTCHA_CACHED_TIME = 30 * 60  # in second
 
 TOKEN_EXPIRES_IN = 30 * 60  # thirty minutes in total

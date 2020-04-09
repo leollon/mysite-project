@@ -19,34 +19,50 @@ RUN apk add --no-cache \
         # shell to used
         bash
 
+# remove man page and documentation
+# for reducing image size
 RUN rm -rf \
         /usr/local/share/doc \
         /usr/local/share/man \
     && find /usr/local -name '*.a' -delete
 
 # Start building backend image
+
+# create an normal user
 RUN adduser -s /bin/bash -DH blog
 RUN echo 'blog ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN echo 'blog:producion' | chpasswd
 
 
+# copy start and entrypoint script
 COPY ./compose/backend/ /
+# copy backend requirements
 COPY ./requirements.txt /
 
 RUN pip install --no-cache-dir -r requirements.txt \
     && rm -f requirements.txt
+
+# code directory
 RUN mkdir /backend
 
+# current work directory for the following commands
 WORKDIR /backend
 
+# copy backend code
 COPY backend/        ./
 
+# change mode to rwxr-xr-x
 RUN chmod 755 -R /entrypoint /start /backend
 RUN chown -R blog:blog /entrypoint \
         /backend \
         /start \
         /uwsgi.ini
 
+# change ownership, username:group name
+RUN chown -R blog:blog /entrypoint /start /backend
+
+
+# User run the following instrucstions, only for RUN, CMD and ENTRYPOINT
 USER blog:blog
 
 RUN echo "uid=blog" >> /uwsgi.ini && \
@@ -55,5 +71,10 @@ RUN echo "uid=blog" >> /uwsgi.ini && \
     echo "chdir=/backend" >> /uwsgi.ini && \
     echo "pidfile=${PIDFILE}"  >> /uwsgi.ini
 
-RUN mkdir -p var/log data run
+# prepare neccessary data directories,
+# in case when starting backend, it occurrs some
+# denied permissions.
+RUN mkdir -p var/log data run dj_assets
+
+# create log for django running log
 RUN touch var/log/backend.log

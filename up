@@ -4,9 +4,10 @@ set -xe
 
 # create volumes's source before build images,
 # otherwise PermissionError or FileNotFoundError occurs 
-# when container runs.
+# when container start running.
 
-mkdir -p var/log run data captcha markdown dj_assets
+
+mkdir -p var/log run data captcha markdown dj_assets "$HOME/assets/"
 
 if [ -e "./postgresql" ]
 then
@@ -14,3 +15,5 @@ then
 fi
 
 docker-compose -f production.yml up "$@"
+cp -ruv dj_assets/* "$HOME/assets/"
+cp -ruv ./frontend/public/* "$HOME/assets/"
