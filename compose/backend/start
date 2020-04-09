@@ -2,6 +2,10 @@
 
 set -xe
 
+
+# collectstatic files, such as css,
+# images and javascript files.
+python manage.py collectstatic --no-input
 python manage.py makemigrations --no-input && python manage.py migrate
 celery flower --basic_auth="${FLOWER_USER}":"${FLOWER_PASSWORD}" -A backend --adress=127.0.0.1 --port=5555 --auto_refresh=True &
 celery -A backend worker -P gevent -c 500 -l DEBUG -f var/log/celery.log --pidfile run/celeryd.pid -D

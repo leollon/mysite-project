@@ -67,6 +67,3 @@ RUN mkdir -p var/log data run dj_static
 # create log for django running log
 RUN touch var/log/backend.log
 
-# collectstatic files, such as css,
-# images and javascript files.
-RUN python manage.py collectstatic --no-input

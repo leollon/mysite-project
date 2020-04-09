@@ -14,3 +14,5 @@ then
 fi
 
 docker-compose -f local.yml up "$@"     # start building images
+cp -ruv dj_static/* "$HOME/static/"
+cp -ruv frontend/static/* "$HOME/static/"
