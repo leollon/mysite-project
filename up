@@ -6,7 +6,7 @@ set -o errexit
 # otherwise PermissionError or FileNotFoundError occurs 
 # when container runs.
 
-mkdir -p var/log run data captcha markdown dj_static "$HOME/static/"
+mkdir -p var/log run data captcha markdown dj_static
 
 if [ -e "./postgresql" ]
 then
@@ -14,5 +14,5 @@ then
 fi
 
 docker-compose -f local.yml up "$@"     # start building images
+cp -ruv frontend/public/static "$HOME"
 cp -ruv dj_static/* "$HOME/static/"
-cp -ruv frontend/static/* "$HOME/static/"

@@ -10,7 +10,7 @@ import Layout from '../components/Layout';
 import ArticleList from '../components/Post';
 import PageList from '../components/Pagination';
 
-const API_URL = 'http://dev.django.com/api/v1/articles/';
+const API_URL = process.env.apiHost + '/articles/';
 
 export default function Index() {
     const router = useRouter();

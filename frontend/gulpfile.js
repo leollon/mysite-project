@@ -2,26 +2,26 @@ const gulp = require('gulp');
 const rename = require('gulp-rename');
 const terser = require('gulp-terser');
 const cleanCSS = require('gulp-clean-css');
-const imageMinify = require('gulp-imagemin');
+const webp = require('gulp-webp');
 const del = require('del');
 
 const paths = {
     css: {
         orig: 'static/css/*.css',
-        dest: 'public/css/',
+        dest: 'public/static/css/',
     },
     js: {
         orig: ['static/js/*.js'],
-        dest: 'public/js/',
+        dest: 'public/static/js/',
     },
     img: {
         orig: 'static/img/*.*',
-        dest: 'public/img/',
+        dest: 'public/static/img/',
     },
 };
 
 function clean() {
-    return del(['public/**']);
+    return del(['public/static']);
 }
 
 function jsMinify() {
@@ -53,15 +53,12 @@ function cssMinify() {
         .pipe(gulp.dest(paths.css.dest));
 }
 
-function imgMinify() {
-    // 压缩图片
+function imgToWebP() {
+    // convert image/jpeg, image/png, image/tiff and image/webp
+    // to webp
     return gulp
         .src(paths.img.orig)
-        .pipe(
-            imageMinify({
-                progressive: true,
-            })
-        )
+        .pipe(webp())
         .pipe(gulp.dest(paths.img.dest));
 }
 
@@ -72,9 +69,9 @@ function auto() {
 
 gulp.task(
     'compress',
-    gulp.series(clean, gulp.parallel(cssMinify, jsMinify, imgMinify))
+    gulp.series(clean, gulp.parallel(cssMinify, jsMinify, imgToWebP))
 );
 gulp.task(
     'default',
-    gulp.series(clean, gulp.parallel(cssMinify, jsMinify, imgMinify), auto)
+    gulp.series(clean, gulp.parallel(cssMinify, jsMinify, imgToWebP), auto)
 );

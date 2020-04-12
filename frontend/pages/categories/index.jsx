@@ -8,7 +8,7 @@ import fetcher from '../../lib/fetch';
 import Layout from '../../components/Layout';
 import CategoryList from '../../components/Category';
 
-const API_URL = 'http://dev.django.com/api/v1/categories';
+const API_URL = process.env.apiHost + '/categories';
 
 export default function Categories() {
     let { data, error } = useSWR(`${API_URL}`, fetcher);

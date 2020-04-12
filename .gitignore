@@ -14,6 +14,7 @@ run
 siteEnv
 var
 captcha
+**/public/static
 **/data/**
 **/build/**
 **/node_modules/**
@@ -22,6 +23,7 @@ captcha
 # files
 
 .coverage
+*.webp
 *.pyc
 **/package-lock.json
 

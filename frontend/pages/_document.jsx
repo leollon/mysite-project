@@ -23,7 +23,10 @@ class CustomDocument extends Document {
                     key="keywords"
                     content="Python,Django,c,c++,Linux,backend,后端"
                 />
-                <meta name="google-site-verification" content="" />
+                <meta
+                    name="google-site-verification"
+                    content={process.env.googleVerificationCode}
+                />
 
                 <link rel="icon" type="image/x-icon" href="/favicon.ico" />
                 <link
@@ -69,7 +72,7 @@ class CustomDocument extends Document {
                     type="text/css"
                 />
                 <link
-                    href="/static/css/clean-blog.css"
+                    href="/static/css/clean-blog.min.css"
                     rel="stylesheet"
                     type="text/css"
                     media="screen"
@@ -130,7 +133,7 @@ class CustomDocument extends Document {
                         </div>
                     </footer>
                     <NextScript />
-                    <script src="/static/js/clean-blog.js" />
+                    <script src="/static/js/clean-blog.min.js" />
                 </body>
             </Html>
         );

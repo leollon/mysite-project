@@ -10,7 +10,7 @@ function Error({ errorCode }) {
         <Layout title={errorCode} description={errorCode}>
             <div className="error404 empty">
                 <h1>{errorCode}</h1>
-                <img src="/static/img/404.png" alt="error" />
+                <img src="/static/img/404.webp" alt="error" />
             </div>
         </Layout>
     );
