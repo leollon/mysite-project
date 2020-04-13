@@ -82,7 +82,10 @@ class CustomDocument extends Document {
 
                 <script
                     async
-                    src="https://www.googletagmanager.com/gtag/js?id={GOOGLE ANALYTICS CODE}"
+                    src={
+                        'https://www.googletagmanager.com/gtag/js?id=' +
+                        process.env.googleAnalysticsCode
+                    }
                 />
                 <title key="site-title">I&apos;m 🤔</title>
 

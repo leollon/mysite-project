@@ -1,7 +1,6 @@
 // components/Pagination.jsx
 
 import React from 'react';
-import Link from 'next/link';
 import PropTypes from 'prop-types';
 
 function getCursor(link) {
@@ -21,17 +20,10 @@ export default function PageList(props) {
                     className={`previous${previous ? '' : ' disabled'}`}
                     key="previous"
                 >
-                    <Link
-                        href={previous ? previous : '#'}
-                        as={`${previous ? previous : '#'}`}
-                    >
-                        <a>&larr; Newer</a>
-                    </Link>
+                    <a href={previous ? previous : '#'}>&larr; Newer</a>
                 </li>
                 <li className={`next${next ? '' : ' disabled'}`} key="next">
-                    <Link href={next ? next : '#'} as={`${next ? next : '#'}`}>
-                        <a>Older &rarr;</a>
-                    </Link>
+                    <a href={next ? next : '#'}>Older &rarr;</a>
                 </li>
             </ul>
         );

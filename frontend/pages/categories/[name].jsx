@@ -5,12 +5,13 @@ import PropTypes from 'prop-types';
 
 import Error from '../_error';
 import fetcher from '../../lib/fetch';
+import handler from '../../lib/errorHandler';
 import Layout from '../../components/Layout';
 import ArticleList from '../../components/Post';
 import Summary from '../../components/SubHeader';
 import PageList from '../../components/Pagination';
 
-const API_URL = 'http://backend:8000/api/v1/categories/';
+const URL = process.env.apiHost + '/categories/';
 
 export default function CategorizedArticles({ articles, name, errorCode }) {
     if (errorCode) {
@@ -39,15 +40,9 @@ CategorizedArticles.getInitialProps = async (context) => {
     let errorCode = false;
     const { name, cur } = context.query;
     const articles = await fetcher(
-        `${API_URL}${name}/articles${cur ? '?cur=' + cur : ''}`
+        `${URL}${name}/articles${cur ? '?cur=' + cur : ''}`
     ).catch((error) => {
-        if (error.name === 'FetchError') {
-            errorCode = '500 Internal Server Error';
-        } else if (error.name === 'AbortError') {
-            errorCode = 'Request Cancelled';
-        } else {
-            errorCode = error.message;
-        }
+        errorCode = handler(error);
     });
     return { errorCode, articles, name };
 };

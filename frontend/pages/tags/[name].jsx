@@ -5,11 +5,12 @@ import PropTypes from 'prop-types';
 
 import Error from '../_error';
 import fetcher from '../../lib/fetch';
+import handler from '../../lib/errorHandler';
 import Layout from '../../components/Layout';
 import ArticleList from '../../components/Post';
 import PageList from '../../components/Pagination';
 
-const API_URL = 'http://backend:8000/api/v1/tags/';
+const URL = process.env.apiHost + '/tags/';
 
 export default function taggedArticles({ articles, name, errorCode }) {
     if (errorCode) {
@@ -33,15 +34,9 @@ taggedArticles.getInitialProps = async function (context) {
     const { name, cur } = context.query;
     let errorCode = false;
     const articles = await fetcher(
-        `${API_URL}${name}/articles/${cur ? '?cur=' + cur : ''}`
+        `${URL}${name}/articles/${cur ? '?cur=' + cur : ''}`
     ).catch((error) => {
-        if (error.name === 'FetchError') {
-            errorCode = '500 Server Error';
-        } else if (error.name === 'AbortError') {
-            errorCode = 'Request Cancelled';
-        } else {
-            errorCode = error.message;
-        }
+        errorCode = handler(error);
     });
     return { errorCode, articles, name };
 };
