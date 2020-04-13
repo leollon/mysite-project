@@ -20,7 +20,7 @@ Error.propTypes = {
     errorCode: PropTypes.any.isRequired,
 };
 
-Error.getInitialProps = ({ res, err }) => {
+Error.getInitialProps = async function ({ res, err }) {
     const errorCode = res
         ? res.statusCode
         : err

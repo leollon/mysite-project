@@ -4,6 +4,7 @@ module.exports = {
     env: {
         github: 'leollon',
         googleVerificationCode: 'adfedafd',
-        apiHost: 'http://dev.django.com/api/v1',
+        googleAnalysticsCode: '123fejidde',
+        apiHost: 'http://backend:8000/api/v1',
     },
 };
