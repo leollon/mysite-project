@@ -10,7 +10,7 @@ function Error({ errorCode }) {
         <Layout title={errorCode} description={errorCode}>
             <div className="error404 empty">
                 <h1>{errorCode}</h1>
-                <img src="/img/404.png" alt="error" />
+                <img src="/assets/img/404.png" alt="error" />
             </div>
         </Layout>
     );
@@ -20,7 +20,7 @@ Error.propTypes = {
     errorCode: PropTypes.any.isRequired,
 };
 
-Error.getInitialProps = ({ res, err }) => {
+Error.getInitialProps = async function ({ res, err }) {
     const errorCode = res
         ? res.statusCode
         : err

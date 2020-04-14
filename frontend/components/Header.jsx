@@ -2,7 +2,6 @@
 
 import React from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
 import PropTypes from 'prop-types';
 
 const Header = (props) => (
@@ -38,9 +37,9 @@ const Header = (props) => (
                         <span className="sr-only">Toggle navigation</span>
                         Menu <i className="fa fa-bars" />
                     </button>
-                    <Link href="/">
-                        <a className="navbar-brand">Home</a>
-                    </Link>
+                    <a className="navbar-brand" href="/">
+                        Home
+                    </a>
                 </div>
 
                 <div
@@ -49,24 +48,16 @@ const Header = (props) => (
                 >
                     <ul className="nav navbar-nav navbar-right">
                         <li key="categories">
-                            <Link href="/categories">
-                                <a>categories</a>
-                            </Link>
+                            <a href="/categories">categories</a>
                         </li>
                         <li key="tags">
-                            <Link href="/tags">
-                                <a>tags</a>
-                            </Link>
+                            <a href="/tags">tags</a>
                         </li>
                         <li key="friends">
-                            <Link href="/friends">
-                                <a>Friends</a>
-                            </Link>
+                            <a href="/friends">Friends</a>
                         </li>
                         <li key="about">
-                            <Link href="/about">
-                                <a>about</a>
-                            </Link>
+                            <a href="/about">about</a>
                         </li>
                     </ul>
                 </div>

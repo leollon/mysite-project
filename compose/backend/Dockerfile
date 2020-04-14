@@ -74,7 +74,7 @@ RUN echo "uid=blog" >> /uwsgi.ini && \
 # prepare neccessary data directories,
 # in case when starting backend, it occurrs some
 # denied permissions.
-RUN mkdir -p var/log data run dj_assets
+RUN mkdir -p var/log data run dj_assets assets
 
 # create log for django running log
 RUN touch var/log/backend.log

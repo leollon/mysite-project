@@ -5,11 +5,12 @@ import PropTypes from 'prop-types';
 
 import Error from '../_error';
 import fetcher from '../../lib/fetch';
+import handler from '../../lib/errorHandler';
 import Layout from '../../components/Layout';
 import Comments from '../../components/Comment';
 import SyntaxHighlight from '../../components/SyntaxHighlight';
 
-const API_URL = 'http://backend:8080/api/v1/articles/';
+const URL = process.env.apiHost + '/articles/';
 
 const Post = (props) => {
     if (props.errorCode) {
@@ -47,27 +48,15 @@ Post.getInitialProps = async function (context) {
         article = {},
         comments = {};
 
-    article = await fetcher(`${API_URL}${slug}`).catch((error) => {
-        if (error.name === 'FetchError') {
-            errorCode = '500 Server Error';
-        } else if (error.name === 'AbortError') {
-            errorCode = 'Request Cancelled';
-        } else {
-            errorCode = error.message;
-        }
+    article = await fetcher(`${URL}${slug}`).catch((error) => {
+        errorCode = handler(error);
     });
 
     if (!errorCode) {
         comments = await fetcher(
-            `${API_URL}${article.slug}/comments${cursor}`
+            `${URL}${article.slug}/comments${cursor}`
         ).catch((error) => {
-            if (error.name === 'FetchError') {
-                errorCode = '500 Server Error';
-            } else if (error.name === 'AbortError') {
-                errorCode = 'Request Cancelled';
-            } else {
-                errorCode = error.message;
-            }
+            errorCode = handler(error);
         });
     }
     return { errorCode, article, comments };

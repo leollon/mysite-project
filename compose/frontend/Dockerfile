@@ -5,7 +5,7 @@ LABEL Name=mysite/frontend Version=1.0.0
 RUN apk add --no-cache \
         -X https://mirrors.ustc.edu.cn/alpine/v$(cat /etc/issue | tr -d '[a-zA-Z\(\)\ \\\n]')/main \
         # for the dependency of gulp-imagemin package
-        build-base libtool automake autoconf nasm zlib-dev
+        build-base libtool automake autoconf zlib-dev libpng-dev libjpeg-turbo-dev
 
 # For the sake of time and the Great Fucking Wall,
 # I Have to set npm registry mirror

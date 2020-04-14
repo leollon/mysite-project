@@ -564,15 +564,11 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
 /* customize css */
 
 .intro-header {
-    background-image: url('../img/home-bg.jpg');
+    background-image: url('/assets/img/home-bg.webp');
 }
 
 @media only screen and (max-width: 768px) {
     .article-body {
-        font-size: 16px;
-    }
-
-    td {
         font-size: 16px;
     }
 }
@@ -612,12 +608,6 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
 
 .tag {
     margin: 3px;
-}
-
-th,
-td {
-    border: 1px dotted lightgray;
-    padding: 5px;
 }
 
 p {

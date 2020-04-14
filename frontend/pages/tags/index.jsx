@@ -1,29 +1,19 @@
 // pages/tags/index.js
 
 import React from 'react';
-import useSWR from 'swr';
+import PropTypes from 'prop-types';
 
 import Error from '../_error';
 import fetcher from '../../lib/fetch';
+import handler from '../../lib/errorHandler';
 import TagList from '../../components/Tag';
 import Layout from '../../components/Layout';
 
-const API_URL = process.env.api_host + '/api/v1/tags/';
+const URL = process.env.apiHost + '/tags/';
 
-export default function Tags() {
-    let { data, error } = useSWR(`${API_URL}`, fetcher);
-
-    if (error) {
-        return <Error errorCode={error.message} />;
-    }
-    if (!data) {
-        return (
-            <Layout title={'Loading'} description={'Loading'}>
-                <div className="empty">
-                    <h1>Loading</h1>
-                </div>
-            </Layout>
-        );
+export default function Tags({ data, errorCode }) {
+    if (errorCode) {
+        return <Error errorCode={errorCode} />;
     }
 
     return (
@@ -32,3 +22,16 @@ export default function Tags() {
         </Layout>
     );
 }
+
+Tags.propTypes = {
+    data: PropTypes.object.isRequired,
+    errorCode: PropTypes.any.isRequired,
+};
+
+Tags.getInitialProps = async function (context) {
+    let errorCode = false;
+    const data = await fetcher(`${URL}`).catch((error) => {
+        errorCode = handler(error);
+    });
+    return { data, errorCode };
+};

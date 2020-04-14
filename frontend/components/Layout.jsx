@@ -1,11 +1,27 @@
 // components/Layout.jsx
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import Header from './Header';
 
 const Layout = function (props) {
+    
+    useEffect(() => {
+        if (process.env.NODE_ENV === 'production') {
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+            gtag('config', process.env.googleAnalysticsCode, {
+                page_location: window.location.href,
+                page_path: window.location.pathname,
+                page_title: window.document.title,
+            });
+        }
+    }, []);
+    
     return (
         <>
             <Header title={props.title} description={props.description} />

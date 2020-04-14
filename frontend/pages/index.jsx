@@ -1,46 +1,45 @@
 // pages/index.js
 
 import React from 'react';
-import useSWR from 'swr';
-import { useRouter } from 'next/router';
+import PropTypes from 'prop-types';
 
 import Error from './_error';
 import fetcher from '../lib/fetch';
+import handler from '../lib/errorHandler';
 import Layout from '../components/Layout';
 import ArticleList from '../components/Post';
 import PageList from '../components/Pagination';
 
-const API_URL = process.env.api_host + '/api/v1/articles/';
+const URL = process.env.apiHost + '/articles/';
 
-export default function Index() {
-    const router = useRouter();
-    const query = router.query;
-
-    let { data, error } = useSWR(
-        `${API_URL}${query.cur ? '?cur=' + query.cur : ''}`,
-        fetcher
-    );
-
-    if (error) {
-        return <Error errorCode={error.message} />;
-    }
-    if (!data) {
-        return (
-            <Layout title={'Loading'} description={'Loading'}>
-                <div className="empty">
-                    <h1>Loading</h1>
-                </div>
-            </Layout>
-        );
+export default function Index({ data, errorCode }) {
+    if (errorCode) {
+        return <Error errorCode={errorCode} />;
     }
 
     return (
         <Layout
-            title="I'm 🤔"
-            description="Leollon の blog powered by Django and Bootstrap"
+            title="Leollon's web log"
+            description="Leollon の web log. About Linux，c，c++，Python, Django, GoLang."
         >
             <ArticleList articles={data.results} />
             <PageList links={data.links} />
         </Layout>
     );
 }
+
+Index.propTypes = {
+    data: PropTypes.object.isRequired,
+    errorCode: PropTypes.any.isRequired,
+};
+
+Index.getInitialProps = async function (context) {
+    const { cur } = context.query;
+    let errorCode = false;
+    const data = await fetcher(`${URL}${cur ? '?cur=' + cur : ''}`).catch(
+        (error) => {
+            errorCode = handler(error);
+        }
+    );
+    return { data, errorCode };
+};

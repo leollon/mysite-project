@@ -23,7 +23,10 @@ class CustomDocument extends Document {
                     key="keywords"
                     content="Python,Django,c,c++,Linux,backend,后端"
                 />
-                <meta name="google-site-verification" content="" />
+                <meta
+                    name="google-site-verification"
+                    content={process.env.googleVerificationCode}
+                />
 
                 <link rel="icon" type="image/x-icon" href="/favicon.ico" />
                 <link
@@ -84,7 +87,10 @@ class CustomDocument extends Document {
 
                 <script
                     async
-                    src="https://www.googletagmanager.com/gtag/js?id={GOOGLE ANALYTICS CODE}"
+                    src={
+                        'https://www.googletagmanager.com/gtag/js?id=' +
+                        process.env.googleAnalysticsCode
+                    }
                 />
                 <title key="site-title">I&apos;m 🤔</title>
 

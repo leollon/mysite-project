@@ -3,7 +3,8 @@ module.exports = {
     poweredByHeader: false,
     env: {
         github: 'leollon',
-        google_site_verification: '',
-        api_host: 'http://prod.django.com',
+        googleVerificationCode: 'adfedafd',
+        googleAnalysticsCode: '123fejidde',
+        apiHost: 'http://backend:8000/api/v1',
     },
 };
