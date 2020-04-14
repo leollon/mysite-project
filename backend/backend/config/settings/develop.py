@@ -64,11 +64,8 @@ CACHES = {
 # tied to app's static, like my_app/static/
 STATIC_URL = "/static/"
 
-# Directory containing all collected static files
-STATICFILES_DIRS = [Path(BASE_DIR).parent.parent / "static/", ]
-
-# serve static file in productionf
-STATIC_ROOT = (Path(BASE_DIR).parent.parent / "dj_static").as_posix()
+# static files collected by collectstatic command
+STATIC_ROOT = (Path(BASE_DIR).parent.parent / "static").as_posix()
 
 # Captcha's directory
 CAPTCHA_BASE_DIR = Path(Path(BASE_DIR).parent.parent / "captcha")

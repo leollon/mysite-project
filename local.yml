@@ -4,6 +4,7 @@ volumes:
   postgres: {}
   redis: {}
   captcha: {}
+  static: {}
 
 services:
 
@@ -51,7 +52,7 @@ services:
       - ./run:/backend/run
       - ./data:/backend/data
       - ./captcha:/backend/captcha
-      - ./dj_static:/backend/dj_static
+      - ./static:/backend/static
       - ./markdown:/backend/apps/article/management/markdown
     env_file:
       - ./.envs/.django

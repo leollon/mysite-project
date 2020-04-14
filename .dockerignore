@@ -5,7 +5,7 @@
 .vscode
 .mypy_cache
 **/cache
-**/dj_static
+**/static
 **/__pycache__
 **/log
 **/run
