@@ -1,12 +1,12 @@
 #!/bin/bash
 
-set -o errexit
+set -xe
 
 # create volumes's source before build images,
 # otherwise PermissionError or FileNotFoundError occurs 
 # when container runs.
 
-mkdir -p var/log run data captcha markdown dj_static
+mkdir -p var/log run data captcha markdown static
 
 if [ -e "./postgresql" ]
 then
@@ -14,5 +14,4 @@ then
 fi
 
 docker-compose -f local.yml up "$@"     # start building images
-cp -ruv frontend/public/static "$HOME"
-cp -ruv dj_static/* "$HOME/static/"
+cp -ruv static frontend/public/static "$HOME/"

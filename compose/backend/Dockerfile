@@ -62,7 +62,7 @@ USER blog:blog
 # prepare neccessary data directories,
 # in case when starting backend, it occurrs some
 # denied permissions.
-RUN mkdir -p var/log data run dj_static static
+RUN mkdir -p var/log data run static
 
 # create log for django running log
 RUN touch var/log/backend.log
