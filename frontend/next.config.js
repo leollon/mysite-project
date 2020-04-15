@@ -5,6 +5,6 @@ module.exports = {
         github: 'leollon',
         googleVerificationCode: 'adfedafd',
         googleAnalysticsCode: '123fejidde',
-        apiHost: 'http://backend:8000/api/v1',
+        apiHost: 'http://backend:8080/api/v1',
     },
 };

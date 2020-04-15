@@ -6,7 +6,7 @@ set -xe
 # otherwise PermissionError or FileNotFoundError occurs 
 # when container start running.
 
-mkdir -p var/log run data captcha markdown dj_assets
+mkdir -p var/log run data captcha markdown assets
 
 if [ -e "./postgresql" ]
 then
@@ -14,5 +14,4 @@ then
 fi
 
 docker-compose -f production.yml up "$@"
-cp -ruv ./frontend/public/assets "$HOME"
-cp -ruv dj_assets/* "$HOME/assets/"
+cp -ruv assets frontend/public/assets "$HOME"

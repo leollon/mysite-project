@@ -54,13 +54,10 @@ CACHES = {
 # tied to app's static, like my_app/static/
 STATIC_URL = "/assets/"
 
-# Here stores all static files
-STATICFILES_DIRS = [(Path(BASE_DIR).parent.parent / "assets/").as_posix(), ]
-
 # Directory containing all static files
 # when running `python manage.py collectstatic`, collect all static file into
 # a same directory. For production, use nginx to response static file requested
-STATIC_ROOT = (Path(BASE_DIR).parent.parent / "dj_assets").as_posix()
+STATIC_ROOT = (Path(BASE_DIR).parent.parent / "assets").as_posix()
 
 # Captcha's directory# Captcha's directory
 CAPTCHA_BASE_DIR = Path(BASE_DIR).parent.parent / "captcha"

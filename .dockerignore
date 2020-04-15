@@ -5,11 +5,10 @@
 .idea
 .vscode
 .mypy_cache
+assets
 captcha
 data
-dj_assets
 **/cache
-**/dj_assets
 **/__pycache__
 **/log
 **/run

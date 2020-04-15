@@ -4,7 +4,7 @@ volumes:
   postgres: {}
   redis: {}
   captcha: {}
-  dj_assets: {}
+  assets: {}
 
 services:
 
@@ -46,7 +46,7 @@ services:
       - ./run:/backend/run
       - ./data:/backend/data
       - ./captcha:/backend/captcha
-      - ./dj_assets:/backend/dj_assets
+      - ./assets:/backend/assets
       - ./markdown:/backend/apps/article/management/markdown
     env_file:
       - ./.envs/.django
@@ -73,6 +73,7 @@ services:
       - ./frontend:/frontend
       # https://jdlm.info/articles/2016/03/06/lessons-building-node-app-docker.html
       - /frontend/node_modules
+      - /frontend/build
     env_file:
       - ./.envs/.frontend
     networks:

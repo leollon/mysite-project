@@ -3,11 +3,10 @@
 .idea
 .vscode
 .mypy_cache
+assets
 cache
 captcha
 coverage_html_report
-dj_static
-dj_assets
 markdown
 postgresql
 redis
@@ -15,6 +14,8 @@ run
 siteEnv
 var
 captcha
+**/public/assets
+**/public/static
 **/data/**
 **/build/**
 **/node_modules/**
@@ -32,6 +33,7 @@ captcha
 # not ignored directories
 
 !**/frontend/data
+!**/frontend/static
 !**/apps/captcha
 
 
