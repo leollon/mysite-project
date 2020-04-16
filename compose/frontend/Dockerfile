@@ -2,6 +2,9 @@ FROM node:10.15.3-alpine
 
 LABEL Name=mysite/frontend Version=1.0.0
 
+ENV NEXT_TELEMETRY_DEBUG 1
+ENV NEXT_TELEMETRY_DISABLED 1
+
 RUN apk add --no-cache \
         -X https://mirrors.ustc.edu.cn/alpine/v$(cat /etc/issue | tr -d '[a-zA-Z\(\)\ \\\n]')/main \
         # for the dependency of gulp-imagemin package
