@@ -31,7 +31,7 @@ docker-compose*
 # directories not to be ignored
 
 !**/apps/captcha
-!**/frontend/data
+!**/frontend/data/**
 
 
 # files not to be ignored
@@ -39,3 +39,4 @@ docker-compose*
 !**/entrypoint
 !**/start
 !**/*.sh
+!**/*.ini

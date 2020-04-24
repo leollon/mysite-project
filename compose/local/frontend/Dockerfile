@@ -18,7 +18,7 @@ RUN npm config set registry http://mirrors.cloud.tencent.com/npm/
 RUN mkdir /frontend
 
 # copy start and entrypoint script
-COPY ./compose/frontend/ /
+COPY ./compose/local/frontend/ /
 
 # copy frontend code
 COPY ./frontend /frontend

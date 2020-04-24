@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -xe
+
+# collect static files for admin app
+python manage.py collectstatic --no-input
+
+# database migration
+
+python manage.py makemigrations --no-input && python manage.py migrate
+
+# celery task
+celery -A backend worker -P gevent -c 500 -l INFO -f var/log/celery.log --pidfile run/celeryd.pid -D
+celery flower --basic_auth="${FLOWER_USER}":"${FLOWER_PASSWORD}" -A backend --adress=127.0.0.1 --port=5555 --auto_refresh=True &
+celery -A backend beat -s /backend/run/celerybeat-schedule --pidfile run/celerybeat.pid --detach
+
+# django gateway
+uwsgi --ini /uwsgi.ini

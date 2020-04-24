@@ -7,9 +7,9 @@
         "lib": "lib"
     },
     "scripts": {
-        "dev": "node server.js",
+        "dev": "cross-env node server.js",
         "build": "next build",
-        "start": "next start",
+        "start": "cross-env node server.js",
         "test": "jest"
     },
     "keywords": [
@@ -20,7 +20,9 @@
     "author": "leollon",
     "license": "MIT",
     "dependencies": {
+        "cross-env": "^7.0.2",
         "del": "^3.0.0",
+        "express": "^4.17.1",
         "gulp": "^4.0.0",
         "gulp-clean-css": "^3.10.0",
         "gulp-rename": "^1.4.0",

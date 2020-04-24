@@ -8,7 +8,7 @@ import os
 
 from celery import Celery
 
-ENVIRON_MODULE = os.environ.get('DJANGO_BACKEND_PROFILE', 'develop')
+ENVIRON_MODULE = os.environ.get('DJANGO_BACKEND_PROFILE')
 os.environ.setdefault(
     'DJANGO_SETTINGS_MODULE', 'backend.config.settings.%s' % ENVIRON_MODULE
 )

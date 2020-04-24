@@ -4,7 +4,7 @@ volumes:
   postgres: {}
   redis: {}
   captcha: {}
-  static: {}
+  assets: {}
 
 services:
 
@@ -12,15 +12,16 @@ services:
     image: mysite/postgres:9.6-alpine
     build:
       context: .
-      dockerfile: ./compose/local/postgres/Dockerfile
+      dockerfile: ./compose/production/postgres/Dockerfile
     env_file:
-      - ./.envs/.local/.postgres
+      - ./.envs/.production/.postgres
     volumes:
       - ./postgresql:/var/lib/postgresql
     networks:
       - blog-net
     ports:
       - "127.0.0.1:55432:5432"
+    restart: always
 
   redis:
     image: redis:4.0-alpine
@@ -30,56 +31,51 @@ services:
       - blog-net
     ports:
       - "127.0.0.1:6369:6379"
-
-  mailhog:
-    image: mailhog/mailhog
-    networks:
-      - blog-net
-    ports:
-    - "127.0.0.1:8025:8025"
-    - "127.0.0.1:1025:1025"
+    restart: always
 
   backend:
     image: mysite/backend
     build:
       context: .
-      dockerfile: ./compose/local/backend/Dockerfile  # the file contains the steps of build images
+      dockerfile: ./compose/production/backend/Dockerfile  # the file contains the steps of build images
     entrypoint: /entrypoint
-    command: /start        # The command runs in the container
+    command: /start             # The command runs in the containe
     volumes:
       - ./backend:/backend
       - ./var:/backend/var
       - ./run:/backend/run
       - ./data:/backend/data
       - ./captcha:/backend/captcha
-      - ./static:/backend/static
+      - ./assets:/backend/assets
       - ./markdown:/backend/apps/article/management/markdown
     env_file:
-      - ./.envs/.local/.django
-      - ./.envs/.local/.postgres
+      - ./.envs/.production/.django
+      - ./.envs/.production/.postgres
     networks:
       - blog-net
     ports:
-      - "127.0.0.1:8000:8000"  # web service port
+      - "127.0.0.1:8080:8080"  # web service port
+      - "127.0.0.1:8085:8085"  # uwsgi status port
       - "127.0.0.1:5555:5555"  # flower service port
     depends_on:
       - postgres
       - redis
-      - mailhog
+    restart: always
   
   frontend:
     image: mysite/frontend
     build:
       context: .
-      dockerfile: ./compose/local/frontend/Dockerfile
+      dockerfile: ./compose/production/frontend/Dockerfile
     entrypoint: /entrypoint
     command: /start
     volumes:
       - ./frontend:/frontend
       # https://jdlm.info/articles/2016/03/06/lessons-building-node-app-docker.html
       - /frontend/node_modules
+      - /frontend/build
     env_file:
-      - ./.envs/.local/.frontend
+      - ./.envs/.production/.frontend
     networks:
       - blog-net
     ports:

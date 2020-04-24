@@ -34,13 +34,13 @@ RUN echo 'blog ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN echo 'blog:local' | chpasswd
 
 # copy start and entrypoint script
-COPY ./compose/backend/ /
+COPY ./compose/local/backend/ /
 # copy backend requirements
-COPY ./requirements.txt /
+COPY ./requirements/common.txt ./requirements/local.txt /
 
 # install requirements and remove requirements.txt for reducing image size
-RUN pip install -r requirements.txt -i https://pypi.douban.com/simple \
-    && rm -f requirements.txt
+RUN pip install -r local.txt -i https://pypi.douban.com/simple \
+    && rm -f local.txt common.txt
 
 # code directory
 RUN mkdir /backend
