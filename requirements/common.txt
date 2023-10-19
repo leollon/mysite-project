@@ -10,7 +10,7 @@ gevent==1.4.0
 itsdangerous==1.1.0
 Pillow==9.3.0
 psycopg2-binary==2.8.4
-Pygments==2.7.4
+Pygments==2.15.0
 redis==4.4.4
 tornado==6.3.3
 uwsgi==2.0.17.1
