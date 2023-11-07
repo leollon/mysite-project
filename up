@@ -14,4 +14,4 @@ then
 fi
 
 docker-compose -f production.yml up "$@"
-cp -ruv assets frontend/public/assets "$HOME"
+cp -ruv assets frontend/public/assets "$HOME/"

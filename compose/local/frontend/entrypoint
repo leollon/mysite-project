@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -xe
+
+./node_modules/.bin/gulp -SLL compress
+
+exec "$@"

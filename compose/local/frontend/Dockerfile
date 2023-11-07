@@ -2,6 +2,9 @@ FROM node:10.15.3-alpine
 
 LABEL Name=mysite/frontend Version=1.0.0
 
+ENV NEXT_TELEMETRY_DEBUG 1
+ENV NEXT_TELEMETRY_DISABLED 1
+
 RUN apk add --no-cache \
         # for the dependency of gulp-imagemin package
         build-base libtool automake autoconf zlib-dev libpng-dev libjpeg-turbo-dev
@@ -10,7 +13,7 @@ RUN apk add --no-cache \
 RUN mkdir /frontend
 
 # copy start and entrypoint script
-COPY ./compose/frontend/ /
+COPY ./compose/local/frontend/ /
 
 # copy frontend code
 COPY ./frontend /frontend

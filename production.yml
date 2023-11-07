@@ -12,9 +12,9 @@ services:
     image: mysite/postgres:9.6-alpine
     build:
       context: .
-      dockerfile: ./compose/postgres/Dockerfile
+      dockerfile: ./compose/production/postgres/Dockerfile
     env_file:
-      - ./.envs/.postgres
+      - ./.envs/.production/.postgres
     volumes:
       - ./postgresql:/var/lib/postgresql
     networks:
@@ -37,7 +37,7 @@ services:
     image: mysite/backend
     build:
       context: .
-      dockerfile: ./compose/backend/Dockerfile  # the file contains the steps of build images
+      dockerfile: ./compose/production/backend/Dockerfile  # the file contains the steps of build images
     entrypoint: /entrypoint
     command: /start             # The command runs in the containe
     volumes:
@@ -47,10 +47,11 @@ services:
       - ./data:/backend/data
       - ./captcha:/backend/captcha
       - ./assets:/backend/assets
+      - ./static:/backend/static
       - ./markdown:/backend/apps/article/management/markdown
     env_file:
-      - ./.envs/.django
-      - ./.envs/.postgres
+      - ./.envs/.production/.django
+      - ./.envs/.production/.postgres
     networks:
       - blog-net
     ports:
@@ -66,7 +67,7 @@ services:
     image: mysite/frontend
     build:
       context: .
-      dockerfile: ./compose/frontend/Dockerfile
+      dockerfile: ./compose/production/frontend/Dockerfile
     entrypoint: /entrypoint
     command: /start
     volumes:
@@ -75,7 +76,7 @@ services:
       - /frontend/node_modules
       - /frontend/build
     env_file:
-      - ./.envs/.frontend
+      - ./.envs/.production/.frontend
     networks:
       - blog-net
     ports:

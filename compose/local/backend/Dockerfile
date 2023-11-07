@@ -35,9 +35,9 @@ RUN echo 'blog:producion' | chpasswd
 
 
 # copy start and entrypoint script
-COPY ./compose/backend/ /
+COPY ./compose/local/backend/ /
 # copy backend requirements
-COPY ./requirements.txt /
+COPY ./requirements/common.txt ./requirements/local.txt /
 
 RUN pip install --no-cache-dir -r requirements.txt \
     && rm -f requirements.txt
